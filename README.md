@@ -168,14 +168,18 @@ S4-E and S6 differ only in how the envelope is installed:
 - S4-E: HMAC with a per-device policy key.
 - S6: PQ signature, verified with the authority's public key.
 
+**Naming.** Adversaries A1–A5, compromise levels C0–C4, properties P1–P8 and attacks T1–T10 follow the internal document *Étape 2 — Modèle de menace et propriétés de sécurité* v0.1 (2026-11-04). Coverage and status are tracked in `config/traceability.yaml` and rendered in `REPORT.md` §8b.
+
 **Baselines and compromises (`config/threat.yaml`, assumed key custody).**
 - **S4-F:** per-command HMAC plus static bounds and invariants compiled into firmware. Not updatable over the air.
 - **S4-E:** the same envelopes as S6, but authenticated with HMAC-SHA256 under a per-device key that only the policy authority holds; the cloud platform does not.
-- **Compromises:**
-  - C1: the cloud agent platform, which holds the per-command session keys.
-  - C2: one gateway / network server, which holds only LoRaWAN network keys. Application-layer authentication is assumed end-to-end.
-  - C3: the policy authority's HSM, which holds the S6 signing key and the S4-E per-device keys.
-  - C1+C3: both, reported as an extra row.
+- **Compromise levels (Étape 2 §3):**
+  - C0: nothing compromised. A1/A2/A3/A5 can only send proposals to an honest PDP, which filters them with the event-envelope policy for every scheme (P8 provenance labels are not modelled).
+  - C1: the cloud command platform (agent runtime **and** PDP), which holds the per-command session keys k_{d,e}.
+  - C2: a network server or gateway, which holds only LoRaWAN network keys. Application-layer authentication is assumed end-to-end.
+  - C3: the PA HSM, which holds sk_PA and the S4-E per-device keys.
+  - C4: one physically extracted device. Counted for that device only.
+  - C1+C3: both, reported as an extra row that is not an Étape 2 level.
 - An attacker holding a scheme's envelope key installs a permissive envelope (the whole catalogue, no invariants).
 - **K6** = blast(S4-E) / blast(S6) per compromise, plus the properties that separate the two. Third-party verification without forging power is demonstrated with real ML-DSA-44 and HMAC in `tests/test_threat.py`.
 

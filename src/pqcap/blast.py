@@ -91,9 +91,10 @@ def blast_compromise(catalogue, env: ev.Policy, firmware: ev.Policy, inv: ev.Inv
     it installs a permissive envelope (whole catalogue, no invariants). Every count runs the device check.
     """
     rows = []
-    for comp in threat["compromises"]:
+    for comp, spec in threat["compromises"].items():
         keys = attacker_keys(threat, comp)
-        mac_key = DEVICE_KEY if "session" in keys else ATTACKER_KEY
+        pdp = spec.get("honest_pdp_filters", False)   # C0: proposals pass through an honest PDP
+        mac_key = DEVICE_KEY if ("session" in keys or pdp) else ATTACKER_KEY
         for scheme in SCHEMES:
             pol = env
             if scheme in threat["envelope_key"] and threat["envelope_key"][scheme] in keys:
@@ -104,15 +105,34 @@ def blast_compromise(catalogue, env: ev.Policy, firmware: ev.Policy, inv: ev.Inv
                 chk, h = (lambda s, m: ev.check_s4f(firmware, catalogue, s, m, DEVICE_KEY, tag_len)), 0
             else:
                 chk, h = (lambda s, m, p=pol: ev.check_enveloped(p, catalogue, s, m, DEVICE_KEY, tag_len)), env.handle
+            if pdp:  # the honest PDP only emits commands its policy (event envelope) allows in this state
+                chk = _pdp_filtered(chk, env, catalogue, tag_len)
             for sname, st in device_states(inv).items():
                 for aid, n in _count_with_key(chk, catalogue, st, h, tag_len, mac_key).items():
                     a = catalogue[aid]
-                    rows.append({"compromise": comp, "compromise_label": threat["compromises"][comp]["label"],
+                    rows.append({"compromise": comp, "compromise_label": spec["label"], "scope": spec["scope"],
                                  "scheme": scheme, "state": sname, "action": a.name,
                                  "catalogue_commands": a.targets * (a.max - a.min + 1), "accepted": n,
                                  "attacker_has_session_key": "session" in keys,
                                  "attacker_replaced_envelope": pol is not env})
     return pd.DataFrame(rows)
+
+
+def _pdp_filtered(check, env: ev.Policy, catalogue, tag_len: int):
+    def f(state, msg):
+        if not _pdp_allows(env, catalogue, state, msg, tag_len):
+            return ev.Decision(False, "pdp"), state
+        return check(state, msg)
+    return f
+
+
+def _pdp_allows(env: ev.Policy, catalogue, state, msg: bytes, tag_len: int) -> bool:
+    """PDP software policy (C0): the same command, checked against the event envelope in this state."""
+    body = msg[:ev.HEADER.size + ev.PARAMS.size]
+    _, counter = ev.HEADER.unpack_from(body)
+    re = ev.HEADER.pack(env.handle, counter) + body[ev.HEADER.size:]
+    return ev.check_enveloped(env, catalogue, state, re + ev.tag(DEVICE_KEY, re, tag_len), DEVICE_KEY,
+                              tag_len)[0].accepted
 
 
 def _count_with_key(check, catalogue, state, handle, tag_len, key) -> dict[int, int]:
@@ -139,10 +159,12 @@ PROPERTIES = [
 
 def k6(df: pd.DataFrame, state: str, envelope_bytes: dict[str, int]) -> dict:
     d = df[df.state == state].groupby(["compromise", "scheme"], sort=False).accepted.sum().unstack()
+    scope = df.drop_duplicates("compromise").set_index("compromise").scope if "scope" in df else {}
     rows = []
     for comp, r in d.iterrows():
         e, s6 = int(r["S4-E"]), int(r["S6"])
-        rows.append({"compromise": comp, **{k: int(r[k]) for k in SCHEMES},
+        rows.append({"compromise": comp, "scope": scope.get(comp, "all") if len(scope) else "all",
+                     **{k: int(r[k]) for k in SCHEMES},
                      "ratio_s4e_s6": (e / s6) if s6 else None,
                      "ratio_note": "" if s6 else ("both 0" if e == 0 else "S6 is 0")})
     props = [dict(zip(("property", *SCHEMES, "evidence"), p)) for p in PROPERTIES]

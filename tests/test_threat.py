@@ -30,6 +30,9 @@ def test_custody():
     assert blast.attacker_keys(THREAT, "C1") == {"session"}
     assert blast.attacker_keys(THREAT, "C2") == {"lorawan_ns"}
     assert blast.attacker_keys(THREAT, "C3") == {"policy_pq", "policy_mac"}
+    assert blast.attacker_keys(THREAT, "C0") == set()                            # H5: agents hold no keys
+    assert blast.attacker_keys(THREAT, "C4") == {"session", "receipt", "policy_mac"}
+    assert set(THREAT["compromises"]) >= {"C0", "C1", "C2", "C3", "C4"}
     assert THREAT["status"].startswith("assumed")
 
 
@@ -41,8 +44,13 @@ def test_matrix(matrix):
         assert _tot(matrix, "C1", "S4-E", st) == _tot(matrix, "C1", "S6", st)
         assert _tot(matrix, "C1+C3", "S6", st) == _tot(matrix, "C1+C3", "S4", st)      # envelope replaced
         assert _tot(matrix, "C1+C3", "S4-F", st) == _tot(matrix, "C1", "S4-F", st)    # firmware immune to C3
+        c0 = {_tot(matrix, "C0", s, st) for s in blast.SCHEMES}
+        assert c0 == {_tot(matrix, "C1", "S6", st)}                                # honest PDP = envelope policy
+        assert _tot(matrix, "C4", "S4-E", st) == _tot(matrix, "C1", "S4", st)      # device holds policy_mac
+        assert _tot(matrix, "C4", "S6", st) == _tot(matrix, "C1", "S6", st)        # device holds only pk_PA
     s4 = sum(a.targets * (a.max - a.min + 1) for a in CAT.values())
     assert _tot(matrix, "C1", "S4") == s4
+    assert set(matrix[matrix.compromise == "C4"].scope) == {"one_device"}
     assert matrix[(matrix.compromise == "C1+C3") & (matrix.scheme == "S6")].attacker_replaced_envelope.all()
     assert not matrix[(matrix.compromise == "C1") & (matrix.scheme == "S6")].attacker_replaced_envelope.any()
 
@@ -51,7 +59,10 @@ def test_k6(matrix):
     k = blast.k6(matrix, REF, {"S4-E": 144, "S6": 2532})
     by = {r["compromise"]: r for r in k["rows"]}
     assert by["C1"]["ratio_s4e_s6"] == 1.0 and by["C2"]["ratio_note"] == "both 0"
-    assert k["answer"].startswith("S4-E and S6 have the same")
+    assert by["C4"]["ratio_s4e_s6"] > 1 and by["C4"]["scope"] == "one_device"
+    assert k["answer"].endswith("differ (see table)")
+    same = matrix[matrix.compromise != "C4"]
+    assert blast.k6(same, REF, {"S4-E": 1, "S6": 1})["answer"].startswith("S4-E and S6 have the same")
     props = {p["property"]: p for p in k["properties"]}
     assert props["Blast radius under C1+C3 bounded below S4's"]["S4-F"].startswith("yes")
     assert props["Blast radius under C1+C3 bounded below S4's"]["S6"].startswith("no")

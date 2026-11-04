@@ -260,10 +260,12 @@ def section_k5_matrix(k5: dict) -> str:
     if "matrix" not in k5:
         return ""
     m = pd.DataFrame(k5["matrix"])
-    return ("\n\n**K5 - blast radius per compromise** (accepted catalogue commands, state "
-            f"{k5['state']}; C1 = cloud agent platform, C2 = one gateway / network server, C3 = policy authority HSM, "
-            "C1+C3 = both, extra row; key custody in `config/threat.yaml`, assumed):\n\n"
-            + md_table(m, {c: (lambda v: f"{int(v):,}") for c in m.columns if c != "compromise"}))
+    labels = k5.get("matrix_labels", {})
+    m.insert(1, "level (Étape 2)", m.compromise.map(lambda c: labels.get(c, "")))
+    return ("\n\n**K5 - blast radius per compromise level** (accepted catalogue commands, state "
+            f"{k5['state']}; key custody in `config/threat.yaml`, assumed; C4 counts commands for the ONE "
+            "extracted device):\n\n"
+            + md_table(m, {c: (lambda v: f"{int(v):,}") for c in m.columns if c not in ("compromise", "level (Étape 2)")}))
 
 
 def section_k6(k6: dict) -> str:
@@ -347,6 +349,19 @@ def section_harm(results: Path, config: Path) -> str:
                                  "`legit_intents_rejected` count distinct requests):", t2])
 
 
+def section_traceability(config: Path) -> str:
+    p = config / "traceability.yaml"
+    if not p.exists():
+        return "_no traceability map_"
+    t = load_yaml(p)
+    props = pd.DataFrame([{"id": k, **v, "artefacts": "; ".join(v["artefacts"]) or "-"} for k, v in t["properties"].items()])
+    atk = pd.DataFrame([{"id": k, **v} for k, v in t["attacks"].items()])
+    return ("Naming follows *Étape 2 — Modèle de menace et propriétés de sécurité* v0.1 (adversaries A1-A5, "
+            "compromise levels C0-C4, properties P1-P8, attacks T1-T10). Status per `config/traceability.yaml`.\n\n"
+            + md_table(props[["id", "name", "status", "artefacts"]]) + "\n\n"
+            + md_table(atk[["id", "name", "adversary", "covered_by", "status"]]))
+
+
 def section_kill(results: Path) -> str:
     k = json.loads((results / "kill_criteria.json").read_text())
     k1 = k["K1"]
@@ -413,6 +428,7 @@ def run(config: Path, results: Path, figures: Path) -> None:
         "## 7d. Revocation: envelope validity and renewal", section_revocation(results, model),
         "## 7e. Harm-weighted replay: USGS Buffalo Bayou, Hurricane Harvey", section_harm(results, config),
         "## 8. Kill criteria", section_kill(results),
+        "## 8b. Traceability to the Étape 2 threat model", section_traceability(config),
         "## 9. Figures", "\n".join(f"- [{f}](figures/{f}) ([pdf](figures/{f[:-4]}.pdf))" for f in figs),
     ]
     (results.parent / "REPORT.md").write_text("\n\n".join(parts) + "\n")

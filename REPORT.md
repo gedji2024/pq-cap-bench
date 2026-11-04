@@ -725,23 +725,27 @@ Counted by running every (action, target, value) in `config/actions.yaml` throug
 | set_alert_threshold | 1,501 | 1,501 | 301 | 0.2005 |
 | TOTAL | 2,944 | 2,944 | 314 | 0.1067 |
 
-**K5 - blast radius per compromise** (accepted catalogue commands, state alert=True,battery=above_floor; C1 = cloud agent platform, C2 = one gateway / network server, C3 = policy authority HSM, C1+C3 = both, extra row; key custody in `config/threat.yaml`, assumed):
+**K5 - blast radius per compromise level** (accepted catalogue commands, state alert=True,battery=above_floor; key custody in `config/threat.yaml`, assumed; C4 counts commands for the ONE extracted device):
 
-| compromise | S4 | S4-F | S4-E | S6 |
-|---|---|---|---|---|
-| C1 | 2,944 | 1,364 | 314 | 314 |
-| C2 | 0 | 0 | 0 | 0 |
-| C3 | 0 | 0 | 0 | 0 |
-| C1+C3 | 2,944 | 1,364 | 2,944 | 2,944 |
+| compromise | level (Étape 2) | S4 | S4-F | S4-E | S6 |
+|---|---|---|---|---|---|
+| C0 | nothing compromised; A1/A2/A3/A5 send proposals to an honest PDP [scope: all] | 314 | 314 | 314 | 314 |
+| C1 | cloud command platform (agent runtime and PDP) [scope: all] | 2,944 | 1,364 | 314 | 314 |
+| C2 | network server or gateway [scope: all] | 0 | 0 | 0 | 0 |
+| C3 | PA HSM (sk_PA) -- outside the protection, Étape 2 Sec. 3 [scope: all] | 0 | 0 | 0 | 0 |
+| C4 | one device D extracted physically [scope: one_device] | 2,944 | 1,364 | 2,944 | 314 |
+| C1+C3 | C1 and C3 together (extra row, not an Étape 2 level) [scope: all] | 2,944 | 1,364 | 2,944 | 2,944 |
 
-**K6 - blast(S4-E) / blast(S6) per compromise -> S4-E and S6 have the same blast radius under every compromise; they differ in the properties listed.**
+**K6 - blast(S4-E) / blast(S6) per compromise -> S4-E and S6 blast radii differ (see table).**
 
-| compromise | S4 | S4-F | S4-E | S6 | ratio_s4e_s6 | ratio_note |
-|---|---|---|---|---|---|---|
-| C1 | 2,944 | 1,364 | 314 | 314 | 1.000 | - |
-| C2 | 0 | 0 | 0 | 0 | - | both 0 |
-| C3 | 0 | 0 | 0 | 0 | - | both 0 |
-| C1+C3 | 2,944 | 1,364 | 2,944 | 2,944 | 1.000 | - |
+| compromise | scope | S4 | S4-F | S4-E | S6 | ratio_s4e_s6 | ratio_note |
+|---|---|---|---|---|---|---|---|
+| C0 | all | 314 | 314 | 314 | 314 | 1.000 | - |
+| C1 | all | 2,944 | 1,364 | 314 | 314 | 1.000 | - |
+| C2 | all | 0 | 0 | 0 | 0 | - | both 0 |
+| C3 | all | 0 | 0 | 0 | 0 | - | both 0 |
+| C4 | one_device | 2,944 | 1,364 | 2,944 | 314 | 9.376 | - |
+| C1+C3 | all | 2,944 | 1,364 | 2,944 | 2,944 | 1.000 | - |
 
 Properties that differ (blast radius does not separate S4-E from S6; these do):
 
@@ -753,6 +757,34 @@ Properties that differ (blast radius does not separate S4-E from S6; these do):
 | One extracted device lets attacker forge envelopes | n/a | n/a | yes, for that device only | no | custody: S4-E device holds policy_mac |
 | Blast radius under C1+C3 bounded below S4's | no (2944) | yes (1364) | no (2944) | no (2944) | results/model_blast_compromise.csv |
 | Envelope bytes on air (measured authenticator sizes) | - | - | 144 B | 2532 B | results/sizes.csv |
+
+## 8b. Traceability to the Étape 2 threat model
+
+Naming follows *Étape 2 — Modèle de menace et propriétés de sécurité* v0.1 (adversaries A1-A5, compromise levels C0-C4, properties P1-P8, attacks T1-T10). Status per `config/traceability.yaml`.
+
+| id | name | status | artefacts |
+|---|---|---|---|
+| P1 | Envelope confinement | tested; symbolic proof pending (formal/) | K5/K6 compromise matrix; tests/test_envelope.py soundness; formal/crisis.spthy P1 lemmas |
+| P2 | Delegation by attenuation only | pending (formal/); device-side delegation not implemented | formal/delegation.spthy P2 lemma |
+| P3 | Offline enforcement | partial (no backhaul-outage experiment) | pqcap.envelope checks use only installed state; harm replay |
+| P4 | Freshness / anti-replay | tested; symbolic proof pending (formal/) | tests/test_envelope.py reject_reasons (replay); formal/crisis.spthy P4 lemmas |
+| P5 | Receipt fidelity | open (receipts not implemented) | - |
+| P6 | Physical invariants preserved | tested (per device); zone invariant open | tests/test_harm.py battery-floor property; tests/test_envelope.py invariants |
+| P7 | Bounded exposure after compromise | measured (model) | REPORT 7d revocation |
+| P8 | Provenance binding (weak) | open (labels not modelled) | - |
+
+| id | name | adversary | covered_by | status |
+|---|---|---|---|---|
+| T1 | Fake bulletin asks to disable sensors | A1 | C0 row of K5 (honest PDP filter) | partial |
+| T2 | Delegation with widened rights | A2 | formal/delegation.spthy | pending (formal/) |
+| T3 | Falsified measurements lower the rate | A3 | - | open |
+| T4 | Replay of an old command | A4, C2 | replay tests + formal P4 | tested; symbolic pending |
+| T5 | Targeted delay of envelopes in calm phase | C2 | - | open |
+| T6 | Compromised platform floods in-bounds commands | C1 | harm replay C1 suppress/drain; K5 | measured |
+| T7 | MCP tool rewrites parameters | A5 | C0 row of K5 (in-bounds rewrites accepted) | partial |
+| T8 | Quantum forgery of a classical envelope | A4-Q | - | open |
+| T9 | Brute force on the 8-byte tag over LoRa | A4 | - | open |
+| T10 | Coordinated disabling of neighbouring sensors | C1 | - | open (known limit) |
 
 ## 9. Figures
 

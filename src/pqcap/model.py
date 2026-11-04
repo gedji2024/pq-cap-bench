@@ -229,6 +229,8 @@ def run(config: Path, results: Path) -> dict[str, pd.DataFrame]:
             fw = ev.firmware_policy_from_config(acfg)
             bc = blast.blast_compromise(cat, env, fw, inv, load_yaml(threat_p), tag_len)
             bc.to_csv(results / "model_blast_compromise.csv", index=False)
+            k["K5"]["matrix_labels"] = {c: f"{v['label']} [scope: {v['scope']}]"
+                                         for c, v in load_yaml(threat_p)["compromises"].items()}
             k["K5"]["matrix"] = (bc[bc.state == ref].groupby(["compromise", "scheme"], sort=False).accepted.sum()
                                  .unstack().reset_index().to_dict("records"))
             env_b = {"S4-E": ev.ENVELOPE_BYTES + sig[model["s4e_envelope_mac"]],

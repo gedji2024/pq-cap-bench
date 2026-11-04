@@ -1,0 +1,22 @@
+# Traceability to "Étape 2 — Modèle de menace et propriétés de sécurité" v0.1 (2026-11-04).
+# status: proved (Tamarin) | tested (property tests) | measured (model/replay) | partial | open
+properties:
+  P1: {name: "Envelope confinement", artefacts: ["K5/K6 compromise matrix", "tests/test_envelope.py soundness", "formal/crisis.spthy P1 lemmas"], status: "tested; symbolic proof pending (formal/)"}
+  P2: {name: "Delegation by attenuation only", artefacts: ["formal/delegation.spthy P2 lemma"], status: "pending (formal/); device-side delegation not implemented"}
+  P3: {name: "Offline enforcement", artefacts: ["pqcap.envelope checks use only installed state", "harm replay"], status: "partial (no backhaul-outage experiment)"}
+  P4: {name: "Freshness / anti-replay", artefacts: ["tests/test_envelope.py reject_reasons (replay)", "formal/crisis.spthy P4 lemmas"], status: "tested; symbolic proof pending (formal/)"}
+  P5: {name: "Receipt fidelity", artefacts: [], status: "open (receipts not implemented)"}
+  P6: {name: "Physical invariants preserved", artefacts: ["tests/test_harm.py battery-floor property", "tests/test_envelope.py invariants"], status: "tested (per device); zone invariant open"}
+  P7: {name: "Bounded exposure after compromise", artefacts: ["REPORT 7d revocation"], status: "measured (model)"}
+  P8: {name: "Provenance binding (weak)", artefacts: [], status: "open (labels not modelled)"}
+attacks:
+  T1: {name: "Fake bulletin asks to disable sensors", adversary: A1, covered_by: "C0 row of K5 (honest PDP filter)", status: partial}
+  T2: {name: "Delegation with widened rights", adversary: A2, covered_by: "formal/delegation.spthy", status: "pending (formal/)"}
+  T3: {name: "Falsified measurements lower the rate", adversary: A3, covered_by: "-", status: open}
+  T4: {name: "Replay of an old command", adversary: "A4, C2", covered_by: "replay tests + formal P4", status: "tested; symbolic pending"}
+  T5: {name: "Targeted delay of envelopes in calm phase", adversary: C2, covered_by: "-", status: open}
+  T6: {name: "Compromised platform floods in-bounds commands", adversary: C1, covered_by: "harm replay C1 suppress/drain; K5", status: measured}
+  T7: {name: "MCP tool rewrites parameters", adversary: A5, covered_by: "C0 row of K5 (in-bounds rewrites accepted)", status: partial}
+  T8: {name: "Quantum forgery of a classical envelope", adversary: A4-Q, covered_by: "-", status: open}
+  T9: {name: "Brute force on the 8-byte tag over LoRa", adversary: A4, covered_by: "-", status: open}
+  T10: {name: "Coordinated disabling of neighbouring sensors", adversary: C1, covered_by: "-", status: "open (known limit)"}

@@ -442,7 +442,22 @@
         "ratio_s6_s4": 0.10665760869565218
       }
     ],
+    "matrix_labels": {
+      "C0": "nothing compromised; A1/A2/A3/A5 send proposals to an honest PDP [scope: all]",
+      "C1": "cloud command platform (agent runtime and PDP) [scope: all]",
+      "C2": "network server or gateway [scope: all]",
+      "C3": "PA HSM (sk_PA) -- outside the protection, \u00c9tape 2 Sec. 3 [scope: all]",
+      "C4": "one device D extracted physically [scope: one_device]",
+      "C1+C3": "C1 and C3 together (extra row, not an \u00c9tape 2 level) [scope: all]"
+    },
     "matrix": [
+      {
+        "compromise": "C0",
+        "S4": 314,
+        "S4-F": 314,
+        "S4-E": 314,
+        "S6": 314
+      },
       {
         "compromise": "C1",
         "S4": 2944,
@@ -465,6 +480,13 @@
         "S6": 0
       },
       {
+        "compromise": "C4",
+        "S4": 2944,
+        "S4-F": 1364,
+        "S4-E": 2944,
+        "S6": 314
+      },
+      {
         "compromise": "C1+C3",
         "S4": 2944,
         "S4-F": 1364,
@@ -477,7 +499,18 @@
     "state": "alert=True,battery=above_floor",
     "rows": [
       {
+        "compromise": "C0",
+        "scope": "all",
+        "S4": 314,
+        "S4-F": 314,
+        "S4-E": 314,
+        "S6": 314,
+        "ratio_s4e_s6": 1.0,
+        "ratio_note": ""
+      },
+      {
         "compromise": "C1",
+        "scope": "all",
         "S4": 2944,
         "S4-F": 1364,
         "S4-E": 314,
@@ -487,6 +520,7 @@
       },
       {
         "compromise": "C2",
+        "scope": "all",
         "S4": 0,
         "S4-F": 0,
         "S4-E": 0,
@@ -496,6 +530,7 @@
       },
       {
         "compromise": "C3",
+        "scope": "all",
         "S4": 0,
         "S4-F": 0,
         "S4-E": 0,
@@ -504,7 +539,18 @@
         "ratio_note": "both 0"
       },
       {
+        "compromise": "C4",
+        "scope": "one_device",
+        "S4": 2944,
+        "S4-F": 1364,
+        "S4-E": 2944,
+        "S6": 314,
+        "ratio_s4e_s6": 9.375796178343949,
+        "ratio_note": ""
+      },
+      {
         "compromise": "C1+C3",
+        "scope": "all",
         "S4": 2944,
         "S4-F": 1364,
         "S4-E": 2944,
@@ -563,6 +609,6 @@
         "evidence": "results/sizes.csv"
       }
     ],
-    "answer": "S4-E and S6 have the same blast radius under every compromise; they differ in the properties listed"
+    "answer": "S4-E and S6 blast radii differ (see table)"
   }
 }
