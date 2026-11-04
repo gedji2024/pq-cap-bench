@@ -39,6 +39,9 @@ legit_policy:
   rise_cm_per_h: 15                  # ramp up when the reported stage rises faster than this -- assumed
   steady_cm_per_h: 3                 # step down when |rate| stays below this ... -- assumed
   steady_reports: 3                  # ... for this many consecutive reports -- assumed
+  # D3: naive asks for its target regardless of limits; limit_aware asks for the closest value the device
+  # would accept now (envelope limits are public; the device state is what the PDP last observed).
+  variants: [naive, limit_aware]
 
 # Attacker strategies (each opportunity: the most harmful command the device would accept, chosen with
 # the same pure check function the device runs -- the policy is not secret).

@@ -339,16 +339,18 @@ def section_harm(results: Path, config: Path) -> str:
     cols = ["scheme", "compromise", "strategy", "crossings", "missed", "delayed", "on_time", "max_delay_min",
             "floor_violating_uplinks", "died", "died_h", "min_soc_pct", "attacker_accepted"]
     num = lambda v: f"{v:,.1f}"  # noqa: E731
-    t1 = md_table(d[d.compromise != "none"][cols], {"max_delay_min": num, "died_h": num, "min_soc_pct": num})
-    leg = d[d.compromise == "none"][["scheme", "crossings", "missed", "delayed", "max_delay_min",
-                                     "floor_violating_uplinks", "min_soc_pct", "legit_sent", "legit_rejected",
-                                     "legit_rejection_rate", "legit_intents", "legit_intents_rejected",
-                                     "legit_reject_reasons"]]
-    t2 = md_table(leg, {"max_delay_min": num, "min_soc_pct": num, "legit_rejection_rate": lambda v: f"{v:.1%}"})
+    t1 = md_table(d[d.compromise != "none"][[c for c in cols]], {"max_delay_min": num, "died_h": num, "min_soc_pct": num})
+    leg = d[d.compromise == "none"][["scheme", "legit_policy", "crossings", "missed", "delayed", "max_delay_min",
+                                     "floor_violating_uplinks", "min_soc_pct", "legit_intents", "legit_intents_rejected",
+                                     "legit_unique_rejection_rate", "legit_sent", "legit_rejected", "legit_reject_reasons"]]
+    t2 = md_table(leg, {"max_delay_min": num, "min_soc_pct": num, "legit_unique_rejection_rate": lambda v: f"{v:.1%}"})
     return "\n\n".join(head + ["**Under attack** (attacker holds the session key; C1+C3 also replaces envelopes):",
-                                 t1, "**Legitimate operation** (no compromise; rule-based adaptive-reporting policy; "
-                                 "the policy retries a rejected command at every opportunity, so `legit_intents` and "
-                                 "`legit_intents_rejected` count distinct requests):", t2])
+                                 t1, "**Legitimate operation (D3)** - no compromise; rule-based adaptive-reporting policy. "
+                                 "The metric is the share of **unique requests** rejected (`legit_unique_rejection_rate`); "
+                                 "`legit_sent`/`legit_rejected` include retries (a rejected request is retried at every "
+                                 "opportunity) and are shown only for traceability - the earlier raw-retry rate is "
+                                 "**superseded**. `limit_aware` knows the public envelope limits and the invariants in the "
+                                 "current state and asks for the closest accepted value:", t2])
 
 
 def section_traceability(config: Path) -> str:

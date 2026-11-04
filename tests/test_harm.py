@@ -136,6 +136,29 @@ def test_legit_policy_rules():
 def test_run_end_to_end():
     df, evs, meta = harm.run({**HCFG, "schemes": ["S4", "S6"], "compromises": ["none", "C1"],
                               "attacker": {"strategies": ["drain"]}}, ACFG, REPO_ROOT)
-    assert len(df) == 4 and set(df.strategy) == {"-", "drain"}
+    assert len(df) == 2 * (len(HCFG["legit_policy"]["variants"]) + 1) and set(df.strategy) == {"-", "drain"}
+    assert set(df[df.compromise == "none"].legit_policy) == set(HCFG["legit_policy"]["variants"])
     assert meta["n_readings"] == 460 and len(meta["gaps_over_60_min"]) >= 1
     assert (evs.level_cm.unique().size == len(HCFG["harm"]["reference_levels_ft"]))
+
+
+def test_limit_aware_policy():
+    p = harm.LegitPolicy(HCFG["legit_policy"], "limit_aware", 1, 1440)
+    p.observe([(0, 100.0), (60, 200.0)])                              # rise -> wants the fast interval
+    fast = HCFG["legit_policy"]["fast_interval_min"]
+    assert p.command(60, lambda v: v == fast) == (ev.A_INTERVAL, fast)
+    assert p.command(60, lambda v: v >= 30) == (ev.A_INTERVAL, 30)    # closest accepted value
+    assert p.command(60, lambda v: False) is None                    # nothing acceptable -> no request
+    assert p.command(30, lambda v: v >= 30) is None                   # already there
+    naive = harm.LegitPolicy(HCFG["legit_policy"], "naive")
+    naive.observe([(0, 100.0), (60, 200.0)])
+    assert naive.command(60, lambda v: False) == (ev.A_INTERVAL, fast)
+    with pytest.raises(ValueError):
+        harm.LegitPolicy(HCFG["legit_policy"], "bogus")
+
+
+def test_limit_aware_never_rejected_on_replay():
+    stage = _hydrograph(1000)
+    for scheme in ("S4-F", "S6"):
+        st = harm.simulate(stage, scheme, "none", None, _cfg(), CAT, ENV, FW, "limit_aware")["stats"]
+        assert st["legit_rejected"] == 0 and st["legit_intents"] > 0

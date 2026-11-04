@@ -650,14 +650,18 @@ Reference levels 10 ft, 20 ft, 30 ft, 40 ft; a crossing is *delayed* if first re
 | S6 | C1+C3 | suppress | 4 | 4 | 0 | 0 | - | 0 | False | - | 59.1 | 3 |
 | S6 | C1+C3 | drain | 4 | 3 | 0 | 1 | 7.0 | 202 | True | 20.2 | 0.0 | 606 |
 
-**Legitimate operation** (no compromise; rule-based adaptive-reporting policy; the policy retries a rejected command at every opportunity, so `legit_intents` and `legit_intents_rejected` count distinct requests):
+**Legitimate operation (D3)** - no compromise; rule-based adaptive-reporting policy. The metric is the share of **unique requests** rejected (`legit_unique_rejection_rate`); `legit_sent`/`legit_rejected` include retries (a rejected request is retried at every opportunity) and are shown only for traceability - the earlier raw-retry rate is **superseded**. `limit_aware` knows the public envelope limits and the invariants in the current state and asks for the closest accepted value:
 
-| scheme | crossings | missed | delayed | max_delay_min | floor_violating_uplinks | min_soc_pct | legit_sent | legit_rejected | legit_rejection_rate | legit_intents | legit_intents_rejected | legit_reject_reasons |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| S4 | 4 | 0 | 0 | 9.0 | 15 | 18.5 | 8 | 0 | 0.0% | 8 | 0 | - |
-| S4-F | 4 | 0 | 0 | 9.0 | 0 | 16.3 | 35 | 30 | 85.7% | 6 | 1 | invariant:alert_min_rate=30 |
-| S4-E | 4 | 0 | 0 | 9.0 | 0 | 16.3 | 35 | 30 | 85.7% | 6 | 1 | invariant:alert_min_rate=30 |
-| S6 | 4 | 0 | 0 | 9.0 | 0 | 16.3 | 35 | 30 | 85.7% | 6 | 1 | invariant:alert_min_rate=30 |
+| scheme | legit_policy | crossings | missed | delayed | max_delay_min | floor_violating_uplinks | min_soc_pct | legit_intents | legit_intents_rejected | legit_unique_rejection_rate | legit_sent | legit_rejected | legit_reject_reasons |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| S4 | naive | 4 | 0 | 0 | 9.0 | 15 | 18.5 | 8 | 0 | 0.0% | 8 | 0 | - |
+| S4 | limit_aware | 4 | 0 | 0 | 9.0 | 15 | 18.5 | 8 | 0 | 0.0% | 8 | 0 | - |
+| S4-F | naive | 4 | 0 | 0 | 9.0 | 0 | 16.3 | 6 | 1 | 16.7% | 35 | 30 | invariant:alert_min_rate=30 |
+| S4-F | limit_aware | 4 | 0 | 0 | 9.0 | 0 | 16.6 | 8 | 0 | 0.0% | 8 | 0 | - |
+| S4-E | naive | 4 | 0 | 0 | 9.0 | 0 | 16.3 | 6 | 1 | 16.7% | 35 | 30 | invariant:alert_min_rate=30 |
+| S4-E | limit_aware | 4 | 0 | 0 | 9.0 | 0 | 16.6 | 8 | 0 | 0.0% | 8 | 0 | - |
+| S6 | naive | 4 | 0 | 0 | 9.0 | 0 | 16.3 | 6 | 1 | 16.7% | 35 | 30 | invariant:alert_min_rate=30 |
+| S6 | limit_aware | 4 | 0 | 0 | 9.0 | 0 | 16.6 | 8 | 0 | 0.0% | 8 | 0 | - |
 
 ## 7f. Device-side envelope verification (pqm4, published)
 

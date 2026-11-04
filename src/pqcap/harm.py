@@ -158,15 +158,23 @@ def attacker_command(strategy: str, sch: Scheme, d: Dev, st: ev.DeviceState) -> 
 
 
 class LegitPolicy:
-    """Ramp up on rise, step down when steady (rule-based adaptive reporting)."""
+    """Ramp up on rise, step down when steady (rule-based adaptive reporting).
 
-    def __init__(self, p: dict):
+    variant "naive":       asks for the rule's target interval regardless of the device's limits.
+    variant "limit_aware": knows the envelope limits (public) and the device's invariants in the current
+                           state; it asks for the accepted value closest to the target, or nothing.
+    """
+
+    def __init__(self, p: dict, variant: str = "naive", lo: int = 1, hi: int = 1440):
+        if variant not in ("naive", "limit_aware"):
+            raise ValueError(variant)
         self.p, self.received, self.steady_n, self.want = p, [], 0, None
+        self.variant, self.lo, self.hi = variant, lo, hi
 
     def observe(self, samples: list[tuple[int, float]]):
         self.received.extend(samples)
 
-    def command(self, current: int) -> tuple[int, int] | None:
+    def command(self, current: int, accept=None) -> tuple[int, int] | None:
         r = [x for x in self.received if x[0] >= self.received[-1][0] - 60] if self.received else []
         if len(r) < 2 or r[-1][0] == r[0][0]:
             return None
@@ -178,19 +186,25 @@ class LegitPolicy:
             want = self.p["slow_interval_min"]
         else:
             return None
+        if self.variant == "limit_aware" and accept is not None and not accept(want):
+            ok = sorted((v for v in range(self.lo, self.hi + 1) if accept(v)), key=lambda v: (abs(v - want), v))
+            if not ok:
+                return None
+            want = ok[0]
         return (ev.A_INTERVAL, want) if want != current else None
 
 
 # ---------------------------------------------------------------- simulation
 def simulate(stage: np.ndarray, scheme: str, compromise: str, strategy: str | None, cfg: dict, cat,
-             env: ev.Policy, fw: ev.Policy) -> dict:
+             env: ev.Policy, fw: ev.Policy, legit_variant: str = "naive") -> dict:
     dv, bt = cfg["device"], cfg["battery"]
     sch = Scheme(scheme, cat, env, fw, replaced=(compromise == "C1+C3"))
     inv = sch.invariants
     q_tx, sleep_per_min = uplink_charge_mAh(bt), bt["sleep_current_mA"] / 60
     d = Dev(dv["default_reporting_interval_min"], dv["alert_threshold_cm"], soc_mAh=bt["capacity_mAh"]
             * bt["initial_soc_pct"] / 100)
-    legit = LegitPolicy(cfg["legit_policy"]) if compromise == "none" else None
+    ia = cat[ev.A_INTERVAL]
+    legit = LegitPolicy(cfg["legit_policy"], legit_variant, ia.min, ia.max) if compromise == "none" else None
     prof = cfg["_profile_inv"]                                       # scored against the PROFILE invariants, all schemes
     cfg_floor = bt["capacity_mAh"] * prof.battery_floor_pct / 100
     cmd_pending = False
@@ -236,7 +250,7 @@ def simulate(stage: np.ndarray, scheme: str, compromise: str, strategy: str | No
         # ---- one downlink opportunity
         st = _dstate(d, 100 * d.soc_mAh / bt["capacity_mAh"], t)
         if legit:
-            cmd, who = legit.command(d.interval), "legit"
+            cmd, who = legit.command(d.interval, lambda v, st=st: sch.accepts(st, ev.A_INTERVAL, v)), "legit"
         elif strategy:
             cmd, who = attacker_command(strategy, sch, d, st), "attacker"
         else:
@@ -301,11 +315,13 @@ def run(cfg: dict, actions_cfg: dict, root: Path) -> tuple[pd.DataFrame, pd.Data
     rows, events = [], []
     for scheme in cfg["schemes"]:
         for comp in cfg["compromises"]:
-            for strat in ([None] if comp == "none" else cfg["attacker"]["strategies"]):
-                r = simulate(stage, scheme, comp, strat, cfg, cat, env, fw)
+            runs = ([(None, v) for v in cfg["legit_policy"].get("variants", ["naive"])] if comp == "none"
+                    else [(x, "-") for x in cfg["attacker"]["strategies"]])
+            for strat, variant in runs:
+                r = simulate(stage, scheme, comp, strat, cfg, cat, env, fw, variant if strat is None else "naive")
                 sc = score(stage, r["delivered"], levels, cfg["harm"]["delay_tolerance_min"])
                 st = r["stats"]
-                rows.append({"scheme": scheme, "compromise": comp, "strategy": strat or "-",
+                rows.append({"scheme": scheme, "compromise": comp, "strategy": strat or "-", "legit_policy": variant,
                              **{k: sc[k] for k in ("crossings", "missed", "delayed", "on_time", "mean_delay_min",
                                                    "max_delay_min")},
                              "floor_violating_uplinks": st["floor_violating_uplinks"],
@@ -318,9 +334,12 @@ def run(cfg: dict, actions_cfg: dict, root: Path) -> tuple[pd.DataFrame, pd.Data
                              "legit_rejection_rate": (st["legit_rejected"] / st["legit_sent"]) if st["legit_sent"] else 0.0,
                              "legit_intents": st["legit_intents"],
                              "legit_intents_rejected": st["legit_intents_rejected"],
+                             "legit_unique_rejection_rate": (st["legit_intents_rejected"] / st["legit_intents"])
+                             if st["legit_intents"] else 0.0,
                              "legit_reject_reasons": ";".join(f"{k}={v}" for k, v in sorted(st["reject_reasons"].items())),
                              "attacker_sent": st["attacker_sent"], "attacker_accepted": st["attacker_accepted"]})
-                events += [{"scheme": scheme, "compromise": comp, "strategy": strat or "-", **e} for e in sc["events"]]
+                events += [{"scheme": scheme, "compromise": comp, "strategy": strat or "-", "legit_policy": variant, **e}
+                           for e in sc["events"]]
     meta = {"gaps_over_60_min": gaps(s, 60), "n_readings": int(s.size), "first": str(s.index[0]), "last": str(s.index[-1]),
             "max_gap_min": max_gap_min(s), "peak_cm": float(s.max()), "peak_time": str(s.idxmax()),
             "minutes": int(stage.size), "uplink_charge_mAh": uplink_charge_mAh(cfg["battery"]),
