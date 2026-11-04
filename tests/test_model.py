@@ -199,9 +199,11 @@ def test_run_end_to_end(tmp_path, cfgs):
     model["s2_kem"] = ["ML-KEM-512"]
     for name, obj in {"token": token, "radio": radio, "model": model}.items():
         (cfg / f"{name}.yaml").write_text(json.dumps(obj))           # JSON is valid YAML
+    (cfg / "actions.yaml").write_text((CONFIG / "actions.yaml").read_text())
     M.run(cfg, tmp_path)
     for f in ("model_tokens", "model_delivery", "model_capacity", "model_s2_amortization"):
         assert (tmp_path / f"{f}.csv").exists()
     kc = json.loads((tmp_path / "kill_criteria.json").read_text())
     assert kc["K1"]["answer"] == "no" and kc["K1_crc_sensitivity"]["frames"] == kc["K1"]["frames"]
-    assert (tmp_path / "model_sensitivity_crc.csv").exists()
+    assert (tmp_path / "model_sensitivity_crc.csv").exists() and (tmp_path / "model_blast_radius.csv").exists()
+    assert 0 < kc["K5"]["ratio"] < 1

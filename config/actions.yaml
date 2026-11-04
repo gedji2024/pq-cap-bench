@@ -1,0 +1,25 @@
+# Action catalogue and crisis-envelope SCENARIO for the blast-radius metric (K5).
+#
+# Nothing here is measured or taken from a specification: it is an illustrative device
+# profile (a hydrological monitoring node with 4 sensor slots and 1 valve). The S6/S4
+# blast-radius ratio depends directly on these choices -- change them to your deployment.
+#
+# Command space = (action, target, integer value). A command is "accepted" if the device's
+# verification function (pqcap.envelope) returns accepted for it with a valid tag and fresh
+# counter, i.e. assuming the attacker holds the cloud-side HMAC key.
+
+catalogue:
+  set_sampling_interval:  {id: 1, targets: 4, min: 1,   max: 3600, unit: s}
+  sensor_enable:          {id: 2, targets: 4, min: 0,   max: 1,    unit: "0=disable,1=enable"}
+  set_alert_threshold:    {id: 3, targets: 4, min: 0,   max: 1000, unit: cm}
+  set_valve_opening:      {id: 4, targets: 1, min: 0,   max: 100,  unit: "%"}
+
+# Crisis envelope (S6): what the PQ-signed envelope pre-authorises for the event.
+# Omitted actions are forbidden. targets = allowed target indices; [lo, hi] inclusive.
+envelope:
+  handle: 0x0000002A
+  rules:
+    set_sampling_interval: {targets: [0, 1, 2, 3], lo: 10,  hi: 60}    # faster sampling only
+    sensor_enable:         {targets: [0, 1, 2, 3], lo: 1,   hi: 1}     # may enable, never disable
+    set_alert_threshold:   {targets: [0, 1],       lo: 200, hi: 400}   # bounded around nominal
+    set_valve_opening:     {targets: [0],          lo: 0,   hi: 30}    # partial opening only

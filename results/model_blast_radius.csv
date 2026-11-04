@@ -1,0 +1,6 @@
+action,action_id,catalogue_commands,s4_accepted,s6_accepted,ratio_s6_s4,tag_bytes
+set_sampling_interval,1,14400,14400,204,0.014166666666666666,8
+sensor_enable,2,8,8,4,0.5,8
+set_alert_threshold,3,4004,4004,402,0.1003996003996004,8
+set_valve_opening,4,101,101,31,0.3069306930693069,8
+TOTAL,0,18513,18513,641,0.03462431804677794,8

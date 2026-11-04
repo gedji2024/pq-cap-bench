@@ -199,5 +199,15 @@ def run(config: Path, results: Path) -> dict[str, pd.DataFrame]:
     from .kill import evaluate  # noqa: PLC0415
     k = evaluate(out, model)
     k["K1_crc_sensitivity"] = evaluate(out_alt, model)["K1"]
+    actions = config / "actions.yaml"
+    if actions.exists() and "s6" in model:
+        from . import blast  # noqa: PLC0415
+        from . import envelope as ev  # noqa: PLC0415
+        acfg = load_yaml(actions)
+        cat, env = ev.catalogue_from_config(acfg), ev.envelope_from_config(acfg)
+        ev.encode_bounds(env)  # scenario must fit the 64-B envelope bounds field
+        br = blast.blast_radius(cat, env, model["s6"]["tag_bytes"][0])
+        br.to_csv(results / "model_blast_radius.csv", index=False)
+        k["K5"] = blast.k5(br)
     (results / "kill_criteria.json").write_text(json.dumps(k, indent=2, default=str))
     return out

@@ -554,6 +554,18 @@ At the Class A maximum commands per epoch (every downlink opportunity used; infe
 | 8 | 24 | 53 | 1 | True | 6 | - |
 | 16 | 32 | 53 | 1 | True | 6 | - |
 
+**K5 - Blast radius under cloud-side symmetric-key compromise: how many catalogue commands would a device accept from an attacker holding the HMAC key? -> S6/S4 = 0.0346 (641 of 18,513 commands).**
+
+Counted by running every (action, target, value) in `config/actions.yaml` through the device-side check (`pqcap.envelope.check_s4` / `check_s6`) with a valid tag and fresh counter. The envelope bounds are an illustrative scenario, not a measurement; the ratio is only as meaningful as those bounds.
+
+| action | catalogue_commands | s4_accepted | s6_accepted | ratio_s6_s4 |
+|---|---|---|---|---|
+| set_sampling_interval | 14,400 | 14,400 | 204 | 0.0142 |
+| sensor_enable | 8 | 8 | 4 | 0.5000 |
+| set_alert_threshold | 4,004 | 4,004 | 402 | 0.1004 |
+| set_valve_opening | 101 | 101 | 31 | 0.3069 |
+| TOTAL | 18,513 | 18,513 | 641 | 0.0346 |
+
 ## 9. Figures
 
 - [fig1_token_frames_per_dr.png](figures/fig1_token_frames_per_dr.png) ([pdf](figures/fig1_token_frames_per_dr.pdf))

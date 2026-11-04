@@ -198,8 +198,16 @@ def section_s6(results: Path, model: dict) -> str:
     return "\n\n".join(out)
 
 
-def section_k5(k5: dict) -> str:  # filled in by the blast-radius step
-    return f"**K5: {k5.get('answer', 'n/a')}**"
+def section_k5(k5: dict) -> str:
+    df = pd.DataFrame(k5["rows"])
+    return ("**K5 - Blast radius under cloud-side symmetric-key compromise: how many catalogue commands would a "
+            f"device accept from an attacker holding the HMAC key? -> {k5['answer']}.**\n\n"
+            "Counted by running every (action, target, value) in `config/actions.yaml` through the device-side check "
+            "(`pqcap.envelope.check_s4` / `check_s6`) with a valid tag and fresh counter. The envelope bounds are an "
+            "illustrative scenario, not a measurement; the ratio is only as meaningful as those bounds.\n\n"
+            + md_table(df[["action", "catalogue_commands", "s4_accepted", "s6_accepted", "ratio_s6_s4"]],
+                       {c: (lambda v: f"{int(v):,}") for c in ["catalogue_commands", "s4_accepted", "s6_accepted"]}
+                       | {"ratio_s6_s4": lambda v: f"{v:.4f}"}))
 
 
 def section_kill(results: Path) -> str:
@@ -240,9 +248,8 @@ def section_kill(results: Path) -> str:
               f"-> {k4['answer'].upper()}.**\n\n"
               + md_table(pd.DataFrame(k4["rows"]), {"cmd_bytes": lambda v: f"{int(v)}",
                                                     "min_max_app_payload": lambda v: f"{int(v)}"}))
-    parts = [s1, s2, s3, s4]
-    if "K5" in k:
-        parts.append(section_k5(k["K5"]))
+    parts = [s1, s2, s3, s4,
+             section_k5(k["K5"]) if "K5" in k else "**K5: n/a** - no action catalogue (config/actions.yaml)"]
     return "\n\n".join(parts)
 
 

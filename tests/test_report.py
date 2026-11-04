@@ -37,6 +37,11 @@ def _fake_results(tmp_path, cfgs):  # noqa: F811
     from pqcap.kill import evaluate
     k = evaluate(out, mdl)
     k["K1_crc_sensitivity"] = evaluate(alt, mdl)["K1"]
+    from pqcap import blast
+    from pqcap import envelope as ev
+    from pqcap.config import load_yaml
+    acfg = load_yaml(CONFIG / "actions.yaml")
+    k["K5"] = blast.k5(blast.blast_radius(ev.catalogue_from_config(acfg), ev.envelope_from_config(acfg), 8))
     (r / "kill_criteria.json").write_text(json.dumps(k, default=str))
     cfg = tmp_path / "cfg"
     cfg.mkdir()
@@ -52,7 +57,7 @@ def test_report_renders(tmp_path, cfgs):  # noqa: F811
     (figs / "fig1_x.png").write_bytes(b"")
     report.run(cfg, r, figs)
     md = (tmp_path / "REPORT.md").read_text()
-    for h in ("## 1. Environment", "## 4. Host timings", "## 8. Kill criteria", "**K1", "**K2", "**K3", "**K4",
+    for h in ("## 1. Environment", "## 4. Host timings", "## 8. Kill criteria", "**K1", "**K2", "**K3", "**K4", "**K5 - Blast radius",
               "## 7c. S6", "Crisis commands per gateway", "fig1_x.png"):
         assert h in md
     assert "env.json missing" in md
@@ -80,11 +85,12 @@ def test_report_env_and_na(tmp_path, cfgs):  # noqa: F811
     k["K1"] = {"answer": "n/a", "reason": "missing"}
     k["K2"] = {"answer": "n/a", "reason": "missing"}
     k["K4"] = {"answer": "n/a", "reason": "missing"}
+    k.pop("K5")
     (r / "model_s6_calm.csv").unlink()
     (r / "kill_criteria.json").write_text(json.dumps(k))
     report.run(cfg, r, tmp_path)
     md = (tmp_path / "REPORT.md").read_text()
-    assert "**K1: n/a**" in md and "**K2: n/a**" in md and "**K4: n/a**" in md and "_S6 not configured_" in md and "| CPU | cpu |" in md
+    assert "**K1: n/a**" in md and "**K2: n/a**" in md and "**K4: n/a**" in md and "**K5: n/a**" in md and "_S6 not configured_" in md and "| CPU | cpu |" in md
 
 
 def test_report_s6_no_signer(tmp_path, cfgs):  # noqa: F811

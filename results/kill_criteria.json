@@ -398,5 +398,58 @@
     "cmds_per_device": 0,
     "cmds_gateway": 0,
     "binding_limit": "device_opportunities"
+  },
+  "K5": {
+    "answer": "S6/S4 = 0.0346 (641 of 18,513 commands)",
+    "ratio": 0.03462431804677794,
+    "s6_accepted": 641,
+    "s4_accepted": 18513,
+    "rows": [
+      {
+        "action": "set_sampling_interval",
+        "action_id": 1,
+        "catalogue_commands": 14400,
+        "s4_accepted": 14400,
+        "s6_accepted": 204,
+        "ratio_s6_s4": 0.014166666666666666,
+        "tag_bytes": 8
+      },
+      {
+        "action": "sensor_enable",
+        "action_id": 2,
+        "catalogue_commands": 8,
+        "s4_accepted": 8,
+        "s6_accepted": 4,
+        "ratio_s6_s4": 0.5,
+        "tag_bytes": 8
+      },
+      {
+        "action": "set_alert_threshold",
+        "action_id": 3,
+        "catalogue_commands": 4004,
+        "s4_accepted": 4004,
+        "s6_accepted": 402,
+        "ratio_s6_s4": 0.1003996003996004,
+        "tag_bytes": 8
+      },
+      {
+        "action": "set_valve_opening",
+        "action_id": 4,
+        "catalogue_commands": 101,
+        "s4_accepted": 101,
+        "s6_accepted": 31,
+        "ratio_s6_s4": 0.3069306930693069,
+        "tag_bytes": 8
+      },
+      {
+        "action": "TOTAL",
+        "action_id": 0,
+        "catalogue_commands": 18513,
+        "s4_accepted": 18513,
+        "s6_accepted": 641,
+        "ratio_s6_s4": 0.03462431804677794,
+        "tag_bytes": 8
+      }
+    ]
   }
 }
