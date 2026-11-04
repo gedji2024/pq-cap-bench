@@ -188,6 +188,15 @@ S4-E and S6 differ only in how the envelope is installed:
 - tamper rejection;
 - 112-B envelope round-trip.
 
+## Revocation (`pqcap.revocation`, `model.yaml: revocation`)
+- Envelope validity is V ∈ {6, 24, 72} h, with routine renewal. Firmware rejects any envelope valid for longer than V, including an attacker-minted one (`validity_ok`, property-tested).
+- **Exposure window after revocation starts** (detection delay excluded, since it is the same for every scheme):
+  - S4 / S4-F under C1: unbounded. There is no over-the-air revocation path that does not depend on the leaked key.
+  - S4-E / S6, passive expiry: worst V, expected V/2.
+  - S4-E / S6, active push: the time to deliver a replacement envelope to all N devices, capped at V. The authority's downlink path is assumed independent of the compromised platform.
+  - S4-E / S6 under C3: each minted envelope is capped at V. Rotating the root key is not modelled.
+- **Renewal cost:** the gateway airtime per day of re-sending envelopes every V, against the duty-cycle budget, per DR and N.
+
 ## What is NOT measured
 - **MCU cost:** cycles, RAM, flash and energy for verification on the device. Host timings rank algorithms; they do not predict Cortex-M figures.
 - **Real radio:** loss, collisions, gateway scheduling and regulatory dwell time. Everything radio-related is analytical.

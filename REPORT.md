@@ -523,6 +523,98 @@ S4 sends the full 80-B capability body with every command; S6 sends a 16-B refer
 | S1 | Falcon-512 | 744 | 4 | 0 | 14 | 28 |
 | S2 | ML-DSA-44+KEM/HMAC-SHA256-T16 | 96 | 1 | 48 | 97 | 195 |
 
+## 7d. Revocation: envelope validity and renewal
+
+Exposure window after revocation starts (hours; detection delay excluded, identical for all schemes). Firmware caps every envelope - including an attacker-minted one - at the validity V (`pqcap.envelope.validity_ok`).
+
+| scheme | compromise | validity_h | mechanism | exposure_worst_h | exposure_expected_h |
+|---|---|---|---|---|---|
+| S4 | C1 | 6 | none OTA | unbounded | unbounded |
+| S4-F | C1 | 6 | none OTA | unbounded | unbounded |
+| S4-E | C1 | 6 | passive expiry | 6.00 | 3.00 |
+| S4-E | C3 | 6 | per minted envelope (until root-key rotation, not modelled) | 6.00 | 6.00 |
+| S6 | C1 | 6 | passive expiry | 6.00 | 3.00 |
+| S6 | C3 | 6 | per minted envelope (until root-key rotation, not modelled) | 6.00 | 6.00 |
+| S4 | C1 | 24 | none OTA | unbounded | unbounded |
+| S4-F | C1 | 24 | none OTA | unbounded | unbounded |
+| S4-E | C1 | 24 | passive expiry | 24.00 | 12.00 |
+| S4-E | C3 | 24 | per minted envelope (until root-key rotation, not modelled) | 24.00 | 24.00 |
+| S6 | C1 | 24 | passive expiry | 24.00 | 12.00 |
+| S6 | C3 | 24 | per minted envelope (until root-key rotation, not modelled) | 24.00 | 24.00 |
+| S4 | C1 | 72 | none OTA | unbounded | unbounded |
+| S4-F | C1 | 72 | none OTA | unbounded | unbounded |
+| S4-E | C1 | 72 | passive expiry | 72.00 | 36.00 |
+| S4-E | C3 | 72 | per minted envelope (until root-key rotation, not modelled) | 72.00 | 72.00 |
+| S6 | C1 | 72 | passive expiry | 72.00 | 36.00 |
+| S6 | C3 | 72 | per minted envelope (until root-key rotation, not modelled) | 72.00 | 72.00 |
+
+**Active push at US915 DR8** (replacement envelope delivered to all N devices; exposure = min(V, push time)):
+
+| scheme | validity_h | devices | envelope_bytes | envelope_frames | push_time_h | exposure_worst_h | exposure_expected_h |
+|---|---|---|---|---|---|---|---|
+| S4-E | 6 | 10 | 144 | 3 | 0.25 | 0.25 | 0.25 |
+| S4-E | 6 | 50 | 144 | 3 | 0.25 | 0.25 | 0.25 |
+| S4-E | 6 | 200 | 144 | 3 | 0.25 | 0.25 | 0.25 |
+| S6 | 6 | 10 | 2,532 | 50 | 4.17 | 4.17 | 3.00 |
+| S6 | 6 | 50 | 2,532 | 50 | 4.17 | 4.17 | 3.00 |
+| S6 | 6 | 200 | 2,532 | 50 | 4.17 | 4.17 | 3.00 |
+| S4-E | 24 | 10 | 144 | 3 | 0.25 | 0.25 | 0.25 |
+| S4-E | 24 | 50 | 144 | 3 | 0.25 | 0.25 | 0.25 |
+| S4-E | 24 | 200 | 144 | 3 | 0.25 | 0.25 | 0.25 |
+| S6 | 24 | 10 | 2,532 | 50 | 4.17 | 4.17 | 4.17 |
+| S6 | 24 | 50 | 2,532 | 50 | 4.17 | 4.17 | 4.17 |
+| S6 | 24 | 200 | 2,532 | 50 | 4.17 | 4.17 | 4.17 |
+| S4-E | 72 | 10 | 144 | 3 | 0.25 | 0.25 | 0.25 |
+| S4-E | 72 | 50 | 144 | 3 | 0.25 | 0.25 | 0.25 |
+| S4-E | 72 | 200 | 144 | 3 | 0.25 | 0.25 | 0.25 |
+| S6 | 72 | 10 | 2,532 | 50 | 4.17 | 4.17 | 4.17 |
+| S6 | 72 | 50 | 2,532 | 50 | 4.17 | 4.17 | 4.17 |
+| S6 | 72 | 200 | 2,532 | 50 | 4.17 | 4.17 | 4.17 |
+
+**Routine-renewal gateway airtime, US915 DR8** (share of the daily gateway budget; >100 % = infeasible; all feasible for every V: S4-E N=10: yes, S4-E N=50: yes, S4-E N=200: yes, S6 N=10: yes, S6 N=50: yes, S6 N=200: yes):
+
+| scheme | envelope_bytes | devices | V=6 h | V=24 h | V=72 h |
+|---|---|---|---|---|---|
+| S4-E | 144 | 10 | 0.08% | 0.02% | 0.01% |
+| S4-E | 144 | 50 | 0.42% | 0.10% | 0.03% |
+| S4-E | 144 | 200 | 1.67% | 0.42% | 0.14% |
+| S6 | 2,532 | 10 | 1.42% | 0.36% | 0.12% |
+| S6 | 2,532 | 50 | 7.11% | 1.78% | 0.59% |
+| S6 | 2,532 | 200 | 28.43% | 7.11% | 2.37% |
+
+**Routine-renewal gateway airtime, US915 DR13** (share of the daily gateway budget; >100 % = infeasible; all feasible for every V: S4-E N=10: yes, S4-E N=50: yes, S4-E N=200: yes, S6 N=10: yes, S6 N=50: yes, S6 N=200: yes):
+
+| scheme | envelope_bytes | devices | V=6 h | V=24 h | V=72 h |
+|---|---|---|---|---|---|
+| S4-E | 144 | 10 | 0.00% | 0.00% | 0.00% |
+| S4-E | 144 | 50 | 0.01% | 0.00% | 0.00% |
+| S4-E | 144 | 200 | 0.06% | 0.01% | 0.00% |
+| S6 | 2,532 | 10 | 0.05% | 0.01% | 0.00% |
+| S6 | 2,532 | 50 | 0.24% | 0.06% | 0.02% |
+| S6 | 2,532 | 200 | 0.97% | 0.24% | 0.08% |
+
+**Routine-renewal gateway airtime, EU868 DR0** (share of the daily gateway budget; >100 % = infeasible; all feasible for every V: S4-E N=10: yes, S4-E N=50: no, S4-E N=200: no, S6 N=10: no, S6 N=50: no, S6 N=200: no):
+
+| scheme | envelope_bytes | devices | V=6 h | V=24 h | V=72 h |
+|---|---|---|---|---|---|
+| S4-E | 144 | 10 | 38.04% | 9.51% | 3.17% |
+| S4-E | 144 | 50 | 190.20% | 47.55% | 15.85% |
+| S4-E | 144 | 200 | 760.79% | 190.20% | 63.40% |
+| S6 | 2,532 | 10 | 670.23% | 167.56% | 55.85% |
+| S6 | 2,532 | 50 | 3351.13% | 837.78% | 279.26% |
+| S6 | 2,532 | 200 | 13404.54% | 3351.13% | 1117.04% |
+
+**Routine-renewal gateway airtime, EU868 DR5** (share of the daily gateway budget; >100 % = infeasible; all feasible for every V: S4-E N=10: yes, S4-E N=50: yes, S4-E N=200: yes, S6 N=10: yes, S6 N=50: yes, S6 N=200: no):
+
+| scheme | envelope_bytes | devices | V=6 h | V=24 h | V=72 h |
+|---|---|---|---|---|---|
+| S4-E | 144 | 10 | 1.16% | 0.29% | 0.10% |
+| S4-E | 144 | 50 | 5.81% | 1.45% | 0.48% |
+| S4-E | 144 | 200 | 23.25% | 5.81% | 1.94% |
+| S6 | 2,532 | 10 | 19.36% | 4.84% | 1.61% |
+| S6 | 2,532 | 50 | 96.78% | 24.19% | 8.06% |
+| S6 | 2,532 | 200 | 387.11% | 96.78% | 32.26% |
+
 ## 8. Kill criteria
 
 **K1 - Is S1 with ML-DSA-44 deliverable within W = 30 min for N = 50 at US915 DR8? -> NO.**

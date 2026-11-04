@@ -51,6 +51,13 @@ def _fake_results(tmp_path, cfgs):  # noqa: F811
     k["K5"]["matrix"] = (bc[bc.state == ref].groupby(["compromise", "scheme"], sort=False).accepted.sum()
                          .unstack().reset_index().to_dict("records"))
     k["K6"] = blast.k6(bc, ref, {"S4-E": 144, "S6": 2532})
+    from pqcap import revocation as rv
+    chans = M.channels(radio, mdl)
+    lc = lambda n, ch: M.link_cost(n, ch, 2)  # noqa: E731
+    rv.exposure(chans, {"S4-E": 144, "S6": 2532}, mdl["revocation"], 300, lc).to_csv(
+        r / "model_revocation_exposure.csv", index=False)
+    rv.renewal_cost(chans, {"S4-E": 144, "S6": 2532}, mdl["revocation"], 300, lc).to_csv(
+        r / "model_renewal_cost.csv", index=False)
     (r / "kill_criteria.json").write_text(json.dumps(k, default=str))
     cfg = tmp_path / "cfg"
     cfg.mkdir()
@@ -66,7 +73,7 @@ def test_report_renders(tmp_path, cfgs):  # noqa: F811
     (figs / "fig1_x.png").write_bytes(b"")
     report.run(cfg, r, figs)
     md = (tmp_path / "REPORT.md").read_text()
-    for h in ("## 1. Environment", "## 4. Host timings", "## 8. Kill criteria", "**K1", "**K2", "**K3", "**K4", "**K5 - Blast radius", "**K5 - blast radius per compromise", "**K6 - blast(S4-E)",
+    for h in ("## 1. Environment", "## 4. Host timings", "## 8. Kill criteria", "**K1", "**K2", "**K3", "**K4", "**K5 - Blast radius", "**K5 - blast radius per compromise", "## 7d. Revocation", "**K6 - blast(S4-E)",
               "## 7c. S6", "Crisis commands per gateway", "**Why the crisis capacities differ", "its capacity equals S6", "fig1_x.png"):
         assert h in md
     assert "env.json missing" in md
@@ -96,12 +103,13 @@ def test_report_env_and_na(tmp_path, cfgs):  # noqa: F811
     k["K4"] = {"answer": "n/a", "reason": "missing"}
     k.pop("K5")
     k.pop("K6")
+    (r / "model_revocation_exposure.csv").unlink()
     (r / "model_s6_calm.csv").unlink()
     (r / "kill_criteria.json").write_text(json.dumps(k))
     report.run(cfg, r, tmp_path)
     md = (tmp_path / "REPORT.md").read_text()
     assert "## 4. Host timings (cpu host, not MCU)" in md and "**All timings: cpu host, not MCU.**" in md
-    assert "**K1: n/a**" in md and "**K2: n/a**" in md and "**K4: n/a**" in md and "**K5: n/a**" in md and "**K6: n/a**" in md and "_S6 not configured_" in md and "| CPU | cpu |" in md
+    assert "**K1: n/a**" in md and "**K2: n/a**" in md and "**K4: n/a**" in md and "**K5: n/a**" in md and "**K6: n/a**" in md and "_revocation not configured_" in md and "_S6 not configured_" in md and "| CPU | cpu |" in md
 
 
 def test_report_s6_no_signer(tmp_path, cfgs):  # noqa: F811

@@ -221,5 +221,14 @@ def run(config: Path, results: Path) -> dict[str, pd.DataFrame]:
             env_b = {"S4-E": ev.ENVELOPE_BYTES + sig[model["s4e_envelope_mac"]],
                      "S6": ev.ENVELOPE_BYTES + sig[model["s6"]["signers"][0]]}
             k["K6"] = blast.k6(bc, ref, env_b)
+            if "revocation" in model:
+                from . import revocation as rv  # noqa: PLC0415
+                chans = channels(radio, model)
+                lc = lambda n, ch: link_cost(n, ch, model["fragment_header_bytes"])  # noqa: E731
+                U = model["uplink_interval_s"]
+                rv.exposure(chans, env_b, model["revocation"], U, lc).to_csv(results / "model_revocation_exposure.csv",
+                                                                            index=False)
+                rv.renewal_cost(chans, env_b, model["revocation"], U, lc).to_csv(results / "model_renewal_cost.csv",
+                                                                                index=False)
     (results / "kill_criteria.json").write_text(json.dumps(k, indent=2, default=str))
     return out

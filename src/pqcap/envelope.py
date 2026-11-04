@@ -280,13 +280,24 @@ check_s4e = check_enveloped
 
 
 # ---------------------------------------------------------------- envelope installation
-def install_envelope_s4e(blob: bytes, mac: bytes, policy_key: bytes) -> Policy | None:
+def validity_ok(env: Policy, max_validity_s: int | None) -> bool:
+    """Firmware cap: an envelope may not be valid for longer than max_validity_s (None = no cap).
+    This bounds the exposure window of any envelope, including one minted by an attacker."""
+    return env.not_before <= env.not_after and (max_validity_s is None
+                                                or env.not_after - env.not_before <= max_validity_s)
+
+
+def install_envelope_s4e(blob: bytes, mac: bytes, policy_key: bytes, max_validity_s: int | None = None) -> Policy | None:
     """S4-E: the device holds the per-device policy key, so it (and anyone holding it) could also forge."""
     if not hmac.compare_digest(hmac.new(policy_key, blob, hashlib.sha256).digest(), mac):
         return None
-    return decode_envelope(blob)
+    env = decode_envelope(blob)
+    return env if validity_ok(env, max_validity_s) else None
 
 
-def install_envelope_s6(blob: bytes, sig: bytes, verify) -> Policy | None:
+def install_envelope_s6(blob: bytes, sig: bytes, verify, max_validity_s: int | None = None) -> Policy | None:
     """S6: `verify(blob, sig) -> bool` uses only the policy authority's PUBLIC key (e.g. ML-DSA-44)."""
-    return decode_envelope(blob) if verify(blob, sig) else None
+    if not verify(blob, sig):
+        return None
+    env = decode_envelope(blob)
+    return env if validity_ok(env, max_validity_s) else None

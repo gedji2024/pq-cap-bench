@@ -276,6 +276,40 @@ def section_k6(k6: dict) -> str:
             + md_table(p))
 
 
+def section_revocation(results: Path, model: dict) -> str:
+    pe, pr = results / "model_revocation_exposure.csv", results / "model_renewal_cost.csv"
+    if not pe.exists():
+        return "_revocation not configured_"
+    e, r = pd.read_csv(pe), pd.read_csv(pr)
+    k1 = model["kill_criteria"]["K1"]
+    h = lambda v: "unbounded" if v == float("inf") else f"{v:,.2f}"  # noqa: E731
+    fixed = e[e.mechanism != "active push"][["scheme", "compromise", "validity_h", "mechanism", "exposure_worst_h",
+                                             "exposure_expected_h"]]
+    push = e[(e.mechanism == "active push") & (e.region == k1["region"]) & (e.dr == k1["dr"])]
+    push = push[["scheme", "validity_h", "devices", "envelope_bytes", "envelope_frames", "push_time_h",
+                 "exposure_worst_h", "exposure_expected_h"]]
+    out = ["Exposure window after revocation starts (hours; detection delay excluded, identical for all schemes). "
+           "Firmware caps every envelope - including an attacker-minted one - at the validity V "
+           "(`pqcap.envelope.validity_ok`).",
+           md_table(fixed, {"exposure_worst_h": h, "exposure_expected_h": h}),
+           f"**Active push at {k1['region']} DR{k1['dr']}** (replacement envelope delivered to all N devices; "
+           "exposure = min(V, push time)):",
+           md_table(push, {"envelope_bytes": lambda v: f"{int(v):,}", "envelope_frames": lambda v: f"{int(v)}",
+                           "push_time_h": h, "exposure_worst_h": h, "exposure_expected_h": h})]
+    for reg, dr in model["figure_channels"]:
+        g = r[(r.region == reg) & (r.dr == dr)]
+        p = g.pivot_table(index=["scheme", "envelope_bytes", "devices"], columns="validity_h",
+                          values="gateway_utilisation", sort=False)
+        p.columns = [f"V={v} h" for v in p.columns]
+        f = g.groupby(["scheme", "devices"], sort=False).feasible.all()
+        out.append(f"**Routine-renewal gateway airtime, {reg} DR{dr}** (share of the daily gateway budget; "
+                   f">100 % = infeasible; all feasible for every V: "
+                   + ", ".join(f"{s} N={n}: {'yes' if v else 'no'}" for (s, n), v in f.items()) + "):\n\n"
+                   + md_table(p.reset_index(), {c: (lambda v: f"{v:.2%}") for c in p.columns}
+                              | {"envelope_bytes": lambda v: f"{int(v):,}", "devices": lambda v: f"{int(v)}"}))
+    return "\n\n".join(out)
+
+
 def section_kill(results: Path) -> str:
     k = json.loads((results / "kill_criteria.json").read_text())
     k1 = k["K1"]
@@ -339,6 +373,7 @@ def run(config: Path, results: Path, figures: Path) -> None:
         "## 7. Commands within window", section_capacity(results, model),
         "## 7b. Sensitivity: downlink CRC", section_crc(results, config, model),
         "## 7c. S6 pre-positioned capability envelopes", section_s6(results, model),
+        "## 7d. Revocation: envelope validity and renewal", section_revocation(results, model),
         "## 8. Kill criteria", section_kill(results),
         "## 9. Figures", "\n".join(f"- [{f}](figures/{f}) ([pdf](figures/{f[:-4]}.pdf))" for f in figs),
     ]

@@ -53,3 +53,11 @@ s6:
   crisis_windows_min: [15, 30, 60]
   # S4 is compared like-for-like inside the crisis table (full token and compact format, same tag lengths)
   compare: [[S1, ML-DSA-44], [S1, Falcon-512], [S2, ML-DSA-44+KEM/HMAC-SHA256-T16]]
+
+# Revocation / renewal of S6 and S4-E envelopes (modelling parameters).
+revocation:
+  validity_hours: [6, 24, 72]      # envelope validity V; firmware caps any envelope at V (incl. attacker-minted)
+  devices: [10, 50, 200]
+  # Active revocation = the policy authority pushes a replacement (empty-bounds) envelope over its own
+  # downlink path (assumed independent of the compromised cloud platform).
+  active_push: true
