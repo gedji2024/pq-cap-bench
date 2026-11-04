@@ -17,7 +17,7 @@ from pqcap.radio import fragment
 from pqcap.token import TokenModel, epoch_message_bytes
 
 FIX_SIG = {"PQ-A": 1000, "PQ-B": 30, "HMAC-SHA256-T16": 16, "HMAC-SHA256-T32": 32, "ECDSA-P256": 64,
-           "HYB": 1064}
+           "HYB": 1064, "Ed25519": 64}
 FIX_KEM = {"KEM-X": 500}
 
 
@@ -215,7 +215,9 @@ def test_run_end_to_end(tmp_path, cfgs):
     kc = json.loads((tmp_path / "kill_criteria.json").read_text())
     assert kc["K1"]["answer"] == "no" and kc["K1_crc_sensitivity"]["frames"] == kc["K1"]["frames"]
     assert (tmp_path / "model_sensitivity_crc.csv").exists() and (tmp_path / "model_blast_radius.csv").exists()
-    assert (tmp_path / "catalogue_k6_ranges.csv").exists()
+    assert (tmp_path / "catalogue_k6_ranges.csv").exists() and (tmp_path / "d2_blast_s6f.csv").exists()
+    tok = pd.read_csv(tmp_path / "d2_op_token_cost.csv")
+    assert set(tok.op_token_alg) == {"Ed25519"} and (tok.frames >= 1).all()
     mc = pd.read_csv(tmp_path / "mcu_verify_cost.csv")
     assert (mc.verify_ms_per_day_V6h > mc.verify_ms_per_day_V72h).all()
     assert (tmp_path / "model_harm.csv").exists() and "source" in json.loads((tmp_path / "harm_meta.json").read_text())

@@ -32,6 +32,10 @@ kill_criteria:
   K2: {near_symmetric_ratio: 2.0}  # S2/S4 per-command airtime ratio considered "near-symmetric"
   K4: {region: US915}              # S6 crisis command fits one frame at every downlink DR of this region
 
+# D2: candidate signature algorithms for the OP approval token (sk_OP is distinct from sk_PA; no choice is
+# imposed, the size of each measured algorithm is reported)
+d2_op_token_algorithms: [Ed25519, Falcon-512, ML-DSA-44]
+
 # S4-E envelope authenticator: HMAC-SHA256 (full 32-B tag, measured algorithm label) under a per-device key
 s4e_envelope_mac: HMAC-SHA256-T32
 

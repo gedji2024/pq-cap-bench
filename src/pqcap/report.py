@@ -441,6 +441,31 @@ def section_catalogue(results: Path, config: Path) -> str:
                          "**K6 = blast(S4-E)/blast(S6), ranges (cases where both are 0 are counted, not divided)**", t6])
 
 
+def section_d2(results: Path) -> str:
+    p = results / "d2_blast_s6f.csv"
+    if not p.exists():
+        return "_D2 not run_"
+    b, t = pd.read_csv(p), pd.read_csv(results / "d2_op_token_cost.csv")
+    ints = lambda v: f"{int(v):,}"  # noqa: E731
+    hm = results / "model_harm.csv"
+    harm_t = ""
+    if hm.exists():
+        h = pd.read_csv(hm)
+        h = h[h.scheme.isin(["S4-F", "S6", "S6+F"]) & (h.compromise != "none") & (h.strategy == "suppress")]
+        harm_t = ("\n\n**S4-F suppress attack re-run against S6+F** (Harvey replay, Sec. 7e):\n\n"
+                  + md_table(h[["scheme", "compromise", "strategy", "crossings", "missed", "delayed", "max_delay_min",
+                                "floor_violating_uplinks", "died"]], {"max_delay_min": lambda v: f"{v:,.0f}"}))
+    tk = t.pivot_table(index=["op_token_alg", "token_bytes"], columns=["region", "dr"], values="frames", sort=False)
+    tk.columns = [f"{r} DR{d}" for r, d in tk.columns]
+    return ("**D2 - S6+F: non-updatable firmware floor (battery floor, minimum alert reporting rate) + updatable S6 "
+            "envelopes; 'disable sensor' only with an OP approval token (sk_OP distinct from sk_PA).** Blast radius "
+            "(accepted commands, ASSUMED profile of `config/actions.yaml`) under C1, C1+C3 (OP key safe) and C1+C3+OP, "
+            "in every device state; catalogue ranges for S6+F are in Sec. 8a:\n\n"
+            + md_table(b, {c: ints for c in b.columns if c not in ("state", "compromise")}) + harm_t
+            + "\n\n**OP token cost** - one signature over the command, frames per DR for each measured algorithm "
+              "(`results/sizes.csv`):\n\n" + md_table(tk.reset_index(), {c: ints for c in tk.columns} | {"token_bytes": ints}))
+
+
 def section_kill(results: Path) -> str:
     k = json.loads((results / "kill_criteria.json").read_text())
     k1 = k["K1"]
@@ -508,6 +533,7 @@ def run(config: Path, results: Path, figures: Path) -> None:
         "## 7d. Revocation: envelope validity and renewal", section_revocation(results, model),
         "## 7e. Harm-weighted replay: USGS Buffalo Bayou, Hurricane Harvey", section_harm(results, config),
         "## 7f. Device-side envelope verification (pqm4, published)", section_mcu(results, config),
+        "## 7g. D2: two-tier defence S6+F", section_d2(results),
         "## 8. Kill criteria", section_kill(results),
         "## 8a. K5/K6 on the manufacturer device catalogue (supersedes the K5/K6 of Sec. 8)",
         section_catalogue(results, config),

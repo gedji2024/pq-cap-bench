@@ -8,6 +8,7 @@
 #   policy_pq  S6 PA signing key sk_PA (HSM); D stores only pk_PA
 #   policy_mac S4-E per-device envelope HMAC keys (PA HSM and each D)
 #   lorawan_ns LoRaWAN network-session keys (NS/GW); application keys are end-to-end (Étape 2, Sec. 1.1)
+#   op_approval OP approval key sk_OP (Étape 2 Sec. 1.1), distinct from sk_PA; required by S6+F for "disable"
 status: "assumed -- key custody model (Étape 2 Sec. 1.1 and Sec. 3)"
 
 custody:
@@ -16,6 +17,7 @@ custody:
   ns_gateway: [lorawan_ns]
   pa_hsm: [policy_pq, policy_mac]
   device_D: [session, receipt, policy_mac]       # policy_mac exists only in S4-E devices
+  operator_OP: [op_approval]
 
 compromises:
   C0: {label: "nothing compromised; A1/A2/A3/A5 send proposals to an honest PDP", parties: [agents_AG],
@@ -24,10 +26,12 @@ compromises:
   C2: {label: "network server or gateway", parties: [ns_gateway], scope: all}
   C3: {label: "PA HSM (sk_PA) -- outside the protection, Étape 2 Sec. 3", parties: [pa_hsm], scope: all}
   C4: {label: "one device D extracted physically", parties: [device_D], scope: one_device}
-  C1+C3: {label: "C1 and C3 together (extra row, not an Étape 2 level)", parties: [pdp_cloud_platform, pa_hsm],
-          scope: all}
+  C1+C3: {label: "C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",
+          parties: [pdp_cloud_platform, pa_hsm], scope: all}
+  C1+C3+OP: {label: "C1, C3 and the OP approval key (extra row, D2 worst case)",
+             parties: [pdp_cloud_platform, pa_hsm, operator_OP], scope: all}
 
 # Which key lets an attacker replace the installed envelope with one of its own.
-envelope_key: {S6: policy_pq, S4-E: policy_mac}
+envelope_key: {S6: policy_pq, S6+F: policy_pq, S4-E: policy_mac}
 # Under C0 the honest PDP emits only proposals inside its software policy; modelled as the event envelope
 # bounds + invariants for every scheme (S4 included). Provenance labels (P8) are not modelled.

@@ -63,6 +63,22 @@ C0,nothing compromised; A1/A2/A3/A5 send proposals to an honest PDP,all,S6,"aler
 C0,nothing compromised; A1/A2/A3/A5 send proposals to an honest PDP,all,S6,"alert=False,battery=below_floor",request_immediate_uplink,1,0,False,False
 C0,nothing compromised; A1/A2/A3/A5 send proposals to an honest PDP,all,S6,"alert=False,battery=below_floor",sensor_enable,2,1,False,False
 C0,nothing compromised; A1/A2/A3/A5 send proposals to an honest PDP,all,S6,"alert=False,battery=below_floor",set_alert_threshold,1501,301,False,False
+C0,nothing compromised; A1/A2/A3/A5 send proposals to an honest PDP,all,S6+F,"alert=True,battery=above_floor",set_reporting_interval,1440,11,False,False
+C0,nothing compromised; A1/A2/A3/A5 send proposals to an honest PDP,all,S6+F,"alert=True,battery=above_floor",request_immediate_uplink,1,1,False,False
+C0,nothing compromised; A1/A2/A3/A5 send proposals to an honest PDP,all,S6+F,"alert=True,battery=above_floor",sensor_enable,2,1,False,False
+C0,nothing compromised; A1/A2/A3/A5 send proposals to an honest PDP,all,S6+F,"alert=True,battery=above_floor",set_alert_threshold,1501,301,False,False
+C0,nothing compromised; A1/A2/A3/A5 send proposals to an honest PDP,all,S6+F,"alert=True,battery=below_floor",set_reporting_interval,1440,0,False,False
+C0,nothing compromised; A1/A2/A3/A5 send proposals to an honest PDP,all,S6+F,"alert=True,battery=below_floor",request_immediate_uplink,1,0,False,False
+C0,nothing compromised; A1/A2/A3/A5 send proposals to an honest PDP,all,S6+F,"alert=True,battery=below_floor",sensor_enable,2,1,False,False
+C0,nothing compromised; A1/A2/A3/A5 send proposals to an honest PDP,all,S6+F,"alert=True,battery=below_floor",set_alert_threshold,1501,301,False,False
+C0,nothing compromised; A1/A2/A3/A5 send proposals to an honest PDP,all,S6+F,"alert=False,battery=above_floor",set_reporting_interval,1440,56,False,False
+C0,nothing compromised; A1/A2/A3/A5 send proposals to an honest PDP,all,S6+F,"alert=False,battery=above_floor",request_immediate_uplink,1,1,False,False
+C0,nothing compromised; A1/A2/A3/A5 send proposals to an honest PDP,all,S6+F,"alert=False,battery=above_floor",sensor_enable,2,1,False,False
+C0,nothing compromised; A1/A2/A3/A5 send proposals to an honest PDP,all,S6+F,"alert=False,battery=above_floor",set_alert_threshold,1501,301,False,False
+C0,nothing compromised; A1/A2/A3/A5 send proposals to an honest PDP,all,S6+F,"alert=False,battery=below_floor",set_reporting_interval,1440,0,False,False
+C0,nothing compromised; A1/A2/A3/A5 send proposals to an honest PDP,all,S6+F,"alert=False,battery=below_floor",request_immediate_uplink,1,0,False,False
+C0,nothing compromised; A1/A2/A3/A5 send proposals to an honest PDP,all,S6+F,"alert=False,battery=below_floor",sensor_enable,2,1,False,False
+C0,nothing compromised; A1/A2/A3/A5 send proposals to an honest PDP,all,S6+F,"alert=False,battery=below_floor",set_alert_threshold,1501,301,False,False
 C1,cloud command platform (agent runtime and PDP),all,S4,"alert=True,battery=above_floor",set_reporting_interval,1440,1440,True,False
 C1,cloud command platform (agent runtime and PDP),all,S4,"alert=True,battery=above_floor",request_immediate_uplink,1,1,True,False
 C1,cloud command platform (agent runtime and PDP),all,S4,"alert=True,battery=above_floor",sensor_enable,2,2,True,False
@@ -127,6 +143,22 @@ C1,cloud command platform (agent runtime and PDP),all,S6,"alert=False,battery=be
 C1,cloud command platform (agent runtime and PDP),all,S6,"alert=False,battery=below_floor",request_immediate_uplink,1,0,True,False
 C1,cloud command platform (agent runtime and PDP),all,S6,"alert=False,battery=below_floor",sensor_enable,2,1,True,False
 C1,cloud command platform (agent runtime and PDP),all,S6,"alert=False,battery=below_floor",set_alert_threshold,1501,301,True,False
+C1,cloud command platform (agent runtime and PDP),all,S6+F,"alert=True,battery=above_floor",set_reporting_interval,1440,11,True,False
+C1,cloud command platform (agent runtime and PDP),all,S6+F,"alert=True,battery=above_floor",request_immediate_uplink,1,1,True,False
+C1,cloud command platform (agent runtime and PDP),all,S6+F,"alert=True,battery=above_floor",sensor_enable,2,1,True,False
+C1,cloud command platform (agent runtime and PDP),all,S6+F,"alert=True,battery=above_floor",set_alert_threshold,1501,301,True,False
+C1,cloud command platform (agent runtime and PDP),all,S6+F,"alert=True,battery=below_floor",set_reporting_interval,1440,0,True,False
+C1,cloud command platform (agent runtime and PDP),all,S6+F,"alert=True,battery=below_floor",request_immediate_uplink,1,0,True,False
+C1,cloud command platform (agent runtime and PDP),all,S6+F,"alert=True,battery=below_floor",sensor_enable,2,1,True,False
+C1,cloud command platform (agent runtime and PDP),all,S6+F,"alert=True,battery=below_floor",set_alert_threshold,1501,301,True,False
+C1,cloud command platform (agent runtime and PDP),all,S6+F,"alert=False,battery=above_floor",set_reporting_interval,1440,56,True,False
+C1,cloud command platform (agent runtime and PDP),all,S6+F,"alert=False,battery=above_floor",request_immediate_uplink,1,1,True,False
+C1,cloud command platform (agent runtime and PDP),all,S6+F,"alert=False,battery=above_floor",sensor_enable,2,1,True,False
+C1,cloud command platform (agent runtime and PDP),all,S6+F,"alert=False,battery=above_floor",set_alert_threshold,1501,301,True,False
+C1,cloud command platform (agent runtime and PDP),all,S6+F,"alert=False,battery=below_floor",set_reporting_interval,1440,0,True,False
+C1,cloud command platform (agent runtime and PDP),all,S6+F,"alert=False,battery=below_floor",request_immediate_uplink,1,0,True,False
+C1,cloud command platform (agent runtime and PDP),all,S6+F,"alert=False,battery=below_floor",sensor_enable,2,1,True,False
+C1,cloud command platform (agent runtime and PDP),all,S6+F,"alert=False,battery=below_floor",set_alert_threshold,1501,301,True,False
 C2,network server or gateway,all,S4,"alert=True,battery=above_floor",set_reporting_interval,1440,0,False,False
 C2,network server or gateway,all,S4,"alert=True,battery=above_floor",request_immediate_uplink,1,0,False,False
 C2,network server or gateway,all,S4,"alert=True,battery=above_floor",sensor_enable,2,0,False,False
@@ -191,6 +223,22 @@ C2,network server or gateway,all,S6,"alert=False,battery=below_floor",set_report
 C2,network server or gateway,all,S6,"alert=False,battery=below_floor",request_immediate_uplink,1,0,False,False
 C2,network server or gateway,all,S6,"alert=False,battery=below_floor",sensor_enable,2,0,False,False
 C2,network server or gateway,all,S6,"alert=False,battery=below_floor",set_alert_threshold,1501,0,False,False
+C2,network server or gateway,all,S6+F,"alert=True,battery=above_floor",set_reporting_interval,1440,0,False,False
+C2,network server or gateway,all,S6+F,"alert=True,battery=above_floor",request_immediate_uplink,1,0,False,False
+C2,network server or gateway,all,S6+F,"alert=True,battery=above_floor",sensor_enable,2,0,False,False
+C2,network server or gateway,all,S6+F,"alert=True,battery=above_floor",set_alert_threshold,1501,0,False,False
+C2,network server or gateway,all,S6+F,"alert=True,battery=below_floor",set_reporting_interval,1440,0,False,False
+C2,network server or gateway,all,S6+F,"alert=True,battery=below_floor",request_immediate_uplink,1,0,False,False
+C2,network server or gateway,all,S6+F,"alert=True,battery=below_floor",sensor_enable,2,0,False,False
+C2,network server or gateway,all,S6+F,"alert=True,battery=below_floor",set_alert_threshold,1501,0,False,False
+C2,network server or gateway,all,S6+F,"alert=False,battery=above_floor",set_reporting_interval,1440,0,False,False
+C2,network server or gateway,all,S6+F,"alert=False,battery=above_floor",request_immediate_uplink,1,0,False,False
+C2,network server or gateway,all,S6+F,"alert=False,battery=above_floor",sensor_enable,2,0,False,False
+C2,network server or gateway,all,S6+F,"alert=False,battery=above_floor",set_alert_threshold,1501,0,False,False
+C2,network server or gateway,all,S6+F,"alert=False,battery=below_floor",set_reporting_interval,1440,0,False,False
+C2,network server or gateway,all,S6+F,"alert=False,battery=below_floor",request_immediate_uplink,1,0,False,False
+C2,network server or gateway,all,S6+F,"alert=False,battery=below_floor",sensor_enable,2,0,False,False
+C2,network server or gateway,all,S6+F,"alert=False,battery=below_floor",set_alert_threshold,1501,0,False,False
 C3,"PA HSM (sk_PA) -- outside the protection, Étape 2 Sec. 3",all,S4,"alert=True,battery=above_floor",set_reporting_interval,1440,0,False,False
 C3,"PA HSM (sk_PA) -- outside the protection, Étape 2 Sec. 3",all,S4,"alert=True,battery=above_floor",request_immediate_uplink,1,0,False,False
 C3,"PA HSM (sk_PA) -- outside the protection, Étape 2 Sec. 3",all,S4,"alert=True,battery=above_floor",sensor_enable,2,0,False,False
@@ -255,6 +303,22 @@ C3,"PA HSM (sk_PA) -- outside the protection, Étape 2 Sec. 3",all,S6,"alert=Fal
 C3,"PA HSM (sk_PA) -- outside the protection, Étape 2 Sec. 3",all,S6,"alert=False,battery=below_floor",request_immediate_uplink,1,0,False,True
 C3,"PA HSM (sk_PA) -- outside the protection, Étape 2 Sec. 3",all,S6,"alert=False,battery=below_floor",sensor_enable,2,0,False,True
 C3,"PA HSM (sk_PA) -- outside the protection, Étape 2 Sec. 3",all,S6,"alert=False,battery=below_floor",set_alert_threshold,1501,0,False,True
+C3,"PA HSM (sk_PA) -- outside the protection, Étape 2 Sec. 3",all,S6+F,"alert=True,battery=above_floor",set_reporting_interval,1440,0,False,True
+C3,"PA HSM (sk_PA) -- outside the protection, Étape 2 Sec. 3",all,S6+F,"alert=True,battery=above_floor",request_immediate_uplink,1,0,False,True
+C3,"PA HSM (sk_PA) -- outside the protection, Étape 2 Sec. 3",all,S6+F,"alert=True,battery=above_floor",sensor_enable,2,0,False,True
+C3,"PA HSM (sk_PA) -- outside the protection, Étape 2 Sec. 3",all,S6+F,"alert=True,battery=above_floor",set_alert_threshold,1501,0,False,True
+C3,"PA HSM (sk_PA) -- outside the protection, Étape 2 Sec. 3",all,S6+F,"alert=True,battery=below_floor",set_reporting_interval,1440,0,False,True
+C3,"PA HSM (sk_PA) -- outside the protection, Étape 2 Sec. 3",all,S6+F,"alert=True,battery=below_floor",request_immediate_uplink,1,0,False,True
+C3,"PA HSM (sk_PA) -- outside the protection, Étape 2 Sec. 3",all,S6+F,"alert=True,battery=below_floor",sensor_enable,2,0,False,True
+C3,"PA HSM (sk_PA) -- outside the protection, Étape 2 Sec. 3",all,S6+F,"alert=True,battery=below_floor",set_alert_threshold,1501,0,False,True
+C3,"PA HSM (sk_PA) -- outside the protection, Étape 2 Sec. 3",all,S6+F,"alert=False,battery=above_floor",set_reporting_interval,1440,0,False,True
+C3,"PA HSM (sk_PA) -- outside the protection, Étape 2 Sec. 3",all,S6+F,"alert=False,battery=above_floor",request_immediate_uplink,1,0,False,True
+C3,"PA HSM (sk_PA) -- outside the protection, Étape 2 Sec. 3",all,S6+F,"alert=False,battery=above_floor",sensor_enable,2,0,False,True
+C3,"PA HSM (sk_PA) -- outside the protection, Étape 2 Sec. 3",all,S6+F,"alert=False,battery=above_floor",set_alert_threshold,1501,0,False,True
+C3,"PA HSM (sk_PA) -- outside the protection, Étape 2 Sec. 3",all,S6+F,"alert=False,battery=below_floor",set_reporting_interval,1440,0,False,True
+C3,"PA HSM (sk_PA) -- outside the protection, Étape 2 Sec. 3",all,S6+F,"alert=False,battery=below_floor",request_immediate_uplink,1,0,False,True
+C3,"PA HSM (sk_PA) -- outside the protection, Étape 2 Sec. 3",all,S6+F,"alert=False,battery=below_floor",sensor_enable,2,0,False,True
+C3,"PA HSM (sk_PA) -- outside the protection, Étape 2 Sec. 3",all,S6+F,"alert=False,battery=below_floor",set_alert_threshold,1501,0,False,True
 C4,one device D extracted physically,one_device,S4,"alert=True,battery=above_floor",set_reporting_interval,1440,1440,True,False
 C4,one device D extracted physically,one_device,S4,"alert=True,battery=above_floor",request_immediate_uplink,1,1,True,False
 C4,one device D extracted physically,one_device,S4,"alert=True,battery=above_floor",sensor_enable,2,2,True,False
@@ -319,67 +383,179 @@ C4,one device D extracted physically,one_device,S6,"alert=False,battery=below_fl
 C4,one device D extracted physically,one_device,S6,"alert=False,battery=below_floor",request_immediate_uplink,1,0,True,False
 C4,one device D extracted physically,one_device,S6,"alert=False,battery=below_floor",sensor_enable,2,1,True,False
 C4,one device D extracted physically,one_device,S6,"alert=False,battery=below_floor",set_alert_threshold,1501,301,True,False
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4,"alert=True,battery=above_floor",set_reporting_interval,1440,1440,True,False
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4,"alert=True,battery=above_floor",request_immediate_uplink,1,1,True,False
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4,"alert=True,battery=above_floor",sensor_enable,2,2,True,False
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4,"alert=True,battery=above_floor",set_alert_threshold,1501,1501,True,False
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4,"alert=True,battery=below_floor",set_reporting_interval,1440,1440,True,False
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4,"alert=True,battery=below_floor",request_immediate_uplink,1,1,True,False
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4,"alert=True,battery=below_floor",sensor_enable,2,2,True,False
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4,"alert=True,battery=below_floor",set_alert_threshold,1501,1501,True,False
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4,"alert=False,battery=above_floor",set_reporting_interval,1440,1440,True,False
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4,"alert=False,battery=above_floor",request_immediate_uplink,1,1,True,False
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4,"alert=False,battery=above_floor",sensor_enable,2,2,True,False
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4,"alert=False,battery=above_floor",set_alert_threshold,1501,1501,True,False
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4,"alert=False,battery=below_floor",set_reporting_interval,1440,1440,True,False
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4,"alert=False,battery=below_floor",request_immediate_uplink,1,1,True,False
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4,"alert=False,battery=below_floor",sensor_enable,2,2,True,False
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4,"alert=False,battery=below_floor",set_alert_threshold,1501,1501,True,False
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4-F,"alert=True,battery=above_floor",set_reporting_interval,1440,11,True,False
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4-F,"alert=True,battery=above_floor",request_immediate_uplink,1,1,True,False
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4-F,"alert=True,battery=above_floor",sensor_enable,2,1,True,False
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4-F,"alert=True,battery=above_floor",set_alert_threshold,1501,1351,True,False
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4-F,"alert=True,battery=below_floor",set_reporting_interval,1440,0,True,False
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4-F,"alert=True,battery=below_floor",request_immediate_uplink,1,0,True,False
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4-F,"alert=True,battery=below_floor",sensor_enable,2,1,True,False
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4-F,"alert=True,battery=below_floor",set_alert_threshold,1501,1351,True,False
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4-F,"alert=False,battery=above_floor",set_reporting_interval,1440,716,True,False
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4-F,"alert=False,battery=above_floor",request_immediate_uplink,1,1,True,False
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4-F,"alert=False,battery=above_floor",sensor_enable,2,2,True,False
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4-F,"alert=False,battery=above_floor",set_alert_threshold,1501,1351,True,False
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4-F,"alert=False,battery=below_floor",set_reporting_interval,1440,601,True,False
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4-F,"alert=False,battery=below_floor",request_immediate_uplink,1,0,True,False
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4-F,"alert=False,battery=below_floor",sensor_enable,2,2,True,False
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4-F,"alert=False,battery=below_floor",set_alert_threshold,1501,1351,True,False
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4-E,"alert=True,battery=above_floor",set_reporting_interval,1440,1440,True,True
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4-E,"alert=True,battery=above_floor",request_immediate_uplink,1,1,True,True
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4-E,"alert=True,battery=above_floor",sensor_enable,2,2,True,True
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4-E,"alert=True,battery=above_floor",set_alert_threshold,1501,1501,True,True
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4-E,"alert=True,battery=below_floor",set_reporting_interval,1440,1440,True,True
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4-E,"alert=True,battery=below_floor",request_immediate_uplink,1,1,True,True
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4-E,"alert=True,battery=below_floor",sensor_enable,2,2,True,True
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4-E,"alert=True,battery=below_floor",set_alert_threshold,1501,1501,True,True
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4-E,"alert=False,battery=above_floor",set_reporting_interval,1440,1440,True,True
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4-E,"alert=False,battery=above_floor",request_immediate_uplink,1,1,True,True
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4-E,"alert=False,battery=above_floor",sensor_enable,2,2,True,True
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4-E,"alert=False,battery=above_floor",set_alert_threshold,1501,1501,True,True
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4-E,"alert=False,battery=below_floor",set_reporting_interval,1440,1440,True,True
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4-E,"alert=False,battery=below_floor",request_immediate_uplink,1,1,True,True
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4-E,"alert=False,battery=below_floor",sensor_enable,2,2,True,True
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S4-E,"alert=False,battery=below_floor",set_alert_threshold,1501,1501,True,True
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S6,"alert=True,battery=above_floor",set_reporting_interval,1440,1440,True,True
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S6,"alert=True,battery=above_floor",request_immediate_uplink,1,1,True,True
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S6,"alert=True,battery=above_floor",sensor_enable,2,2,True,True
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S6,"alert=True,battery=above_floor",set_alert_threshold,1501,1501,True,True
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S6,"alert=True,battery=below_floor",set_reporting_interval,1440,1440,True,True
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S6,"alert=True,battery=below_floor",request_immediate_uplink,1,1,True,True
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S6,"alert=True,battery=below_floor",sensor_enable,2,2,True,True
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S6,"alert=True,battery=below_floor",set_alert_threshold,1501,1501,True,True
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S6,"alert=False,battery=above_floor",set_reporting_interval,1440,1440,True,True
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S6,"alert=False,battery=above_floor",request_immediate_uplink,1,1,True,True
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S6,"alert=False,battery=above_floor",sensor_enable,2,2,True,True
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S6,"alert=False,battery=above_floor",set_alert_threshold,1501,1501,True,True
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S6,"alert=False,battery=below_floor",set_reporting_interval,1440,1440,True,True
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S6,"alert=False,battery=below_floor",request_immediate_uplink,1,1,True,True
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S6,"alert=False,battery=below_floor",sensor_enable,2,2,True,True
-C1+C3,"C1 and C3 together (extra row, not an Étape 2 level)",all,S6,"alert=False,battery=below_floor",set_alert_threshold,1501,1501,True,True
+C4,one device D extracted physically,one_device,S6+F,"alert=True,battery=above_floor",set_reporting_interval,1440,11,True,False
+C4,one device D extracted physically,one_device,S6+F,"alert=True,battery=above_floor",request_immediate_uplink,1,1,True,False
+C4,one device D extracted physically,one_device,S6+F,"alert=True,battery=above_floor",sensor_enable,2,1,True,False
+C4,one device D extracted physically,one_device,S6+F,"alert=True,battery=above_floor",set_alert_threshold,1501,301,True,False
+C4,one device D extracted physically,one_device,S6+F,"alert=True,battery=below_floor",set_reporting_interval,1440,0,True,False
+C4,one device D extracted physically,one_device,S6+F,"alert=True,battery=below_floor",request_immediate_uplink,1,0,True,False
+C4,one device D extracted physically,one_device,S6+F,"alert=True,battery=below_floor",sensor_enable,2,1,True,False
+C4,one device D extracted physically,one_device,S6+F,"alert=True,battery=below_floor",set_alert_threshold,1501,301,True,False
+C4,one device D extracted physically,one_device,S6+F,"alert=False,battery=above_floor",set_reporting_interval,1440,56,True,False
+C4,one device D extracted physically,one_device,S6+F,"alert=False,battery=above_floor",request_immediate_uplink,1,1,True,False
+C4,one device D extracted physically,one_device,S6+F,"alert=False,battery=above_floor",sensor_enable,2,1,True,False
+C4,one device D extracted physically,one_device,S6+F,"alert=False,battery=above_floor",set_alert_threshold,1501,301,True,False
+C4,one device D extracted physically,one_device,S6+F,"alert=False,battery=below_floor",set_reporting_interval,1440,0,True,False
+C4,one device D extracted physically,one_device,S6+F,"alert=False,battery=below_floor",request_immediate_uplink,1,0,True,False
+C4,one device D extracted physically,one_device,S6+F,"alert=False,battery=below_floor",sensor_enable,2,1,True,False
+C4,one device D extracted physically,one_device,S6+F,"alert=False,battery=below_floor",set_alert_threshold,1501,301,True,False
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4,"alert=True,battery=above_floor",set_reporting_interval,1440,1440,True,False
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4,"alert=True,battery=above_floor",request_immediate_uplink,1,1,True,False
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4,"alert=True,battery=above_floor",sensor_enable,2,2,True,False
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4,"alert=True,battery=above_floor",set_alert_threshold,1501,1501,True,False
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4,"alert=True,battery=below_floor",set_reporting_interval,1440,1440,True,False
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4,"alert=True,battery=below_floor",request_immediate_uplink,1,1,True,False
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4,"alert=True,battery=below_floor",sensor_enable,2,2,True,False
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4,"alert=True,battery=below_floor",set_alert_threshold,1501,1501,True,False
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4,"alert=False,battery=above_floor",set_reporting_interval,1440,1440,True,False
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4,"alert=False,battery=above_floor",request_immediate_uplink,1,1,True,False
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4,"alert=False,battery=above_floor",sensor_enable,2,2,True,False
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4,"alert=False,battery=above_floor",set_alert_threshold,1501,1501,True,False
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4,"alert=False,battery=below_floor",set_reporting_interval,1440,1440,True,False
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4,"alert=False,battery=below_floor",request_immediate_uplink,1,1,True,False
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4,"alert=False,battery=below_floor",sensor_enable,2,2,True,False
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4,"alert=False,battery=below_floor",set_alert_threshold,1501,1501,True,False
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4-F,"alert=True,battery=above_floor",set_reporting_interval,1440,11,True,False
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4-F,"alert=True,battery=above_floor",request_immediate_uplink,1,1,True,False
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4-F,"alert=True,battery=above_floor",sensor_enable,2,1,True,False
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4-F,"alert=True,battery=above_floor",set_alert_threshold,1501,1351,True,False
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4-F,"alert=True,battery=below_floor",set_reporting_interval,1440,0,True,False
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4-F,"alert=True,battery=below_floor",request_immediate_uplink,1,0,True,False
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4-F,"alert=True,battery=below_floor",sensor_enable,2,1,True,False
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4-F,"alert=True,battery=below_floor",set_alert_threshold,1501,1351,True,False
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4-F,"alert=False,battery=above_floor",set_reporting_interval,1440,716,True,False
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4-F,"alert=False,battery=above_floor",request_immediate_uplink,1,1,True,False
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4-F,"alert=False,battery=above_floor",sensor_enable,2,2,True,False
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4-F,"alert=False,battery=above_floor",set_alert_threshold,1501,1351,True,False
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4-F,"alert=False,battery=below_floor",set_reporting_interval,1440,601,True,False
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4-F,"alert=False,battery=below_floor",request_immediate_uplink,1,0,True,False
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4-F,"alert=False,battery=below_floor",sensor_enable,2,2,True,False
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4-F,"alert=False,battery=below_floor",set_alert_threshold,1501,1351,True,False
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4-E,"alert=True,battery=above_floor",set_reporting_interval,1440,1440,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4-E,"alert=True,battery=above_floor",request_immediate_uplink,1,1,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4-E,"alert=True,battery=above_floor",sensor_enable,2,2,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4-E,"alert=True,battery=above_floor",set_alert_threshold,1501,1501,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4-E,"alert=True,battery=below_floor",set_reporting_interval,1440,1440,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4-E,"alert=True,battery=below_floor",request_immediate_uplink,1,1,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4-E,"alert=True,battery=below_floor",sensor_enable,2,2,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4-E,"alert=True,battery=below_floor",set_alert_threshold,1501,1501,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4-E,"alert=False,battery=above_floor",set_reporting_interval,1440,1440,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4-E,"alert=False,battery=above_floor",request_immediate_uplink,1,1,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4-E,"alert=False,battery=above_floor",sensor_enable,2,2,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4-E,"alert=False,battery=above_floor",set_alert_threshold,1501,1501,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4-E,"alert=False,battery=below_floor",set_reporting_interval,1440,1440,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4-E,"alert=False,battery=below_floor",request_immediate_uplink,1,1,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4-E,"alert=False,battery=below_floor",sensor_enable,2,2,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S4-E,"alert=False,battery=below_floor",set_alert_threshold,1501,1501,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S6,"alert=True,battery=above_floor",set_reporting_interval,1440,1440,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S6,"alert=True,battery=above_floor",request_immediate_uplink,1,1,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S6,"alert=True,battery=above_floor",sensor_enable,2,2,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S6,"alert=True,battery=above_floor",set_alert_threshold,1501,1501,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S6,"alert=True,battery=below_floor",set_reporting_interval,1440,1440,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S6,"alert=True,battery=below_floor",request_immediate_uplink,1,1,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S6,"alert=True,battery=below_floor",sensor_enable,2,2,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S6,"alert=True,battery=below_floor",set_alert_threshold,1501,1501,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S6,"alert=False,battery=above_floor",set_reporting_interval,1440,1440,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S6,"alert=False,battery=above_floor",request_immediate_uplink,1,1,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S6,"alert=False,battery=above_floor",sensor_enable,2,2,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S6,"alert=False,battery=above_floor",set_alert_threshold,1501,1501,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S6,"alert=False,battery=below_floor",set_reporting_interval,1440,1440,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S6,"alert=False,battery=below_floor",request_immediate_uplink,1,1,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S6,"alert=False,battery=below_floor",sensor_enable,2,2,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S6,"alert=False,battery=below_floor",set_alert_threshold,1501,1501,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S6+F,"alert=True,battery=above_floor",set_reporting_interval,1440,15,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S6+F,"alert=True,battery=above_floor",request_immediate_uplink,1,1,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S6+F,"alert=True,battery=above_floor",sensor_enable,2,1,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S6+F,"alert=True,battery=above_floor",set_alert_threshold,1501,1501,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S6+F,"alert=True,battery=below_floor",set_reporting_interval,1440,0,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S6+F,"alert=True,battery=below_floor",request_immediate_uplink,1,0,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S6+F,"alert=True,battery=below_floor",sensor_enable,2,1,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S6+F,"alert=True,battery=below_floor",set_alert_threshold,1501,1501,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S6+F,"alert=False,battery=above_floor",set_reporting_interval,1440,1440,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S6+F,"alert=False,battery=above_floor",request_immediate_uplink,1,1,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S6+F,"alert=False,battery=above_floor",sensor_enable,2,1,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S6+F,"alert=False,battery=above_floor",set_alert_threshold,1501,1501,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S6+F,"alert=False,battery=below_floor",set_reporting_interval,1440,1321,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S6+F,"alert=False,battery=below_floor",request_immediate_uplink,1,0,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S6+F,"alert=False,battery=below_floor",sensor_enable,2,1,True,True
+C1+C3,"C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level)",all,S6+F,"alert=False,battery=below_floor",set_alert_threshold,1501,1501,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4,"alert=True,battery=above_floor",set_reporting_interval,1440,1440,True,False
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4,"alert=True,battery=above_floor",request_immediate_uplink,1,1,True,False
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4,"alert=True,battery=above_floor",sensor_enable,2,2,True,False
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4,"alert=True,battery=above_floor",set_alert_threshold,1501,1501,True,False
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4,"alert=True,battery=below_floor",set_reporting_interval,1440,1440,True,False
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4,"alert=True,battery=below_floor",request_immediate_uplink,1,1,True,False
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4,"alert=True,battery=below_floor",sensor_enable,2,2,True,False
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4,"alert=True,battery=below_floor",set_alert_threshold,1501,1501,True,False
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4,"alert=False,battery=above_floor",set_reporting_interval,1440,1440,True,False
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4,"alert=False,battery=above_floor",request_immediate_uplink,1,1,True,False
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4,"alert=False,battery=above_floor",sensor_enable,2,2,True,False
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4,"alert=False,battery=above_floor",set_alert_threshold,1501,1501,True,False
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4,"alert=False,battery=below_floor",set_reporting_interval,1440,1440,True,False
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4,"alert=False,battery=below_floor",request_immediate_uplink,1,1,True,False
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4,"alert=False,battery=below_floor",sensor_enable,2,2,True,False
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4,"alert=False,battery=below_floor",set_alert_threshold,1501,1501,True,False
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4-F,"alert=True,battery=above_floor",set_reporting_interval,1440,11,True,False
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4-F,"alert=True,battery=above_floor",request_immediate_uplink,1,1,True,False
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4-F,"alert=True,battery=above_floor",sensor_enable,2,1,True,False
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4-F,"alert=True,battery=above_floor",set_alert_threshold,1501,1351,True,False
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4-F,"alert=True,battery=below_floor",set_reporting_interval,1440,0,True,False
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4-F,"alert=True,battery=below_floor",request_immediate_uplink,1,0,True,False
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4-F,"alert=True,battery=below_floor",sensor_enable,2,1,True,False
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4-F,"alert=True,battery=below_floor",set_alert_threshold,1501,1351,True,False
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4-F,"alert=False,battery=above_floor",set_reporting_interval,1440,716,True,False
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4-F,"alert=False,battery=above_floor",request_immediate_uplink,1,1,True,False
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4-F,"alert=False,battery=above_floor",sensor_enable,2,2,True,False
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4-F,"alert=False,battery=above_floor",set_alert_threshold,1501,1351,True,False
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4-F,"alert=False,battery=below_floor",set_reporting_interval,1440,601,True,False
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4-F,"alert=False,battery=below_floor",request_immediate_uplink,1,0,True,False
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4-F,"alert=False,battery=below_floor",sensor_enable,2,2,True,False
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4-F,"alert=False,battery=below_floor",set_alert_threshold,1501,1351,True,False
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4-E,"alert=True,battery=above_floor",set_reporting_interval,1440,1440,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4-E,"alert=True,battery=above_floor",request_immediate_uplink,1,1,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4-E,"alert=True,battery=above_floor",sensor_enable,2,2,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4-E,"alert=True,battery=above_floor",set_alert_threshold,1501,1501,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4-E,"alert=True,battery=below_floor",set_reporting_interval,1440,1440,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4-E,"alert=True,battery=below_floor",request_immediate_uplink,1,1,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4-E,"alert=True,battery=below_floor",sensor_enable,2,2,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4-E,"alert=True,battery=below_floor",set_alert_threshold,1501,1501,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4-E,"alert=False,battery=above_floor",set_reporting_interval,1440,1440,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4-E,"alert=False,battery=above_floor",request_immediate_uplink,1,1,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4-E,"alert=False,battery=above_floor",sensor_enable,2,2,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4-E,"alert=False,battery=above_floor",set_alert_threshold,1501,1501,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4-E,"alert=False,battery=below_floor",set_reporting_interval,1440,1440,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4-E,"alert=False,battery=below_floor",request_immediate_uplink,1,1,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4-E,"alert=False,battery=below_floor",sensor_enable,2,2,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S4-E,"alert=False,battery=below_floor",set_alert_threshold,1501,1501,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S6,"alert=True,battery=above_floor",set_reporting_interval,1440,1440,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S6,"alert=True,battery=above_floor",request_immediate_uplink,1,1,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S6,"alert=True,battery=above_floor",sensor_enable,2,2,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S6,"alert=True,battery=above_floor",set_alert_threshold,1501,1501,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S6,"alert=True,battery=below_floor",set_reporting_interval,1440,1440,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S6,"alert=True,battery=below_floor",request_immediate_uplink,1,1,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S6,"alert=True,battery=below_floor",sensor_enable,2,2,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S6,"alert=True,battery=below_floor",set_alert_threshold,1501,1501,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S6,"alert=False,battery=above_floor",set_reporting_interval,1440,1440,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S6,"alert=False,battery=above_floor",request_immediate_uplink,1,1,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S6,"alert=False,battery=above_floor",sensor_enable,2,2,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S6,"alert=False,battery=above_floor",set_alert_threshold,1501,1501,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S6,"alert=False,battery=below_floor",set_reporting_interval,1440,1440,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S6,"alert=False,battery=below_floor",request_immediate_uplink,1,1,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S6,"alert=False,battery=below_floor",sensor_enable,2,2,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S6,"alert=False,battery=below_floor",set_alert_threshold,1501,1501,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S6+F,"alert=True,battery=above_floor",set_reporting_interval,1440,15,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S6+F,"alert=True,battery=above_floor",request_immediate_uplink,1,1,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S6+F,"alert=True,battery=above_floor",sensor_enable,2,1,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S6+F,"alert=True,battery=above_floor",set_alert_threshold,1501,1501,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S6+F,"alert=True,battery=below_floor",set_reporting_interval,1440,0,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S6+F,"alert=True,battery=below_floor",request_immediate_uplink,1,0,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S6+F,"alert=True,battery=below_floor",sensor_enable,2,1,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S6+F,"alert=True,battery=below_floor",set_alert_threshold,1501,1501,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S6+F,"alert=False,battery=above_floor",set_reporting_interval,1440,1440,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S6+F,"alert=False,battery=above_floor",request_immediate_uplink,1,1,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S6+F,"alert=False,battery=above_floor",sensor_enable,2,2,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S6+F,"alert=False,battery=above_floor",set_alert_threshold,1501,1501,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S6+F,"alert=False,battery=below_floor",set_reporting_interval,1440,1321,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S6+F,"alert=False,battery=below_floor",request_immediate_uplink,1,0,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S6+F,"alert=False,battery=below_floor",sensor_enable,2,2,True,True
+C1+C3+OP,"C1, C3 and the OP approval key (extra row, D2 worst case)",all,S6+F,"alert=False,battery=below_floor",set_alert_threshold,1501,1501,True,True

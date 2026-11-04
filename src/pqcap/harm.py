@@ -106,11 +106,12 @@ def effective_interval(interval: int, alert: bool, soc_pct: float, inv: ev.Invar
 class Scheme:
     """Device-side check for one scheme, with the policy in force (possibly attacker-replaced)."""
 
-    def __init__(self, name: str, cat, env: ev.Policy, fw: ev.Policy, replaced: bool):
-        self.name, self.cat = name, cat
-        self.env = ev.permissive_policy(cat, env.handle) if replaced and name in ("S4-E", "S6") else env
+    def __init__(self, name: str, cat, env: ev.Policy, fw: ev.Policy, replaced: bool, op_key: bool = False):
+        self.name, self.cat, self.op_key = name, cat, op_key
+        enveloped = name in ("S4-E", "S6", "S6+F")
+        self.env = ev.permissive_policy(cat, env.handle) if replaced and enveloped else env
         self.fw = fw
-        self.handle = self.env.handle if name in ("S4-E", "S6") else 0
+        self.handle = self.env.handle if enveloped else 0
 
     @property
     def invariants(self) -> ev.Invariants:
@@ -118,11 +119,18 @@ class Scheme:
             return ev.NO_INVARIANTS
         return self.fw.invariants if self.name == "S4-F" else self.env.invariants
 
+    @property
+    def floor(self) -> ev.Invariants:
+        """S6+F non-updatable firmware floor (profile invariants); none for the other schemes."""
+        return self.fw.invariants if self.name == "S6+F" else ev.NO_INVARIANTS
+
     def check(self, state: ev.DeviceState, msg: bytes):
         if self.name == "S4":
             return ev.check_s4(self.cat, state, msg, KEY, TAG)
         if self.name == "S4-F":
             return ev.check_s4f(self.fw, self.cat, state, msg, KEY, TAG)
+        if self.name == "S6+F":
+            return ev.check_s6f(self.env, self.floor, self.cat, state, msg, KEY, TAG, self.op_key)
         return ev.check_enveloped(self.env, self.cat, state, msg, KEY, TAG)
 
     def accepts(self, state: ev.DeviceState, aid: int, value: int) -> bool:
@@ -198,8 +206,8 @@ class LegitPolicy:
 def simulate(stage: np.ndarray, scheme: str, compromise: str, strategy: str | None, cfg: dict, cat,
              env: ev.Policy, fw: ev.Policy, legit_variant: str = "naive") -> dict:
     dv, bt = cfg["device"], cfg["battery"]
-    sch = Scheme(scheme, cat, env, fw, replaced=(compromise == "C1+C3"))
-    inv = sch.invariants
+    sch = Scheme(scheme, cat, env, fw, replaced=compromise.startswith("C1+C3"), op_key=compromise.endswith("+OP"))
+    inv, floor = sch.invariants, sch.floor
     q_tx, sleep_per_min = uplink_charge_mAh(bt), bt["sleep_current_mA"] / 60
     d = Dev(dv["default_reporting_interval_min"], dv["alert_threshold_cm"], soc_mAh=bt["capacity_mAh"]
             * bt["initial_soc_pct"] / 100)
@@ -231,7 +239,7 @@ def simulate(stage: np.ndarray, scheme: str, compromise: str, strategy: str | No
                 d.alert = now_alert
             else:
                 d.alert = False
-        eff = effective_interval(d.interval, d.alert, soc_pct, inv)
+        eff = effective_interval(effective_interval(d.interval, d.alert, soc_pct, inv), d.alert, soc_pct, floor)
         since = t - d.last_uplink
         if since < dv["min_uplink_spacing_min"] or not (d.pending or since >= eff):
             continue

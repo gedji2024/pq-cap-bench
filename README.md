@@ -204,6 +204,12 @@ S4-E and S6 differ only in how the envelope is installed:
 - An attacker holding a scheme's envelope key installs a permissive envelope (the whole catalogue, no invariants).
 - **K6** = blast(S4-E) / blast(S6) per compromise, plus the properties that separate the two. Third-party verification without forging power is demonstrated with real ML-DSA-44 and HMAC in `tests/test_threat.py`.
 
+**S6+F (D2), two-tier defence.**
+- A non-updatable firmware floor (battery floor, minimum alert reporting rate) holds even if the envelope is replaced.
+- On top of it sit updatable S6 envelopes.
+- "Disable sensor" requires an OP approval token signed with sk_OP, a key distinct from sk_PA (`check_s6f`, property-tested).
+- Extra rows C1+C3 (OP key safe) and C1+C3+OP. The token's cost in frames is reported for each measured signature algorithm.
+
 **Counting.** Blast radius = the number of (action, target, value) commands the device accepts. It is counted by running every candidate through the device check in an explicit device state (alert × battery). K5 uses `count_state`; all four states are in `results/model_blast_radius.csv`.
 
 **Hypothesis property tests:**

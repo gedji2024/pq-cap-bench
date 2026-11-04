@@ -49,5 +49,5 @@ attacker:
   strategies: [suppress, drain]
   # suppress: disable sensor > raise alert threshold to max accepted > slowest accepted reporting interval
   # drain:    fastest accepted reporting interval > immediate uplink at every opportunity
-compromises: [none, C1, C1+C3]       # none = legitimate policy only (legit rejection rate measured here)
-schemes: [S4, S4-F, S4-E, S6]
+compromises: [none, C1, C1+C3, C1+C3+OP]  # none = legitimate policy only; C1+C3 keeps the OP key safe (D2)
+schemes: [S4, S4-F, S4-E, S6, S6+F]

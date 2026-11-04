@@ -1,0 +1,13 @@
+state,compromise,S4,S4-F,S4-E,S6,S6+F
+"alert=True,battery=above_floor",C1,2944,1364,314,314,314
+"alert=True,battery=above_floor",C1+C3,2944,1364,2944,2944,1518
+"alert=True,battery=above_floor",C1+C3+OP,2944,1364,2944,2944,1518
+"alert=True,battery=below_floor",C1,2944,1352,302,302,302
+"alert=True,battery=below_floor",C1+C3,2944,1352,2944,2944,1502
+"alert=True,battery=below_floor",C1+C3+OP,2944,1352,2944,2944,1502
+"alert=False,battery=above_floor",C1,2944,2070,359,359,359
+"alert=False,battery=above_floor",C1+C3,2944,2070,2944,2944,2943
+"alert=False,battery=above_floor",C1+C3+OP,2944,2070,2944,2944,2944
+"alert=False,battery=below_floor",C1,2944,1954,302,302,302
+"alert=False,battery=below_floor",C1+C3,2944,1954,2944,2944,2823
+"alert=False,battery=below_floor",C1+C3+OP,2944,1954,2944,2944,2824

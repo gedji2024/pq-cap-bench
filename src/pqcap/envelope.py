@@ -282,6 +282,22 @@ check_s6 = check_enveloped
 check_s4e = check_enveloped
 
 
+def check_s6f(env: Policy, floor: Invariants, catalogue, state, msg, key, tag_len, op_token_valid: bool):
+    """S6+F (D2): S6 envelope check, then a NON-UPDATABLE firmware floor (applies even if the envelope was
+    replaced), and "disable sensor" only with a valid OP approval token (signed with sk_OP != sk_PA;
+    `op_token_valid` is the result of verifying it)."""
+    dec, new = check_enveloped(env, catalogue, state, msg, key, tag_len)
+    if not dec.accepted:
+        return dec, state
+    aid, _target, value, _reserved = decode_params(msg[HEADER.size:HEADER.size + PARAMS.size])
+    v = invariant_violation(floor, state, aid, value)
+    if v:
+        return Decision(False, "floor:" + v), state
+    if aid == A_ENABLE and value == 0 and not op_token_valid:
+        return Decision(False, "op_token_required"), state
+    return dec, new
+
+
 # ---------------------------------------------------------------- S6-R: revocation committed in advance (D1)
 REV_COMMIT_BYTES = 32  # SHA-256 output
 REVOCATION = struct.Struct(">I")

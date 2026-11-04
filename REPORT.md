@@ -705,18 +705,32 @@ Reference levels 10 ft, 20 ft, 30 ft, 40 ft; a crossing is *delayed* if first re
 | S4 | C1 | drain | 4 | 3 | 0 | 1 | 7.0 | 202 | True | 20.2 | 0.0 | 606 |
 | S4 | C1+C3 | suppress | 4 | 4 | 0 | 0 | - | 0 | False | - | 59.1 | 3 |
 | S4 | C1+C3 | drain | 4 | 3 | 0 | 1 | 7.0 | 202 | True | 20.2 | 0.0 | 606 |
+| S4 | C1+C3+OP | suppress | 4 | 4 | 0 | 0 | - | 0 | False | - | 59.1 | 3 |
+| S4 | C1+C3+OP | drain | 4 | 3 | 0 | 1 | 7.0 | 202 | True | 20.2 | 0.0 | 606 |
 | S4-F | C1 | suppress | 4 | 4 | 0 | 0 | - | 0 | False | - | 58.5 | 3 |
 | S4-F | C1 | drain | 4 | 0 | 2 | 2 | 112.0 | 0 | False | - | 13.3 | 403 |
 | S4-F | C1+C3 | suppress | 4 | 4 | 0 | 0 | - | 0 | False | - | 58.5 | 3 |
 | S4-F | C1+C3 | drain | 4 | 0 | 2 | 2 | 112.0 | 0 | False | - | 13.3 | 403 |
+| S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | 0 | - | 0 | False | - | 58.5 | 3 |
+| S4-F | C1+C3+OP | drain | 4 | 0 | 2 | 2 | 112.0 | 0 | False | - | 13.3 | 403 |
 | S4-E | C1 | suppress | 4 | 0 | 1 | 3 | 38.0 | 0 | False | - | 19.1 | 1 |
 | S4-E | C1 | drain | 4 | 0 | 2 | 2 | 112.0 | 0 | False | - | 13.3 | 403 |
 | S4-E | C1+C3 | suppress | 4 | 4 | 0 | 0 | - | 0 | False | - | 59.1 | 3 |
 | S4-E | C1+C3 | drain | 4 | 3 | 0 | 1 | 7.0 | 202 | True | 20.2 | 0.0 | 606 |
+| S4-E | C1+C3+OP | suppress | 4 | 4 | 0 | 0 | - | 0 | False | - | 59.1 | 3 |
+| S4-E | C1+C3+OP | drain | 4 | 3 | 0 | 1 | 7.0 | 202 | True | 20.2 | 0.0 | 606 |
 | S6 | C1 | suppress | 4 | 0 | 1 | 3 | 38.0 | 0 | False | - | 19.1 | 1 |
 | S6 | C1 | drain | 4 | 0 | 2 | 2 | 112.0 | 0 | False | - | 13.3 | 403 |
 | S6 | C1+C3 | suppress | 4 | 4 | 0 | 0 | - | 0 | False | - | 59.1 | 3 |
 | S6 | C1+C3 | drain | 4 | 3 | 0 | 1 | 7.0 | 202 | True | 20.2 | 0.0 | 606 |
+| S6 | C1+C3+OP | suppress | 4 | 4 | 0 | 0 | - | 0 | False | - | 59.1 | 3 |
+| S6 | C1+C3+OP | drain | 4 | 3 | 0 | 1 | 7.0 | 202 | True | 20.2 | 0.0 | 606 |
+| S6+F | C1 | suppress | 4 | 0 | 1 | 3 | 38.0 | 0 | False | - | 19.1 | 1 |
+| S6+F | C1 | drain | 4 | 0 | 2 | 2 | 112.0 | 0 | False | - | 13.3 | 403 |
+| S6+F | C1+C3 | suppress | 4 | 0 | 4 | 0 | 1,178.0 | 0 | False | - | 59.2 | 2 |
+| S6+F | C1+C3 | drain | 4 | 0 | 2 | 2 | 111.0 | 0 | False | - | 13.3 | 403 |
+| S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | 0 | - | 0 | False | - | 59.1 | 3 |
+| S6+F | C1+C3+OP | drain | 4 | 0 | 2 | 2 | 111.0 | 0 | False | - | 13.3 | 403 |
 
 **Legitimate operation (D3)** - no compromise; rule-based adaptive-reporting policy. The metric is the share of **unique requests** rejected (`legit_unique_rejection_rate`); `legit_sent`/`legit_rejected` include retries (a rejected request is retried at every opportunity) and are shown only for traceability - the earlier raw-retry rate is **superseded**. `limit_aware` knows the public envelope limits and the invariants in the current state and asks for the closest accepted value:
 
@@ -730,6 +744,8 @@ Reference levels 10 ft, 20 ft, 30 ft, 40 ft; a crossing is *delayed* if first re
 | S4-E | limit_aware | 4 | 0 | 0 | 9.0 | 0 | 16.6 | 8 | 0 | 0.0% | 8 | 0 | - |
 | S6 | naive | 4 | 0 | 0 | 9.0 | 0 | 16.3 | 6 | 1 | 16.7% | 35 | 30 | invariant:alert_min_rate=30 |
 | S6 | limit_aware | 4 | 0 | 0 | 9.0 | 0 | 16.6 | 8 | 0 | 0.0% | 8 | 0 | - |
+| S6+F | naive | 4 | 0 | 0 | 9.0 | 0 | 16.3 | 6 | 1 | 16.7% | 35 | 30 | invariant:alert_min_rate=30 |
+| S6+F | limit_aware | 4 | 0 | 0 | 9.0 | 0 | 16.6 | 8 | 0 | 0.0% | 8 | 0 | - |
 
 ## 7f. Device-side envelope verification (pqm4, published)
 
@@ -741,6 +757,47 @@ Reference levels 10 ft, 20 ft, 30 ft, 40 ft; a crossing is *delayed* if first re
 | ML-DSA-44 | m4fstack | 6ff2be970f6f | 1,000 | 3,242,333 | 3,199,001 | 3,279,836 | 2,712 | 24 | 135.10 | 136.66 | 540.39 | 135.10 | 45.03 |
 | Falcon-512 | m4-ct | 94435189596a | 10 | 482,280 | 472,137 | 485,160 | 376 | 24 | 20.09 | 20.21 | 80.38 | 20.09 | 6.70 |
 | FN-DSA-512 (provisional) | m4f | 6ff2be970f6f | 10 | 396,949 | 390,368 | 406,553 | 2,976 | 24 | 16.54 | 16.94 | 66.16 | 16.54 | 5.51 |
+
+## 7g. D2: two-tier defence S6+F
+
+**D2 - S6+F: non-updatable firmware floor (battery floor, minimum alert reporting rate) + updatable S6 envelopes; 'disable sensor' only with an OP approval token (sk_OP distinct from sk_PA).** Blast radius (accepted commands, ASSUMED profile of `config/actions.yaml`) under C1, C1+C3 (OP key safe) and C1+C3+OP, in every device state; catalogue ranges for S6+F are in Sec. 8a:
+
+| state | compromise | S4 | S4-F | S4-E | S6 | S6+F |
+|---|---|---|---|---|---|---|
+| alert=True,battery=above_floor | C1 | 2,944 | 1,364 | 314 | 314 | 314 |
+| alert=True,battery=above_floor | C1+C3 | 2,944 | 1,364 | 2,944 | 2,944 | 1,518 |
+| alert=True,battery=above_floor | C1+C3+OP | 2,944 | 1,364 | 2,944 | 2,944 | 1,518 |
+| alert=True,battery=below_floor | C1 | 2,944 | 1,352 | 302 | 302 | 302 |
+| alert=True,battery=below_floor | C1+C3 | 2,944 | 1,352 | 2,944 | 2,944 | 1,502 |
+| alert=True,battery=below_floor | C1+C3+OP | 2,944 | 1,352 | 2,944 | 2,944 | 1,502 |
+| alert=False,battery=above_floor | C1 | 2,944 | 2,070 | 359 | 359 | 359 |
+| alert=False,battery=above_floor | C1+C3 | 2,944 | 2,070 | 2,944 | 2,944 | 2,943 |
+| alert=False,battery=above_floor | C1+C3+OP | 2,944 | 2,070 | 2,944 | 2,944 | 2,944 |
+| alert=False,battery=below_floor | C1 | 2,944 | 1,954 | 302 | 302 | 302 |
+| alert=False,battery=below_floor | C1+C3 | 2,944 | 1,954 | 2,944 | 2,944 | 2,823 |
+| alert=False,battery=below_floor | C1+C3+OP | 2,944 | 1,954 | 2,944 | 2,944 | 2,824 |
+
+**S4-F suppress attack re-run against S6+F** (Harvey replay, Sec. 7e):
+
+| scheme | compromise | strategy | crossings | missed | delayed | max_delay_min | floor_violating_uplinks | died |
+|---|---|---|---|---|---|---|---|---|
+| S4-F | C1 | suppress | 4 | 4 | 0 | - | 0 | False |
+| S4-F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
+| S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| S6 | C1 | suppress | 4 | 0 | 1 | 38 | 0 | False |
+| S6 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
+| S6 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| S6+F | C1 | suppress | 4 | 0 | 1 | 38 | 0 | False |
+| S6+F | C1+C3 | suppress | 4 | 0 | 4 | 1,178 | 0 | False |
+| S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+
+**OP token cost** - one signature over the command, frames per DR for each measured algorithm (`results/sizes.csv`):
+
+| op_token_alg | token_bytes | US915 DR8 | US915 DR9 | US915 DR10 | US915 DR11 | US915 DR12 | US915 DR13 | EU868 DR0 | EU868 DR1 | EU868 DR2 | EU868 DR3 | EU868 DR4 | EU868 DR5 | EU868 DR6 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Ed25519 | 64 | 2 | 1 | 1 | 1 | 1 | 1 | 2 | 2 | 2 | 1 | 1 | 1 | 1 |
+| Falcon-512 | 664 | 14 | 6 | 3 | 3 | 3 | 3 | 14 | 14 | 14 | 6 | 3 | 3 | 3 |
+| ML-DSA-44 | 2,420 | 48 | 20 | 11 | 11 | 11 | 11 | 50 | 50 | 50 | 22 | 11 | 11 | 11 |
 
 ## 8. Kill criteria
 
@@ -818,36 +875,38 @@ Counted by running every (action, target, value) in `config/actions.yaml` throug
 
 **K5 - blast radius per compromise level** (accepted catalogue commands, state alert=True,battery=above_floor; key custody in `config/threat.yaml`, assumed; C4 counts commands for the ONE extracted device):
 
-| compromise | level (Étape 2) | S4 | S4-F | S4-E | S6 |
-|---|---|---|---|---|---|
-| C0 | nothing compromised; A1/A2/A3/A5 send proposals to an honest PDP [scope: all] | 314 | 314 | 314 | 314 |
-| C1 | cloud command platform (agent runtime and PDP) [scope: all] | 2,944 | 1,364 | 314 | 314 |
-| C2 | network server or gateway [scope: all] | 0 | 0 | 0 | 0 |
-| C3 | PA HSM (sk_PA) -- outside the protection, Étape 2 Sec. 3 [scope: all] | 0 | 0 | 0 | 0 |
-| C4 | one device D extracted physically [scope: one_device] | 2,944 | 1,364 | 2,944 | 314 |
-| C1+C3 | C1 and C3 together (extra row, not an Étape 2 level) [scope: all] | 2,944 | 1,364 | 2,944 | 2,944 |
+| compromise | level (Étape 2) | S4 | S4-F | S4-E | S6 | S6+F |
+|---|---|---|---|---|---|---|
+| C0 | nothing compromised; A1/A2/A3/A5 send proposals to an honest PDP [scope: all] | 314 | 314 | 314 | 314 | 314 |
+| C1 | cloud command platform (agent runtime and PDP) [scope: all] | 2,944 | 1,364 | 314 | 314 | 314 |
+| C2 | network server or gateway [scope: all] | 0 | 0 | 0 | 0 | 0 |
+| C3 | PA HSM (sk_PA) -- outside the protection, Étape 2 Sec. 3 [scope: all] | 0 | 0 | 0 | 0 | 0 |
+| C4 | one device D extracted physically [scope: one_device] | 2,944 | 1,364 | 2,944 | 314 | 314 |
+| C1+C3 | C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level) [scope: all] | 2,944 | 1,364 | 2,944 | 2,944 | 1,518 |
+| C1+C3+OP | C1, C3 and the OP approval key (extra row, D2 worst case) [scope: all] | 2,944 | 1,364 | 2,944 | 2,944 | 1,518 |
 
 **K6 - blast(S4-E) / blast(S6) per compromise -> S4-E and S6 blast radii differ (see table).**
 
-| compromise | scope | S4 | S4-F | S4-E | S6 | ratio_s4e_s6 | ratio_note |
-|---|---|---|---|---|---|---|---|
-| C0 | all | 314 | 314 | 314 | 314 | 1.000 | - |
-| C1 | all | 2,944 | 1,364 | 314 | 314 | 1.000 | - |
-| C2 | all | 0 | 0 | 0 | 0 | - | both 0 |
-| C3 | all | 0 | 0 | 0 | 0 | - | both 0 |
-| C4 | one_device | 2,944 | 1,364 | 2,944 | 314 | 9.376 | - |
-| C1+C3 | all | 2,944 | 1,364 | 2,944 | 2,944 | 1.000 | - |
+| compromise | scope | S4 | S4-F | S4-E | S6 | S6+F | ratio_s4e_s6 | ratio_note |
+|---|---|---|---|---|---|---|---|---|
+| C0 | all | 314 | 314 | 314 | 314 | 314 | 1.000 | - |
+| C1 | all | 2,944 | 1,364 | 314 | 314 | 314 | 1.000 | - |
+| C2 | all | 0 | 0 | 0 | 0 | 0 | - | both 0 |
+| C3 | all | 0 | 0 | 0 | 0 | 0 | - | both 0 |
+| C4 | one_device | 2,944 | 1,364 | 2,944 | 314 | 314 | 9.376 | - |
+| C1+C3 | all | 2,944 | 1,364 | 2,944 | 2,944 | 1518 | 1.000 | - |
+| C1+C3+OP | all | 2,944 | 1,364 | 2,944 | 2,944 | 1518 | 1.000 | - |
 
 Properties that differ (blast radius does not separate S4-E from S6; these do):
 
-| property | S4 | S4-F | S4-E | S6 | evidence |
-|---|---|---|---|---|---|
-| Third-party verifiability of the policy without forging power | n/a (no policy) | n/a (no OTA policy) | no: verifying needs the per-device key, which also forges | yes: verified with the authority's public key | tests/test_threat.py::test_third_party_verification |
-| Policy provisioning without shared secrets | n/a | yes (compiled in) | no: per-device secret in device and HSM | yes: device stores a public key | config/threat.yaml custody |
-| Policy updatable over the air | n/a (no bounds) | no | yes | yes | scheme definition |
-| One extracted device lets attacker forge envelopes | n/a | n/a | yes, for that device only | no | custody: S4-E device holds policy_mac |
-| Blast radius under C1+C3 bounded below S4's | no (2944) | yes (1364) | no (2944) | no (2944) | results/model_blast_compromise.csv |
-| Envelope bytes on air (measured authenticator sizes) | - | - | 144 B | 2532 B | results/sizes.csv |
+| property | S4 | S4-F | S4-E | S6 | S6+F | evidence |
+|---|---|---|---|---|---|---|
+| Third-party verifiability of the policy without forging power | n/a (no policy) | n/a (no OTA policy) | no: verifying needs the per-device key, which also forges | yes: verified with the authority's public key | tests/test_threat.py::test_third_party_verification | - |
+| Policy provisioning without shared secrets | n/a | yes (compiled in) | no: per-device secret in device and HSM | yes: device stores a public key | config/threat.yaml custody | - |
+| Policy updatable over the air | n/a (no bounds) | no | yes | yes | scheme definition | - |
+| One extracted device lets attacker forge envelopes | n/a | n/a | yes, for that device only | no | custody: S4-E device holds policy_mac | - |
+| Blast radius under C1+C3 bounded below S4's | no (2944) | yes (1364) | no (2944) | no (2944) | yes (1518) | results/model_blast_compromise.csv |
+| Envelope bytes on air (measured authenticator sizes) | - | - | 144 B | 2532 B | - | results/sizes.csv |
 
 ## 8a. K5/K6 on the manufacturer device catalogue (supersedes the K5/K6 of Sec. 8)
 
@@ -862,31 +921,43 @@ Devices (4): EM400-UDL, EM410-RDL, LWL01, PS-LB - downlink commands, payload len
 | C0 | S4-F | 0 | 1 | 0.00 | 0.86 | 0 | 562,949,961,286,424 | 12 |
 | C0 | S4-E | 0 | 1 | 0.00 | 0.86 | 0 | 562,949,961,286,424 | 12 |
 | C0 | S6 | 0 | 1 | 0.00 | 0.86 | 0 | 562,949,961,286,424 | 12 |
+| C0 | S6+F | 0 | 1 | 0.00 | 0.86 | 0 | 562,949,961,286,424 | 12 |
 | C1 | S4 | 1 | 1 | 1.00 | 1.00 | 16,777,231 | 562,949,978,062,740 | 12 |
 | C1 | S4c | 1 | 1 | 1.00 | 1.00 | 16,777,231 | 562,949,978,062,740 | 12 |
 | C1 | S4-F | 5.45e-05 | 1 | 0.75 | 0.86 | 915 | 562,949,961,286,424 | 12 |
 | C1 | S4-E | 0 | 1 | 0.00 | 0.86 | 0 | 562,949,961,286,424 | 12 |
 | C1 | S6 | 0 | 1 | 0.00 | 0.86 | 0 | 562,949,961,286,424 | 12 |
+| C1 | S6+F | 0 | 1 | 0.00 | 0.86 | 0 | 562,949,961,286,424 | 12 |
 | C2 | S4 | 0 | 0 | 0.00 | 0.00 | 0 | 0 | 12 |
 | C2 | S4c | 0 | 0 | 0.00 | 0.00 | 0 | 0 | 12 |
 | C2 | S4-F | 0 | 0 | 0.00 | 0.00 | 0 | 0 | 12 |
 | C2 | S4-E | 0 | 0 | 0.00 | 0.00 | 0 | 0 | 12 |
 | C2 | S6 | 0 | 0 | 0.00 | 0.00 | 0 | 0 | 12 |
+| C2 | S6+F | 0 | 0 | 0.00 | 0.00 | 0 | 0 | 12 |
 | C3 | S4 | 0 | 0 | 0.00 | 0.00 | 0 | 0 | 12 |
 | C3 | S4c | 0 | 0 | 0.00 | 0.00 | 0 | 0 | 12 |
 | C3 | S4-F | 0 | 0 | 0.00 | 0.00 | 0 | 0 | 12 |
 | C3 | S4-E | 0 | 0 | 0.00 | 0.00 | 0 | 0 | 12 |
 | C3 | S6 | 0 | 0 | 0.00 | 0.00 | 0 | 0 | 12 |
+| C3 | S6+F | 0 | 0 | 0.00 | 0.00 | 0 | 0 | 12 |
 | C4 | S4 | 1 | 1 | 1.00 | 1.00 | 16,777,231 | 562,949,978,062,740 | 12 |
 | C4 | S4c | 1 | 1 | 1.00 | 1.00 | 16,777,231 | 562,949,978,062,740 | 12 |
 | C4 | S4-F | 5.45e-05 | 1 | 0.75 | 0.86 | 915 | 562,949,961,286,424 | 12 |
 | C4 | S4-E | 1 | 1 | 1.00 | 1.00 | 16,777,231 | 562,949,978,062,740 | 12 |
 | C4 | S6 | 0 | 1 | 0.00 | 0.86 | 0 | 562,949,961,286,424 | 12 |
+| C4 | S6+F | 0 | 1 | 0.00 | 0.86 | 0 | 562,949,961,286,424 | 12 |
 | C1+C3 | S4 | 1 | 1 | 1.00 | 1.00 | 16,777,231 | 562,949,978,062,740 | 12 |
 | C1+C3 | S4c | 1 | 1 | 1.00 | 1.00 | 16,777,231 | 562,949,978,062,740 | 12 |
 | C1+C3 | S4-F | 5.45e-05 | 1 | 0.75 | 0.86 | 915 | 562,949,961,286,424 | 12 |
 | C1+C3 | S4-E | 1 | 1 | 1.00 | 1.00 | 16,777,231 | 562,949,978,062,740 | 12 |
 | C1+C3 | S6 | 1 | 1 | 1.00 | 1.00 | 16,777,231 | 562,949,978,062,740 | 12 |
+| C1+C3 | S6+F | 5.45e-05 | 1 | 0.75 | 0.86 | 915 | 562,949,961,286,424 | 12 |
+| C1+C3+OP | S4 | 1 | 1 | 1.00 | 1.00 | 16,777,231 | 562,949,978,062,740 | 12 |
+| C1+C3+OP | S4c | 1 | 1 | 1.00 | 1.00 | 16,777,231 | 562,949,978,062,740 | 12 |
+| C1+C3+OP | S4-F | 5.45e-05 | 1 | 0.75 | 0.86 | 915 | 562,949,961,286,424 | 12 |
+| C1+C3+OP | S4-E | 1 | 1 | 1.00 | 1.00 | 16,777,231 | 562,949,978,062,740 | 12 |
+| C1+C3+OP | S6 | 1 | 1 | 1.00 | 1.00 | 16,777,231 | 562,949,978,062,740 | 12 |
+| C1+C3+OP | S6+F | 5.45e-05 | 1 | 0.75 | 0.86 | 915 | 562,949,961,286,424 | 12 |
 
 **K6 = blast(S4-E)/blast(S6), ranges (cases where both are 0 are counted, not divided)**
 
@@ -898,6 +969,7 @@ Devices (4): EM400-UDL, EM410-RDL, LWL01, PS-LB - downlink commands, payload len
 | C3 | - | - | 12 | 12 |
 | C4 | 1 | 2.54e+11 | 0 | 12 |
 | C1+C3 | 1 | 1 | 0 | 12 |
+| C1+C3+OP | 1 | 1 | 0 | 12 |
 
 ## 8b. Traceability to the Étape 2 threat model
 

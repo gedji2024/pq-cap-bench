@@ -73,7 +73,7 @@ def k5(df: pd.DataFrame, state: str) -> dict:
 
 
 # ---------------------------------------------------------------- compromise matrix (K6)
-SCHEMES = ("S4", "S4-F", "S4-E", "S6")
+SCHEMES = ("S4", "S4-F", "S4-E", "S6", "S6+F")
 DEVICE_KEY = bytes(range(100, 132))  # the device's real per-command session key in the count
 
 
@@ -103,6 +103,9 @@ def blast_compromise(catalogue, env: ev.Policy, firmware: ev.Policy, inv: ev.Inv
                 chk, h = (lambda s, m: ev.check_s4(catalogue, s, m, DEVICE_KEY, tag_len)), 0
             elif scheme == "S4-F":
                 chk, h = (lambda s, m: ev.check_s4f(firmware, catalogue, s, m, DEVICE_KEY, tag_len)), 0
+            elif scheme == "S6+F":  # D2: firmware floor + OP token for "disable"
+                chk, h = (lambda s, m, p=pol, op="op_approval" in keys: ev.check_s6f(
+                    p, inv, catalogue, s, m, DEVICE_KEY, tag_len, op)), env.handle
             else:
                 chk, h = (lambda s, m, p=pol: ev.check_enveloped(p, catalogue, s, m, DEVICE_KEY, tag_len)), env.handle
             if pdp:  # the honest PDP only emits commands its policy (event envelope) allows in this state

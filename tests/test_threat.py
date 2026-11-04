@@ -55,6 +55,16 @@ def test_matrix(matrix):
     assert not matrix[(matrix.compromise == "C1") & (matrix.scheme == "S6")].attacker_replaced_envelope.any()
 
 
+def test_s6f_matrix(matrix):
+    for st in blast.device_states(INV):
+        assert _tot(matrix, "C1", "S6+F", st) == _tot(matrix, "C1", "S6", st)           # floor = envelope invariants
+        assert _tot(matrix, "C1+C3", "S6+F", st) < _tot(matrix, "C1+C3", "S6", st)       # floor survives C3
+        assert _tot(matrix, "C1+C3", "S6+F", st) <= _tot(matrix, "C1+C3+OP", "S6+F", st)
+    calm = "alert=False,battery=above_floor"
+    assert _tot(matrix, "C1+C3+OP", "S6+F", calm) - _tot(matrix, "C1+C3", "S6+F", calm) == 1   # the disable command
+    assert blast.attacker_keys(THREAT, "C1+C3+OP") >= {"op_approval", "policy_pq", "session"}
+
+
 def test_k6(matrix):
     k = blast.k6(matrix, REF, {"S4-E": 144, "S6": 2532})
     by = {r["compromise"]: r for r in k["rows"]}

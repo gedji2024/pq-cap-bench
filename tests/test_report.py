@@ -51,6 +51,10 @@ def _fake_results(tmp_path, cfgs):  # noqa: F811
     k["K5"]["matrix"] = (bc[bc.state == ref].groupby(["compromise", "scheme"], sort=False).accepted.sum()
                          .unstack().reset_index().to_dict("records"))
     k["K6"] = blast.k6(bc, ref, {"S4-E": 144, "S6": 2532})
+    bc[bc.compromise.isin(["C1", "C1+C3", "C1+C3+OP"])].groupby(["state", "compromise", "scheme"], sort=False) \
+        .accepted.sum().unstack().reset_index().to_csv(r / "d2_blast_s6f.csv", index=False)
+    pd.DataFrame([{"op_token_alg": "Ed25519", "token_bytes": 64, "region": "US915", "dr": 8, "frames": 2,
+                   "airtime_s": 0.5}]).to_csv(r / "d2_op_token_cost.csv", index=False)
     from pqcap import revocation as rv
     chans = M.channels(radio, mdl)
     lc = lambda n, ch: M.link_cost(n, ch, 2)  # noqa: E731
@@ -91,7 +95,7 @@ def test_report_renders(tmp_path, cfgs):  # noqa: F811
     (figs / "fig1_x.png").write_bytes(b"")
     report.run(cfg, r, figs)
     md = (tmp_path / "REPORT.md").read_text()
-    for h in ("## 1. Environment", "## 4. Host timings", "## 8. Kill criteria", "**K1", "**K2", "**K3", "**K4", "**K5 - Blast radius", "**K5 - blast radius per compromise", "## 7d. Revocation", "**D1 - active revocation time", "## 8b. Traceability", "## 8a. K5/K6 on the manufacturer", "**SUPERSEDED**", "## 7f. Device-side", "Energy is **not reported**", "## 0. Repository state", "kept `7df90f4`", "T10", "## 7e. Harm-weighted replay", "**Data gaps > 60 min", "**K6 - blast(S4-E)",
+    for h in ("## 1. Environment", "## 4. Host timings", "## 8. Kill criteria", "**K1", "**K2", "**K3", "**K4", "**K5 - Blast radius", "**K5 - blast radius per compromise", "## 7d. Revocation", "**D2 - S6+F", "**OP token cost**", "**D1 - active revocation time", "## 8b. Traceability", "## 8a. K5/K6 on the manufacturer", "**SUPERSEDED**", "## 7f. Device-side", "Energy is **not reported**", "## 0. Repository state", "kept `7df90f4`", "T10", "## 7e. Harm-weighted replay", "**Data gaps > 60 min", "**K6 - blast(S4-E)",
               "## 7c. S6", "Crisis commands per gateway", "**Why the crisis capacities differ", "its capacity equals S6", "fig1_x.png"):
         assert h in md
     assert "env.json missing" in md
@@ -123,6 +127,7 @@ def test_report_env_and_na(tmp_path, cfgs):  # noqa: F811
     k.pop("K6")
     (r / "model_revocation_exposure.csv").unlink()
     (r / "model_harm.csv").unlink()
+    (r / "d2_blast_s6f.csv").unlink()
     (cfg / "traceability.yaml").unlink()
     (cfg / "repo_state.yaml").unlink()
     (r / "catalogue_k5_ranges.csv").unlink()
@@ -132,7 +137,7 @@ def test_report_env_and_na(tmp_path, cfgs):  # noqa: F811
     report.run(cfg, r, tmp_path)
     md = (tmp_path / "REPORT.md").read_text()
     assert "## 4. Host timings (cpu host, not MCU)" in md and "**All timings: cpu host, not MCU.**" in md
-    assert "**K1: n/a**" in md and "**K2: n/a**" in md and "**K4: n/a**" in md and "**K5: n/a**" in md and "**K6: n/a**" in md and "_revocation not configured_" in md and "_harm replay not run" in md and "_no traceability map_" in md and "_no pqm4 data_" in md and "_no repository state record_" in md and "_no manufacturer catalogue_" in md and "_S6 not configured_" in md and "| CPU | cpu |" in md
+    assert "**K1: n/a**" in md and "**K2: n/a**" in md and "**K4: n/a**" in md and "**K5: n/a**" in md and "**K6: n/a**" in md and "_revocation not configured_" in md and "_harm replay not run" in md and "_D2 not run_" in md and "_no traceability map_" in md and "_no pqm4 data_" in md and "_no repository state record_" in md and "_no manufacturer catalogue_" in md and "_S6 not configured_" in md and "| CPU | cpu |" in md
 
 
 def test_report_s6_no_signer(tmp_path, cfgs):  # noqa: F811

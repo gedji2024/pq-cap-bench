@@ -119,6 +119,11 @@ def test_catalogue_sweep_ranges():
     r = k6.set_index("compromise")
     assert r.loc["C4", "ratio_max"] > 1 and r.loc["C2", "both_zero_cases"] == r.loc["C2", "cases"]
     assert set(k5.columns) >= {"fraction_min", "fraction_max", "type_coverage_min", "type_coverage_max"}
+    sf = df[df.scheme == "S6+F"].set_index(["device", "policy", "compromise"]).accepted
+    s6 = df[df.scheme == "S6"].set_index(["device", "policy", "compromise"]).accepted
+    assert (sf <= s6).all()
+    dis = df[(df.scheme == "S6+F") & (df.compromise == "C1+C3")].accepted_types
+    assert not dis.str.contains("alarm_disable").any()                         # no OP key -> no disable
 
 
 def test_accepts_domain_and_low_battery():

@@ -448,7 +448,8 @@
       "C2": "network server or gateway [scope: all]",
       "C3": "PA HSM (sk_PA) -- outside the protection, \u00c9tape 2 Sec. 3 [scope: all]",
       "C4": "one device D extracted physically [scope: one_device]",
-      "C1+C3": "C1 and C3 together (extra row, not an \u00c9tape 2 level) [scope: all]"
+      "C1+C3": "C1 and C3 together, OP key NOT compromised (extra row, not an \u00c9tape 2 level) [scope: all]",
+      "C1+C3+OP": "C1, C3 and the OP approval key (extra row, D2 worst case) [scope: all]"
     },
     "matrix": [
       {
@@ -456,42 +457,56 @@
         "S4": 314,
         "S4-F": 314,
         "S4-E": 314,
-        "S6": 314
+        "S6": 314,
+        "S6+F": 314
       },
       {
         "compromise": "C1",
         "S4": 2944,
         "S4-F": 1364,
         "S4-E": 314,
-        "S6": 314
+        "S6": 314,
+        "S6+F": 314
       },
       {
         "compromise": "C2",
         "S4": 0,
         "S4-F": 0,
         "S4-E": 0,
-        "S6": 0
+        "S6": 0,
+        "S6+F": 0
       },
       {
         "compromise": "C3",
         "S4": 0,
         "S4-F": 0,
         "S4-E": 0,
-        "S6": 0
+        "S6": 0,
+        "S6+F": 0
       },
       {
         "compromise": "C4",
         "S4": 2944,
         "S4-F": 1364,
         "S4-E": 2944,
-        "S6": 314
+        "S6": 314,
+        "S6+F": 314
       },
       {
         "compromise": "C1+C3",
         "S4": 2944,
         "S4-F": 1364,
         "S4-E": 2944,
-        "S6": 2944
+        "S6": 2944,
+        "S6+F": 1518
+      },
+      {
+        "compromise": "C1+C3+OP",
+        "S4": 2944,
+        "S4-F": 1364,
+        "S4-E": 2944,
+        "S6": 2944,
+        "S6+F": 1518
       }
     ]
   },
@@ -505,6 +520,7 @@
         "S4-F": 314,
         "S4-E": 314,
         "S6": 314,
+        "S6+F": 314,
         "ratio_s4e_s6": 1.0,
         "ratio_note": ""
       },
@@ -515,6 +531,7 @@
         "S4-F": 1364,
         "S4-E": 314,
         "S6": 314,
+        "S6+F": 314,
         "ratio_s4e_s6": 1.0,
         "ratio_note": ""
       },
@@ -525,6 +542,7 @@
         "S4-F": 0,
         "S4-E": 0,
         "S6": 0,
+        "S6+F": 0,
         "ratio_s4e_s6": null,
         "ratio_note": "both 0"
       },
@@ -535,6 +553,7 @@
         "S4-F": 0,
         "S4-E": 0,
         "S6": 0,
+        "S6+F": 0,
         "ratio_s4e_s6": null,
         "ratio_note": "both 0"
       },
@@ -545,6 +564,7 @@
         "S4-F": 1364,
         "S4-E": 2944,
         "S6": 314,
+        "S6+F": 314,
         "ratio_s4e_s6": 9.375796178343949,
         "ratio_note": ""
       },
@@ -555,6 +575,18 @@
         "S4-F": 1364,
         "S4-E": 2944,
         "S6": 2944,
+        "S6+F": 1518,
+        "ratio_s4e_s6": 1.0,
+        "ratio_note": ""
+      },
+      {
+        "compromise": "C1+C3+OP",
+        "scope": "all",
+        "S4": 2944,
+        "S4-F": 1364,
+        "S4-E": 2944,
+        "S6": 2944,
+        "S6+F": 1518,
         "ratio_s4e_s6": 1.0,
         "ratio_note": ""
       }
@@ -566,7 +598,7 @@
         "S4-F": "n/a (no OTA policy)",
         "S4-E": "no: verifying needs the per-device key, which also forges",
         "S6": "yes: verified with the authority's public key",
-        "evidence": "tests/test_threat.py::test_third_party_verification"
+        "S6+F": "tests/test_threat.py::test_third_party_verification"
       },
       {
         "property": "Policy provisioning without shared secrets",
@@ -574,7 +606,7 @@
         "S4-F": "yes (compiled in)",
         "S4-E": "no: per-device secret in device and HSM",
         "S6": "yes: device stores a public key",
-        "evidence": "config/threat.yaml custody"
+        "S6+F": "config/threat.yaml custody"
       },
       {
         "property": "Policy updatable over the air",
@@ -582,7 +614,7 @@
         "S4-F": "no",
         "S4-E": "yes",
         "S6": "yes",
-        "evidence": "scheme definition"
+        "S6+F": "scheme definition"
       },
       {
         "property": "One extracted device lets attacker forge envelopes",
@@ -590,7 +622,7 @@
         "S4-F": "n/a",
         "S4-E": "yes, for that device only",
         "S6": "no",
-        "evidence": "custody: S4-E device holds policy_mac"
+        "S6+F": "custody: S4-E device holds policy_mac"
       },
       {
         "property": "Blast radius under C1+C3 bounded below S4's",
@@ -598,7 +630,8 @@
         "S4": "no (2944)",
         "S4-F": "yes (1364)",
         "S4-E": "no (2944)",
-        "S6": "no (2944)"
+        "S6": "no (2944)",
+        "S6+F": "yes (1518)"
       },
       {
         "property": "Envelope bytes on air (measured authenticator sizes)",

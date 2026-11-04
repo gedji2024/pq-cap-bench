@@ -193,7 +193,7 @@ def count_accepted(ctx: Context, a: DevAction, state: dict) -> int:
 
 
 # ---------------------------------------------------------------- compromise sweep (K5/K6 on the catalogue)
-SCHEMES = ("S4", "S4c", "S4-F", "S4-E", "S6")
+SCHEMES = ("S4", "S4c", "S4-F", "S4-E", "S6", "S6+F")
 
 
 def scheme_context(scheme: str, comp: dict, keys: set[str], dev_policy: Policy, fw_policy: Policy,
@@ -205,6 +205,9 @@ def scheme_context(scheme: str, comp: dict, keys: set[str], dev_policy: Policy, 
     if scheme == "S4-F":
         return Context(session, fw_policy, inv, pdp)
     replaced = threat["envelope_key"].get(scheme) in keys
+    if scheme == "S6+F":  # D2: the firmware floor survives envelope replacement; disable needs an OP token
+        return Context(session, full if replaced else dev_policy, None if replaced else inv, pdp,
+                       op_required=("alarm_disable",), has_op_token="op_approval" in keys, floor=inv)
     return Context(session, full if replaced else dev_policy, None if replaced else inv, pdp)
 
 

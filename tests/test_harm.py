@@ -162,3 +162,15 @@ def test_limit_aware_never_rejected_on_replay():
     for scheme in ("S4-F", "S6"):
         st = harm.simulate(stage, scheme, "none", None, _cfg(), CAT, ENV, FW, "limit_aware")["stats"]
         assert st["legit_rejected"] == 0 and st["legit_intents"] > 0
+
+
+def test_s6f_resists_suppress_without_op_key():
+    stage = _hydrograph(1000)
+    lv = [x * 30.48 for x in HCFG["harm"]["reference_levels_ft"]]
+    f = harm.simulate(stage, "S4-F", "C1", "suppress", _cfg(), CAT, ENV, FW)
+    sf = harm.simulate(stage, "S6+F", "C1+C3", "suppress", _cfg(), CAT, ENV, FW)
+    op = harm.simulate(stage, "S6+F", "C1+C3+OP", "suppress", _cfg(), CAT, ENV, FW)
+    sc = lambda r: harm.score(stage, r["delivered"], lv, 30)  # noqa: E731
+    assert sc(f)["missed"] == sc(f)["crossings"] and sc(sf)["missed"] == 0
+    assert sc(op)["missed"] == sc(op)["crossings"]                      # OP key compromised -> disable accepted
+    assert harm.Scheme("S6", CAT, ENV, FW, False).floor == ev.NO_INVARIANTS

@@ -207,3 +207,30 @@ def test_blast_s4_s6_matches_closed_form():
     k = blast.k5(df, ref)
     assert k["ratio"] == pytest.approx(k["s6_accepted"] / k["s4_accepted"]) and k["answer"].startswith("S6/S4")
     assert blast.reference_state_name({}) == "alert=True,battery=above_floor"
+
+
+# ---------------------------------------------------------------- D2: S6+F
+@SETTINGS
+@given(env=policies(), aid=U8, value=I32, s=states(), op=st.booleans(), tag_len=st.sampled_from([8, 16]))
+def test_s6f_floor_and_op_token(env, aid, value, s, op, tag_len):
+    """Even under a permissive (attacker-minted) envelope, S6+F never accepts a command that breaks the
+    firmware floor, and never accepts 'disable sensor' without a valid OP token."""
+    perm = ev.permissive_policy(CAT, env.handle)
+    for pol in (env, perm):
+        msg = ev.make_command(KEY, pol.handle, s.last_counter + 1, aid, 0, value, tag_len)
+        d, _ = ev.check_s6f(pol, INV, CAT, s, msg, KEY, tag_len, op)
+        if d.accepted:
+            assert ev.invariant_violation(INV, s, aid, value) is None
+            assert not (aid == ev.A_ENABLE and value == 0 and not op)
+            assert ev.check_s6(pol, CAT, s, msg, KEY, tag_len)[0].accepted     # S6+F accepts a subset of S6
+
+
+def test_s6f_reasons():
+    perm = ev.permissive_policy(CAT, 7)
+    s = ev.DeviceState(0, alert_active=False, soc_pct=90.0)
+    off = ev.make_command(KEY, 7, 1, ev.A_ENABLE, 0, 0, 8)
+    assert ev.check_s6f(perm, INV, CAT, s, off, KEY, 8, False)[0].reason == "op_token_required"
+    assert ev.check_s6f(perm, INV, CAT, s, off, KEY, 8, True)[0].accepted
+    slow = ev.make_command(KEY, 7, 1, ev.A_INTERVAL, 0, 600, 8)
+    assert ev.check_s6f(perm, INV, CAT, ev.DeviceState(0, alert_active=True), slow, KEY, 8, True)[0].reason.startswith("floor:")
+    assert ev.check_s6f(perm, INV, CAT, s, slow[:-1], KEY, 8, True)[0].reason == "length"

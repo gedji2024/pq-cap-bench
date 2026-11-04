@@ -250,6 +250,19 @@ def run(config: Path, results: Path) -> dict[str, pd.DataFrame]:
             env_b = {"S4-E": ev.ENVELOPE_BYTES + sig[model["s4e_envelope_mac"]],
                      "S6": ev.ENVELOPE_BYTES + sig[model["s6"]["signers"][0]]}
             k["K6"] = blast.k6(bc, ref, env_b)
+            d2 = bc[bc.compromise.isin(["C1", "C1+C3", "C1+C3+OP"])].groupby(
+                ["state", "compromise", "scheme"], sort=False).accepted.sum().unstack().reset_index()
+            d2.to_csv(results / "d2_blast_s6f.csv", index=False)
+            # OP approval token = one signature over the command; size per measured algorithm, frames at each LoRa DR
+            tok = []
+            for alg in model.get("d2_op_token_algorithms", []):
+                if alg in sig:
+                    for ch in channels(radio, model):
+                        if ch.phy is not None:
+                            lcx = link_cost(sig[alg], ch, model["fragment_header_bytes"])
+                            tok.append({"op_token_alg": alg, "token_bytes": sig[alg], "region": ch.region, "dr": ch.dr,
+                                        "frames": lcx["frames"], "airtime_s": lcx["airtime_s"]})
+            pd.DataFrame(tok).to_csv(results / "d2_op_token_cost.csv", index=False)
             if "revocation" in model:
                 from . import revocation as rv  # noqa: PLC0415
                 chans = channels(radio, model)
