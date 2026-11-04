@@ -97,7 +97,9 @@ def test_channels(cfgs):
     assert us[8].max_app == 53 and us[8].duty is None and us[8].phy.sf == 12 and us[8].phy.bw_hz == 500e3
     assert eu[0].duty == model["eu868_duty_cycle"] and eu[5].max_app == 242
     assert ch[-1].region == "NB-IoT" and ch[-1].phy is None
-    assert us[8].phy_overhead == 13
+    assert us[8].mac.phy_payload(53) == 66 and ch[-1].mac is None
+    radio2 = {**radio, "lorawan_overhead": {**radio["lorawan_overhead"], "fopts_bytes": 5}}
+    assert {c.dr: c for c in M.channels(radio2, model) if c.region == "US915"}[8].max_app == 48
     radio["payload_table_variant"] = "repeater_compatible"
     assert {c.dr: c for c in M.channels(radio, model) if c.region == "EU868"}[5].max_app == 222
 

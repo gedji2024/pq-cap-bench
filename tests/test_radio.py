@@ -18,6 +18,7 @@ import pytest
 from pqcap.radio import (
     Fragmentation,
     LoraPhy,
+    MacOverhead,
     duty_cycle_off_time_s,
     fragment,
     frames_airtime_s,
@@ -135,7 +136,29 @@ def test_fragment_errors():
 def test_frames_airtime_sums_per_frame_toa():
     phy = LoraPhy(sf=12, bw_hz=500e3)
     f = fragment(200, 53, 2)
-    assert frames_airtime_s(f, phy, 13) == pytest.approx(sum(time_on_air_s(p + 13, phy) for p in f.app_payloads))
+    assert frames_airtime_s(f, phy, MacOverhead()) == pytest.approx(
+        sum(time_on_air_s(p + 13, phy) for p in f.app_payloads))
+
+
+def test_mac_overhead_ts001():
+    m = MacOverhead()
+    assert m.phy_payload(1) == 14 and m.phy_payload(53) == 66
+    assert m.phy_payload(0) == 12                      # no FPort without FRMPayload (TS001 Sec. 4.3)
+    assert MacOverhead(fopts=3).phy_payload(10) == 26
+    with pytest.raises(ValueError):
+        m.phy_payload(-1)
+
+
+def test_no_double_counting_against_rp002_tables():
+    """Full frame: PHYPayload = N + 13 must equal M + 5 (MHDR + MIC around MACPayload) for every DR."""
+    from pqcap.config import CONFIG, load_yaml
+    radio = load_yaml(CONFIG / "radio.yaml")
+    ov = radio["lorawan_overhead"]
+    m = MacOverhead(ov["mhdr"], ov["fhdr_min"], ov["fport"], ov["mic"], ov["fopts_bytes"])
+    for region in radio["regions"].values():
+        for d in region["downlink_drs"].values():
+            for v in ("rep", "norep"):
+                assert m.phy_payload(d[v]["N"]) == d[v]["M"] + ov["mhdr"] + ov["mic"] <= 255
 
 
 def test_duty_cycle_off_time():

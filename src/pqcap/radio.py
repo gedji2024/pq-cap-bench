@@ -76,8 +76,26 @@ def fragment(message_bytes: int, max_app_payload: int, frag_header: int) -> Frag
     return Fragmentation(n, tuple(sizes))
 
 
-def frames_airtime_s(frag: Fragmentation, phy: LoraPhy, phy_overhead: int) -> float:
-    return sum(time_on_air_s(app + phy_overhead, phy) for app in frag.app_payloads)
+@dataclass(frozen=True)
+class MacOverhead:
+    """LoRaWAN framing around FRMPayload (TS001-1.0.4 Sec. 4, Tables 2, 6, 10)."""
+
+    mhdr: int = 1
+    fhdr_min: int = 7
+    fport: int = 1
+    mic: int = 4
+    fopts: int = 0
+
+    def phy_payload(self, frm_payload: int) -> int:
+        """PHYPayload length for a given FRMPayload; FPort is absent when FRMPayload is empty."""
+        if frm_payload < 0:
+            raise ValueError("FRMPayload must be >= 0")
+        return (self.mhdr + self.fhdr_min + self.fopts + (self.fport if frm_payload > 0 else 0)
+                + frm_payload + self.mic)
+
+
+def frames_airtime_s(frag: Fragmentation, phy: LoraPhy, mac: MacOverhead) -> float:
+    return sum(time_on_air_s(mac.phy_payload(app), phy) for app in frag.app_payloads)
 
 
 def duty_cycle_off_time_s(airtime_s: float, duty: float | None) -> float:

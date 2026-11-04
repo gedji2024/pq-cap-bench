@@ -88,8 +88,10 @@ Encodings:
 - N assumes an empty FOpts. Piggy-backed MAC commands would reduce it.
 
 **Frame overhead.** PHYPayload = FRMPayload + 13 B (MHDR 1 + FHDR 7 + FPort 1 + MIC 4).
-- RP002 confirms FHDR + FPort (M − N = 8).
-- MHDR and MIC are standard LoRaWAN L2 values that were **not re-read for this project; please verify**.
+- All four sizes are verified against **TS001-1.0.4**: §4.1 Table 2 (MHDR 1, MIC 4), §4.3.1 Table 6 (FHDR 7..22) and §4.3.2 Table 10 (FPort 0..1).
+- FPort is counted only when FRMPayload is non-empty (TS001 §4.3).
+- **No double counting.** RP002 §2.4.6/§2.5.6 define M as the max MACPayload (excludes MHDR and MIC) and N as the max FRMPayload with empty FOpts (also excludes FHDR and FPort). A full frame is therefore N + 13 = M + 5 bytes; a unit test checks this for every DR.
+- FOpts is assumed empty (`fopts_bytes: 0`). A non-zero value adds to the PHYPayload and lowers the usable N by the same amount.
 
 **PHY settings.** RP002 Table 109: preamble 8, explicit header, CR 4/5.
 

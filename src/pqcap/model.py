@@ -11,7 +11,7 @@ import pandas as pd
 
 from . import delivery as dl
 from .config import load_yaml
-from .radio import LoraPhy, duty_cycle_off_time_s, fragment, frames_airtime_s, time_on_air_s
+from .radio import LoraPhy, MacOverhead, duty_cycle_off_time_s, fragment, frames_airtime_s, time_on_air_s
 from .token import SCHEME_DESC, TokenModel, epoch_message_bytes
 
 RX1_DELAY_S = 1.0  # [RP002] Sec. 2.3 RECEIVE_DELAY1 (recommended default)
@@ -24,12 +24,12 @@ class Channel:
     phy: LoraPhy | None      # None => NB-IoT (no LoRa ToA)
     max_app: int
     duty: float | None
-    phy_overhead: int        # bytes added around FRMPayload
+    mac: MacOverhead | None  # LoRaWAN framing around FRMPayload (None for NB-IoT)
 
 
 def channels(radio: dict, model: dict) -> list[Channel]:
     p, ov = radio["phy"], radio["lorawan_overhead"]
-    overhead = ov["mhdr"] + ov["fhdr_min"] + ov["fport"] + ov["mic"]
+    mac = MacOverhead(ov["mhdr"], ov["fhdr_min"], ov["fport"], ov["mic"], ov.get("fopts_bytes", 0))
     variant = {"not_repeater_compatible": "norep", "repeater_compatible": "rep"}[radio["payload_table_variant"]]
     out = []
     for region, r in radio["regions"].items():
@@ -38,8 +38,8 @@ def channels(radio: dict, model: dict) -> list[Channel]:
             phy = LoraPhy(sf=d["sf"], bw_hz=d["bw_khz"] * 1e3, cr=p["coding_rate"],
                           preamble=p["preamble_symbols"], explicit_header=p["explicit_header"],
                           crc_on=p["crc_on_downlink"], ldro_threshold_ms=p["ldro_symbol_time_threshold_ms"])
-            out.append(Channel(region, int(dr), phy, d[variant]["N"], duty, overhead))
-    out.append(Channel("NB-IoT", 0, None, model["nbiot_max_payload_bytes"], None, 0))
+            out.append(Channel(region, int(dr), phy, d[variant]["N"] - mac.fopts, duty, mac))
+    out.append(Channel("NB-IoT", 0, None, model["nbiot_max_payload_bytes"], None, None))
     return out
 
 
@@ -76,9 +76,9 @@ def link_cost(nbytes: int, ch: Channel, frag_header: int) -> dict:
     if ch.phy is None:
         return {"frames": fr.frames, "airtime_s": float("nan"), "last_frame_toa_s": float("nan"),
                 "duty_off_time_s": float("nan")}
-    air = frames_airtime_s(fr, ch.phy, ch.phy_overhead)
+    air = frames_airtime_s(fr, ch.phy, ch.mac)
     return {"frames": fr.frames, "airtime_s": air,
-            "last_frame_toa_s": time_on_air_s(fr.app_payloads[-1] + ch.phy_overhead, ch.phy),
+            "last_frame_toa_s": time_on_air_s(ch.mac.phy_payload(fr.app_payloads[-1]), ch.phy),
             "duty_off_time_s": duty_cycle_off_time_s(air, ch.duty)}
 
 

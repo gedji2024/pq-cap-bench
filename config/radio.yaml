@@ -13,14 +13,26 @@
 payload_table_variant: not_repeater_compatible   # or: repeater_compatible
 
 lorawan_overhead:
-  # PHYPayload = MHDR(1) + MACPayload + MIC(4); MACPayload = FHDR(7, empty FOpts) + FPort(1) + FRMPayload
-  # [RP002] M - N = 8 in every table (FHDR 7 + FPort 1) -- VERIFIED from tables.
-  # MHDR (1) and MIC (4): LoRaWAN L2 1.0.4 Sec. 4 frame format -- NOT re-read for this
-  # project; standard values, please verify.
+  # [TS001] LoRa Alliance TS001-1.0.4 "LoRaWAN L2 1.0.4 Specification" (2020),
+  #         https://lora-alliance.org/wp-content/uploads/2021/11/LoRaWAN-Link-Layer-Specification-v1.0.4.pdf
+  # PHYPayload = MHDR | MACPayload | MIC                [TS001] Sec. 4.1, Table 2 (1 | 7..M | 4 octets), p. 15
+  # MACPayload = FHDR | FPort | FRMPayload               [TS001] Sec. 4.3.2, Table 10 (7..22 | 0..1 | 0..N), p. 24
+  # FHDR = DevAddr 4 | FCtrl 1 | FCnt 2 | FOpts 0..15    [TS001] Sec. 4.3.1, Table 6, p. 17
+  # FPort is absent when FRMPayload is empty            [TS001] Sec. 4.3 p. 17, Sec. 4.3.2 p. 23
+  #
+  # Double-counting audit:
+  #   [RP002] Sec. 2.4.6 (p. 28) / Sec. 2.5.6 (p. 34): M = "maximum MACPayload size" -> excludes MHDR and MIC;
+  #   N = "maximum application payload length in the absence of the OPTIONAL FOpts" -> excludes FHDR and FPort.
+  #   Every RP002 row has N = M - 8 = M - FHDR_min(7) - FPort(1), consistent with [TS001] Sec. 4.3.2
+  #   "N <= M - 1 - (length of FHDR in octets)".
+  #   The model caps FRMPayload at N and adds MHDR + FHDR + FPort + MIC once, so a full frame has
+  #   PHYPayload = N + 13 = M + 5 (tested). Preamble, PHDR, PHDR_CRC and payload CRC are NOT added
+  #   here: the SX1276 ToA formula accounts for them (preamble, IH and CRC terms).
   mhdr: 1
-  fhdr_min: 7
-  fport: 1
+  fhdr_min: 7          # DevAddr + FCtrl + FCnt with empty FOpts
+  fport: 1             # counted only when FRMPayload is non-empty
   mic: 4
+  fopts_bytes: 0       # piggy-backed MAC commands; >0 adds to FHDR and lowers the usable N by the same amount
 
 phy:
   # [RP002] Sec. 4.1.2, Table 109 "LoRa physical layer settings": preamble 8 symbols,
