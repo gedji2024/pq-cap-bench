@@ -1,0 +1,45 @@
+{
+  "gaps_over_60_min": [
+    {
+      "after": "2017-08-26 03:15:00-05:00",
+      "before": "2017-08-26 16:15:00-05:00",
+      "minutes": 780.0
+    },
+    {
+      "after": "2017-08-27 15:00:00-05:00",
+      "before": "2017-08-28 01:00:00-05:00",
+      "minutes": 600.0
+    },
+    {
+      "after": "2017-08-28 01:00:00-05:00",
+      "before": "2017-08-28 07:45:00-05:00",
+      "minutes": 405.0
+    }
+  ],
+  "n_readings": 460,
+  "first": "2017-08-26 00:00:00-05:00",
+  "last": "2017-08-31 23:45:00-05:00",
+  "max_gap_min": 780.0,
+  "peak_cm": 1277.112,
+  "peak_time": "2017-08-28 01:00:00-05:00",
+  "minutes": 8626,
+  "uplink_charge_mAh": 6.539285714285715,
+  "levels_cm": [
+    304.8,
+    609.6,
+    914.4,
+    1219.2
+  ],
+  "source": {
+    "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2017-08-26&endDT=2017-08-31&parameterCd=00065&siteStatus=all",
+    "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2017-08-26&endDT=2017-08-31&parameterCd=00065&siteStatus=all",
+    "http_status": 200,
+    "retrieved_utc": "2026-11-04T14:10:01+00:00",
+    "sha256": "2d8509d6ec9baf770cf78987bd481763916c274b712d4964f0d410ab602f9b3f",
+    "bytes": 39493,
+    "site": "08074000",
+    "parameter_cd": "00065",
+    "start": "2017-08-26",
+    "end": "2017-08-31"
+  }
+}

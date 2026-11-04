@@ -2,13 +2,17 @@ UV ?= uv
 export OQS_INSTALL_PATH := $(CURDIR)/vendor/liboqs-install
 RUN := env -u VIRTUAL_ENV $(UV) run --frozen
 
-.PHONY: all liboqs sync bench env model figures report test cov clean
+.PHONY: all liboqs sync bench env model figures report test cov clean data
 
 all: bench model report
 
 liboqs: vendor/liboqs-build-info.json
 vendor/liboqs-build-info.json:
 	./scripts/build_liboqs.sh
+
+# Re-fetch the cached USGS series (writes data/*.json + .meta.json with URL, date, SHA-256).
+data:
+	python3 scripts/fetch_usgs.py 08074000 00065 2017-08-26 2017-08-31
 
 sync:
 	env -u VIRTUAL_ENV $(UV) sync --frozen

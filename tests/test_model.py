@@ -202,10 +202,14 @@ def test_run_end_to_end(tmp_path, cfgs):
         (cfg / f"{name}.yaml").write_text(json.dumps(obj))           # JSON is valid YAML
     (cfg / "actions.yaml").write_text((CONFIG / "actions.yaml").read_text())
     (cfg / "threat.yaml").write_text((CONFIG / "threat.yaml").read_text())
+    h = load_yaml(CONFIG / "harm.yaml")
+    h.update(schemes=["S4", "S6"], compromises=["none", "C1"], attacker={"strategies": ["drain"]})
+    (cfg / "harm.yaml").write_text(json.dumps(h))
     M.run(cfg, tmp_path)
     for f in ("model_tokens", "model_delivery", "model_capacity", "model_s2_amortization"):
         assert (tmp_path / f"{f}.csv").exists()
     kc = json.loads((tmp_path / "kill_criteria.json").read_text())
     assert kc["K1"]["answer"] == "no" and kc["K1_crc_sensitivity"]["frames"] == kc["K1"]["frames"]
     assert (tmp_path / "model_sensitivity_crc.csv").exists() and (tmp_path / "model_blast_radius.csv").exists()
+    assert (tmp_path / "model_harm.csv").exists() and "source" in json.loads((tmp_path / "harm_meta.json").read_text())
     assert 0 < kc["K5"]["ratio"] < 1 and "K6" in kc and (tmp_path / "model_blast_compromise.csv").exists()

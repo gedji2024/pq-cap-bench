@@ -197,6 +197,29 @@ S4-E and S6 differ only in how the envelope is installed:
   - S4-E / S6 under C3: each minted envelope is capped at V. Rotating the root key is not modelled.
 - **Renewal cost:** the gateway airtime per day of re-sending envelopes every V, against the duty-cycle budget, per DR and N.
 
+## Harm-weighted replay (`pqcap.harm`, `config/harm.yaml`)
+**Input.** USGS 08074000 Buffalo Bayou at Houston, TX, gage height, 2017-08-26..31 (Hurricane Harvey).
+- The raw JSON is cached in `data/`. The query URL, the URL after redirect, the retrieval date and the SHA-256 are in `data/*.meta.json`.
+- `make data` re-fetches it.
+- Gaps longer than 60 min, including two that bracket the peak, are filled by linear interpolation and listed in the report.
+
+**Simulation.** A minute-resolution model of one node, with one downlink opportunity after each uplink. This holds for both LoRaWAN Class A and the cellular nodes of Kerkez et al. §4.1.
+- The device samples, raises a firmware alert (immediate uplink), buffers samples and reports on its interval.
+- Each delivered command goes through the scheme's device check.
+- Invariants are enforced at acceptance **and** on the device's effective behaviour ("hard limits below the agent", Kerkez et al. §8).
+
+**Battery.** Sleep current 50 µA and transmit current >200 mA come from the paper. The per-uplink charge is derived from its "drains a battery in a week" statement, under a stated interpretation (assumed).
+
+**Attacker.** At every opportunity, the attacker sends the most harmful command the device would accept (*suppress* or *drain*), chosen with the same pure check the device runs.
+
+**Metrics.**
+- Missed and delayed crossings of operator reference levels.
+- Floor-violating uplinks: uplinks below the floor at a rate the battery invariant forbids, scored identically for every scheme.
+- Device death.
+- Legitimate-command rejection rate for a ramp-up / step-down adaptive policy, also as distinct intents.
+
+**Property tests:** with invariants below the agent, a C1 attacker never causes a floor-violating uplink or device death under S4-F, S4-E or S6.
+
 ## What is NOT measured
 - **MCU cost:** cycles, RAM, flash and energy for verification on the device. Host timings rank algorithms; they do not predict Cortex-M figures.
 - **Real radio:** loss, collisions, gateway scheduling and regulatory dwell time. Everything radio-related is analytical.

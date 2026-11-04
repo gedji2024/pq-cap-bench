@@ -1,0 +1,50 @@
+# Harm-weighted replay (pqcap.harm). Stage series: USGS NWIS, cached raw in data/ with its
+# query URL and retrieval date in the matching .meta.json (scripts/fetch_usgs.py).
+#
+# Sources: [K26] Kerkez et al., ACM DXConf 2026, doi:10.1145/3847238.3849040, Sec. 4.1.
+# Anything not marked [K26] or USGS is "assumed -- pending field profile".
+
+series:
+  file: data/usgs_08074000_00065_2017-08-26_2017-08-31.json   # Buffalo Bayou at Houston, TX; gage height, ft
+  ft_to_cm: 30.48                                             # unit conversion (exact by definition)
+  interpolation: linear                                       # between USGS readings, incl. data gaps -- assumed
+
+device:
+  sample_period_min: 10              # [K26] "wake to sample every ten minutes on average"
+  default_reporting_interval_min: 60 # [K26] "buffer readings before transmitting hourly"
+  alert_threshold_cm: 610            # 20.0 ft -- assumed -- pending field profile
+  min_uplink_spacing_min: 2          # modem cycle floor for back-to-back uplinks -- assumed
+  # Envelope renewal (Sec. 7d) is assumed to succeed throughout the replay, so validity never lapses here.
+
+battery:
+  sleep_current_mA: 0.05             # [K26] "sleep current of 50 micro-Amps"
+  tx_current_mA: 200                 # [K26] "transmission currents can reach above 200 milli-Amps" (lower bound used)
+  capacity_mAh: 6600                 # assumed -- pending field profile
+  # [K26] "transmitting continuously drains a battery in a week". INTERPRETATION (assumed): transmitting at
+  # every 10-min sample empties a full battery in 7 days. The per-uplink charge is derived from this.
+  week_drain_uplink_period_min: 10
+  initial_soc_pct: 60                # assumed -- pending field profile
+  solar_recharge: none               # overcast hurricane event; conservative -- assumed
+
+# Operator reference levels used to score detection (missed / delayed upward crossings).
+harm:
+  reference_levels_ft: [10, 20, 30, 40]   # assumed -- pending field profile
+  delay_tolerance_min: 30                 # a crossing reported later than this is "delayed" -- assumed
+
+# Rule-based adaptive-reporting policy run by the legitimate platform ([K26] Sec. 6 pattern:
+# ramp up on rise, step down when steady).
+legit_policy:
+  fast_interval_min: 10              # assumed
+  slow_interval_min: 60              # = default hourly reporting [K26]
+  rise_cm_per_h: 15                  # ramp up when the reported stage rises faster than this -- assumed
+  steady_cm_per_h: 3                 # step down when |rate| stays below this ... -- assumed
+  steady_reports: 3                  # ... for this many consecutive reports -- assumed
+
+# Attacker strategies (each opportunity: the most harmful command the device would accept, chosen with
+# the same pure check function the device runs -- the policy is not secret).
+attacker:
+  strategies: [suppress, drain]
+  # suppress: disable sensor > raise alert threshold to max accepted > slowest accepted reporting interval
+  # drain:    fastest accepted reporting interval > immediate uplink at every opportunity
+compromises: [none, C1, C1+C3]       # none = legitimate policy only (legit rejection rate measured here)
+schemes: [S4, S4-F, S4-E, S6]

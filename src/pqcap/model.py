@@ -196,6 +196,19 @@ def run(config: Path, results: Path) -> dict[str, pd.DataFrame]:
     out["model_sensitivity_crc"] = crc_sensitivity(out, out_alt, model, alt_crc)
     for name, df in out.items():
         df.to_csv(results / f"{name}.csv", index=False)
+    harm_p, actions_p = config / "harm.yaml", config / "actions.yaml"
+    if harm_p.exists() and actions_p.exists():
+        from . import harm  # noqa: PLC0415
+        from .config import REPO_ROOT  # noqa: PLC0415
+        hcfg = load_yaml(harm_p)
+        series = REPO_ROOT / hcfg["series"]["file"]
+        if series.exists():
+            hd, he, hm = harm.run(hcfg, load_yaml(actions_p), REPO_ROOT)
+            hd.to_csv(results / "model_harm.csv", index=False)
+            he.to_csv(results / "model_harm_events.csv", index=False)
+            meta_p = series.with_suffix(".meta.json")
+            hm["source"] = json.loads(meta_p.read_text()) if meta_p.exists() else {}
+            (results / "harm_meta.json").write_text(json.dumps(hm, indent=2, default=str))
     from .kill import evaluate  # noqa: PLC0415
     k = evaluate(out, model)
     k["K1_crc_sensitivity"] = evaluate(out_alt, model)["K1"]

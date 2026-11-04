@@ -615,6 +615,44 @@ Exposure window after revocation starts (hours; detection delay excluded, identi
 | S6 | 2,532 | 50 | 96.78% | 24.19% | 8.06% |
 | S6 | 2,532 | 200 | 387.11% | 96.78% | 32.26% |
 
+## 7e. Harm-weighted replay: USGS Buffalo Bayou, Hurricane Harvey
+
+Series: `data/usgs_08074000_00065_2017-08-26_2017-08-31.json` - query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2017-08-26&endDT=2017-08-31&parameterCd=00065&siteStatus=all` (served from `https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2017-08-26&endDT=2017-08-31&parameterCd=00065&siteStatus=all`), retrieved 2026-11-04T14:10:01+00:00, SHA-256 `2d8509d6ec9baf77...`. 460 readings, 2017-08-26 00:00:00-05:00 to 2017-08-31 23:45:00-05:00; peak 41.90 ft at 2017-08-28 01:00:00-05:00.
+
+**Data gaps > 60 min (filled by linear interpolation - crossing times inside them are interpolation-dependent):** 2017-08-26 03:15:00-05:00 -> 2017-08-26 16:15:00-05:00 (780 min); 2017-08-27 15:00:00-05:00 -> 2017-08-28 01:00:00-05:00 (600 min); 2017-08-28 01:00:00-05:00 -> 2017-08-28 07:45:00-05:00 (405 min).
+
+Reference levels 10 ft, 20 ft, 30 ft, 40 ft; a crossing is *delayed* if first reported more than 30 min after it occurs. Per-uplink charge 6.54 mAh, derived from the paper's 'drains a battery in a week' statement under the interpretation in `config/harm.yaml` (assumed). A *floor violation* is an uplink below the battery floor at a rate the profile's battery invariant forbids (firmware alert uplinks exempt), scored against the same profile for every scheme, including S4. All device, battery, policy and threshold values are assumed - pending field profile, except those marked [K26] in the config.
+
+**Under attack** (attacker holds the session key; C1+C3 also replaces envelopes):
+
+| scheme | compromise | strategy | crossings | missed | delayed | on_time | max_delay_min | floor_violating_uplinks | died | died_h | min_soc_pct | attacker_accepted |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| S4 | C1 | suppress | 4 | 4 | 0 | 0 | - | 0 | False | - | 59.1 | 3 |
+| S4 | C1 | drain | 4 | 3 | 0 | 1 | 7.0 | 202 | True | 20.2 | 0.0 | 606 |
+| S4 | C1+C3 | suppress | 4 | 4 | 0 | 0 | - | 0 | False | - | 59.1 | 3 |
+| S4 | C1+C3 | drain | 4 | 3 | 0 | 1 | 7.0 | 202 | True | 20.2 | 0.0 | 606 |
+| S4-F | C1 | suppress | 4 | 4 | 0 | 0 | - | 0 | False | - | 58.5 | 3 |
+| S4-F | C1 | drain | 4 | 0 | 2 | 2 | 112.0 | 0 | False | - | 13.3 | 403 |
+| S4-F | C1+C3 | suppress | 4 | 4 | 0 | 0 | - | 0 | False | - | 58.5 | 3 |
+| S4-F | C1+C3 | drain | 4 | 0 | 2 | 2 | 112.0 | 0 | False | - | 13.3 | 403 |
+| S4-E | C1 | suppress | 4 | 0 | 1 | 3 | 38.0 | 0 | False | - | 19.1 | 1 |
+| S4-E | C1 | drain | 4 | 0 | 2 | 2 | 112.0 | 0 | False | - | 13.3 | 403 |
+| S4-E | C1+C3 | suppress | 4 | 4 | 0 | 0 | - | 0 | False | - | 59.1 | 3 |
+| S4-E | C1+C3 | drain | 4 | 3 | 0 | 1 | 7.0 | 202 | True | 20.2 | 0.0 | 606 |
+| S6 | C1 | suppress | 4 | 0 | 1 | 3 | 38.0 | 0 | False | - | 19.1 | 1 |
+| S6 | C1 | drain | 4 | 0 | 2 | 2 | 112.0 | 0 | False | - | 13.3 | 403 |
+| S6 | C1+C3 | suppress | 4 | 4 | 0 | 0 | - | 0 | False | - | 59.1 | 3 |
+| S6 | C1+C3 | drain | 4 | 3 | 0 | 1 | 7.0 | 202 | True | 20.2 | 0.0 | 606 |
+
+**Legitimate operation** (no compromise; rule-based adaptive-reporting policy; the policy retries a rejected command at every opportunity, so `legit_intents` and `legit_intents_rejected` count distinct requests):
+
+| scheme | crossings | missed | delayed | max_delay_min | floor_violating_uplinks | min_soc_pct | legit_sent | legit_rejected | legit_rejection_rate | legit_intents | legit_intents_rejected | legit_reject_reasons |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| S4 | 4 | 0 | 0 | 9.0 | 15 | 18.5 | 8 | 0 | 0.0% | 8 | 0 | - |
+| S4-F | 4 | 0 | 0 | 9.0 | 0 | 16.3 | 35 | 30 | 85.7% | 6 | 1 | invariant:alert_min_rate=30 |
+| S4-E | 4 | 0 | 0 | 9.0 | 0 | 16.3 | 35 | 30 | 85.7% | 6 | 1 | invariant:alert_min_rate=30 |
+| S6 | 4 | 0 | 0 | 9.0 | 0 | 16.3 | 35 | 30 | 85.7% | 6 | 1 | invariant:alert_min_rate=30 |
+
 ## 8. Kill criteria
 
 **K1 - Is S1 with ML-DSA-44 deliverable within W = 30 min for N = 50 at US915 DR8? -> NO.**

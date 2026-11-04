@@ -18,7 +18,7 @@ KEY = b"p" * 32
 
 
 @settings(max_examples=300, deadline=None)
-@given(nb=st.integers(0, 2**31), length=st.integers(0, 2**31), cap=st.integers(0, 7 * 86400))
+@given(nb=st.integers(0, 2**31), length=st.integers(0, 2**31 - 1), cap=st.integers(0, 7 * 86400))  # u32 fields
 def test_no_installed_envelope_exceeds_validity_cap(nb, length, cap):
     env = ev.envelope_from_config(ACFG, nb, nb + length)
     blob = ev.encode_envelope(env)

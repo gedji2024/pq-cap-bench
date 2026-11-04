@@ -310,6 +310,43 @@ def section_revocation(results: Path, model: dict) -> str:
     return "\n\n".join(out)
 
 
+def section_harm(results: Path, config: Path) -> str:
+    p = results / "model_harm.csv"
+    if not p.exists():
+        return "_harm replay not run (config/harm.yaml or cached series missing)_"
+    d, m = pd.read_csv(p), json.loads((results / "harm_meta.json").read_text())
+    cfg = load_yaml(config / "harm.yaml")
+    src = m.get("source", {})
+    gaps = "; ".join(f"{g['after']} -> {g['before']} ({g['minutes']:.0f} min)" for g in m["gaps_over_60_min"]) or "none"
+    lv = ", ".join(f"{x} ft" for x in cfg["harm"]["reference_levels_ft"])
+    head = [f"Series: `{cfg['series']['file']}` - query `{src.get('query_url', '?')}` (served from "
+            f"`{src.get('final_url', '?')}`), retrieved {src.get('retrieved_utc', '?')}, SHA-256 "
+            f"`{src.get('sha256', '?')[:16]}...`. {m['n_readings']} readings, {m['first']} to {m['last']}; "
+            f"peak {m['peak_cm'] / cfg['series']['ft_to_cm']:.2f} ft at {m['peak_time']}.",
+            f"**Data gaps > 60 min (filled by {cfg['series']['interpolation']} interpolation - crossing times inside "
+            f"them are interpolation-dependent):** {gaps}.",
+            f"Reference levels {lv}; a crossing is *delayed* if first reported more than "
+            f"{cfg['harm']['delay_tolerance_min']} min after it occurs. Per-uplink charge "
+            f"{m['uplink_charge_mAh']:.2f} mAh, derived from the paper's 'drains a battery in a week' statement under the "
+            "interpretation in `config/harm.yaml` (assumed). A *floor violation* is an uplink below the battery floor at a "
+            "rate the profile's battery invariant forbids (firmware alert uplinks exempt), scored against the same profile "
+            "for every scheme, including S4. All device, battery, policy and threshold values are assumed - pending "
+            "field profile, except those marked [K26] in the config."]
+    cols = ["scheme", "compromise", "strategy", "crossings", "missed", "delayed", "on_time", "max_delay_min",
+            "floor_violating_uplinks", "died", "died_h", "min_soc_pct", "attacker_accepted"]
+    num = lambda v: f"{v:,.1f}"  # noqa: E731
+    t1 = md_table(d[d.compromise != "none"][cols], {"max_delay_min": num, "died_h": num, "min_soc_pct": num})
+    leg = d[d.compromise == "none"][["scheme", "crossings", "missed", "delayed", "max_delay_min",
+                                     "floor_violating_uplinks", "min_soc_pct", "legit_sent", "legit_rejected",
+                                     "legit_rejection_rate", "legit_intents", "legit_intents_rejected",
+                                     "legit_reject_reasons"]]
+    t2 = md_table(leg, {"max_delay_min": num, "min_soc_pct": num, "legit_rejection_rate": lambda v: f"{v:.1%}"})
+    return "\n\n".join(head + ["**Under attack** (attacker holds the session key; C1+C3 also replaces envelopes):",
+                                 t1, "**Legitimate operation** (no compromise; rule-based adaptive-reporting policy; "
+                                 "the policy retries a rejected command at every opportunity, so `legit_intents` and "
+                                 "`legit_intents_rejected` count distinct requests):", t2])
+
+
 def section_kill(results: Path) -> str:
     k = json.loads((results / "kill_criteria.json").read_text())
     k1 = k["K1"]
@@ -374,6 +411,7 @@ def run(config: Path, results: Path, figures: Path) -> None:
         "## 7b. Sensitivity: downlink CRC", section_crc(results, config, model),
         "## 7c. S6 pre-positioned capability envelopes", section_s6(results, model),
         "## 7d. Revocation: envelope validity and renewal", section_revocation(results, model),
+        "## 7e. Harm-weighted replay: USGS Buffalo Bayou, Hurricane Harvey", section_harm(results, config),
         "## 8. Kill criteria", section_kill(results),
         "## 9. Figures", "\n".join(f"- [{f}](figures/{f}) ([pdf](figures/{f[:-4]}.pdf))" for f in figs),
     ]
