@@ -17,8 +17,14 @@ CAT, ENV, FW = ev.catalogue_from_config(ACFG), ev.envelope_from_config(ACFG), ev
 INV = ev.invariants_from_config(ACFG)
 
 
-def _cfg(**over):
-    c = {**HCFG, "_profile_inv": INV}
+from pqcap.devices import load_catalogue  # noqa: E402
+
+DEVS = {d.model: d for d in load_catalogue(CONFIG / "devices")}
+BATS = {p["name"]: harm.battery_from_profile(p, DEVS) for p in HCFG["battery"]["profiles"]}
+
+
+def _cfg(battery_profile="LWL01/poor", **over):
+    c = {**HCFG, "_profile_inv": INV, "_battery": BATS[battery_profile]}
     for k, v in over.items():
         c[k] = {**c[k], **v}
     return c
@@ -63,11 +69,17 @@ def test_crossings_and_score():
     assert sc["missed"] == 2 and np.isnan(sc["mean_delay_min"])
 
 
-def test_uplink_charge_derivation():
-    b = HCFG["battery"]
-    q = harm.uplink_charge_mAh(b)
-    n = 7 * 24 * 60 / b["week_drain_uplink_period_min"]
-    assert q * n + b["sleep_current_mA"] * 168 == pytest.approx(b["capacity_mAh"])   # empties in exactly a week
+def test_battery_profiles_from_manufacturer_data():
+    from pqcap.radio import LoraPhy, time_on_air_s
+    g, p = BATS["PS-LB/good"], BATS["PS-LB/poor"]
+    assert g["capacity"] == 8500 and g["sleep_per_h"] == pytest.approx(0.005)          # 8500 mAh, 5 uA (manual)
+    assert g["tx_mA"] == 82 and p["tx_mA"] == 125                                      # 14 / 20 dBm (manual)
+    assert g["phy_payload_bytes"] == 9 + 13                                             # 9-B uplink + LoRaWAN framing
+    assert g["uplink_toa_s"] == pytest.approx(time_on_air_s(22, LoraPhy(sf=7, bw_hz=125e3)))
+    assert g["q"] == pytest.approx(82 * g["uplink_toa_s"] / 3600) and g["lower_bound"]
+    assert BATS["LWL01/good"]["q"] == pytest.approx(1 / 12000) and BATS["LWL01/poor"]["q"] == pytest.approx(1 / 1300)
+    with pytest.raises(ValueError):
+        harm.battery_from_profile({"name": "x", "device": "LWL01", "model": "bogus"}, DEVS)
 
 
 @settings(max_examples=300, deadline=None)
@@ -90,7 +102,7 @@ def test_effective_interval_respects_invariants(interval, alert, soc):
 def test_bounded_schemes_never_violate_battery_floor_under_c1(soc0, peak, strategy, scheme):
     """Property: with invariants enforced below the agent, an attacker holding the session key cannot
     make the device uplink below the floor at a forbidden rate, nor kill it."""
-    cfg = _cfg(battery={"initial_soc_pct": soc0})
+    cfg = _cfg(battery={"initial_soc_pct": soc0})                  # LWL01/poor: the drain-sensitive profile
     r = harm.simulate(_hydrograph(peak), scheme, "C1", strategy, cfg, CAT, ENV, FW)
     assert r["stats"]["floor_violating_uplinks"] == 0 and r["stats"]["died_min"] is None
 
@@ -134,12 +146,14 @@ def test_legit_policy_rules():
 
 
 def test_run_end_to_end():
-    df, evs, meta = harm.run({**HCFG, "schemes": ["S4", "S6"], "compromises": ["none", "C1"],
-                              "attacker": {"strategies": ["drain"]}}, ACFG, REPO_ROOT)
+    one = {**HCFG, "schemes": ["S4", "S6"], "compromises": ["none", "C1"], "attacker": {"strategies": ["drain"]},
+           "battery": {**HCFG["battery"], "profiles": HCFG["battery"]["profiles"][-1:]}, "events": None}
+    df, evs, meta = harm.run(one, ACFG, REPO_ROOT)
     assert len(df) == 2 * (len(HCFG["legit_policy"]["variants"]) + 1) and set(df.strategy) == {"-", "drain"}
     assert set(df[df.compromise == "none"].legit_policy) == set(HCFG["legit_policy"]["variants"])
-    assert meta["n_readings"] == 460 and len(meta["gaps_over_60_min"]) >= 1
-    assert (evs.level_cm.unique().size == len(HCFG["harm"]["reference_levels_ft"]))
+    e = meta["events"][0]
+    assert e["n_readings"] == 460 and len(e["gaps_over_60_min"]) >= 1 and e["peak_bracketed_by_gap"] is True                 # Harvey peak bracketed by 600- and 405-min gaps
+    assert evs.level_cm.unique().size == len(HCFG["harm"]["reference_levels_ft"])
 
 
 def test_limit_aware_policy():
@@ -174,3 +188,18 @@ def test_s6f_resists_suppress_without_op_key():
     assert sc(f)["missed"] == sc(f)["crossings"] and sc(sf)["missed"] == 0
     assert sc(op)["missed"] == sc(op)["crossings"]                      # OP key compromised -> disable accepted
     assert harm.Scheme("S6", CAT, ENV, FW, False).floor == ev.NO_INVARIANTS
+
+
+def test_event_window_and_fraction_levels():
+    f = HCFG["series"]["file"]
+    evs = [{"name": "w", "file": f, "start": "2017-08-27", "end": "2017-08-29"}]
+    assert harm.event_list({"events": evs}) == evs
+    assert harm.event_list({"series": {"file": f}})[0]["file"] == f
+    stage, s = harm.event_stage(evs[0], HCFG, REPO_ROOT)
+    assert str(s.index[0]) >= "2017-08-27" and str(s.index[-1]) <= "2017-08-29 00:00:00-05:00"
+    cfg = {**HCFG, "events": evs, "schemes": ["S6"], "compromises": ["C1"], "attacker": {"strategies": ["drain"]},
+           "battery": {**HCFG["battery"], "profiles": HCFG["battery"]["profiles"][:1]},
+           "harm": {**HCFG["harm"], "reference_levels_ft": None, "reference_level_fractions": [0.5]}}
+    df, ev_, meta = harm.run(cfg, ACFG, REPO_ROOT)
+    lv = meta["events"][0]["levels_cm"][0]
+    assert lv == pytest.approx(stage.min() + 0.5 * (stage.max() - stage.min())) and len(df) == 1

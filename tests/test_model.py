@@ -220,5 +220,5 @@ def test_run_end_to_end(tmp_path, cfgs):
     assert set(tok.op_token_alg) == {"Ed25519"} and (tok.frames >= 1).all()
     mc = pd.read_csv(tmp_path / "mcu_verify_cost.csv")
     assert (mc.verify_ms_per_day_V6h > mc.verify_ms_per_day_V72h).all()
-    assert (tmp_path / "model_harm.csv").exists() and "source" in json.loads((tmp_path / "harm_meta.json").read_text())
+    assert (tmp_path / "model_harm.csv").exists() and "source" in json.loads((tmp_path / "harm_meta.json").read_text())["events"][0]
     assert 0 < kc["K5"]["ratio"] < 1 and "K6" in kc and (tmp_path / "model_blast_compromise.csv").exists()

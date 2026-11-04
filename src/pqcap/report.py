@@ -337,37 +337,50 @@ def section_harm(results: Path, config: Path) -> str:
         return "_harm replay not run (config/harm.yaml or cached series missing)_"
     d, m = pd.read_csv(p), json.loads((results / "harm_meta.json").read_text())
     cfg = load_yaml(config / "harm.yaml")
-    src = m.get("source", {})
-    gaps = "; ".join(f"{g['after']} -> {g['before']} ({g['minutes']:.0f} min)" for g in m["gaps_over_60_min"]) or "none"
-    lv = ", ".join(f"{x} ft" for x in cfg["harm"]["reference_levels_ft"])
-    head = [f"Series: `{cfg['series']['file']}` - query `{src.get('query_url', '?')}` (served from "
-            f"`{src.get('final_url', '?')}`), retrieved {src.get('retrieved_utc', '?')}, SHA-256 "
-            f"`{src.get('sha256', '?')[:16]}...`. {m['n_readings']} readings, {m['first']} to {m['last']}; "
-            f"peak {m['peak_cm'] / cfg['series']['ft_to_cm']:.2f} ft at {m['peak_time']}.",
-            f"**Data gaps > 60 min (filled by {cfg['series']['interpolation']} interpolation - crossing times inside "
-            f"them are interpolation-dependent):** {gaps}.",
-            f"Reference levels {lv}; a crossing is *delayed* if first reported more than "
-            f"{cfg['harm']['delay_tolerance_min']} min after it occurs. Per-uplink charge "
-            f"{m['uplink_charge_mAh']:.2f} mAh, derived from the paper's 'drains a battery in a week' statement under the "
-            "interpretation in `config/harm.yaml` (assumed). A *floor violation* is an uplink below the battery floor at a "
-            "rate the profile's battery invariant forbids (firmware alert uplinks exempt), scored against the same profile "
-            "for every scheme, including S4. All device, battery, policy and threshold values are assumed - pending "
-            "field profile, except those marked [K26] in the config."]
-    cols = ["scheme", "compromise", "strategy", "crossings", "missed", "delayed", "on_time", "max_delay_min",
-            "floor_violating_uplinks", "died", "died_h", "min_soc_pct", "attacker_accepted"]
     num = lambda v: f"{v:,.1f}"  # noqa: E731
-    t1 = md_table(d[d.compromise != "none"][[c for c in cols]], {"max_delay_min": num, "died_h": num, "min_soc_pct": num})
-    leg = d[d.compromise == "none"][["scheme", "legit_policy", "crossings", "missed", "delayed", "max_delay_min",
+    prov = []
+    for e in m["events"]:
+        src = e.get("source", {})
+        gaps = "; ".join(f"{g['after']} -> {g['before']} ({g['minutes']:.0f} min)" for g in e["gaps_over_60_min"]) or "none"
+        prov.append(f"- **{e['event']}**: `{e['file']}`, query `{src.get('query_url', '?')}`, retrieved "
+                    f"{src.get('retrieved_utc', '?')}, SHA-256 `{src.get('sha256', '?')[:16]}...`; {e['n_readings']} readings "
+                    f"{e['first']} to {e['last']}; peak {e['peak_cm'] / cfg['series']['ft_to_cm']:.2f} ft at {e['peak_time']}"
+                    + (" - **peak reading lies at the edge of a >60-min gap: its timing and the levels near it are interpolation-dependent**" if e["peak_bracketed_by_gap"] else "")
+                    + f". Gaps > 60 min ({cfg['series']['interpolation']} interpolation): {gaps}.")
+    bat = pd.DataFrame(m["battery_profiles"])
+    bcols = [c for c in ("name", "unit", "capacity", "sleep_per_h", "q", "tx_mA", "uplink_toa_s", "uplinks_per_battery",
+                         "lower_bound") if c in bat]
+    tb = md_table(bat[bcols], {"capacity": lambda v: f"{v:,.4g}", "sleep_per_h": lambda v: f"{v:.4g}",
+                               "q": lambda v: f"{v:.4g}", "uplink_toa_s": lambda v: f"{v:.4f}"})
+    lv = cfg["harm"].get("reference_levels_ft") or cfg["harm"].get("reference_level_fractions")
+    head = ["**Events** (USGS NWIS instantaneous values; raw JSON cached in `data/`):", "\n".join(prov),
+            "**Battery profiles (D5)** from the manufacturer catalogue (`config/devices/*.yaml`, Sec. 8a); the earlier "
+            "'drains in a week' interpretation is **superseded**. `q` = charge per uplink (mAh, or battery fraction for "
+            "an uplink-budget profile); `lower_bound` = RX windows, MCU and probe power not documented. ASSUMED: "
+            + "; ".join(cfg["battery"]["assumed"]) + f". Not derivable from the manuals: "
+            + ", ".join(cfg["battery"]["not_derivable"]) + ".", tb,
+            f"Reference levels: {lv} ({'ft' if cfg['harm'].get('reference_levels_ft') else 'fractions of each event range'}); "
+            f"a crossing is *delayed* if first reported more than {cfg['harm']['delay_tolerance_min']} min after it occurs. "
+            "A *floor violation* is an uplink below the battery floor at a rate the battery invariant forbids (firmware "
+            "alert uplinks exempt), scored identically for every scheme. Device, policy, threshold and invariant values "
+            "are ASSUMED (config/actions.yaml, config/harm.yaml)."]
+    body = harm_summary_tables(d, results, num)
+    return "\n\n".join(head + body)
+
+
+def harm_summary_tables(d: pd.DataFrame, results: Path, num) -> list[str]:
+    att = d[d.compromise != "none"]
+    cols = ["event", "battery_profile", "scheme", "compromise", "strategy", "crossings", "missed", "delayed",
+            "max_delay_min", "floor_violating_uplinks", "died", "died_h", "min_soc_pct"]
+    leg = d[d.compromise == "none"][["event", "battery_profile", "scheme", "legit_policy", "missed", "delayed",
                                      "floor_violating_uplinks", "min_soc_pct", "legit_intents", "legit_intents_rejected",
-                                     "legit_unique_rejection_rate", "legit_sent", "legit_rejected", "legit_reject_reasons"]]
-    t2 = md_table(leg, {"max_delay_min": num, "min_soc_pct": num, "legit_unique_rejection_rate": lambda v: f"{v:.1%}"})
-    return "\n\n".join(head + ["**Under attack** (attacker holds the session key; C1+C3 also replaces envelopes):",
-                                 t1, "**Legitimate operation (D3)** - no compromise; rule-based adaptive-reporting policy. "
-                                 "The metric is the share of **unique requests** rejected (`legit_unique_rejection_rate`); "
-                                 "`legit_sent`/`legit_rejected` include retries (a rejected request is retried at every "
-                                 "opportunity) and are shown only for traceability - the earlier raw-retry rate is "
-                                 "**superseded**. `limit_aware` knows the public envelope limits and the invariants in the "
-                                 "current state and asks for the closest accepted value:", t2])
+                                     "legit_unique_rejection_rate", "legit_sent", "legit_rejected"]]
+    return ["**Under attack** (attacker holds the session key; C1+C3 also replaces envelopes; C1+C3+OP also holds sk_OP):",
+            md_table(att[cols], {"max_delay_min": num, "died_h": num, "min_soc_pct": num}),
+            "**Legitimate operation (D3)** - share of **unique requests** rejected (`legit_unique_rejection_rate`); "
+            "`legit_sent`/`legit_rejected` include retries and are shown for traceability only (raw-retry rate "
+            "**superseded**). `limit_aware` asks only for values the device accepts in its current state:",
+            md_table(leg, {"min_soc_pct": num, "legit_unique_rejection_rate": lambda v: f"{v:.1%}"})]
 
 
 def section_traceability(config: Path) -> str:
@@ -451,10 +464,13 @@ def section_d2(results: Path) -> str:
     harm_t = ""
     if hm.exists():
         h = pd.read_csv(hm)
-        h = h[h.scheme.isin(["S4-F", "S6", "S6+F"]) & (h.compromise != "none") & (h.strategy == "suppress")]
-        harm_t = ("\n\n**S4-F suppress attack re-run against S6+F** (Harvey replay, Sec. 7e):\n\n"
-                  + md_table(h[["scheme", "compromise", "strategy", "crossings", "missed", "delayed", "max_delay_min",
-                                "floor_violating_uplinks", "died"]], {"max_delay_min": lambda v: f"{v:,.0f}"}))
+        bp = h.battery_profile.iloc[0]
+        h = h[h.scheme.isin(["S4-F", "S6", "S6+F"]) & (h.compromise != "none") & (h.strategy == "suppress")
+              & (h.battery_profile == bp)]
+        harm_t = (f"\n\n**S4-F suppress attack re-run against S6+F** (replay of Sec. 7e, battery profile {bp}; "
+                  "suppress does not depend on the battery):\n\n"
+                  + md_table(h[["event", "scheme", "compromise", "strategy", "crossings", "missed", "delayed",
+                                "max_delay_min", "floor_violating_uplinks", "died"]], {"max_delay_min": lambda v: f"{v:,.0f}"}))
     tk = t.pivot_table(index=["op_token_alg", "token_bytes"], columns=["region", "dr"], values="frames", sort=False)
     tk.columns = [f"{r} DR{d}" for r, d in tk.columns]
     return ("**D2 - S6+F: non-updatable firmware floor (battery floor, minimum alert reporting rate) + updatable S6 "
@@ -531,7 +547,7 @@ def run(config: Path, results: Path, figures: Path) -> None:
         "## 7b. Sensitivity: downlink CRC", section_crc(results, config, model),
         "## 7c. S6 pre-positioned capability envelopes", section_s6(results, model),
         "## 7d. Revocation: envelope validity and renewal", section_revocation(results, model),
-        "## 7e. Harm-weighted replay: USGS Buffalo Bayou, Hurricane Harvey", section_harm(results, config),
+        "## 7e. Harm-weighted replay (USGS flood events, manufacturer battery profiles)", section_harm(results, config),
         "## 7f. Device-side envelope verification (pqm4, published)", section_mcu(results, config),
         "## 7g. D2: two-tier defence S6+F", section_d2(results),
         "## 8. Kill criteria", section_kill(results),

@@ -72,11 +72,32 @@ def gaps(s: pd.Series, min_minutes: float) -> list[dict]:
 
 
 # ---------------------------------------------------------------- battery
-def uplink_charge_mAh(b: dict) -> float:
-    """Per-uplink charge derived from the 'drains in a week' interpretation (see config/harm.yaml)."""
-    n_week = 7 * 24 * 60 / b["week_drain_uplink_period_min"]
-    sleep_week = b["sleep_current_mA"] * 7 * 24
-    return (b["capacity_mAh"] - sleep_week) / n_week
+def battery_from_profile(prof: dict, devices: dict) -> dict:
+    """D5: battery parameters from the manufacturer catalogue (config/devices/*.yaml).
+
+    model "charge":        capacity_mAh and sleep_uA from the manual; charge per uplink = tx current (manual,
+                           at the profile's tx condition) x LoRa time-on-air of the manual's uplink payload
+                           (+13 B LoRaWAN framing) at the profile's uplink PHY. Lower bound (RX windows, MCU and
+                           probe power not documented).
+    model "uplink_budget": the manual states how many uplinks one battery delivers; the battery is normalised to
+                           that budget (capacity = 1, charge per uplink = 1/budget), sleep drain neglected.
+    """
+    from .radio import LoraPhy, MacOverhead, time_on_air_s  # noqa: PLC0415
+    b = devices[prof["device"]].battery
+    if prof["model"] == "charge":
+        tx = next(x["value"] for x in b["tx_mA"] if x["condition"] == prof["tx_condition"])
+        u = prof["uplink_phy"]
+        phy = LoraPhy(sf=u["sf"], bw_hz=u["bw_khz"] * 1e3, cr=u["cr"], preamble=u["preamble"], crc_on=u["crc_on"])
+        pl = MacOverhead().phy_payload(b["uplink_payload_bytes"]["value"])
+        toa = time_on_air_s(pl, phy)
+        return {"name": prof["name"], "capacity": float(b["capacity_mAh"]["value"]), "sleep_per_h": b["sleep_uA"]["value"] / 1e3,
+                "q": tx * toa / 3600, "unit": "mAh", "tx_mA": tx, "uplink_toa_s": toa, "phy_payload_bytes": pl,
+                "lower_bound": True}
+    if prof["model"] == "uplink_budget":
+        n = next(x["value"] for x in b["uplinks_per_battery"] if x["condition"] == prof["condition"])
+        return {"name": prof["name"], "capacity": 1.0, "sleep_per_h": 0.0, "q": 1.0 / n, "unit": "battery fraction",
+                "uplinks_per_battery": n, "lower_bound": False}
+    raise ValueError(prof["model"])
 
 
 # ---------------------------------------------------------------- device
@@ -204,17 +225,18 @@ class LegitPolicy:
 
 # ---------------------------------------------------------------- simulation
 def simulate(stage: np.ndarray, scheme: str, compromise: str, strategy: str | None, cfg: dict, cat,
-             env: ev.Policy, fw: ev.Policy, legit_variant: str = "naive") -> dict:
-    dv, bt = cfg["device"], cfg["battery"]
+             env: ev.Policy, fw: ev.Policy, legit_variant: str = "naive", bat: dict | None = None) -> dict:
+    dv = cfg["device"]
+    bat = bat or cfg["_battery"]
     sch = Scheme(scheme, cat, env, fw, replaced=compromise.startswith("C1+C3"), op_key=compromise.endswith("+OP"))
     inv, floor = sch.invariants, sch.floor
-    q_tx, sleep_per_min = uplink_charge_mAh(bt), bt["sleep_current_mA"] / 60
-    d = Dev(dv["default_reporting_interval_min"], dv["alert_threshold_cm"], soc_mAh=bt["capacity_mAh"]
-            * bt["initial_soc_pct"] / 100)
+    cap, q_tx, sleep_per_min = bat["capacity"], bat["q"], bat["sleep_per_h"] / 60
+    d = Dev(dv["default_reporting_interval_min"], dv["alert_threshold_cm"],
+            soc_mAh=cap * cfg["battery"]["initial_soc_pct"] / 100)
     ia = cat[ev.A_INTERVAL]
     legit = LegitPolicy(cfg["legit_policy"], legit_variant, ia.min, ia.max) if compromise == "none" else None
     prof = cfg["_profile_inv"]                                       # scored against the PROFILE invariants, all schemes
-    cfg_floor = bt["capacity_mAh"] * prof.battery_floor_pct / 100
+    cfg_floor = cap * prof.battery_floor_pct / 100
     cmd_pending = False
     last_rejected = last_sent = None
     stats = {"legit_intents": 0, "legit_intents_rejected": 0, "floor_violating_uplinks": 0, "uplinks": 0, "legit_sent": 0, "legit_rejected": 0, "attacker_sent": 0, "attacker_accepted": 0,
@@ -226,7 +248,7 @@ def simulate(stage: np.ndarray, scheme: str, compromise: str, strategy: str | No
         if d.soc_mAh <= 0:
             stats["died_min"] = t
             break
-        soc_pct = 100 * d.soc_mAh / bt["capacity_mAh"]
+        soc_pct = 100 * d.soc_mAh / cap
         stats["min_soc_pct"] = min(stats["min_soc_pct"], soc_pct)
         stats["minutes_below_floor"] += d.soc_mAh < cfg_floor
         if t % dv["sample_period_min"] == 0:
@@ -256,7 +278,7 @@ def simulate(stage: np.ndarray, scheme: str, compromise: str, strategy: str | No
             legit.observe(d.buffer)
         d.buffer, d.last_uplink, d.pending = [], t, False
         # ---- one downlink opportunity
-        st = _dstate(d, 100 * d.soc_mAh / bt["capacity_mAh"], t)
+        st = _dstate(d, 100 * d.soc_mAh / cap, t)
         if legit:
             cmd, who = legit.command(d.interval, lambda v, st=st: sch.accepts(st, ev.A_INTERVAL, v)), "legit"
         elif strategy:
@@ -312,44 +334,68 @@ def score(stage: np.ndarray, delivered: list[tuple[int, float, int]], levels_cm:
             "max_delay_min": float(max(delays)) if delays else math.nan, "events": rows}
 
 
+def event_list(cfg: dict) -> list[dict]:
+    """Events to replay: `events` (D4, list of {name, file, start, end}) or the single legacy `series` entry."""
+    if cfg.get("events"):
+        return cfg["events"]
+    return [{"name": "Buffalo Bayou 08074000 (Harvey)", "file": cfg["series"]["file"], "start": None, "end": None}]
+
+
+def event_stage(ev_: dict, cfg: dict, root: Path) -> tuple[np.ndarray, pd.Series]:
+    s = load_series(root / ev_["file"], cfg["series"]["ft_to_cm"])
+    if ev_.get("start"):
+        s = s[(s.index >= pd.Timestamp(ev_["start"], tz=s.index.tz)) & (s.index <= pd.Timestamp(ev_["end"], tz=s.index.tz))]
+    return to_minutes(s), s
+
+
 def run(cfg: dict, actions_cfg: dict, root: Path) -> tuple[pd.DataFrame, pd.DataFrame, dict]:
-    s = load_series(root / cfg["series"]["file"], cfg["series"]["ft_to_cm"])
-    stage = to_minutes(s)
+    from .devices import load_catalogue  # noqa: PLC0415
+    devs = {d.model: d for d in load_catalogue(root / "config/devices")}
+    bats = [battery_from_profile(p, devs) for p in cfg["battery"]["profiles"]]
     cat = ev.catalogue_from_config(actions_cfg)
     env = ev.envelope_from_config(actions_cfg)  # routine renewal assumed to succeed: validity never lapses
     fw = ev.firmware_policy_from_config(actions_cfg)
     cfg = {**cfg, "_profile_inv": ev.invariants_from_config(actions_cfg)}
-    levels = [x * cfg["series"]["ft_to_cm"] for x in cfg["harm"]["reference_levels_ft"]]
-    rows, events = [], []
-    for scheme in cfg["schemes"]:
-        for comp in cfg["compromises"]:
-            runs = ([(None, v) for v in cfg["legit_policy"].get("variants", ["naive"])] if comp == "none"
-                    else [(x, "-") for x in cfg["attacker"]["strategies"]])
-            for strat, variant in runs:
-                r = simulate(stage, scheme, comp, strat, cfg, cat, env, fw, variant if strat is None else "naive")
-                sc = score(stage, r["delivered"], levels, cfg["harm"]["delay_tolerance_min"])
-                st = r["stats"]
-                rows.append({"scheme": scheme, "compromise": comp, "strategy": strat or "-", "legit_policy": variant,
-                             **{k: sc[k] for k in ("crossings", "missed", "delayed", "on_time", "mean_delay_min",
-                                                   "max_delay_min")},
-                             "floor_violating_uplinks": st["floor_violating_uplinks"],
-                             "battery_floor_violated": st["floor_violating_uplinks"] > 0 or st["died_min"] is not None,
-                             "hours_below_floor": st["minutes_below_floor"] / 60,
-                             "min_soc_pct": st["min_soc_pct"], "died": st["died_min"] is not None,
-                             "died_h": None if st["died_min"] is None else st["died_min"] / 60,
-                             "uplinks": st["uplinks"], "legit_sent": st["legit_sent"],
-                             "legit_rejected": st["legit_rejected"],
-                             "legit_rejection_rate": (st["legit_rejected"] / st["legit_sent"]) if st["legit_sent"] else 0.0,
-                             "legit_intents": st["legit_intents"],
-                             "legit_intents_rejected": st["legit_intents_rejected"],
-                             "legit_unique_rejection_rate": (st["legit_intents_rejected"] / st["legit_intents"])
-                             if st["legit_intents"] else 0.0,
-                             "legit_reject_reasons": ";".join(f"{k}={v}" for k, v in sorted(st["reject_reasons"].items())),
-                             "attacker_sent": st["attacker_sent"], "attacker_accepted": st["attacker_accepted"]})
-                events += [{"scheme": scheme, "compromise": comp, "strategy": strat or "-", "legit_policy": variant, **e}
-                           for e in sc["events"]]
-    meta = {"gaps_over_60_min": gaps(s, 60), "n_readings": int(s.size), "first": str(s.index[0]), "last": str(s.index[-1]),
-            "max_gap_min": max_gap_min(s), "peak_cm": float(s.max()), "peak_time": str(s.idxmax()),
-            "minutes": int(stage.size), "uplink_charge_mAh": uplink_charge_mAh(cfg["battery"]),
-            "levels_cm": levels}
+    rows, events, metas = [], [], []
+    for ev_ in event_list(cfg):
+        stage, s = event_stage(ev_, cfg, root)
+        # reference levels: absolute (ft) when given, else fractions of the event's own stage range (D4)
+        if cfg["harm"].get("reference_levels_ft"):
+            levels = [x * cfg["series"]["ft_to_cm"] for x in cfg["harm"]["reference_levels_ft"]]
+        else:
+            lo, hi = float(stage.min()), float(stage.max())
+            levels = [lo + f * (hi - lo) for f in cfg["harm"]["reference_level_fractions"]]
+        metas.append({"event": ev_["name"], "file": ev_["file"], "n_readings": int(s.size), "first": str(s.index[0]),
+                      "last": str(s.index[-1]), "max_gap_min": max_gap_min(s), "gaps_over_60_min": gaps(s, 60),
+                      "peak_cm": float(s.max()), "peak_time": str(s.idxmax()),
+                      "peak_bracketed_by_gap": any(g["after"] <= str(s.idxmax()) <= g["before"] for g in gaps(s, 60)),
+                      "minutes": int(stage.size), "levels_cm": levels})
+        for bat in bats:
+            for scheme in cfg["schemes"]:
+                for comp in cfg["compromises"]:
+                    runs = ([(None, v) for v in cfg["legit_policy"].get("variants", ["naive"])] if comp == "none"
+                            else [(x, "-") for x in cfg["attacker"]["strategies"]])
+                    for strat, variant in runs:
+                        r = simulate(stage, scheme, comp, strat, cfg, cat, env, fw,
+                                     variant if strat is None else "naive", bat)
+                        sc = score(stage, r["delivered"], levels, cfg["harm"]["delay_tolerance_min"])
+                        st = r["stats"]
+                        key = {"event": ev_["name"], "battery_profile": bat["name"], "scheme": scheme,
+                               "compromise": comp, "strategy": strat or "-", "legit_policy": variant}
+                        rows.append({**key, **{k: sc[k] for k in ("crossings", "missed", "delayed", "on_time",
+                                                                  "mean_delay_min", "max_delay_min")},
+                                     "floor_violating_uplinks": st["floor_violating_uplinks"],
+                                     "battery_floor_violated": st["floor_violating_uplinks"] > 0 or st["died_min"] is not None,
+                                     "hours_below_floor": st["minutes_below_floor"] / 60,
+                                     "min_soc_pct": st["min_soc_pct"], "died": st["died_min"] is not None,
+                                     "died_h": None if st["died_min"] is None else st["died_min"] / 60,
+                                     "uplinks": st["uplinks"], "legit_sent": st["legit_sent"],
+                                     "legit_rejected": st["legit_rejected"], "legit_intents": st["legit_intents"],
+                                     "legit_intents_rejected": st["legit_intents_rejected"],
+                                     "legit_unique_rejection_rate": (st["legit_intents_rejected"] / st["legit_intents"])
+                                     if st["legit_intents"] else 0.0,
+                                     "legit_reject_reasons": ";".join(f"{k}={v}" for k, v in sorted(st["reject_reasons"].items())),
+                                     "attacker_sent": st["attacker_sent"], "attacker_accepted": st["attacker_accepted"]})
+                        events += [{**key, **e} for e in sc["events"]]
+    meta = {"events": metas, "battery_profiles": bats}
     return pd.DataFrame(rows), pd.DataFrame(events), meta

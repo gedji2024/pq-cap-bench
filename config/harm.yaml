@@ -16,15 +16,34 @@ device:
   min_uplink_spacing_min: 2          # modem cycle floor for back-to-back uplinks -- assumed
   # Envelope renewal (Sec. 7d) is assumed to succeed throughout the replay, so validity never lapses here.
 
+# D5: battery from MANUFACTURER data (config/devices/*.yaml); replaces the earlier "drains in a week"
+# interpretation of Kerkez et al. (superseded). Values without a manual source are labelled ASSUMED.
 battery:
-  sleep_current_mA: 0.05             # [K26] "sleep current of 50 micro-Amps"
-  tx_current_mA: 200                 # [K26] "transmission currents can reach above 200 milli-Amps" (lower bound used)
-  capacity_mAh: 6600                 # assumed -- pending field profile
-  # [K26] "transmitting continuously drains a battery in a week". INTERPRETATION (assumed): transmitting at
-  # every 10-min sample empties a full battery in 7 days. The per-uplink charge is derived from this.
-  week_drain_uplink_period_min: 10
-  initial_soc_pct: 60                # assumed -- pending field profile
-  solar_recharge: none               # overcast hurricane event; conservative -- assumed
+  initial_soc_pct: 60                # ASSUMED -- pending field profile
+  profiles:
+    - name: PS-LB/good               # 14 dBm, EU868 uplink DR5 = SF7/125 kHz [RP002 Table 8]
+      device: PS-LB
+      model: charge                  # capacity + sleep current + tx current x uplink time-on-air
+      tx_condition: "14 dBm"
+      uplink_phy: {sf: 7, bw_khz: 125, cr: 1, preamble: 8, crc_on: true}   # RP002 Table 109: uplink CRC on
+    - name: PS-LB/poor               # 20 dBm, US915 uplink DR0 = SF10/125 kHz [RP002 Table 16]
+      device: PS-LB
+      model: charge
+      tx_condition: "20 dBm"
+      uplink_phy: {sf: 10, bw_khz: 125, cr: 1, preamble: 8, crc_on: true}
+    - name: LWL01/good
+      device: LWL01
+      model: uplink_budget           # battery = the manual's uplink count; sleep drain ASSUMED 0 (capacity not stated)
+      condition: "good coverage, EU868, SF7"
+    - name: LWL01/poor
+      device: LWL01
+      model: uplink_budget
+      condition: "poor coverage, US915, SF10 max power"
+  not_derivable: [EM400-UDL, EM410-RDL]   # manuals give no per-uplink charge, current or uplink count
+  assumed:
+    - "initial state of charge"
+    - "PS-LB: RX windows, MCU and probe-excitation charge excluded (charge per uplink is a LOWER bound)"
+    - "LWL01: sleep drain neglected (no capacity given to convert 5 uA into a battery fraction)"
 
 # Operator reference levels used to score detection (missed / delayed upward crossings).
 harm:

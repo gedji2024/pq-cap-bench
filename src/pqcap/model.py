@@ -206,8 +206,9 @@ def run(config: Path, results: Path) -> dict[str, pd.DataFrame]:
             hd, he, hm = harm.run(hcfg, load_yaml(actions_p), REPO_ROOT)
             hd.to_csv(results / "model_harm.csv", index=False)
             he.to_csv(results / "model_harm_events.csv", index=False)
-            meta_p = series.with_suffix(".meta.json")
-            hm["source"] = json.loads(meta_p.read_text()) if meta_p.exists() else {}
+            for em in hm["events"]:
+                mp = (REPO_ROOT / em["file"]).with_suffix(".meta.json")
+                em["source"] = json.loads(mp.read_text()) if mp.exists() else {}
             (results / "harm_meta.json").write_text(json.dumps(hm, indent=2, default=str))
     if (config / "devices").is_dir() and (config / "policies.yaml").exists():
         from . import devices as devm  # noqa: PLC0415

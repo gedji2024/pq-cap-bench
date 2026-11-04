@@ -95,7 +95,7 @@ def test_report_renders(tmp_path, cfgs):  # noqa: F811
     (figs / "fig1_x.png").write_bytes(b"")
     report.run(cfg, r, figs)
     md = (tmp_path / "REPORT.md").read_text()
-    for h in ("## 1. Environment", "## 4. Host timings", "## 8. Kill criteria", "**K1", "**K2", "**K3", "**K4", "**K5 - Blast radius", "**K5 - blast radius per compromise", "## 7d. Revocation", "**D2 - S6+F", "**OP token cost**", "**D1 - active revocation time", "## 8b. Traceability", "## 8a. K5/K6 on the manufacturer", "**SUPERSEDED**", "## 7f. Device-side", "Energy is **not reported**", "## 0. Repository state", "kept `7df90f4`", "T10", "## 7e. Harm-weighted replay", "**Data gaps > 60 min", "**K6 - blast(S4-E)",
+    for h in ("## 1. Environment", "## 4. Host timings", "## 8. Kill criteria", "**K1", "**K2", "**K3", "**K4", "**K5 - Blast radius", "**K5 - blast radius per compromise", "## 7d. Revocation", "**D2 - S6+F", "**OP token cost**", "**D1 - active revocation time", "## 8b. Traceability", "## 8a. K5/K6 on the manufacturer", "**SUPERSEDED**", "## 7f. Device-side", "Energy is **not reported**", "## 0. Repository state", "kept `7df90f4`", "T10", "## 7e. Harm-weighted replay", "Gaps > 60 min", "**Battery profiles (D5)**", "**K6 - blast(S4-E)",
               "## 7c. S6", "Crisis commands per gateway", "**Why the crisis capacities differ", "its capacity equals S6", "fig1_x.png"):
         assert h in md
     assert "env.json missing" in md

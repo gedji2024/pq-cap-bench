@@ -244,7 +244,12 @@ S4-E and S6 differ only in how the envelope is installed:
 - Each delivered command goes through the scheme's device check.
 - Invariants are enforced at acceptance **and** on the device's effective behaviour ("hard limits below the agent", Kerkez et al. §8).
 
-**Battery.** Sleep current 50 µA and transmit current >200 mA come from the paper. The per-uplink charge is derived from its "drains a battery in a week" statement, under a stated interpretation (assumed).
+**Battery (D5).** Battery parameters now come from the manufacturer manuals (`config/devices/*.yaml`, `config/harm.yaml: battery.profiles`):
+- **PS-LB:** 8500 mAh capacity, 5 µA sleep current, and 82 / 125 mA transmit current at 14 / 20 dBm. Charge per uplink = transmit current × time on air of its 9-byte uplink plus LoRaWAN framing. This is a lower bound: RX windows, MCU and probe power are not documented.
+- **LWL01:** the manual's uplink budget per battery, 12,000 (SF7) or 1,300 (SF10 max power).
+- **EM400 and EM410:** no per-uplink data, so not derivable.
+
+The earlier "drains in a week" interpretation of Kerkez et al. is superseded. ASSUMED values (initial state of charge, excluded charges) are listed in the config and in the report.
 
 **Attacker.** At every opportunity, the attacker sends the most harmful command the device would accept (*suppress* or *drain*), chosen with the same pure check the device runs.
 

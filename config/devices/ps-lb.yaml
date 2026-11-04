@@ -21,6 +21,7 @@ battery:
   lifetime_claim: {value_years: 5, conditions: "NOT FOUND",
                    source: {doc: main, section: "1.1 What is LoRaWAN Pressure Sensor", quote: "PS-LB/LS is powered by  8500mAh Li-SOCI2 battery or  solar powered + Li-ion battery , it is designed for long term use up to 5 years."}}
   uplinks_per_battery: null
+  uplink_payload_bytes: {value: 9, source: {doc: main, section: "2.3.2 Sensor value, FPORT=2", quote: "Uplink payload includes in total 9 bytes."}}
   not_found: ["transmit duration per uplink", "RX-window and probe-power consumption", "uplink count per battery"]
 actions:
   - action: set_reporting_interval

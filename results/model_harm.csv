@@ -1,41 +1,161 @@
-scheme,compromise,strategy,legit_policy,crossings,missed,delayed,on_time,mean_delay_min,max_delay_min,floor_violating_uplinks,battery_floor_violated,hours_below_floor,min_soc_pct,died,died_h,uplinks,legit_sent,legit_rejected,legit_rejection_rate,legit_intents,legit_intents_rejected,legit_unique_rejection_rate,legit_reject_reasons,attacker_sent,attacker_accepted
-S4,none,-,naive,4,0,0,4,6.25,9.0,15,True,15.916666666666666,18.475609668106266,False,,418,8,0,0.0,8,0,0.0,,0,0
-S4,none,-,limit_aware,4,0,0,4,6.25,9.0,15,True,15.916666666666666,18.475609668106266,False,,418,8,0,0.0,8,0,0.0,,0,0
-S4,C1,suppress,-,4,4,0,0,,,0,False,0.0,59.098445165922996,False,,8,0,0,0.0,0,0,0.0,,3,3
-S4,C1,drain,-,4,3,0,1,7.0,7.0,202,True,6.733333333333333,0.041257215006113776,True,20.183333333333334,606,0,0,0.0,0,0,0.0,,606,606
-S4,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,59.098445165922996,False,,8,0,0,0.0,0,0,0.0,,3,3
-S4,C1+C3,drain,-,4,3,0,1,7.0,7.0,202,True,6.733333333333333,0.041257215006113776,True,20.183333333333334,606,0,0,0.0,0,0,0.0,,606,606
-S4,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.098445165922996,False,,8,0,0,0.0,0,0,0.0,,3,3
-S4,C1+C3+OP,drain,-,4,3,0,1,7.0,7.0,202,True,6.733333333333333,0.041257215006113776,True,20.183333333333334,606,0,0,0.0,0,0,0.0,,606,606
-S4-F,none,-,naive,4,0,0,4,6.25,9.0,0,False,72.41666666666667,16.295847763344668,False,,440,35,30,0.8571428571428571,6,1,0.16666666666666666,invariant:alert_min_rate=30,0,0
-S4-F,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,66.66666666666667,16.593088023084796,False,,437,8,0,0.0,8,0,0.0,,0,0
-S4-F,C1,suppress,-,4,4,0,0,,,0,False,0.0,58.50396464644248,False,,14,0,0,0.0,0,0,0.0,,3,3
-S4-F,C1,drain,-,4,0,2,2,47.25,112.0,0,False,130.26666666666668,13.323445165946561,False,,470,0,0,0.0,0,0,0.0,,403,403
-S4-F,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,58.50396464644248,False,,14,0,0,0.0,0,0,0.0,,3,3
-S4-F,C1+C3,drain,-,4,0,2,2,47.25,112.0,0,False,130.26666666666668,13.323445165946561,False,,470,0,0,0.0,0,0,0.0,,403,403
-S4-F,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,58.50396464644248,False,,14,0,0,0.0,0,0,0.0,,3,3
-S4-F,C1+C3+OP,drain,-,4,0,2,2,47.25,112.0,0,False,130.26666666666668,13.323445165946561,False,,470,0,0,0.0,0,0,0.0,,403,403
-S4-E,none,-,naive,4,0,0,4,6.25,9.0,0,False,72.41666666666667,16.295847763344668,False,,440,35,30,0.8571428571428571,6,1,0.16666666666666666,invariant:alert_min_rate=30,0,0
-S4-E,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,66.66666666666667,16.593088023084796,False,,437,8,0,0.0,8,0,0.0,,0,0
-S4-E,C1,suppress,-,4,0,1,3,21.25,38.0,0,False,19.75,19.07009018757813,False,,412,0,0,0.0,0,0,0.0,,1,1
-S4-E,C1,drain,-,4,0,2,2,47.25,112.0,0,False,130.26666666666668,13.323445165946561,False,,470,0,0,0.0,0,0,0.0,,403,403
-S4-E,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,59.098445165922996,False,,8,0,0,0.0,0,0,0.0,,3,3
-S4-E,C1+C3,drain,-,4,3,0,1,7.0,7.0,202,True,6.733333333333333,0.041257215006113776,True,20.183333333333334,606,0,0,0.0,0,0,0.0,,606,606
-S4-E,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.098445165922996,False,,8,0,0,0.0,0,0,0.0,,3,3
-S4-E,C1+C3+OP,drain,-,4,3,0,1,7.0,7.0,202,True,6.733333333333333,0.041257215006113776,True,20.183333333333334,606,0,0,0.0,0,0,0.0,,606,606
-S6,none,-,naive,4,0,0,4,6.25,9.0,0,False,72.41666666666667,16.295847763344668,False,,440,35,30,0.8571428571428571,6,1,0.16666666666666666,invariant:alert_min_rate=30,0,0
-S6,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,66.66666666666667,16.593088023084796,False,,437,8,0,0.0,8,0,0.0,,0,0
-S6,C1,suppress,-,4,0,1,3,21.25,38.0,0,False,19.75,19.07009018757813,False,,412,0,0,0.0,0,0,0.0,,1,1
-S6,C1,drain,-,4,0,2,2,47.25,112.0,0,False,130.26666666666668,13.323445165946561,False,,470,0,0,0.0,0,0,0.0,,403,403
-S6,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,59.098445165922996,False,,8,0,0,0.0,0,0,0.0,,3,3
-S6,C1+C3,drain,-,4,3,0,1,7.0,7.0,202,True,6.733333333333333,0.041257215006113776,True,20.183333333333334,606,0,0,0.0,0,0,0.0,,606,606
-S6,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.098445165922996,False,,8,0,0,0.0,0,0,0.0,,3,3
-S6,C1+C3+OP,drain,-,4,3,0,1,7.0,7.0,202,True,6.733333333333333,0.041257215006113776,True,20.183333333333334,606,0,0,0.0,0,0,0.0,,606,606
-S6+F,none,-,naive,4,0,0,4,6.25,9.0,0,False,72.41666666666667,16.295847763344668,False,,440,35,30,0.8571428571428571,6,1,0.16666666666666666,invariant:alert_min_rate=30,0,0
-S6+F,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,66.66666666666667,16.593088023084796,False,,437,8,0,0.0,8,0,0.0,,0,0
-S6+F,C1,suppress,-,4,0,1,3,21.25,38.0,0,False,19.75,19.07009018757813,False,,412,0,0,0.0,0,0,0.0,,1,1
-S6+F,C1,drain,-,4,0,2,2,47.25,112.0,0,False,130.26666666666668,13.323445165946561,False,,470,0,0,0.0,0,0,0.0,,403,403
-S6+F,C1+C3,suppress,-,4,0,4,0,658.75,1178.0,0,False,0.0,59.19752525250308,False,,7,0,0,0.0,0,0,0.0,,2,2
-S6+F,C1+C3,drain,-,4,0,2,2,46.25,111.0,0,False,130.31666666666666,13.32344516594657,False,,470,0,0,0.0,0,0,0.0,,403,403
-S6+F,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.098445165922996,False,,8,0,0,0.0,0,0,0.0,,3,3
-S6+F,C1+C3+OP,drain,-,4,0,2,2,46.25,111.0,0,False,130.31666666666666,13.32344516594657,False,,470,0,0,0.0,0,0,0.0,,403,403
+event,battery_profile,scheme,compromise,strategy,legit_policy,crossings,missed,delayed,on_time,mean_delay_min,max_delay_min,floor_violating_uplinks,battery_floor_violated,hours_below_floor,min_soc_pct,died,died_h,uplinks,legit_sent,legit_rejected,legit_intents,legit_intents_rejected,legit_unique_rejection_rate,legit_reject_reasons,attacker_sent,attacker_accepted
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4,none,-,naive,4,0,0,4,6.25,9.0,0,False,0.0,59.985205885696566,False,,418,8,0,8,0,0.0,,0,0
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,0.0,59.985205885696566,False,,418,8,0,8,0,0.0,,0,0
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4,C1,suppress,-,4,4,0,0,,,0,False,0.0,59.991421850142046,False,,8,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4,C1,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.926154223464515,False,,4313,0,0,0,0,0.0,,4313,4313
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,59.991421850142046,False,,8,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4,C1+C3,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.926154223464515,False,,4313,0,0,0,0,0.0,,4313,4313
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.991421850142046,False,,8,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4,C1+C3+OP,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.926154223464515,False,,4313,0,0,0,0,0.0,,4313,4313
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4-F,none,-,naive,4,0,0,4,6.25,9.0,0,False,0.0,59.97883831236218,False,,838,202,197,6,1,0.16666666666666666,invariant:alert_min_rate=197,0,0
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4-F,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,0.0,59.98138534169593,False,,670,8,0,8,0,0.0,,0,0
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4-F,C1,suppress,-,4,4,0,0,,,0,False,0.0,59.991330884808704,False,,14,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4-F,C1,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,59.92618454524229,False,,4312,0,0,0,0,0.0,,4312,4312
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4-F,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,59.991330884808704,False,,14,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4-F,C1+C3,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,59.92618454524229,False,,4312,0,0,0,0,0.0,,4312,4312
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4-F,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.991330884808704,False,,14,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4-F,C1+C3+OP,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,59.92618454524229,False,,4312,0,0,0,0,0.0,,4312,4312
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4-E,none,-,naive,4,0,0,4,6.25,9.0,0,False,0.0,59.97883831236218,False,,838,202,197,6,1,0.16666666666666666,invariant:alert_min_rate=197,0,0
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4-E,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,0.0,59.98138534169593,False,,670,8,0,8,0,0.0,,0,0
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4-E,C1,suppress,-,4,0,1,3,21.25,38.0,0,False,0.0,59.98425074969641,False,,482,0,0,0,0,0.0,,1,1
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4-E,C1,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,59.92618454524229,False,,4312,0,0,0,0,0.0,,4312,4312
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4-E,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,59.991421850142046,False,,8,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4-E,C1+C3,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.926154223464515,False,,4313,0,0,0,0,0.0,,4313,4313
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4-E,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.991421850142046,False,,8,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4-E,C1+C3+OP,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.926154223464515,False,,4313,0,0,0,0,0.0,,4313,4313
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S6,none,-,naive,4,0,0,4,6.25,9.0,0,False,0.0,59.97883831236218,False,,838,202,197,6,1,0.16666666666666666,invariant:alert_min_rate=197,0,0
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S6,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,0.0,59.98138534169593,False,,670,8,0,8,0,0.0,,0,0
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S6,C1,suppress,-,4,0,1,3,21.25,38.0,0,False,0.0,59.98425074969641,False,,482,0,0,0,0,0.0,,1,1
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S6,C1,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,59.92618454524229,False,,4312,0,0,0,0,0.0,,4312,4312
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S6,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,59.991421850142046,False,,8,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S6,C1+C3,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.926154223464515,False,,4313,0,0,0,0,0.0,,4313,4313
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S6,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.991421850142046,False,,8,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S6,C1+C3+OP,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.926154223464515,False,,4313,0,0,0,0,0.0,,4313,4313
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S6+F,none,-,naive,4,0,0,4,6.25,9.0,0,False,0.0,59.97883831236218,False,,838,202,197,6,1,0.16666666666666666,invariant:alert_min_rate=197,0,0
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S6+F,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,0.0,59.98138534169593,False,,670,8,0,8,0,0.0,,0,0
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S6+F,C1,suppress,-,4,0,1,3,21.25,38.0,0,False,0.0,59.98425074969641,False,,482,0,0,0,0,0.0,,1,1
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S6+F,C1,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,59.92618454524229,False,,4312,0,0,0,0,0.0,,4312,4312
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S6+F,C1+C3,suppress,-,4,0,4,0,658.75,1178.0,0,False,0.0,59.99143701103094,False,,7,0,0,0,0,0.0,,2,2
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S6+F,C1+C3,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.926154223464515,False,,4313,0,0,0,0,0.0,,4313,4313
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S6+F,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.991421850142046,False,,8,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),PS-LB/good,S6+F,C1+C3+OP,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.926154223464515,False,,4313,0,0,0,0,0.0,,4313,4313
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4,none,-,naive,4,0,0,4,6.25,9.0,0,False,0.0,59.928247555554115,False,,418,8,0,8,0,0.0,,0,0
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,0.0,59.928247555554115,False,,418,8,0,8,0,0.0,,0,0
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4,C1,suppress,-,4,4,0,0,,,0,False,0.0,59.99033173856037,False,,8,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4,C1,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.33844781699467,False,,4313,0,0,0,0,0.0,,4313,4313
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,59.99033173856037,False,,8,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4,C1+C3,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.33844781699467,False,,4313,0,0,0,0,0.0,,4313,4313
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.99033173856037,False,,8,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4,C1+C3+OP,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.33844781699467,False,,4313,0,0,0,0,0.0,,4313,4313
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4-F,none,-,naive,4,0,0,4,6.25,9.0,0,False,0.0,59.86464912418186,False,,838,202,197,6,1,0.16666666666666666,invariant:alert_min_rate=197,0,0
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4-F,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,0.0,59.89008849673076,False,,670,8,0,8,0,0.0,,0,0
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4-F,C1,suppress,-,4,4,0,0,,,0,False,0.0,59.98942318954077,False,,14,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4-F,C1,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,59.33875066666787,False,,4312,0,0,0,0,0.0,,4312,4312
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4-F,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,59.98942318954077,False,,14,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4-F,C1+C3,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,59.33875066666787,False,,4312,0,0,0,0,0.0,,4312,4312
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4-F,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.98942318954077,False,,14,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4-F,C1+C3+OP,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,59.33875066666787,False,,4312,0,0,0,0,0.0,,4312,4312
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4-E,none,-,naive,4,0,0,4,6.25,9.0,0,False,0.0,59.86464912418186,False,,838,202,197,6,1,0.16666666666666666,invariant:alert_min_rate=197,0,0
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4-E,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,0.0,59.89008849673076,False,,670,8,0,8,0,0.0,,0,0
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4-E,C1,suppress,-,4,0,1,3,21.25,38.0,0,False,0.0,59.91870779084828,False,,482,0,0,0,0,0.0,,1,1
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4-E,C1,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,59.33875066666787,False,,4312,0,0,0,0,0.0,,4312,4312
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4-E,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,59.99033173856037,False,,8,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4-E,C1+C3,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.33844781699467,False,,4313,0,0,0,0,0.0,,4313,4313
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4-E,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.99033173856037,False,,8,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4-E,C1+C3+OP,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.33844781699467,False,,4313,0,0,0,0,0.0,,4313,4313
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S6,none,-,naive,4,0,0,4,6.25,9.0,0,False,0.0,59.86464912418186,False,,838,202,197,6,1,0.16666666666666666,invariant:alert_min_rate=197,0,0
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S6,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,0.0,59.89008849673076,False,,670,8,0,8,0,0.0,,0,0
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S6,C1,suppress,-,4,0,1,3,21.25,38.0,0,False,0.0,59.91870779084828,False,,482,0,0,0,0,0.0,,1,1
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S6,C1,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,59.33875066666787,False,,4312,0,0,0,0,0.0,,4312,4312
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S6,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,59.99033173856037,False,,8,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S6,C1+C3,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.33844781699467,False,,4313,0,0,0,0,0.0,,4313,4313
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S6,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.99033173856037,False,,8,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S6,C1+C3+OP,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.33844781699467,False,,4313,0,0,0,0,0.0,,4313,4313
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S6+F,none,-,naive,4,0,0,4,6.25,9.0,0,False,0.0,59.86464912418186,False,,838,202,197,6,1,0.16666666666666666,invariant:alert_min_rate=197,0,0
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S6+F,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,0.0,59.89008849673076,False,,670,8,0,8,0,0.0,,0,0
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S6+F,C1,suppress,-,4,0,1,3,21.25,38.0,0,False,0.0,59.91870779084828,False,,482,0,0,0,0,0.0,,1,1
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S6+F,C1,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,59.33875066666787,False,,4312,0,0,0,0,0.0,,4312,4312
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S6+F,C1+C3,suppress,-,4,0,4,0,658.75,1178.0,0,False,0.0,59.99048316339697,False,,7,0,0,0,0,0.0,,2,2
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S6+F,C1+C3,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.33844781699467,False,,4313,0,0,0,0,0.0,,4313,4313
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S6+F,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.99033173856037,False,,8,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S6+F,C1+C3+OP,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.33844781699467,False,,4313,0,0,0,0,0.0,,4313,4313
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S4,none,-,naive,4,0,0,4,6.25,9.0,0,False,0.0,56.51666666666705,False,,418,8,0,8,0,0.0,,0,0
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S4,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,0.0,56.51666666666705,False,,418,8,0,8,0,0.0,,0,0
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S4,C1,suppress,-,4,4,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S4,C1,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,24.058333333337288,False,,4313,0,0,0,0,0.0,,4313,4313
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S4,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S4,C1+C3,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,24.058333333337288,False,,4313,0,0,0,0,0.0,,4313,4313
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S4,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S4,C1+C3+OP,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,24.058333333337288,False,,4313,0,0,0,0,0.0,,4313,4313
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S4-F,none,-,naive,4,0,0,4,6.25,9.0,0,False,0.0,53.01666666666743,False,,838,202,197,6,1,0.16666666666666666,invariant:alert_min_rate=197,0,0
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S4-F,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,0.0,54.41666666666728,False,,670,8,0,8,0,0.0,,0,0
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S4-F,C1,suppress,-,4,4,0,0,,,0,False,0.0,59.88333333333335,False,,14,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S4-F,C1,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,24.075000000003953,False,,4312,0,0,0,0,0.0,,4312,4312
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S4-F,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,59.88333333333335,False,,14,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S4-F,C1+C3,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,24.075000000003953,False,,4312,0,0,0,0,0.0,,4312,4312
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S4-F,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.88333333333335,False,,14,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S4-F,C1+C3+OP,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,24.075000000003953,False,,4312,0,0,0,0,0.0,,4312,4312
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S4-E,none,-,naive,4,0,0,4,6.25,9.0,0,False,0.0,53.01666666666743,False,,838,202,197,6,1,0.16666666666666666,invariant:alert_min_rate=197,0,0
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S4-E,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,0.0,54.41666666666728,False,,670,8,0,8,0,0.0,,0,0
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S4-E,C1,suppress,-,4,0,1,3,21.25,38.0,0,False,0.0,55.99166666666711,False,,482,0,0,0,0,0.0,,1,1
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S4-E,C1,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,24.075000000003953,False,,4312,0,0,0,0,0.0,,4312,4312
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S4-E,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S4-E,C1+C3,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,24.058333333337288,False,,4313,0,0,0,0,0.0,,4313,4313
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S4-E,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S4-E,C1+C3+OP,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,24.058333333337288,False,,4313,0,0,0,0,0.0,,4313,4313
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S6,none,-,naive,4,0,0,4,6.25,9.0,0,False,0.0,53.01666666666743,False,,838,202,197,6,1,0.16666666666666666,invariant:alert_min_rate=197,0,0
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S6,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,0.0,54.41666666666728,False,,670,8,0,8,0,0.0,,0,0
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S6,C1,suppress,-,4,0,1,3,21.25,38.0,0,False,0.0,55.99166666666711,False,,482,0,0,0,0,0.0,,1,1
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S6,C1,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,24.075000000003953,False,,4312,0,0,0,0,0.0,,4312,4312
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S6,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S6,C1+C3,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,24.058333333337288,False,,4313,0,0,0,0,0.0,,4313,4313
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S6,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S6,C1+C3+OP,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,24.058333333337288,False,,4313,0,0,0,0,0.0,,4313,4313
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S6+F,none,-,naive,4,0,0,4,6.25,9.0,0,False,0.0,53.01666666666743,False,,838,202,197,6,1,0.16666666666666666,invariant:alert_min_rate=197,0,0
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S6+F,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,0.0,54.41666666666728,False,,670,8,0,8,0,0.0,,0,0
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S6+F,C1,suppress,-,4,0,1,3,21.25,38.0,0,False,0.0,55.99166666666711,False,,482,0,0,0,0,0.0,,1,1
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S6+F,C1,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,24.075000000003953,False,,4312,0,0,0,0,0.0,,4312,4312
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S6+F,C1+C3,suppress,-,4,0,4,0,658.75,1178.0,0,False,0.0,59.94166666666667,False,,7,0,0,0,0,0.0,,2,2
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S6+F,C1+C3,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,24.058333333337288,False,,4313,0,0,0,0,0.0,,4313,4313
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S6+F,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),LWL01/good,S6+F,C1+C3+OP,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,24.058333333337288,False,,4313,0,0,0,0,0.0,,4313,4313
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4,none,-,naive,4,0,0,4,6.25,9.0,0,False,0.0,27.846153846154888,False,,418,8,0,8,0,0.0,,0,0
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,0.0,27.846153846154888,False,,418,8,0,8,0,0.0,,0,0
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4,C1,suppress,-,4,4,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4,C1,drain,-,4,3,0,1,7.0,7.0,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4,C1+C3,drain,-,4,3,0,1,7.0,7.0,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4,C1+C3+OP,drain,-,4,3,0,1,7.0,7.0,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4-F,none,-,naive,4,0,0,4,6.25,9.0,0,False,52.916666666666664,17.92307692307803,False,,547,28,23,6,1,0.16666666666666666,invariant:alert_min_rate=23,0,0
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4-F,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,37.416666666666664,18.53846153846265,False,,539,8,0,8,0,0.0,,0,0
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4-F,C1,suppress,-,4,4,0,0,,,0,False,0.0,58.923076923076955,False,,14,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4-F,C1,drain,-,4,0,2,2,46.5,111.0,0,False,126.36666666666666,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4-F,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,58.923076923076955,False,,14,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4-F,C1+C3,drain,-,4,0,2,2,46.5,111.0,0,False,126.36666666666666,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4-F,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,58.923076923076955,False,,14,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4-F,C1+C3+OP,drain,-,4,0,2,2,46.5,111.0,0,False,126.36666666666666,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4-E,none,-,naive,4,0,0,4,6.25,9.0,0,False,52.916666666666664,17.92307692307803,False,,547,28,23,6,1,0.16666666666666666,invariant:alert_min_rate=23,0,0
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4-E,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,37.416666666666664,18.53846153846265,False,,539,8,0,8,0,0.0,,0,0
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4-E,C1,suppress,-,4,0,1,3,21.25,38.0,0,False,0.0,23.000000000001126,False,,482,0,0,0,0,0.0,,1,1
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4-E,C1,drain,-,4,0,2,2,46.5,111.0,0,False,126.36666666666666,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4-E,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4-E,C1+C3,drain,-,4,3,0,1,7.0,7.0,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4-E,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4-E,C1+C3+OP,drain,-,4,3,0,1,7.0,7.0,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S6,none,-,naive,4,0,0,4,6.25,9.0,0,False,52.916666666666664,17.92307692307803,False,,547,28,23,6,1,0.16666666666666666,invariant:alert_min_rate=23,0,0
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S6,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,37.416666666666664,18.53846153846265,False,,539,8,0,8,0,0.0,,0,0
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S6,C1,suppress,-,4,0,1,3,21.25,38.0,0,False,0.0,23.000000000001126,False,,482,0,0,0,0,0.0,,1,1
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S6,C1,drain,-,4,0,2,2,46.5,111.0,0,False,126.36666666666666,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S6,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S6,C1+C3,drain,-,4,3,0,1,7.0,7.0,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S6,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S6,C1+C3+OP,drain,-,4,3,0,1,7.0,7.0,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S6+F,none,-,naive,4,0,0,4,6.25,9.0,0,False,52.916666666666664,17.92307692307803,False,,547,28,23,6,1,0.16666666666666666,invariant:alert_min_rate=23,0,0
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S6+F,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,37.416666666666664,18.53846153846265,False,,539,8,0,8,0,0.0,,0,0
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S6+F,C1,suppress,-,4,0,1,3,21.25,38.0,0,False,0.0,23.000000000001126,False,,482,0,0,0,0,0.0,,1,1
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S6+F,C1,drain,-,4,0,2,2,46.5,111.0,0,False,126.36666666666666,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S6+F,C1+C3,suppress,-,4,0,4,0,658.75,1178.0,0,False,0.0,59.461538461538474,False,,7,0,0,0,0,0.0,,2,2
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S6+F,C1+C3,drain,-,4,0,2,2,46.25,111.0,0,False,126.41666666666667,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S6+F,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+Buffalo Bayou 08074000 (Harvey),LWL01/poor,S6+F,C1+C3+OP,drain,-,4,0,2,2,46.25,111.0,0,False,126.41666666666667,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
