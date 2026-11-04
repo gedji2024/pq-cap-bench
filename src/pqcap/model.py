@@ -204,10 +204,10 @@ def run(config: Path, results: Path) -> dict[str, pd.DataFrame]:
         from . import blast  # noqa: PLC0415
         from . import envelope as ev  # noqa: PLC0415
         acfg = load_yaml(actions)
-        cat, env = ev.catalogue_from_config(acfg), ev.envelope_from_config(acfg)
-        ev.encode_bounds(env)  # scenario must fit the 64-B envelope bounds field
-        br = blast.blast_radius(cat, env, model["s6"]["tag_bytes"][0])
+        cat, env, inv = ev.catalogue_from_config(acfg), ev.envelope_from_config(acfg), ev.invariants_from_config(acfg)
+        ev.encode_envelope(env)  # scenario must fit the 112-B envelope (64-B bounds, 32-B invariants)
+        br = blast.blast_s4_s6(cat, env, inv, model["s6"]["tag_bytes"][0])
         br.to_csv(results / "model_blast_radius.csv", index=False)
-        k["K5"] = blast.k5(br)
+        k["K5"] = blast.k5(br, blast.reference_state_name(acfg))
     (results / "kill_criteria.json").write_text(json.dumps(k, indent=2, default=str))
     return out

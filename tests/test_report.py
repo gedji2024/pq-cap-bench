@@ -41,7 +41,9 @@ def _fake_results(tmp_path, cfgs):  # noqa: F811
     from pqcap import envelope as ev
     from pqcap.config import load_yaml
     acfg = load_yaml(CONFIG / "actions.yaml")
-    k["K5"] = blast.k5(blast.blast_radius(ev.catalogue_from_config(acfg), ev.envelope_from_config(acfg), 8))
+    br = blast.blast_s4_s6(ev.catalogue_from_config(acfg), ev.envelope_from_config(acfg),
+                           ev.invariants_from_config(acfg), 8)
+    k["K5"] = blast.k5(br, blast.reference_state_name(acfg))
     (r / "kill_criteria.json").write_text(json.dumps(k, default=str))
     cfg = tmp_path / "cfg"
     cfg.mkdir()

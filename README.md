@@ -143,21 +143,39 @@ Encodings:
 - **K4.** Does every S6 crisis command (8 B and 16 B tags) fit in one frame at every US915 downlink DR?
 - **K5.** What is the blast-radius ratio S6/S4 under cloud-side HMAC-key compromise?
 
-## Blast radius under key compromise (`config/actions.yaml`, `pqcap.envelope`, `pqcap.blast`)
-- The attacker holds the cloud-side HMAC key, so it can mint a valid tag and a fresh counter for any message.
-- The blast radius is the number of distinct (action, target, value) commands from the catalogue that the device **accepts**: sampling interval, sensor enable/disable, alert threshold, valve opening.
-- **S4:** every syntactically valid catalogue command is accepted.
-- **S6:** a command is accepted only if it is also inside the PQ-signed envelope's bounds. Those bounds were verified in the calm phase, and the HMAC key cannot forge them.
-- Counts are produced by running **every** candidate through the device-side check functions `check_s4` / `check_s6`. A test cross-checks them against the closed form.
-- Envelope checking is implemented as pure functions (state in, state out). Hypothesis property tests check:
-  - soundness: no accepted command is outside the bounds or catalogue, and none has a stale counter;
-  - completeness: every in-bounds command with a fresh counter is accepted;
-  - S6-accepted ⊆ S4-accepted;
-  - any single-bit tampering is rejected;
-  - encode/decode round-trips.
-- The scenario rules are serialised into the 64-byte envelope bounds field, and the run fails if they don't fit.
-- ⚠ The catalogue and envelope bounds are an **illustrative scenario**, not measured data. K5 is only as meaningful as those bounds.
-- Commands are counted with equal weight. Read the per-action breakdown to see which harmful actions S6 removes entirely: in the default scenario, disabling a sensor.
+## Device profile and blast radius (`config/actions.yaml`, `pqcap.envelope`, `pqcap.blast`)
+**Profile.** The action **types** follow Kerkez et al., "Toward Agent-Native Water Systems", ACM DXConf 2026, doi:10.1145/3847238.3849040 (§4.1 single ultrasonic depth sensor per cellular node; §6 adaptive reporting):
+- `set_reporting_interval`
+- `request_immediate_uplink`
+- `sensor_enable` (enable/disable)
+- `set_alert_threshold`
+
+Physical invariants (state-dependent):
+- a minimum reporting rate, and no sensor disable, during an active alert;
+- a battery floor, below which faster reporting and immediate uplinks are refused.
+
+⚠ **Every numeric value is "assumed — pending field profile".** The paper is cited for the action types only.
+
+**Checks.** All checks are pure functions (state in, state out). The 112-byte envelope is fully specified: header 16 (handle, validity), bounds 64, invariants 32.
+
+| Scheme | Device accepts a command if |
+|---|---|
+| S4 | valid MAC + fresh counter + in catalogue |
+| S4-F | the above + static firmware bounds + firmware invariants |
+| S4-E / S6 | the above + installed envelope handle + validity window + envelope bounds + envelope invariants |
+
+S4-E and S6 differ only in how the envelope is installed:
+- S4-E: HMAC with a per-device policy key.
+- S6: PQ signature, verified with the authority's public key.
+
+**Counting.** Blast radius = the number of (action, target, value) commands the device accepts. It is counted by running every candidate through the device check in an explicit device state (alert × battery). K5 uses `count_state`; all four states are in `results/model_blast_radius.csv`.
+
+**Hypothesis property tests:**
+- soundness: no accepted command is outside bounds, catalogue, validity or any invariant;
+- completeness;
+- bounded schemes accept a subset of S4;
+- tamper rejection;
+- 112-B envelope round-trip.
 
 ## What is NOT measured
 - **MCU cost:** cycles, RAM, flash and energy for verification on the device. Host timings rank algorithms; they do not predict Cortex-M figures.

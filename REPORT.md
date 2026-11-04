@@ -583,17 +583,17 @@ At the Class A maximum commands per epoch (every downlink opportunity used; infe
 | 8 | 24 | 53 | 1 | True | 6 | - |
 | 16 | 32 | 53 | 1 | True | 6 | - |
 
-**K5 - Blast radius under cloud-side symmetric-key compromise: how many catalogue commands would a device accept from an attacker holding the HMAC key? -> S6/S4 = 0.0346 (641 of 18,513 commands).**
+**K5 - Blast radius under cloud-side session-key compromise: how many catalogue commands would a device accept from an attacker holding the per-command HMAC key? -> S6/S4 = 0.1067 (314 of 2,944 commands, state alert=True,battery=above_floor).**
 
-Counted by running every (action, target, value) in `config/actions.yaml` through the device-side check (`pqcap.envelope.check_s4` / `check_s6`) with a valid tag and fresh counter. The envelope bounds are an illustrative scenario, not a measurement; the ratio is only as meaningful as those bounds.
+Counted by running every (action, target, value) in `config/actions.yaml` through the device-side check (`pqcap.envelope`) with a valid tag and fresh counter, in the stated device state (all states are in `results/model_blast_radius.csv`). Action types follow Kerkez et al. 2026; every bound and invariant is **assumed - pending field profile**, so the ratio is only as meaningful as those values.
 
-| action | catalogue_commands | s4_accepted | s6_accepted | ratio_s6_s4 |
+| action | catalogue_commands | S4 | S6 | ratio_s6_s4 |
 |---|---|---|---|---|
-| set_sampling_interval | 14,400 | 14,400 | 204 | 0.0142 |
-| sensor_enable | 8 | 8 | 4 | 0.5000 |
-| set_alert_threshold | 4,004 | 4,004 | 402 | 0.1004 |
-| set_valve_opening | 101 | 101 | 31 | 0.3069 |
-| TOTAL | 18,513 | 18,513 | 641 | 0.0346 |
+| set_reporting_interval | 1,440 | 1,440 | 11 | 0.0076 |
+| request_immediate_uplink | 1 | 1 | 1 | 1.0000 |
+| sensor_enable | 2 | 2 | 1 | 0.5000 |
+| set_alert_threshold | 1,501 | 1,501 | 301 | 0.2005 |
+| TOTAL | 2,944 | 2,944 | 314 | 0.1067 |
 
 ## 9. Figures
 

@@ -1,4 +1,4 @@
-"""Property tests for S6 envelope checking (hypothesis) + blast-radius accounting."""
+"""Property tests for device-side checks (hypothesis) + blast-radius accounting."""
 
 import pytest
 from hypothesis import HealthCheck, given, settings
@@ -11,44 +11,87 @@ from pqcap.config import CONFIG, load_yaml
 KEY = b"k" * 32
 I32 = st.integers(min_value=-(2**31), max_value=2**31 - 1)
 U8 = st.integers(min_value=0, max_value=255)
-CAT = ev.catalogue_from_config(load_yaml(CONFIG / "actions.yaml"))
+ACFG = load_yaml(CONFIG / "actions.yaml")
+CAT = ev.catalogue_from_config(ACFG)
+INV = ev.invariants_from_config(ACFG)
+SETTINGS = settings(max_examples=400, deadline=None, suppress_health_check=[HealthCheck.too_slow])
 
 
 @st.composite
-def envelopes(draw):
-    """Random envelopes whose rules reference catalogue actions with arbitrary bounds/targets."""
+def invariants(draw):
+    return ev.Invariants(draw(st.integers(0, 1440)), draw(st.booleans()), draw(st.integers(0, 100)),
+                         draw(st.integers(0, 1440)), draw(st.booleans()))
+
+
+@st.composite
+def policies(draw):
+    """Random envelopes: rules over catalogue actions with arbitrary bounds/targets, invariants, validity."""
     rules = {}
     for a in draw(st.lists(st.sampled_from(list(CAT.values())), unique_by=lambda a: a.id, max_size=len(CAT))):
         lo = draw(st.integers(a.min - 5, a.max + 5))
         hi = draw(st.integers(lo, a.max + 10))
-        targets = draw(st.frozensets(st.integers(0, 7), max_size=8))
-        rules[a.id] = ev.Rule(a.id, targets, lo, hi)
-    return ev.Envelope(draw(st.integers(0, 2**32 - 1)), rules)
+        rules[a.id] = ev.Rule(a.id, draw(st.frozensets(st.integers(0, 7), max_size=8)), lo, hi)
+    nb = draw(st.integers(0, 2**31))
+    return ev.Policy(draw(st.integers(0, 2**32 - 1)), rules, draw(invariants()), nb,
+                     draw(st.integers(nb, 2**32 - 1)))
 
 
-SETTINGS = settings(max_examples=400, deadline=None, suppress_health_check=[HealthCheck.too_slow])
+@st.composite
+def states(draw):
+    return ev.DeviceState(draw(st.integers(0, 2**32 - 2)), draw(st.booleans()),
+                          draw(st.floats(0, 100, allow_nan=False)), draw(st.integers(0, 2**32 - 1)))
 
 
 @SETTINGS
-@given(env=envelopes(), aid=U8, target=U8, value=I32, counter=st.integers(1, 2**32 - 1),
-       last=st.integers(0, 2**32 - 1), tag_len=st.sampled_from([8, 16]))
-def test_no_accepted_command_outside_bounds(env, aid, target, value, counter, last, tag_len):
-    """Soundness: anything S6 accepts is inside the envelope AND the catalogue, with a fresh counter."""
+@given(env=policies(), aid=U8, target=U8, value=I32, counter=st.integers(1, 2**32 - 1), s=states(),
+       tag_len=st.sampled_from([8, 16]))
+def test_no_accepted_command_outside_bounds(env, aid, target, value, counter, s, tag_len):
+    """Soundness: anything S6/S4-E accepts is inside bounds, catalogue, validity and every invariant."""
     msg = ev.make_command(KEY, env.handle, counter, aid, target, value, tag_len)
-    d, new = ev.check_s6(env, CAT, ev.DeviceState(last), msg, KEY, tag_len)
+    d, new = ev.check_s6(env, CAT, s, msg, KEY, tag_len)
     if d.accepted:
         r = env.rules[aid]
         assert target in r.targets and r.lo <= value <= r.hi
         assert CAT[aid].min <= value <= CAT[aid].max and target < CAT[aid].targets
-        assert counter > last and new.last_counter == counter
+        assert env.not_before <= s.now <= env.not_after
+        assert ev.invariant_violation(env.invariants, s, aid, value) is None
+        assert counter > s.last_counter and new.last_counter == counter
     else:
-        assert new.last_counter == last
+        assert new == s
 
 
 @SETTINGS
-@given(env=envelopes(), data=st.data(), tag_len=st.sampled_from([8, 16]))
+@given(fw=policies(), aid=U8, target=U8, value=I32, s=states(), tag_len=st.sampled_from([8, 16]))
+def test_s4f_sound(fw, aid, target, value, s, tag_len):
+    msg = ev.make_command(KEY, 0, s.last_counter + 1, aid, target, value, tag_len)
+    if ev.check_s4f(fw, CAT, s, msg, KEY, tag_len)[0].accepted:
+        assert ev.within_bounds(fw, aid, target, value)
+        assert ev.invariant_violation(fw.invariants, s, aid, value) is None
+
+
+@SETTINGS
+@given(inv=invariants(), s=states(), value=st.integers(0, 1440))
+def test_invariants_hold(inv, s, value):
+    """No accepted command breaks the physical invariants (stated directly, independent of the implementation)."""
+    low = inv.battery_floor_pct > 0 and s.soc_pct < inv.battery_floor_pct
+    for aid, v in [(ev.A_INTERVAL, value), (ev.A_IMMEDIATE, 0), (ev.A_ENABLE, 0), (ev.A_ENABLE, 1)]:
+        if ev.invariant_violation(inv, s, aid, v) is None:
+            if aid == ev.A_INTERVAL and s.alert_active and inv.alert_max_interval:
+                assert v <= inv.alert_max_interval
+            if aid == ev.A_INTERVAL and low:
+                assert v >= inv.low_batt_min_interval
+            if aid == ev.A_IMMEDIATE and low:
+                assert not inv.low_batt_block_immediate
+            if aid == ev.A_ENABLE and v == 0 and s.alert_active:
+                assert not inv.alert_forbid_disable
+
+
+@SETTINGS
+@given(env=policies(), data=st.data(), tag_len=st.sampled_from([8, 16]))
 def test_in_bounds_commands_accepted(env, data, tag_len):
-    """Completeness: every command inside envelope and catalogue, with fresh counter, is accepted."""
+    """Completeness: in-bounds, in-catalogue, valid-time, invariant-respecting, fresh commands are accepted."""
+    s = ev.DeviceState(6, data.draw(st.booleans()), data.draw(st.floats(0, 100)),
+                       data.draw(st.integers(env.not_before, env.not_after)))
     ok = [(r, CAT[r.action_id]) for r in env.rules.values()
           if any(t < CAT[r.action_id].targets for t in r.targets)
           and max(r.lo, CAT[r.action_id].min) <= min(r.hi, CAT[r.action_id].max)]
@@ -58,16 +101,21 @@ def test_in_bounds_commands_accepted(env, data, tag_len):
     t = data.draw(st.sampled_from(sorted(x for x in r.targets if x < a.targets)))
     v = data.draw(st.integers(max(r.lo, a.min), min(r.hi, a.max)))
     msg = ev.make_command(KEY, env.handle, 7, a.id, t, v, tag_len)
-    assert ev.check_s6(env, CAT, ev.DeviceState(6), msg, KEY, tag_len)[0].accepted
+    d = ev.check_s6(env, CAT, s, msg, KEY, tag_len)[0]
+    assert d.accepted == (ev.invariant_violation(env.invariants, s, a.id, v) is None)
 
 
 @SETTINGS
-@given(env=envelopes(), aid=U8, target=U8, value=I32, tag_len=st.sampled_from([8, 16]))
-def test_s6_accepts_subset_of_s4(env, aid, target, value, tag_len):
-    m6 = ev.make_command(KEY, env.handle, 2, aid, target, value, tag_len)
-    m4 = ev.make_command(KEY, 0, 2, aid, target, value, tag_len)
-    if ev.check_s6(env, CAT, ev.DeviceState(1), m6, KEY, tag_len)[0].accepted:
-        assert ev.check_s4(CAT, ev.DeviceState(1), m4, KEY, tag_len)[0].accepted
+@given(env=policies(), aid=U8, target=U8, value=I32, s=states(), tag_len=st.sampled_from([8, 16]))
+def test_bounded_schemes_accept_subset_of_s4(env, aid, target, value, s, tag_len):
+    c = s.last_counter + 1
+    m6 = ev.make_command(KEY, env.handle, c, aid, target, value, tag_len)
+    m4 = ev.make_command(KEY, 0, c, aid, target, value, tag_len)
+    a4 = ev.check_s4(CAT, s, m4, KEY, tag_len)[0].accepted
+    if ev.check_s6(env, CAT, s, m6, KEY, tag_len)[0].accepted:
+        assert a4
+    if ev.check_s4f(env, CAT, s, m4, KEY, tag_len)[0].accepted:
+        assert a4
 
 
 @SETTINGS
@@ -77,65 +125,85 @@ def test_params_roundtrip(aid, target, value):
 
 
 @SETTINGS
-@given(env=envelopes())
-def test_bounds_roundtrip(env):
-    env = ev.Envelope(env.handle, {k: r for k, r in env.rules.items() if r.lo >= -(2**31)})
-    assert ev.decode_bounds(env.handle, ev.encode_bounds(env)) == env
+@given(env=policies())
+def test_envelope_roundtrip(env):
+    inv = env.invariants
+    env = ev.Policy(env.handle, env.rules, ev.Invariants(inv.alert_max_interval, inv.alert_forbid_disable,
+                                                         inv.battery_floor_pct, inv.low_batt_min_interval,
+                                                         inv.low_batt_block_immediate), env.not_before, env.not_after)
+    blob = ev.encode_envelope(env)
+    assert len(blob) == ev.ENVELOPE_BYTES == 112
+    assert ev.decode_envelope(blob) == env
 
 
 @SETTINGS
-@given(env=envelopes(), flip=st.integers(0, 15), tag_len=st.sampled_from([8, 16]))
+@given(env=policies(), flip=st.integers(0, 15), tag_len=st.sampled_from([8, 16]))
 def test_any_tampering_rejected(env, flip, tag_len):
-    msg = bytearray(ev.make_command(KEY, env.handle, 5, 1, 0, 30, tag_len))
+    msg = bytearray(ev.make_command(KEY, env.handle, 5, 1, 0, 10, tag_len))
     msg[flip] ^= 0x01                                    # flip a bit in handle/counter/params
     assert not ev.check_s6(env, CAT, ev.DeviceState(0), bytes(msg), KEY, tag_len)[0].accepted
 
 
-def _scenario():
-    cfg = load_yaml(CONFIG / "actions.yaml")
-    return ev.envelope_from_config(cfg)
+# ---------------------------------------------------------------- deterministic cases
+ENV = ev.envelope_from_config(ACFG)
 
 
 @pytest.mark.parametrize("tag_len", [8, 16])
 def test_reject_reasons(tag_len):
-    env = _scenario()
-    good = ev.make_command(KEY, env.handle, 5, 1, 0, 30, tag_len)
-    s0 = ev.DeviceState(4)
-    assert ev.check_s6(env, CAT, s0, good, KEY, tag_len)[0] == ev.Decision(True, "ok")
-    reason = lambda m, st_=s0: ev.check_s6(env, CAT, st_, m, KEY, tag_len)[0].reason  # noqa: E731
+    s0 = ev.DeviceState(4, alert_active=True, soc_pct=90.0)
+    good = ev.make_command(KEY, ENV.handle, 5, ev.A_INTERVAL, 0, 10, tag_len)
+    assert ev.check_s6(ENV, CAT, s0, good, KEY, tag_len)[0] == ev.Decision(True, "ok")
+    reason = lambda m, st_=s0: ev.check_s6(ENV, CAT, st_, m, KEY, tag_len)[0].reason  # noqa: E731
+    cmd = lambda a, v, h=ENV.handle: ev.make_command(KEY, h, 5, a, 0, v, tag_len)  # noqa: E731
     assert reason(good[:-1]) == "length"
     assert reason(good, ev.DeviceState(5)) == "replay"
     assert reason(good[:-1] + bytes([good[-1] ^ 1])) == "tag"
-    assert reason(ev.make_command(KEY, env.handle + 1, 5, 1, 0, 30, tag_len)) == "handle"
-    assert reason(ev.make_command(KEY, env.handle, 5, 2, 0, 0, tag_len)) == "envelope"      # disable sensor
-    assert reason(ev.make_command(KEY, env.handle, 5, 9, 0, 0, tag_len)) == "catalogue"
-    body = ev.HEADER.pack(env.handle, 5) + ev.PARAMS.pack(1, 0, 30, 1)
-    assert reason(body + ev.tag(KEY, body, tag_len)) == "reserved"
-    body4 = ev.HEADER.pack(0, 5) + ev.PARAMS.pack(1, 0, 30, 1)
+    assert reason(cmd(ev.A_INTERVAL, 10, ENV.handle + 1)) == "handle"
+    assert reason(cmd(ev.A_INTERVAL, 30)) == "invariant:alert_min_rate"       # in bounds, too slow during alert
+    assert reason(cmd(ev.A_INTERVAL, 90)) == "bounds"
+    assert reason(cmd(ev.A_ENABLE, 0)) == "bounds"                            # envelope: enable only
+    assert reason(cmd(9, 0)) == "catalogue"
+    low = ev.DeviceState(4, alert_active=False, soc_pct=5.0)
+    assert reason(cmd(ev.A_IMMEDIATE, 0), low) == "invariant:battery_floor"
+    assert reason(cmd(ev.A_INTERVAL, 30), low) == "invariant:battery_floor"
+    assert reason(cmd(ev.A_INTERVAL, 30), ev.DeviceState(4, now=5)) == "ok"
+    exp = ev.Policy(ENV.handle, ENV.rules, ENV.invariants, 10, 20)
+    assert ev.check_s6(exp, CAT, ev.DeviceState(4, now=21), cmd(ev.A_INTERVAL, 30), KEY, tag_len)[0].reason == "expired"
+    body = ev.HEADER.pack(ENV.handle, 5) + ev.PARAMS.pack(1, 0, 10, 1)
+    assert reason(body + ev.tag(KEY, body, tag_len)) == "catalogue"           # reserved bits set
+    body4 = ev.HEADER.pack(0, 5) + ev.PARAMS.pack(1, 0, 10, 1)
     assert ev.check_s4(CAT, s0, body4 + ev.tag(KEY, body4, tag_len), KEY, tag_len)[0].reason == "catalogue"
     assert ev.check_s4(CAT, s0, good[:-1], KEY, tag_len)[0].reason == "length"
+    fw = ev.firmware_policy_from_config(ACFG)
+    assert ev.check_s4f(fw, CAT, s0, good[:-1], KEY, tag_len)[0].reason == "length"
+    assert ev.check_s4f(fw, CAT, ev.DeviceState(4), cmd(ev.A_ENABLE, 0, 0), KEY, tag_len)[0].accepted
 
 
-def test_encode_bounds_limits():
-    env = _scenario()
-    assert len(ev.encode_bounds(env)) == 64
-    too_many = ev.Envelope(1, {i: ev.Rule(i, frozenset({0}), 0, 1) for i in range(1, 8)})  # 70 B
+def test_encoding_limits_and_config():
+    assert len(ev.encode_bounds(ENV)) == 64 and len(ev.encode_invariants(INV)) == 32
     with pytest.raises(ValueError, match="bounds field"):
-        ev.encode_bounds(too_many)
+        ev.encode_bounds(ev.Policy(1, {i: ev.Rule(i, frozenset({0}), 0, 1) for i in range(1, 8)}))  # 70 B
     with pytest.raises(ValueError, match="bitmap"):
-        ev.encode_bounds(ev.Envelope(1, {1: ev.Rule(1, frozenset({8}), 0, 1)}))
+        ev.encode_bounds(ev.Policy(1, {1: ev.Rule(1, frozenset({8}), 0, 1)}))
+    with pytest.raises(ValueError, match="112"):
+        ev.decode_envelope(b"\0" * 10)
+    assert ACFG["status"].startswith("assumed")
+    p = ev.permissive_policy(CAT)
+    assert all(p.rules[a.id].lo == a.min and p.rules[a.id].hi == a.max for a in CAT.values())
+    assert ev.invariants_from_config({}) == ev.NO_INVARIANTS
 
 
-def test_blast_radius_matches_closed_form():
-    env = _scenario()
-    df = blast.blast_radius(CAT, env, 8).set_index("action")
+def test_blast_s4_s6_matches_closed_form():
+    df = blast.blast_s4_s6(CAT, ENV, INV, 8)
+    ref = blast.reference_state_name(ACFG)
+    d = df[df.state == ref].pivot_table(index="action", columns="scheme", values="accepted")
+    s = ev.DeviceState(0, True, 100.0)
     for a in CAT.values():
-        r = env.rules.get(a.id)
-        exp6 = 0 if r is None else (len([t for t in r.targets if t < a.targets])
-                                    * max(0, min(r.hi, a.max) - max(r.lo, a.min) + 1))
-        assert df.loc[a.name, "s4_accepted"] == a.targets * (a.max - a.min + 1) == df.loc[a.name, "catalogue_commands"]
-        assert df.loc[a.name, "s6_accepted"] == exp6
-    tot = df.loc["TOTAL"]
-    assert tot.s6_accepted == df.drop("TOTAL").s6_accepted.sum()
-    k = blast.k5(df.reset_index())
-    assert k["ratio"] == pytest.approx(tot.s6_accepted / tot.s4_accepted) and k["answer"].startswith("S6/S4")
+        assert d.loc[a.name, "S4"] == a.targets * (a.max - a.min + 1)
+        exp = sum(ev.within_bounds(ENV, a.id, t, v) and ev.invariant_violation(INV, s, a.id, v) is None
+                  for t in range(a.targets) for v in range(a.min, a.max + 1))
+        assert d.loc[a.name, "S6"] == exp
+    assert set(df.state) == set(blast.device_states(INV))
+    k = blast.k5(df, ref)
+    assert k["ratio"] == pytest.approx(k["s6_accepted"] / k["s4_accepted"]) and k["answer"].startswith("S6/S4")
+    assert blast.reference_state_name({}) == "alert=True,battery=above_floor"

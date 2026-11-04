@@ -245,13 +245,14 @@ def section_s6(results: Path, model: dict) -> str:
 
 def section_k5(k5: dict) -> str:
     df = pd.DataFrame(k5["rows"])
-    return ("**K5 - Blast radius under cloud-side symmetric-key compromise: how many catalogue commands would a "
-            f"device accept from an attacker holding the HMAC key? -> {k5['answer']}.**\n\n"
+    ints = lambda v: f"{int(v):,}"  # noqa: E731
+    return ("**K5 - Blast radius under cloud-side session-key compromise: how many catalogue commands would a "
+            f"device accept from an attacker holding the per-command HMAC key? -> {k5['answer']}.**\n\n"
             "Counted by running every (action, target, value) in `config/actions.yaml` through the device-side check "
-            "(`pqcap.envelope.check_s4` / `check_s6`) with a valid tag and fresh counter. The envelope bounds are an "
-            "illustrative scenario, not a measurement; the ratio is only as meaningful as those bounds.\n\n"
-            + md_table(df[["action", "catalogue_commands", "s4_accepted", "s6_accepted", "ratio_s6_s4"]],
-                       {c: (lambda v: f"{int(v):,}") for c in ["catalogue_commands", "s4_accepted", "s6_accepted"]}
+            "(`pqcap.envelope`) with a valid tag and fresh counter, in the stated device state (all states are in "
+            "`results/model_blast_radius.csv`). Action types follow Kerkez et al. 2026; every bound and invariant is "
+            "**assumed - pending field profile**, so the ratio is only as meaningful as those values.\n\n"
+            + md_table(df, {c: ints for c in df.columns if c not in ("action", "ratio_s6_s4")}
                        | {"ratio_s6_s4": lambda v: f"{v:.4f}"}))
 
 

@@ -1,25 +1,52 @@
-# Action catalogue and crisis-envelope SCENARIO for the blast-radius metric (K5).
+# Device action profile for the blast-radius (K5/K6) and harm metrics.
 #
-# Nothing here is measured or taken from a specification: it is an illustrative device
-# profile (a hydrological monitoring node with 4 sensor slots and 1 valve). The S6/S4
-# blast-radius ratio depends directly on these choices -- change them to your deployment.
+# ACTION TYPES follow Kerkez, Watteyne, Tobias, Andersen, Prater, "Toward Agent-Native Water
+# Systems", ACM DXConf 2026, doi:10.1145/3847238.3849040 (Sec. 4.1: one ultrasonic depth sensor per
+# node, cellular modem; Sec. 6: adaptive reporting -- ramp reporting up on rise, step down when
+# steady, "the sensor battery should never die"; alerts by email/text).
+# The paper is cited for the action TYPES only.
 #
-# Command space = (action, target, integer value). A command is "accepted" if the device's
-# verification function (pqcap.envelope) returns accepted for it with a valid tag and fresh
-# counter, i.e. assuming the attacker holds the cloud-side HMAC key.
+# EVERY NUMERIC VALUE BELOW IS "assumed -- pending field profile": it is not taken from the paper,
+# from a specification, or from a measurement. Replace with the deployment's real profile.
 
+source_for_action_types: "Kerkez et al. 2026, ACM DXConf, doi:10.1145/3847238.3849040, Sec. 4.1 and Sec. 6"
+status: "assumed -- pending field profile"
+
+# Command space = (action, target, integer value). One depth sensor per node -> 1 target.
 catalogue:
-  set_sampling_interval:  {id: 1, targets: 4, min: 1,   max: 3600, unit: s}
-  sensor_enable:          {id: 2, targets: 4, min: 0,   max: 1,    unit: "0=disable,1=enable"}
-  set_alert_threshold:    {id: 3, targets: 4, min: 0,   max: 1000, unit: cm}
-  set_valve_opening:      {id: 4, targets: 1, min: 0,   max: 100,  unit: "%"}
+  set_reporting_interval:   {id: 1, targets: 1, min: 1, max: 1440, unit: min}    # assumed -- pending field profile
+  request_immediate_uplink: {id: 2, targets: 1, min: 0, max: 0,    unit: none}   # assumed -- pending field profile
+  sensor_enable:            {id: 3, targets: 1, min: 0, max: 1,    unit: "0=disable,1=enable"}  # assumed
+  set_alert_threshold:      {id: 4, targets: 1, min: 0, max: 1500, unit: cm of stage}           # assumed
 
-# Crisis envelope (S6): what the PQ-signed envelope pre-authorises for the event.
+# Physical invariants (state-dependent), enforced on the device by S6 / S4-E (in the envelope)
+# and by S4-F (in firmware). S4 enforces none.
+invariants:
+  alert_max_interval_min: 15        # min reporting rate during an active alert -- assumed -- pending field profile
+  alert_forbid_disable: true        # sensor cannot be disabled during an active alert -- assumed
+  battery_floor_soc_pct: 20         # battery floor (state of charge) -- assumed -- pending field profile
+  low_battery_min_interval_min: 120 # below the floor, no faster reporting than this -- assumed
+  low_battery_block_immediate_uplink: true                                      # assumed
+
+# S6 / S4-E crisis envelope: what the policy authority pre-authorises for an event.
 # Omitted actions are forbidden. targets = allowed target indices; [lo, hi] inclusive.
 envelope:
-  handle: 0x0000002A
+  handle: 42                                                            # arbitrary identifier
   rules:
-    set_sampling_interval: {targets: [0, 1, 2, 3], lo: 10,  hi: 60}    # faster sampling only
-    sensor_enable:         {targets: [0, 1, 2, 3], lo: 1,   hi: 1}     # may enable, never disable
-    set_alert_threshold:   {targets: [0, 1],       lo: 200, hi: 400}   # bounded around nominal
-    set_valve_opening:     {targets: [0],          lo: 0,   hi: 30}    # partial opening only
+    set_reporting_interval:   {targets: [0], lo: 5,   hi: 60}           # assumed -- pending field profile
+    request_immediate_uplink: {targets: [0], lo: 0,   hi: 0}            # assumed
+    sensor_enable:            {targets: [0], lo: 1,   hi: 1}            # enable only -- assumed
+    set_alert_threshold:      {targets: [0], lo: 460, hi: 760}          # 15.1-24.9 ft -- assumed
+
+# S4-F: static bounds hard-coded in firmware at manufacture (not updatable over the air). They must
+# cover every legitimate operating mode for the device's lifetime, so they are wider than an
+# event envelope. The same physical invariants are hard-coded.
+firmware_bounds:
+  rules:
+    set_reporting_interval:   {targets: [0], lo: 5,   hi: 720}          # assumed -- pending field profile
+    request_immediate_uplink: {targets: [0], lo: 0,   hi: 0}            # assumed
+    sensor_enable:            {targets: [0], lo: 0,   hi: 1}            # maintenance needs disable -- assumed
+    set_alert_threshold:      {targets: [0], lo: 150, hi: 1500}         # assumed
+
+# Device state in which blast radius is counted (K5/K6). All four combinations go to the CSV.
+count_state: {alert_active: true, battery_above_floor: true}
