@@ -1,0 +1,58 @@
+# Milesight EM400-UDL (LoRaWAN). Every value: document, section/page, verbatim quote.
+# range_source: downlink_table | app_setting (ToolBox/AT range, not stated for the downlink) | encoding (no documented limit)
+device: {manufacturer: Milesight, model: EM400-UDL}
+docs:
+  main: {title: "Ultrasonic Distance Sensor EM400-UDL User Guide", version: "V 1.1", release_date: "June 15, 2023",
+         url: "https://resource.milesight.com/milesight/iot/document/em400-udl-user-guide-en.pdf", accessed: 2026-11-04,
+         sha256: 5663470b0d0580857938ea0470ab84b1504d4932cfbd3132de423cee35dfd7e6}
+downlink_fport:
+  value: 85
+  source: {doc: main, section: "6.1.2 Downlink Commands", page: 19,
+           quote: "EM400-UDL supports downlink commands to configure the device. Application port is 85 by default."}
+byte_order:
+  value: little
+  status: "inferred from worked example (no explicit sentence in the LoRaWAN section)"
+  source: {doc: main, section: "6.1.2 Downlink Commands", page: 19, quote: "b0 04 => 04 b0 = 1200s = 20 minutes"}
+battery:
+  capacity_mAh: {value: 18000, note: "two batteries x 9000 mAh",
+                 source: {doc: main, section: "1.2 Features", page: 3, quote: "Built-in two 9000 mAh replaceable batteries and work for 10 years without replacement"}}
+  lifetime_claim: {value_years: 10, conditions: "NOT FOUND (reporting interval, SF, temperature not stated)",
+                   source: {doc: main, section: "1.1 Overview", page: 3, quote: "EM400-UDL can work up to 10 years with two 9000 mAh batteries."}}
+  sleep_uA: null
+  tx_mA: null
+  uplinks_per_battery: null
+actions:
+  - action: set_reporting_interval
+    command: "ff 03"
+    payload_bytes: 4
+    dims: [{name: interval, unit: s, min: 60, max: 64800, range_source: app_setting,
+            note: "ToolBox range 1~1080 min converted to seconds; downlink table states only '2 Bytes, unit: s'"}]
+    default: {value: 600, unit: s, source: {doc: main, section: "4.2 Basic Settings", page: 7,
+              quote: "Reporting Interval    LoRaWAN® Version: 10 minutes as default, range: 1~1080 minutes;"}}
+    source: {doc: main, section: "6.1.2 Downlink Commands", page: 19, quote: "03 (Set Reporting Interval)        2 Bytes, unit: s"}
+  - action: set_alarm_threshold
+    command: "ff 06"
+    payload_bytes: 11
+    dims:
+      - {name: alarm_type, unit: enum, min: 1, max: 4, range_source: downlink_table,
+         note: "CTRL Bit2~Bit0 001-below 010-above 011-within 100-below or above (000 = disable, see alarm_disable)"}
+      - {name: min_mm, unit: mm, min: 0, max: 65535, range_source: encoding, note: "Min(2B); signedness NOT FOUND"}
+      - {name: max_mm, unit: mm, min: 0, max: 65535, range_source: encoding, note: "Max(2B); signedness NOT FOUND"}
+    source: {doc: main, section: "6.1.2 Downlink Commands", page: 19,
+             quote: ["06 (Set Threshold Alarm)", "CTRL(1B)+Min(2B)+Max(2B)+00000000(4B)", "010-above"]}
+  - action: alarm_disable
+    command: "ff 06 (CTRL Bit2~Bit0 = 000)"
+    payload_bytes: 11
+    dims: []
+    source: {doc: main, section: "6.1.2 Downlink Commands", page: 19, quote: "CTRL: Bit2~Bit0: 000-disable"}
+  - action: reboot
+    command: "ff 10"
+    payload_bytes: 3
+    dims: []
+    source: {doc: main, section: "6.1.2 Downlink Commands", page: 19, quote: "2. Reboot the device.  ff10ff"}
+not_found:
+  - "downlink command for the collecting interval (ToolBox only, p.13)"
+  - "ADR / data-rate downlink commands (ToolBox settings only, pp.10-11)"
+  - "downlink range for ff03 (only the ToolBox range in minutes)"
+  - "range and signedness of threshold Min/Max"
+  - "sleep current, transmit current, uplinks per battery"

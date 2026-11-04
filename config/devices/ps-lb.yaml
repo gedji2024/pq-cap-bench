@@ -1,0 +1,72 @@
+# Dragino PS-LB (LoRaWAN air/water pressure sensor). HTML manual on docs.dragino.com (no version printed).
+device: {manufacturer: Dragino, model: PS-LB}
+docs:
+  main: {title: "PS-LB/LS | Dragino Documentation Center", version: null, release_date: null,
+         url: "https://docs.dragino.com/docs/LoRaWAN-End-Node/flow-pressure-weight-sensors/ps-lb-ps-ls/", accessed: 2026-11-04,
+         sha256: cb9753d1ca426afb35cc406b52ae8864126e885e64e8180234f5a8aa4a7ff608, note: "HTML page; no version or date printed; covers firmware features up to v1.2.8"}
+  general: {title: "End Device AT Commands and Downlink | Dragino Documentation Center", version: null,
+            url: "https://docs.dragino.com/docs/LoRaWAN-General-Configuration/at-commands-downlink/", accessed: 2026-11-04,
+            sha256: 0a7ab5760a2684e083f294d5aa49c3ce9f31080dd356bc8ed5ae24ca6654bece, note: "PS-LB manual sec. 3.2 defers reboot/ADR/DR commands to this page"}
+downlink_fport: {value: null, status: "NOT FOUND (neither document states the downlink FPort)"}
+byte_order:
+  value: big
+  status: "stated only for 0x0D (sec. 3.12); elsewhere inferred from examples"
+  source: {doc: main, section: "3.3.1 Set Transmit Interval Time", quote: "If the downlink payload=0100003C, it means set the END Node's Transmit Interval to 0x00003C=60(S)"}
+battery:
+  capacity_mAh: {value: 8500, source: {doc: main, section: "1.3 Specification / Battery", quote: "Capacity: 8500mAh"}}
+  sleep_uA: {value: 5, source: {doc: main, section: "1.3 Specification / Power Consumption", quote: "Sleep Mode: 5uA @ 3.3v"}}
+  tx_mA:
+    - {value: 125, condition: "20 dBm", source: {doc: main, section: "1.3 Specification / Power Consumption", quote: "LoRa Transmit Mode: 125mA @ 20dBm, 82mA @ 14dBm"}}
+    - {value: 82, condition: "14 dBm", source: {doc: main, section: "1.3 Specification / Power Consumption", quote: "LoRa Transmit Mode: 125mA @ 20dBm, 82mA @ 14dBm"}}
+  lifetime_claim: {value_years: 5, conditions: "NOT FOUND",
+                   source: {doc: main, section: "1.1 What is LoRaWAN Pressure Sensor", quote: "PS-LB/LS is powered by  8500mAh Li-SOCI2 battery or  solar powered + Li-ion battery , it is designed for long term use up to 5 years."}}
+  uplinks_per_battery: null
+  not_found: ["transmit duration per uplink", "RX-window and probe-power consumption", "uplink count per battery"]
+actions:
+  - action: set_reporting_interval
+    command: "01"
+    payload_bytes: 4
+    dims: [{name: interval, unit: s, min: 0, max: 16777215, range_source: encoding, note: "3-byte value; no documented min/max"}]
+    default: {value: 1200, unit: s, source: {doc: main, section: "2.4 Uplink Interval", quote: "The PS-LB/LS by default uplink the sensor data every 20 minutes."}}
+    source: {doc: main, section: "3.3.1 Set Transmit Interval Time",
+             quote: "Format: Command Code (0x01) followed by 3 bytes time value."}
+  - action: set_collect_interval
+    command: "AE"
+    payload_bytes: 5
+    dims:
+      - {name: interval, unit: s, min: 1, max: 65535, range_source: app_setting, note: "range stated for AT+STDC"}
+      - {name: count, unit: n, min: 1, max: 120, range_source: app_setting, note: "range stated for AT+STDC"}
+    source: {doc: main, section: "3.3.5 Multiple collections are one uplink",
+             quote: "bb: Each collection interval (s), the value is 1 65535 cc: the number of collection times, the value is 1 120"}
+  - action: set_alarm_threshold
+    command: "09 (wave alarm modes 1-2)"
+    payload_bytes: 8
+    dims:
+      - {name: mode, unit: enum, min: 1, max: 2, range_source: downlink_table}
+      - {name: detect_interval, unit: s, min: 0, max: 65535, range_source: app_setting, note: "Range: 0~65535s"}
+      - {name: idc_change, unit: uA, min: 0, max: 65535, range_source: encoding}
+      - {name: vdc_change, unit: mV, min: 0, max: 65535, range_source: encoding}
+    source: {doc: main, section: "2.8.2.1 Wave alarm mode",
+             quote: ["Downlink Command: 0x09 aa bb cc dd", "aa: 1 byte; Set the wave alarm mode.", "dd: 2 bytes; Setting the VDC change threshold. (mV)"]}
+    ambiguity: "text says 'followed by 4 bytes' but fields total 7 and examples are 8 bytes; examples used"
+  - action: alarm_disable
+    command: "09 00 (ROC mode 0)"
+    payload_bytes: 8
+    dims: []
+    source: {doc: main, section: "2.8.2.1 Wave alarm mode (AT+ROC)", quote: "AT+ROC=a,b,c,d  a:  Enable or disable the ROC  0:  off"}
+  - action: set_adr
+    command: "22"
+    payload_bytes: 2
+    dims: [{name: adr, unit: flag, min: 0, max: 1, range_source: downlink_table}]
+    source: {doc: general, section: "7.1 Adaptive Data Rate", quote: "Example 1 : Downlink Payload: 2201 // Set AT+ADR=1. Example 2 : Downlink Payload: 2200FFFF // Set AT+ADR=0."}
+  - action: set_dr
+    command: "22 00 aa FF"
+    payload_bytes: 4
+    dims: [{name: dr, unit: DR, min: 0, max: 7, range_source: downlink_table}]
+    source: {doc: general, section: "7.4 Data Rate", quote: "Feature: Get or Set the Data Rate. (0-7 corresponding to DR_X)"}
+  - action: reboot
+    command: "04 FF"
+    payload_bytes: 2
+    dims: []
+    source: {doc: general, section: "4.2 Reboot End Node", quote: "If the downlink payload= 04FF , the end node will reboot."}
+not_found: ["downlink FPort", "min/max of TDC", "document version/date"]

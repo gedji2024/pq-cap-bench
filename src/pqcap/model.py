@@ -209,6 +209,12 @@ def run(config: Path, results: Path) -> dict[str, pd.DataFrame]:
             meta_p = series.with_suffix(".meta.json")
             hm["source"] = json.loads(meta_p.read_text()) if meta_p.exists() else {}
             (results / "harm_meta.json").write_text(json.dumps(hm, indent=2, default=str))
+    if (config / "devices").is_dir() and (config / "policies.yaml").exists():
+        from . import devices as devm  # noqa: PLC0415
+        cdf, ck5, ck6 = devm.run(config)
+        cdf.to_csv(results / "catalogue_blast.csv", index=False)
+        ck5.to_csv(results / "catalogue_k5_ranges.csv", index=False)
+        ck6.to_csv(results / "catalogue_k6_ranges.csv", index=False)
     if (config / "mcu.yaml").exists():
         from . import pqm4  # noqa: PLC0415
         from .config import REPO_ROOT  # noqa: PLC0415

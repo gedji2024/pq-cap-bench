@@ -64,8 +64,13 @@ def _fake_results(tmp_path, cfgs):  # noqa: F811
     (cfg / "model.yaml").write_text(json.dumps(mdl))
     (cfg / "radio.yaml").write_text(json.dumps(radio))
     (cfg / "traceability.yaml").write_text((CONFIG / "traceability.yaml").read_text())
-    for f in ("mcu.yaml", "repo_state.yaml"):
+    for f in ("mcu.yaml", "repo_state.yaml", "policies.yaml", "threat.yaml", "actions.yaml"):
         (cfg / f).write_text((CONFIG / f).read_text())
+    from pqcap import devices as _d
+    cdf, ck5, ck6 = _d.run(CONFIG)
+    cdf.to_csv(r / "catalogue_blast.csv", index=False)
+    ck5.to_csv(r / "catalogue_k5_ranges.csv", index=False)
+    ck6.to_csv(r / "catalogue_k6_ranges.csv", index=False)
     from pqcap import pqm4 as _p
     _p.verification_cost(CONFIG, REPO_ROOT).to_csv(r / "mcu_verify_cost.csv", index=False)
     from pqcap import harm
@@ -85,7 +90,7 @@ def test_report_renders(tmp_path, cfgs):  # noqa: F811
     (figs / "fig1_x.png").write_bytes(b"")
     report.run(cfg, r, figs)
     md = (tmp_path / "REPORT.md").read_text()
-    for h in ("## 1. Environment", "## 4. Host timings", "## 8. Kill criteria", "**K1", "**K2", "**K3", "**K4", "**K5 - Blast radius", "**K5 - blast radius per compromise", "## 7d. Revocation", "## 8b. Traceability", "## 7f. Device-side", "Energy is **not reported**", "## 0. Repository state", "kept `7df90f4`", "T10", "## 7e. Harm-weighted replay", "**Data gaps > 60 min", "**K6 - blast(S4-E)",
+    for h in ("## 1. Environment", "## 4. Host timings", "## 8. Kill criteria", "**K1", "**K2", "**K3", "**K4", "**K5 - Blast radius", "**K5 - blast radius per compromise", "## 7d. Revocation", "## 8b. Traceability", "## 8a. K5/K6 on the manufacturer", "**SUPERSEDED**", "## 7f. Device-side", "Energy is **not reported**", "## 0. Repository state", "kept `7df90f4`", "T10", "## 7e. Harm-weighted replay", "**Data gaps > 60 min", "**K6 - blast(S4-E)",
               "## 7c. S6", "Crisis commands per gateway", "**Why the crisis capacities differ", "its capacity equals S6", "fig1_x.png"):
         assert h in md
     assert "env.json missing" in md
@@ -119,13 +124,14 @@ def test_report_env_and_na(tmp_path, cfgs):  # noqa: F811
     (r / "model_harm.csv").unlink()
     (cfg / "traceability.yaml").unlink()
     (cfg / "repo_state.yaml").unlink()
+    (r / "catalogue_k5_ranges.csv").unlink()
     (r / "mcu_verify_cost.csv").unlink()
     (r / "model_s6_calm.csv").unlink()
     (r / "kill_criteria.json").write_text(json.dumps(k))
     report.run(cfg, r, tmp_path)
     md = (tmp_path / "REPORT.md").read_text()
     assert "## 4. Host timings (cpu host, not MCU)" in md and "**All timings: cpu host, not MCU.**" in md
-    assert "**K1: n/a**" in md and "**K2: n/a**" in md and "**K4: n/a**" in md and "**K5: n/a**" in md and "**K6: n/a**" in md and "_revocation not configured_" in md and "_harm replay not run" in md and "_no traceability map_" in md and "_no pqm4 data_" in md and "_no repository state record_" in md and "_S6 not configured_" in md and "| CPU | cpu |" in md
+    assert "**K1: n/a**" in md and "**K2: n/a**" in md and "**K4: n/a**" in md and "**K5: n/a**" in md and "**K6: n/a**" in md and "_revocation not configured_" in md and "_harm replay not run" in md and "_no traceability map_" in md and "_no pqm4 data_" in md and "_no repository state record_" in md and "_no manufacturer catalogue_" in md and "_S6 not configured_" in md and "| CPU | cpu |" in md
 
 
 def test_report_s6_no_signer(tmp_path, cfgs):  # noqa: F811

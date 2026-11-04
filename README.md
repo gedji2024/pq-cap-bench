@@ -143,6 +143,27 @@ Encodings:
 - **K4.** Does every S6 crisis command (8 B and 16 B tags) fit in one frame at every US915 downlink DR?
 - **K5.** What is the blast-radius ratio S6/S4 under cloud-side HMAC-key compromise?
 
+## Manufacturer device catalogue (`config/devices/`, `pqcap.devices`, `config/policies.yaml`)
+**Devices.** Milesight EM400-UDL and EM410-RDL, Dragino PS-LB and LWL01.
+
+**Fields.** Each device file records, for every field, the document URL, access date, section/page and a verbatim quote:
+- downlink command codes, payload lengths and parameter ranges;
+- FPort;
+- battery data.
+
+Where a manual does not state a value, the field is `null` with "NOT FOUND".
+
+**Range labels.** Each parameter range is labelled by its origin:
+- `downlink_table`;
+- `app_setting`: a ToolBox or AT range that the manual does not state for the downlink;
+- `encoding`: no documented limit, so the full encodable range is used.
+
+**Verification.** `scripts/verify_device_docs.py DOCS_DIR` re-hashes the downloaded documents and checks every quote verbatim. The result is in `data/devices/verification.json`. Document texts are not stored in the repository.
+
+**Policy sweep.** Envelope bounds are POLICY levels (tight / medium / loose). K5 and K6 are reported as ranges over devices × policies (`REPORT.md` §8a). Counts are exact, from a cell partition of the check's interval tests, and a property test compares them with brute-force enumeration.
+
+The earlier K5/K6 on the assumed catalogue (`config/actions.yaml`) are **superseded**. That file still drives the harm replay and its invariants, which remain ASSUMED.
+
 ## Device profile and blast radius (`config/actions.yaml`, `pqcap.envelope`, `pqcap.blast`)
 **Profile.** The action **types** follow Kerkez et al., "Toward Agent-Native Water Systems", ACM DXConf 2026, doi:10.1145/3847238.3849040 (§4.1 single ultrasonic depth sensor per cellular node; §6 adaptive reporting):
 - `set_reporting_interval`

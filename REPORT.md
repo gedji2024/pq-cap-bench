@@ -730,6 +730,8 @@ At the Class A maximum commands per epoch (every downlink opportunity used; infe
 | 8 | 24 | 53 | 1 | True | 6 | - |
 | 16 | 32 | 53 | 1 | True | 6 | - |
 
+> **SUPERSEDED** by Sec. 8a (manufacturer catalogue): the K5/K6 numbers below use the ASSUMED catalogue of `config/actions.yaml` and are kept for traceability only.
+
 **K5 - Blast radius under cloud-side session-key compromise: how many catalogue commands would a device accept from an attacker holding the per-command HMAC key? -> S6/S4 = 0.1067 (314 of 2,944 commands, state alert=True,battery=above_floor).**
 
 Counted by running every (action, target, value) in `config/actions.yaml` through the device-side check (`pqcap.envelope`) with a valid tag and fresh counter, in the stated device state (all states are in `results/model_blast_radius.csv`). Action types follow Kerkez et al. 2026; every bound and invariant is **assumed - pending field profile**, so the ratio is only as meaningful as those values.
@@ -774,6 +776,56 @@ Properties that differ (blast radius does not separate S4-E from S6; these do):
 | One extracted device lets attacker forge envelopes | n/a | n/a | yes, for that device only | no | custody: S4-E device holds policy_mac |
 | Blast radius under C1+C3 bounded below S4's | no (2944) | yes (1364) | no (2944) | no (2944) | results/model_blast_compromise.csv |
 | Envelope bytes on air (measured authenticator sizes) | - | - | 144 B | 2532 B | results/sizes.csv |
+
+## 8a. K5/K6 on the manufacturer device catalogue (supersedes the K5/K6 of Sec. 8)
+
+Devices (4): EM400-UDL, EM410-RDL, LWL01, PS-LB - downlink commands, payload lengths and parameter ranges from the official manuals (`config/devices/*.yaml`; every quote and document SHA-256 re-checked by `scripts/verify_device_docs.py`, result in `data/devices/verification.json`). Envelope bounds are POLICY levels tight, medium, loose (`config/policies.yaml`). K5/K6 are reported as **ranges over 4 devices x 3 policies**, never as a single number. `fraction` = accepted payloads / catalogue payloads (dominated by multi-field threshold commands whose ranges are encoding ranges); `type_coverage` = share of the device's command types an attacker can get accepted. Invariants (ASSUMED) are applied in the reference state of `config/actions.yaml`; S4c accepts exactly what S4 accepts.
+
+**K5 ranges (manufacturer catalogue)**
+
+| compromise | scheme | fraction_min | fraction_max | type_coverage_min | type_coverage_max | accepted_min | accepted_max | cases |
+|---|---|---|---|---|---|---|---|---|
+| C0 | S4 | 3e-10 | 1 | 0.20 | 1.00 | 30 | 562,949,978,062,740 | 12 |
+| C0 | S4c | 3e-10 | 1 | 0.20 | 1.00 | 30 | 562,949,978,062,740 | 12 |
+| C0 | S4-F | 0 | 1 | 0.00 | 0.86 | 0 | 562,949,961,286,424 | 12 |
+| C0 | S4-E | 0 | 1 | 0.00 | 0.86 | 0 | 562,949,961,286,424 | 12 |
+| C0 | S6 | 0 | 1 | 0.00 | 0.86 | 0 | 562,949,961,286,424 | 12 |
+| C1 | S4 | 1 | 1 | 1.00 | 1.00 | 16,777,231 | 562,949,978,062,740 | 12 |
+| C1 | S4c | 1 | 1 | 1.00 | 1.00 | 16,777,231 | 562,949,978,062,740 | 12 |
+| C1 | S4-F | 5.45e-05 | 1 | 0.75 | 0.86 | 915 | 562,949,961,286,424 | 12 |
+| C1 | S4-E | 0 | 1 | 0.00 | 0.86 | 0 | 562,949,961,286,424 | 12 |
+| C1 | S6 | 0 | 1 | 0.00 | 0.86 | 0 | 562,949,961,286,424 | 12 |
+| C2 | S4 | 0 | 0 | 0.00 | 0.00 | 0 | 0 | 12 |
+| C2 | S4c | 0 | 0 | 0.00 | 0.00 | 0 | 0 | 12 |
+| C2 | S4-F | 0 | 0 | 0.00 | 0.00 | 0 | 0 | 12 |
+| C2 | S4-E | 0 | 0 | 0.00 | 0.00 | 0 | 0 | 12 |
+| C2 | S6 | 0 | 0 | 0.00 | 0.00 | 0 | 0 | 12 |
+| C3 | S4 | 0 | 0 | 0.00 | 0.00 | 0 | 0 | 12 |
+| C3 | S4c | 0 | 0 | 0.00 | 0.00 | 0 | 0 | 12 |
+| C3 | S4-F | 0 | 0 | 0.00 | 0.00 | 0 | 0 | 12 |
+| C3 | S4-E | 0 | 0 | 0.00 | 0.00 | 0 | 0 | 12 |
+| C3 | S6 | 0 | 0 | 0.00 | 0.00 | 0 | 0 | 12 |
+| C4 | S4 | 1 | 1 | 1.00 | 1.00 | 16,777,231 | 562,949,978,062,740 | 12 |
+| C4 | S4c | 1 | 1 | 1.00 | 1.00 | 16,777,231 | 562,949,978,062,740 | 12 |
+| C4 | S4-F | 5.45e-05 | 1 | 0.75 | 0.86 | 915 | 562,949,961,286,424 | 12 |
+| C4 | S4-E | 1 | 1 | 1.00 | 1.00 | 16,777,231 | 562,949,978,062,740 | 12 |
+| C4 | S6 | 0 | 1 | 0.00 | 0.86 | 0 | 562,949,961,286,424 | 12 |
+| C1+C3 | S4 | 1 | 1 | 1.00 | 1.00 | 16,777,231 | 562,949,978,062,740 | 12 |
+| C1+C3 | S4c | 1 | 1 | 1.00 | 1.00 | 16,777,231 | 562,949,978,062,740 | 12 |
+| C1+C3 | S4-F | 5.45e-05 | 1 | 0.75 | 0.86 | 915 | 562,949,961,286,424 | 12 |
+| C1+C3 | S4-E | 1 | 1 | 1.00 | 1.00 | 16,777,231 | 562,949,978,062,740 | 12 |
+| C1+C3 | S6 | 1 | 1 | 1.00 | 1.00 | 16,777,231 | 562,949,978,062,740 | 12 |
+
+**K6 = blast(S4-E)/blast(S6), ranges (cases where both are 0 are counted, not divided)**
+
+| compromise | ratio_min | ratio_max | both_zero_cases | cases |
+|---|---|---|---|---|
+| C0 | 1 | 1 | 1 | 12 |
+| C1 | 1 | 1 | 1 | 12 |
+| C2 | - | - | 12 | 12 |
+| C3 | - | - | 12 | 12 |
+| C4 | 1 | 2.54e+11 | 0 | 12 |
+| C1+C3 | 1 | 1 | 0 | 12 |
 
 ## 8b. Traceability to the Étape 2 threat model
 

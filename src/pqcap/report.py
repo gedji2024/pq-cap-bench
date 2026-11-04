@@ -246,7 +246,9 @@ def section_s6(results: Path, model: dict) -> str:
 def section_k5(k5: dict) -> str:
     df = pd.DataFrame(k5["rows"])
     ints = lambda v: f"{int(v):,}"  # noqa: E731
-    return ("**K5 - Blast radius under cloud-side session-key compromise: how many catalogue commands would a "
+    return ("> **SUPERSEDED** by Sec. 8a (manufacturer catalogue): the K5/K6 numbers below use the ASSUMED catalogue "
+            "of `config/actions.yaml` and are kept for traceability only.\n\n"
+            "**K5 - Blast radius under cloud-side session-key compromise: how many catalogue commands would a "
             f"device accept from an attacker holding the per-command HMAC key? -> {k5['answer']}.**\n\n"
             "Counted by running every (action, target, value) in `config/actions.yaml` through the device-side check "
             "(`pqcap.envelope`) with a valid tag and fresh counter, in the stated device state (all states are in "
@@ -395,6 +397,31 @@ def section_repo_state(config: Path) -> str:
     return "\n".join(lines)
 
 
+def section_catalogue(results: Path, config: Path) -> str:
+    p = results / "catalogue_k5_ranges.csv"
+    if not p.exists():
+        return "_no manufacturer catalogue_"
+    df, k5, k6 = pd.read_csv(results / "catalogue_blast.csv"), pd.read_csv(p), pd.read_csv(results / "catalogue_k6_ranges.csv")
+    devs = sorted(df.device.unique())
+    pols = list(dict.fromkeys(df.policy))
+    e = lambda v: f"{v:.3g}"  # noqa: E731
+    ints = lambda v: f"{int(v):,}"  # noqa: E731
+    head = (f"Devices ({len(devs)}): {', '.join(devs)} - downlink commands, payload lengths and parameter ranges from the "
+            "official manuals (`config/devices/*.yaml`; every quote and document SHA-256 re-checked by "
+            "`scripts/verify_device_docs.py`, result in `data/devices/verification.json`). Envelope bounds are POLICY "
+            f"levels {', '.join(pols)} (`config/policies.yaml`). K5/K6 are reported as **ranges over "
+            f"{len(devs)} devices x {len(pols)} policies**, never as a single number. `fraction` = accepted payloads / "
+            "catalogue payloads (dominated by multi-field threshold commands whose ranges are encoding ranges); "
+            "`type_coverage` = share of the device's command types an attacker can get accepted. Invariants (ASSUMED) "
+            "are applied in the reference state of `config/actions.yaml`; S4c accepts exactly what S4 accepts.")
+    t5 = md_table(k5, {"fraction_min": e, "fraction_max": e, "type_coverage_min": lambda v: f"{v:.2f}",
+                       "type_coverage_max": lambda v: f"{v:.2f}", "accepted_min": ints, "accepted_max": ints,
+                       "cases": ints})
+    t6 = md_table(k6, {"ratio_min": e, "ratio_max": e, "both_zero_cases": ints, "cases": ints})
+    return "\n\n".join([head, "**K5 ranges (manufacturer catalogue)**", t5,
+                         "**K6 = blast(S4-E)/blast(S6), ranges (cases where both are 0 are counted, not divided)**", t6])
+
+
 def section_kill(results: Path) -> str:
     k = json.loads((results / "kill_criteria.json").read_text())
     k1 = k["K1"]
@@ -463,6 +490,8 @@ def run(config: Path, results: Path, figures: Path) -> None:
         "## 7e. Harm-weighted replay: USGS Buffalo Bayou, Hurricane Harvey", section_harm(results, config),
         "## 7f. Device-side envelope verification (pqm4, published)", section_mcu(results, config),
         "## 8. Kill criteria", section_kill(results),
+        "## 8a. K5/K6 on the manufacturer device catalogue (supersedes the K5/K6 of Sec. 8)",
+        section_catalogue(results, config),
         "## 8b. Traceability to the Étape 2 threat model", section_traceability(config),
         "## 9. Figures", "\n".join(f"- [{f}](figures/{f}) ([pdf](figures/{f[:-4]}.pdf))" for f in figs),
     ]

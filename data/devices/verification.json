@@ -1,0 +1,278 @@
+{
+  "checked_utc": "2026-11-04T14:46:00+00:00",
+  "devices": {
+    "em400-udl": {
+      "docs": {
+        "main": {
+          "sha256_match": true,
+          "sha256": "5663470b0d0580857938ea0470ab84b1504d4932cfbd3132de423cee35dfd7e6"
+        }
+      },
+      "quotes": [
+        {
+          "path": ".downlink_fport.source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".byte_order.source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".battery.capacity_mAh.source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".battery.lifetime_claim.source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".actions[0].default.source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".actions[0].source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".actions[1].source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".actions[2].source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".actions[3].source",
+          "doc": "main",
+          "found": true
+        }
+      ]
+    },
+    "em410-rdl": {
+      "docs": {
+        "main": {
+          "sha256_match": true,
+          "sha256": "b89ebc32a11aacc65e908fe119d78d2153a82e7d4b70ae74bb270d6e20ca5d01"
+        }
+      },
+      "quotes": [
+        {
+          "path": ".downlink_fport.source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".byte_order.source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".battery.battery_type.source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".actions[0].default.source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".actions[0].source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".actions[0].example",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".actions[1].source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".actions[2].source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".actions[3].source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".actions[4].source",
+          "doc": "main",
+          "found": true
+        }
+      ]
+    },
+    "lwl01": {
+      "docs": {
+        "main": {
+          "sha256_match": true,
+          "sha256": "f2a87dc8a80e3d3e7e2f1f73a3e742982543fe1975f08d842e979eed8b186572"
+        },
+        "at": {
+          "sha256_match": true,
+          "sha256": "e5ce531861fc43a9313d413584c9060abde84c3761c5fabe83cd0582dc51e75e"
+        }
+      },
+      "quotes": [
+        {
+          "path": ".byte_order.source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".battery.battery_type.source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".battery.sleep_uA.source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".battery.uplinks_per_battery[0].source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".battery.uplinks_per_battery[1].source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".battery.lifetime_claim.source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".actions[0].default.source",
+          "doc": "at",
+          "found": true
+        },
+        {
+          "path": ".actions[0].source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".actions[1].source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".actions[2].source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".actions[3].source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".actions[4].source",
+          "doc": "main",
+          "found": true
+        }
+      ]
+    },
+    "ps-lb": {
+      "docs": {
+        "main": {
+          "sha256_match": true,
+          "sha256": "cb9753d1ca426afb35cc406b52ae8864126e885e64e8180234f5a8aa4a7ff608"
+        },
+        "general": {
+          "sha256_match": true,
+          "sha256": "0a7ab5760a2684e083f294d5aa49c3ce9f31080dd356bc8ed5ae24ca6654bece"
+        }
+      },
+      "quotes": [
+        {
+          "path": ".byte_order.source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".battery.capacity_mAh.source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".battery.sleep_uA.source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".battery.tx_mA[0].source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".battery.tx_mA[1].source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".battery.lifetime_claim.source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".actions[0].default.source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".actions[0].source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".actions[1].source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".actions[2].source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".actions[3].source",
+          "doc": "main",
+          "found": true
+        },
+        {
+          "path": ".actions[4].source",
+          "doc": "general",
+          "found": true
+        },
+        {
+          "path": ".actions[5].source",
+          "doc": "general",
+          "found": true
+        },
+        {
+          "path": ".actions[6].source",
+          "doc": "general",
+          "found": true
+        }
+      ]
+    }
+  }
+}

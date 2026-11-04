@@ -1,0 +1,61 @@
+# Milesight EM410-RDL (LoRaWAN). Document = the URL given by the project lead (EM410-RDL edition,
+# differs from the EM41x-RDL family guide: sha256 325854ea... not used). Byte column = data bytes after channel+type.
+device: {manufacturer: Milesight, model: EM410-RDL}
+docs:
+  main: {title: "EM410-RDL User Guide (LoRaWAN® Version)", version: "V1.2 (latest row of Revision History)",
+         release_date: "Jan. 16, 2025", url: "https://resource.milesight.com/milesight/iot/document/em410-rdl-lora-user-guide-en.pdf",
+         accessed: 2026-11-04, sha256: b89ebc32a11aacc65e908fe119d78d2153a82e7d4b70ae74bb270d6e20ca5d01}
+downlink_fport:
+  value: 85
+  source: {doc: main, section: "7 - Uplink and Downlink / Downlink Command", page: 41,
+           quote: "This device supports downlink commands to configure the device. Application port is 85 by default."}
+byte_order:
+  value: little
+  status: "inferred from worked examples"
+  source: {doc: main, section: "Downlink Command", page: 42, quote: "1400=>0014=20minutes"}
+battery:
+  capacity_mAh: null
+  battery_type: {value: "ER34615 Li-SoCl2", source: {doc: main, section: "Battery Installation", page: 10,
+                 quote: "The device can only be powered by ER34615 Li-SoCl2 battery."}}
+  lifetime_claim: null
+  sleep_uA: null
+  tx_mA: null
+  uplinks_per_battery: null
+actions:
+  - action: set_reporting_interval
+    command: "ff 8e"
+    payload_bytes: 5
+    dims: [{name: interval, unit: min, min: 1, max: 1440, range_source: downlink_table}]
+    default: {value: 1440, unit: min, source: {doc: main, section: "LoRaWAN/Basic settings table", page: 23,
+              quote: "Default: 1440 minutes, range: 1~1440 minutes."}}
+    source: {doc: main, section: "Downlink Command / General Setting", page: 41,
+             quote: ["Reporting Interval ff 8e 3 Byte 2-3: Reporting Interval, UINT16, Unit:", "min, Range: 1~1440"]}
+    example: {hex: ff8e001400, page: 42, quote: "3. Set report interval as 20 minutes. ff8e001400"}
+  - action: set_collect_interval
+    command: "f9 39"
+    payload_bytes: 4
+    dims: [{name: interval, unit: min, min: 1, max: 1440, range_source: downlink_table}]
+    source: {doc: main, section: "Threshold Alarm Settings", page: 44, quote: ["f9 39 2 Unit: min, Range: 1~1440", "ing Interval"]}
+  - action: set_alarm_threshold
+    command: "ff 06"
+    payload_bytes: 11
+    dims:
+      - {name: alarm_type, unit: enum, min: 1, max: 5, range_source: downlink_table,
+         note: "Bit2~Bit0 001-below 010-over 011-within 100-below or over 101-Distance shifts over (000 = disable)"}
+      - {name: min_mm, unit: mm, min: -32768, max: 32767, range_source: encoding, note: "Byte 2-3: Min. Value, INT16, Unit: mm"}
+      - {name: max_mm, unit: mm, min: -32768, max: 32767, range_source: encoding, note: "Byte 4-5: Max. Value or distance shifts value, INT16"}
+    source: {doc: main, section: "Threshold Alarm Settings", page: 44,
+             quote: ["ff 06 9 010-Distance shifts threshold alarm", "000-disable", "101-Distance shifts over", "Byte 2-3: Min. Value, INT16, Unit: mm"]}
+  - action: alarm_disable
+    command: "ff 06 (Bit2~Bit0 = 000)"
+    payload_bytes: 11
+    dims: []
+    source: {doc: main, section: "Threshold Alarm Settings", page: 44, quote: "Bit2~Bit0: 000-disable"}
+  - action: reboot
+    command: "ff 10"
+    payload_bytes: 3
+    dims: []
+    source: {doc: main, section: "Downlink Command / General Setting", page: 41, quote: "Reboot ff 10 1 ff"}
+not_found:
+  - "ADR / data-rate downlink commands"
+  - "battery capacity, sleep/transmit current, uplinks per battery, lifetime claim"

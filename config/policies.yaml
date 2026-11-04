@@ -1,0 +1,24 @@
+# Envelope bounds are POLICY parameters (chosen by the policy authority PA), not device facts.
+# Swept to report K5/K6 as RANGES across devices and policies.
+#
+# Per action: `allow` = the envelope permits this action at all. For each parameter dim of an allowed
+# action, the window is `fraction` x the dim's span (documented or encoding range): centred on the
+# documented default when one exists, otherwise starting at the dim's minimum; enum/flag dims keep
+# ceil(fraction x span) values from the minimum (at least one).
+status: "POLICY -- swept, not measured"
+levels:
+  tight:
+    fraction: 0.01
+    allow: [set_reporting_interval, set_collect_interval]
+  medium:
+    fraction: 0.10
+    allow: [set_reporting_interval, set_collect_interval, set_alarm_threshold, alarm_enable, reboot]
+  loose:
+    fraction: 1.0
+    allow: [set_reporting_interval, set_collect_interval, set_alarm_threshold, alarm_enable, alarm_disable,
+            reboot, set_adr, set_dr]
+# S4-F firmware bounds: static for the device lifetime, so they must admit every legitimate mode: the
+# loose level (POLICY choice).
+firmware_level: loose
+# State-dependent invariants (ASSUMED values, config/actions.yaml `invariants`) are applied to the
+# reporting-interval dim in the device's own unit; counts use the reference state of config/actions.yaml.
