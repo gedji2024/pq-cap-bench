@@ -81,7 +81,7 @@ def k4(out: dict[str, pd.DataFrame], region: str = "US915") -> dict:
     c = out.get("model_s6_crisis")
     if c is None or c.empty:
         return {"answer": "n/a", "reason": "S6 not configured", "rows": []}
-    c = c[c.region == region].drop_duplicates(["tag_bytes", "dr"])
+    c = c[(c.region == region) & (c.scheme == "S6")].drop_duplicates(["tag_bytes", "dr"])
     rows = (c.groupby("tag_bytes", as_index=False)
             .agg(cmd_bytes=("cmd_bytes", "first"), min_max_app_payload=("max_app_payload", "min"),
                  max_frames=("frames", "max"), all_fit=("fits_one_frame", "all"),

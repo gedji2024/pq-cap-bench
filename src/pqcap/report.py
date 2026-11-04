@@ -162,6 +162,39 @@ def section_crc(results: Path, config: Path, model: dict) -> str:
     return "\n\n".join(out) + "\n\n_ttd columns in hours; `_alt` = sensitivity setting._"
 
 
+def section_s6_explain(crisis: pd.DataFrame, model: dict) -> str:
+    """Why S6 and S4 differ in crisis capacity at the K1 reference point - every number read from the rows."""
+    k1 = model["kill_criteria"]["K1"]
+    g = crisis[(crisis.region == k1["region"]) & (crisis.dr == k1["dr"]) & (crisis.window_min == k1["window_min"])
+               & (crisis.devices == k1["devices"])]
+    if g.empty:
+        return ""
+    r0 = g.iloc[0]
+    lines = [f"**Why the crisis capacities differ at {k1['region']} DR{k1['dr']}, W = {k1['window_min']} min, "
+             f"N = {k1['devices']}.** Class A gives each device one downlink per uplink: "
+             f"{k1['window_min'] * 60} s / {model['uplink_interval_s']} s = {int(r0.downlink_opportunities)} downlink "
+             f"opportunities per device in the window; the DR carries at most {int(r0.max_app_payload)} B per frame. "
+             "Commands per gateway = N x floor(opportunities / frames per command), unless the gateway airtime "
+             "budget binds first. The difference is therefore the **command size**, not the cryptography:", ""]
+    for r in g.itertuples():
+        lines.append(f"- {r.scheme} {r.algorithm}: {r.cmd_bytes} B -> {r.frames} frame(s) -> "
+                     f"{int(r.downlink_opportunities)} // {r.frames} = {r.cmds_per_device} per device x "
+                     f"{r.devices} = {r.cmds_gateway} per gateway (binding: {r.binding_limit})")
+    s4 = g[g.scheme == "S4"]
+    body = int((s4.cmd_bytes - s4.tag_bytes).iloc[0]) if not s4.empty else None
+    ref = sum(model["s6"]["crisis_fields"].values())
+    by = g.set_index(["scheme", "tag_bytes"]).cmds_gateway
+    same = all(by.get(("S4c", t)) == by.get(("S6", t)) for t in model["s6"]["tag_bytes"])
+    if body is not None:
+        lines += ["", f"S4 sends the full {body}-B capability body with every command; S6 sends a {ref}-B reference "
+                  "to a body already pre-positioned (and PQ-signed) during the calm phase. S4c sends the S6 wire format "
+                  "with no envelope behind it: "
+                  + ("its capacity equals S6 at every tag length, so the gain comes from pre-positioning the body, and "
+                     "what S6 adds over S4c is bounded authority (K5/K6), not capacity."
+                     if same else "its capacity differs from S6 here; see the table above.")]
+    return "\n".join(lines)
+
+
 def section_s6(results: Path, model: dict) -> str:
     p = results / "model_s6_calm.csv"
     if not p.exists():
@@ -180,8 +213,9 @@ def section_s6(results: Path, model: dict) -> str:
                 "feasible_drs": ", ".join(f"DR{d}" for d in g[g.feasible].dr) or "none",
                 "infeasible_drs": ", ".join(f"DR{d}" for d in g[~g.feasible].dr) or "-",
                 "max_gateway_utilisation": g.gateway_utilisation.max()}), include_groups=False).reset_index())
-    cr = crisis.drop_duplicates(["tag_bytes", "region", "dr"])
-    t_cr = cr.pivot_table(index=["tag_bytes", "cmd_bytes"], columns=["region", "dr"], values="frames", sort=False)
+    cr = crisis.drop_duplicates(["scheme", "algorithm", "region", "dr"])
+    t_cr = cr.pivot_table(index=["scheme", "algorithm", "cmd_bytes"], columns=["region", "dr"], values="frames",
+                          sort=False)
     t_cr.columns = [f"{r} DR{d}" for r, d in t_cr.columns]
     n_ref = model["kill_criteria"]["K1"]["devices"]
     out = [
@@ -194,8 +228,9 @@ def section_s6(results: Path, model: dict) -> str:
         "**Calm phase feasibility** (feasible = envelope frames <= Class A downlink opportunities in P, and "
         "N x envelope airtime <= gateway airtime budget in P):\n\n"
         + md_table(feas, {"devices": ints, "max_gateway_utilisation": lambda v: f"{v:.2%}"}),
-        "**Crisis phase: frames per command** (1 = fits one frame):\n\n"
-        + md_table(t_cr.reset_index(), {c: ints for c in t_cr.columns}),
+        "**Crisis phase: frames per command** (1 = fits one frame; S4 / S4c use the same tag lengths as S6):\n\n"
+        + md_table(t_cr.reset_index(), {c: ints for c in list(t_cr.columns) + ["cmd_bytes"]}),
+        section_s6_explain(crisis, model),
     ]
     for reg, dr in model["figure_channels"]:
         g = cmp_[(cmp_.region == reg) & (cmp_.dr == dr) & (cmp_.devices == n_ref)]

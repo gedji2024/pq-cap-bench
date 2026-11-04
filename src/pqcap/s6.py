@@ -48,10 +48,27 @@ def calm_feasibility(chans, s6: dict, sig: dict, uplink_s: float, devices: list[
     return pd.DataFrame(rows)
 
 
-def crisis_capacity(chans, s6: dict, uplink_s: float, devices: list[int], link_cost) -> pd.DataFrame:
-    rows = []
+def crisis_variants(s6: dict, token_body: int | None) -> list[tuple[str, str, int, int]]:
+    """(scheme, label, tag_bytes, command_bytes) for S6 and like-for-like S4 variants at the same tag lengths.
+
+    S4  full token : header + constraints (token body) + tag  -- the S4 token used everywhere else
+    S4c compact    : the same 16-B handle|counter|params format as S6, without an envelope behind it,
+                     isolating the effect of message format from the effect of the envelope.
+    """
+    out = []
     for tag in s6["tag_bytes"]:
         cb = crisis_bytes(s6["crisis_fields"], tag)
+        out.append(("S6", f"envelope+HMAC-SHA256-T{tag}", tag, cb))
+        if token_body is not None:
+            out.append(("S4", f"full token, HMAC-SHA256-T{tag}", tag, token_body + tag))
+            out.append(("S4c", f"compact command, HMAC-SHA256-T{tag}", tag, cb))
+    return out
+
+
+def crisis_capacity(chans, s6: dict, uplink_s: float, devices: list[int], link_cost,
+                    token_body: int | None = None) -> pd.DataFrame:
+    rows = []
+    for scheme, label, tag, cb in crisis_variants(s6, token_body):
         for ch in chans:
             if ch.phy is None:
                 continue
@@ -60,11 +77,12 @@ def crisis_capacity(chans, s6: dict, uplink_s: float, devices: list[int], link_c
             for W in s6["crisis_windows_min"]:
                 for N in devices:
                     g = dl.commands_per_gateway(N, W * 60, uplink_s, lc["frames"], lc["airtime_s"], ch.duty)
-                    rows.append({"scheme": "S6", "algorithm": f"envelope+HMAC-SHA256-T{tag}", "tag_bytes": tag,
+                    rows.append({"scheme": scheme, "algorithm": label, "tag_bytes": tag,
                                  "region": ch.region, "dr": ch.dr, "max_app_payload": ch.max_app,
                                  "cmd_bytes": cb, "frames": lc["frames"], "fits_one_frame": lc["frames"] == 1
                                  and cb <= ch.max_app, "airtime_s": lc["airtime_s"],
                                  "ttd_worst_s": ttd["ttd_worst_s"], "window_min": W, "devices": N,
+                                 "downlink_opportunities": dl.downlink_opportunities(W * 60, uplink_s),
                                  "cmds_per_device": dl.commands_per_device(W * 60, uplink_s, lc["frames"]), **g})
     return pd.DataFrame(rows)
 
@@ -77,5 +95,7 @@ def compare(crisis: pd.DataFrame, capacity: pd.DataFrame, delivery: pd.DataFrame
     c = capacity[(capacity.depth == 0) & capacity.window_min.isin(s6["crisis_windows_min"])].merge(wanted)
     d = delivery[delivery.depth == 0][["scheme", "algorithm", "region", "dr", "token_bytes", "airtime_s", "ttd_worst_s"]]
     c = c.merge(d, on=["scheme", "algorithm", "region", "dr"]).rename(columns={"token_bytes": "cmd_bytes"})
-    cols = keys + ["cmd_bytes", "frames", "airtime_s", "ttd_worst_s", "cmds_per_device", "cmds_gateway", "binding_limit"]
+    c["downlink_opportunities"] = (c.window_min * 60 // s6.get("uplink_interval_s", 300)).astype(int)
+    cols = keys + ["cmd_bytes", "frames", "airtime_s", "ttd_worst_s", "downlink_opportunities",
+                   "cmds_per_device", "cmds_gateway", "binding_limit"]
     return pd.concat([crisis[cols], c[cols]], ignore_index=True)

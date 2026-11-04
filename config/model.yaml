@@ -48,4 +48,5 @@ s6:
   crisis_fields: {envelope_handle: 4, counter: 4, params: 8}
   tag_bytes: [8, 16]
   crisis_windows_min: [15, 30, 60]
-  compare: [[S1, ML-DSA-44], [S1, Falcon-512], [S2, ML-DSA-44+KEM/HMAC-SHA256-T16], [S4, HMAC-SHA256-T16]]
+  # S4 is compared like-for-like inside the crisis table (full token and compact format, same tag lengths)
+  compare: [[S1, ML-DSA-44], [S1, Falcon-512], [S2, ML-DSA-44+KEM/HMAC-SHA256-T16]]

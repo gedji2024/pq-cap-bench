@@ -34,10 +34,16 @@ def test_s6_outputs(s6cfg):
     e = calm[(calm.region == "EU868") & (calm.dr == 0) & (calm.calm_hours == 6) & (calm.devices == 200)].iloc[0]
     assert not e.gateway_feasible and not e.feasible
     assert e.max_devices_by_airtime == int(6 * 3600 * 0.01 // e.envelope_airtime_s)
-    assert set(crisis.cmd_bytes) == {24, 32} and crisis.fits_one_frame.all()
+    s6r = crisis[crisis.scheme == "S6"]
+    assert set(s6r.cmd_bytes) == {24, 32} and s6r.fits_one_frame.all()
     c = crisis[(crisis.region == "US915") & (crisis.dr == 8) & (crisis.window_min == 30) & (crisis.devices == 50)]
-    assert (c.cmds_gateway == 50 * 6).all()                               # 6 opportunities x 50 devices
-    assert set(cmp_.scheme) == {"S6", "S1", "S4"}
+    by = c.set_index(["scheme", "tag_bytes"])
+    for t in (8, 16):                                                     # like-for-like tag lengths
+        assert by.loc[("S6", t), "cmds_gateway"] == 50 * 6                # 6 opportunities x 50 devices, 1 frame
+        assert by.loc[("S4c", t), "cmds_gateway"] == by.loc[("S6", t), "cmds_gateway"]
+        assert by.loc[("S4", t), "cmd_bytes"] == 80 + t and by.loc[("S4", t), "frames"] == 2
+        assert by.loc[("S4", t), "cmds_gateway"] == 50 * 3
+    assert set(cmp_.scheme) == {"S6", "S4", "S4c", "S1"}
     assert set(cmp_.window_min) == set(model["s6"]["crisis_windows_min"])
 
 

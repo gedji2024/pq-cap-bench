@@ -445,12 +445,27 @@ Envelope = header 16 B + bounds 64 B + invariants 32 B + signature (measured). C
 | Falcon-512 | 72 | 50 | EU868 | DR0, DR1, DR2, DR3, DR4, DR5, DR6 | - | 85.59% |
 | Falcon-512 | 72 | 200 | EU868 | DR2, DR3, DR4, DR5, DR6 | DR0, DR1 | 342.34% |
 
-**Crisis phase: frames per command** (1 = fits one frame):
+**Crisis phase: frames per command** (1 = fits one frame; S4 / S4c use the same tag lengths as S6):
 
-| tag_bytes | cmd_bytes | US915 DR8 | US915 DR9 | US915 DR10 | US915 DR11 | US915 DR12 | US915 DR13 | EU868 DR0 | EU868 DR1 | EU868 DR2 | EU868 DR3 | EU868 DR4 | EU868 DR5 | EU868 DR6 |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 8 | 24 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
-| 16 | 32 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
+| scheme | algorithm | cmd_bytes | US915 DR8 | US915 DR9 | US915 DR10 | US915 DR11 | US915 DR12 | US915 DR13 | EU868 DR0 | EU868 DR1 | EU868 DR2 | EU868 DR3 | EU868 DR4 | EU868 DR5 | EU868 DR6 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| S6 | envelope+HMAC-SHA256-T8 | 24 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
+| S6 | envelope+HMAC-SHA256-T16 | 32 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
+| S4 | full token, HMAC-SHA256-T8 | 88 | 2 | 1 | 1 | 1 | 1 | 1 | 2 | 2 | 2 | 1 | 1 | 1 | 1 |
+| S4 | full token, HMAC-SHA256-T16 | 96 | 2 | 1 | 1 | 1 | 1 | 1 | 2 | 2 | 2 | 1 | 1 | 1 | 1 |
+| S4c | compact command, HMAC-SHA256-T8 | 24 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
+| S4c | compact command, HMAC-SHA256-T16 | 32 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
+
+**Why the crisis capacities differ at US915 DR8, W = 30 min, N = 50.** Class A gives each device one downlink per uplink: 1800 s / 300 s = 6 downlink opportunities per device in the window; the DR carries at most 53 B per frame. Commands per gateway = N x floor(opportunities / frames per command), unless the gateway airtime budget binds first. The difference is therefore the **command size**, not the cryptography:
+
+- S6 envelope+HMAC-SHA256-T8: 24 B -> 1 frame(s) -> 6 // 1 = 6 per device x 50 = 300 per gateway (binding: device_opportunities)
+- S4 full token, HMAC-SHA256-T8: 88 B -> 2 frame(s) -> 6 // 2 = 3 per device x 50 = 150 per gateway (binding: device_opportunities)
+- S4c compact command, HMAC-SHA256-T8: 24 B -> 1 frame(s) -> 6 // 1 = 6 per device x 50 = 300 per gateway (binding: device_opportunities)
+- S6 envelope+HMAC-SHA256-T16: 32 B -> 1 frame(s) -> 6 // 1 = 6 per device x 50 = 300 per gateway (binding: device_opportunities)
+- S4 full token, HMAC-SHA256-T16: 96 B -> 2 frame(s) -> 6 // 2 = 3 per device x 50 = 150 per gateway (binding: device_opportunities)
+- S4c compact command, HMAC-SHA256-T16: 32 B -> 1 frame(s) -> 6 // 1 = 6 per device x 50 = 300 per gateway (binding: device_opportunities)
+
+S4 sends the full 80-B capability body with every command; S6 sends a 16-B reference to a body already pre-positioned (and PQ-signed) during the calm phase. S4c sends the S6 wire format with no envelope behind it: its capacity equals S6 at every tag length, so the gain comes from pre-positioning the body, and what S6 adds over S4c is bounded authority (K5/K6), not capacity.
 
 **Crisis commands per gateway, US915 DR8, N = 50** (S1/S2/S4 at depth 0; S2 per-command cost only, epoch message excluded):
 
@@ -458,10 +473,13 @@ Envelope = header 16 B + bounds 64 B + invariants 32 B + signature (measured). C
 |---|---|---|---|---|---|---|
 | S6 | envelope+HMAC-SHA256-T8 | 24 | 1 | 150 | 300 | 600 |
 | S6 | envelope+HMAC-SHA256-T16 | 32 | 1 | 150 | 300 | 600 |
+| S4 | full token, HMAC-SHA256-T8 | 88 | 2 | 50 | 150 | 300 |
+| S4 | full token, HMAC-SHA256-T16 | 96 | 2 | 50 | 150 | 300 |
+| S4c | compact command, HMAC-SHA256-T8 | 24 | 1 | 150 | 300 | 600 |
+| S4c | compact command, HMAC-SHA256-T16 | 32 | 1 | 150 | 300 | 600 |
 | S1 | ML-DSA-44 | 2,500 | 50 | 0 | 0 | 0 |
 | S1 | Falcon-512 | 744 | 15 | 0 | 0 | 0 |
 | S2 | ML-DSA-44+KEM/HMAC-SHA256-T16 | 96 | 2 | 50 | 150 | 300 |
-| S4 | HMAC-SHA256-T16 | 96 | 2 | 50 | 150 | 300 |
 
 **Crisis commands per gateway, US915 DR13, N = 50** (S1/S2/S4 at depth 0; S2 per-command cost only, epoch message excluded):
 
@@ -469,10 +487,13 @@ Envelope = header 16 B + bounds 64 B + invariants 32 B + signature (measured). C
 |---|---|---|---|---|---|---|
 | S6 | envelope+HMAC-SHA256-T8 | 24 | 1 | 150 | 300 | 600 |
 | S6 | envelope+HMAC-SHA256-T16 | 32 | 1 | 150 | 300 | 600 |
+| S4 | full token, HMAC-SHA256-T8 | 88 | 1 | 150 | 300 | 600 |
+| S4 | full token, HMAC-SHA256-T16 | 96 | 1 | 150 | 300 | 600 |
+| S4c | compact command, HMAC-SHA256-T8 | 24 | 1 | 150 | 300 | 600 |
+| S4c | compact command, HMAC-SHA256-T16 | 32 | 1 | 150 | 300 | 600 |
 | S1 | ML-DSA-44 | 2,500 | 11 | 0 | 0 | 50 |
 | S1 | Falcon-512 | 744 | 4 | 0 | 50 | 150 |
 | S2 | ML-DSA-44+KEM/HMAC-SHA256-T16 | 96 | 1 | 150 | 300 | 600 |
-| S4 | HMAC-SHA256-T16 | 96 | 1 | 150 | 300 | 600 |
 
 **Crisis commands per gateway, EU868 DR0, N = 50** (S1/S2/S4 at depth 0; S2 per-command cost only, epoch message excluded):
 
@@ -480,10 +501,13 @@ Envelope = header 16 B + bounds 64 B + invariants 32 B + signature (measured). C
 |---|---|---|---|---|---|---|
 | S6 | envelope+HMAC-SHA256-T8 | 24 | 1 | 4 | 9 | 19 |
 | S6 | envelope+HMAC-SHA256-T16 | 32 | 1 | 4 | 8 | 16 |
+| S4 | full token, HMAC-SHA256-T8 | 88 | 2 | 1 | 3 | 6 |
+| S4 | full token, HMAC-SHA256-T16 | 96 | 2 | 1 | 3 | 6 |
+| S4c | compact command, HMAC-SHA256-T8 | 24 | 1 | 4 | 9 | 19 |
+| S4c | compact command, HMAC-SHA256-T16 | 32 | 1 | 4 | 8 | 16 |
 | S1 | ML-DSA-44 | 2,500 | 52 | 0 | 0 | 0 |
 | S1 | Falcon-512 | 744 | 16 | 0 | 0 | 0 |
 | S2 | ML-DSA-44+KEM/HMAC-SHA256-T16 | 96 | 2 | 1 | 3 | 6 |
-| S4 | HMAC-SHA256-T16 | 96 | 2 | 1 | 3 | 6 |
 
 **Crisis commands per gateway, EU868 DR5, N = 50** (S1/S2/S4 at depth 0; S2 per-command cost only, epoch message excluded):
 
@@ -491,10 +515,13 @@ Envelope = header 16 B + bounds 64 B + invariants 32 B + signature (measured). C
 |---|---|---|---|---|---|---|
 | S6 | envelope+HMAC-SHA256-T8 | 24 | 1 | 116 | 233 | 467 |
 | S6 | envelope+HMAC-SHA256-T16 | 32 | 1 | 103 | 206 | 412 |
+| S4 | full token, HMAC-SHA256-T8 | 88 | 1 | 53 | 106 | 212 |
+| S4 | full token, HMAC-SHA256-T16 | 96 | 1 | 48 | 97 | 195 |
+| S4c | compact command, HMAC-SHA256-T8 | 24 | 1 | 116 | 233 | 467 |
+| S4c | compact command, HMAC-SHA256-T16 | 32 | 1 | 103 | 206 | 412 |
 | S1 | ML-DSA-44 | 2,500 | 11 | 0 | 0 | 8 |
 | S1 | Falcon-512 | 744 | 4 | 0 | 14 | 28 |
 | S2 | ML-DSA-44+KEM/HMAC-SHA256-T16 | 96 | 1 | 48 | 97 | 195 |
-| S4 | HMAC-SHA256-T16 | 96 | 1 | 48 | 97 | 195 |
 
 ## 8. Kill criteria
 

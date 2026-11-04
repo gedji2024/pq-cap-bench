@@ -58,7 +58,7 @@ def test_report_renders(tmp_path, cfgs):  # noqa: F811
     report.run(cfg, r, figs)
     md = (tmp_path / "REPORT.md").read_text()
     for h in ("## 1. Environment", "## 4. Host timings", "## 8. Kill criteria", "**K1", "**K2", "**K3", "**K4", "**K5 - Blast radius",
-              "## 7c. S6", "Crisis commands per gateway", "fig1_x.png"):
+              "## 7c. S6", "Crisis commands per gateway", "**Why the crisis capacities differ", "its capacity equals S6", "fig1_x.png"):
         assert h in md
     assert "env.json missing" in md
     assert "host (unrecorded CPU), not MCU" in md
@@ -104,3 +104,13 @@ def test_report_s6_no_signer(tmp_path, cfgs):  # noqa: F811
 def test_md_table_formats():
     t = report.md_table(pd.DataFrame({"a": [1.234, None], "b": ["x", ""]}))
     assert "1.23" in t and "| - | - |" in t
+
+
+def test_s6_explain_branches(tmp_path, cfgs):  # noqa: F811
+    r, _ = _fake_results(tmp_path, cfgs)
+    _, _, mdl = cfgs
+    crisis = pd.read_csv(r / "model_s6_crisis.csv")
+    assert "its capacity equals S6" in report.section_s6_explain(crisis, mdl)
+    crisis.loc[crisis.scheme == "S4c", "cmds_gateway"] = -1
+    assert "differs from S6" in report.section_s6_explain(crisis, mdl)
+    assert report.section_s6_explain(crisis.iloc[0:0], mdl) == ""

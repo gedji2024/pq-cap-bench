@@ -119,9 +119,9 @@ def build(token_cfg: dict, radio: dict, model: dict, sig: dict, kem: dict) -> di
         lc = lambda n, ch: link_cost(n, ch, fh)  # noqa: E731
         Ns = model["devices_per_gateway"]
         out["model_s6_calm"] = s6m.calm_feasibility(chans, model["s6"], sig, U, Ns, lc)
-        out["model_s6_crisis"] = s6m.crisis_capacity(chans, model["s6"], U, Ns, lc)
+        out["model_s6_crisis"] = s6m.crisis_capacity(chans, model["s6"], U, Ns, lc, token_body=tm.body)
         out["model_s6_compare"] = s6m.compare(out["model_s6_crisis"], out["model_capacity"],
-                                              out["model_delivery"], model["s6"])
+                                              out["model_delivery"], {**model["s6"], "uplink_interval_s": U})
     return out
 
 
