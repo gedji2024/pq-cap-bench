@@ -37,7 +37,7 @@ def channels(radio: dict, model: dict) -> list[Channel]:
         for dr, d in r["downlink_drs"].items():
             phy = LoraPhy(sf=d["sf"], bw_hz=d["bw_khz"] * 1e3, cr=p["coding_rate"],
                           preamble=p["preamble_symbols"], explicit_header=p["explicit_header"],
-                          crc_on=p["crc_on"], ldro_threshold_ms=p["ldro_symbol_time_threshold_ms"])
+                          crc_on=p["crc_on_downlink"], ldro_threshold_ms=p["ldro_symbol_time_threshold_ms"])
             out.append(Channel(region, int(dr), phy, d[variant]["N"], duty, overhead))
     out.append(Channel("NB-IoT", 0, None, model["nbiot_max_payload_bytes"], None, 0))
     return out
@@ -158,13 +158,37 @@ def s2_amortization(tm: TokenModel, chans, model, sig, kem) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+def crc_sensitivity(base: dict, alt: dict, model: dict, alt_crc: bool) -> pd.DataFrame:
+    """Depth-0 LoRa rows: primary setting vs the alternative downlink-CRC setting."""
+    keys = ["scheme", "algorithm", "depth", "region", "dr"]
+    cols = ["frames", "airtime_s", "ttd_worst_s"]
+    a = base["model_delivery"]
+    b = alt["model_delivery"]
+    a, b = a[(a.depth == 0) & (a.region != "NB-IoT")], b[(b.depth == 0) & (b.region != "NB-IoT")]
+    m = a[keys + ["token_bytes"] + cols].merge(b[keys + cols], on=keys, suffixes=("", "_alt"))
+    k1 = model["kill_criteria"]["K1"]
+    ca, cb = base["model_capacity"], alt["model_capacity"]
+    sel = lambda c: c[(c.depth == 0) & (c.window_min == k1["window_min"]) & (c.devices == k1["devices"])][keys + ["cmds_gateway"]]  # noqa: E731
+    m = m.merge(sel(ca), on=keys).merge(sel(cb), on=keys, suffixes=("", "_alt"))
+    m["airtime_delta_rel"] = m.airtime_s_alt / m.airtime_s - 1
+    m["alt_crc_on_downlink"] = alt_crc
+    return m
+
+
 def run(config: Path, results: Path) -> dict[str, pd.DataFrame]:
     model = load_yaml(config / "model.yaml")
+    radio = load_yaml(config / "radio.yaml")
+    token = load_yaml(config / "token.yaml")
     sig, kem = measured_sizes(results, model["signature_size_statistic"])
-    out = build(load_yaml(config / "token.yaml"), load_yaml(config / "radio.yaml"), model, sig, kem)
+    out = build(token, radio, model, sig, kem)
+    alt_crc = radio["phy"]["sensitivity_crc_on_downlink"]
+    radio_alt = {**radio, "phy": {**radio["phy"], "crc_on_downlink": alt_crc}}
+    out_alt = build(token, radio_alt, model, sig, kem)
+    out["model_sensitivity_crc"] = crc_sensitivity(out, out_alt, model, alt_crc)
     for name, df in out.items():
         df.to_csv(results / f"{name}.csv", index=False)
     from .kill import evaluate  # noqa: PLC0415
     k = evaluate(out, model)
+    k["K1_crc_sensitivity"] = evaluate(out_alt, model)["K1"]
     (results / "kill_criteria.json").write_text(json.dumps(k, indent=2, default=str))
     return out

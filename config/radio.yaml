@@ -28,10 +28,12 @@ phy:
   preamble_symbols: 8
   explicit_header: true
   coding_rate: 1          # 1 => 4/5 ... 4 => 4/8
-  # NOTE: [RP002] Table 109 specifies NO payload CRC on downlink. The project brief
-  # requested CRC on; the default follows the brief (adds 16 bits, conservative) and is
-  # flagged in README. Set to false to follow RP002 Table 109 strictly.
-  crc_on: true
+  # [RP002] Table 109: payload CRC True on uplink, FALSE on downlink. This model only
+  # transmits downlinks (gateway -> device), so crc_on_downlink drives every result.
+  crc_on_downlink: false
+  crc_on_uplink: true       # recorded for completeness; uplinks are not transmitted in this model
+  # Sensitivity variant reported in REPORT.md: the earlier project-brief setting (downlink CRC on).
+  sensitivity_crc_on_downlink: true
   ldro_symbol_time_threshold_ms: 16   # [SX1276] p. 31: LDRO mandated when T_sym > 16 ms
 
 regions:

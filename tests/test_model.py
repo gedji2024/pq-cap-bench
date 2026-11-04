@@ -142,6 +142,22 @@ def test_build_outputs(cfgs):
     assert set(a.kem) == {"KEM-X"}                           # unavailable KEM skipped
 
 
+def test_downlink_crc_follows_rp002(cfgs):
+    _, radio, model = cfgs
+    assert radio["phy"]["crc_on_downlink"] is False and radio["phy"]["crc_on_uplink"] is True
+    assert all(c.phy.crc_on is False for c in M.channels(radio, model) if c.phy is not None)
+
+
+def test_crc_sensitivity_frames_invariant(cfgs):
+    token, radio, model = cfgs
+    base = M.build(token, radio, model, FIX_SIG, FIX_KEM)
+    alt = M.build(token, {**radio, "phy": {**radio["phy"], "crc_on_downlink": True}}, model, FIX_SIG, FIX_KEM)
+    s = M.crc_sensitivity(base, alt, model, True)
+    assert (s.frames == s.frames_alt).all()                  # CRC never changes frame counts
+    assert (s.airtime_delta_rel >= 0).all() and (s.airtime_delta_rel > 0).any()
+    assert (s.cmds_gateway_alt <= s.cmds_gateway).all()
+
+
 def test_s2_amortization_empty_without_signer(cfgs):
     token, radio, model = cfgs
     out = M.build(token, radio, model, {"HMAC-SHA256-T16": 16}, FIX_KEM)
@@ -183,4 +199,6 @@ def test_run_end_to_end(tmp_path, cfgs):
     M.run(cfg, tmp_path)
     for f in ("model_tokens", "model_delivery", "model_capacity", "model_s2_amortization"):
         assert (tmp_path / f"{f}.csv").exists()
-    assert json.loads((tmp_path / "kill_criteria.json").read_text())["K1"]["answer"] == "no"
+    kc = json.loads((tmp_path / "kill_criteria.json").read_text())
+    assert kc["K1"]["answer"] == "no" and kc["K1_crc_sensitivity"]["frames"] == kc["K1"]["frames"]
+    assert (tmp_path / "model_sensitivity_crc.csv").exists()

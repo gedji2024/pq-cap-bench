@@ -121,6 +121,37 @@ def section_capacity(results: Path, model: dict) -> str:
     return "\n\n".join(out)
 
 
+def section_crc(results: Path, config: Path, model: dict) -> str:
+    p = results / "model_sensitivity_crc.csv"
+    if not p.exists():
+        return "_no CRC sensitivity file_"
+    phy = load_yaml(config / "radio.yaml")["phy"]
+    d = pd.read_csv(p)
+    alt = bool(d.alt_crc_on_downlink.iloc[0])
+    k = json.loads((results / "kill_criteria.json").read_text())
+    k1, k1a = k["K1"], k.get("K1_crc_sensitivity", {})
+    head = (f"Primary setting: downlink payload CRC **{'on' if phy['crc_on_downlink'] else 'off'}** "
+            f"(RP002-1.0.3 Table 109). Sensitivity row: downlink CRC **{'on' if alt else 'off'}**. "
+            "Frame counts depend only on payload sizes, so CRC changes airtime, time to deliver and the "
+            "airtime-limited gateway capacity, never the number of frames.")
+    if k1.get("answer") not in (None, "n/a") and k1a.get("answer") not in (None, "n/a"):
+        head += (f"\n\nK1 under primary vs sensitivity: answer {k1['answer']} vs {k1a['answer']}; "
+                 f"airtime per command {k1['airtime_per_cmd_s']:.3f} s vs {k1a['airtime_per_cmd_s']:.3f} s; "
+                 f"worst-case time to deliver {k1['ttd_worst_s'] / 60:,.2f} min vs {k1a['ttd_worst_s'] / 60:,.2f} min.")
+    out = [head, f"Relative airtime change with downlink CRC {'on' if alt else 'off'} (depth 0, all LoRa channels): "
+           f"min {d.airtime_delta_rel.min():+.2%}, max {d.airtime_delta_rel.max():+.2%}."]
+    for reg, dr in model["figure_channels"]:
+        g = d[(d.region == reg) & (d.dr == dr)].sort_values("token_bytes")
+        out.append(f"**{reg} DR{dr}** (W = {model['kill_criteria']['K1']['window_min']} min, "
+                   f"N = {model['kill_criteria']['K1']['devices']} for commands per gateway):\n\n" + md_table(
+            g[["scheme", "algorithm", "frames", "airtime_s", "airtime_s_alt", "airtime_delta_rel",
+               "ttd_worst_s", "ttd_worst_s_alt", "cmds_gateway", "cmds_gateway_alt"]],
+            {"frames": lambda v: f"{int(v)}", "airtime_s": lambda v: f"{v:,.3f}", "airtime_s_alt": lambda v: f"{v:,.3f}",
+             "airtime_delta_rel": lambda v: f"{v:+.2%}", "ttd_worst_s": hrs, "ttd_worst_s_alt": hrs,
+             "cmds_gateway": lambda v: f"{int(v):,}", "cmds_gateway_alt": lambda v: f"{int(v):,}"}))
+    return "\n\n".join(out) + "\n\n_ttd columns in hours; `_alt` = sensitivity setting._"
+
+
 def section_kill(results: Path) -> str:
     k = json.loads((results / "kill_criteria.json").read_text())
     k1 = k["K1"]
@@ -170,6 +201,7 @@ def run(config: Path, results: Path, figures: Path) -> None:
         "## 5. Capability token sizes (bytes)", section_tokens(results),
         "## 6. LoRaWAN / NB-IoT delivery", section_delivery(results, model),
         "## 7. Commands within window", section_capacity(results, model),
+        "## 7b. Sensitivity: downlink CRC", section_crc(results, config, model),
         "## 8. Kill criteria", section_kill(results),
         "## 9. Figures", "\n".join(f"- [{f}](figures/{f}) ([pdf](figures/{f[:-4]}.pdf))" for f in figs),
     ]

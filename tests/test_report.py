@@ -30,13 +30,18 @@ def _fake_results(tmp_path, cfgs):  # noqa: F811
     pd.DataFrame(rows).to_csv(r / "bench_summary.csv", index=False)
     token, radio, mdl = cfgs
     out = M.build(token, radio, mdl, FIX_SIG, {"KEM-X": 500})
+    alt = M.build(token, {**radio, "phy": {**radio["phy"], "crc_on_downlink": True}}, mdl, FIX_SIG, {"KEM-X": 500})
+    out["model_sensitivity_crc"] = M.crc_sensitivity(out, alt, mdl, True)
     for name, df in out.items():
         df.to_csv(r / f"{name}.csv", index=False)
     from pqcap.kill import evaluate
-    (r / "kill_criteria.json").write_text(json.dumps(evaluate(out, mdl), default=str))
+    k = evaluate(out, mdl)
+    k["K1_crc_sensitivity"] = evaluate(alt, mdl)["K1"]
+    (r / "kill_criteria.json").write_text(json.dumps(k, default=str))
     cfg = tmp_path / "cfg"
     cfg.mkdir()
     (cfg / "model.yaml").write_text(json.dumps(mdl))
+    (cfg / "radio.yaml").write_text(json.dumps(radio))
     return r, cfg
 
 
@@ -51,6 +56,14 @@ def test_report_renders(tmp_path, cfgs):  # noqa: F811
         assert h in md
     assert "env.json missing" in md
     assert "HOST measurements" in md
+    assert "## 7b. Sensitivity: downlink CRC" in md and "K1 under primary vs sensitivity" in md
+
+
+def test_report_without_crc_file(tmp_path, cfgs):  # noqa: F811
+    r, cfg = _fake_results(tmp_path, cfgs)
+    (r / "model_sensitivity_crc.csv").unlink()
+    report.run(cfg, r, tmp_path)
+    assert "_no CRC sensitivity file_" in (tmp_path / "REPORT.md").read_text()
 
 
 def test_report_env_and_na(tmp_path, cfgs):  # noqa: F811

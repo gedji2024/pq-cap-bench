@@ -93,7 +93,9 @@ Encodings:
 
 **PHY settings.** RP002 Table 109: preamble 8, explicit header, CR 4/5.
 
-> ⚠ **CRC.** RP002 Table 109 specifies **no payload CRC on downlink**. The project brief asked for CRC on, so the default is `crc_on: true` in `config/radio.yaml`, which adds 16 bits per frame (conservative). Set it to `false` to follow RP002 strictly.
+**CRC.** This follows RP002 Table 109: `crc_on_downlink: false`, `crc_on_uplink: true`. Only downlinks are transmitted in this model.
+- The earlier setting (downlink CRC on, +16 bits per frame) is kept as a sensitivity variant: `results/model_sensitivity_crc.csv`, `REPORT.md` §7b, and `K1_crc_sensitivity` in `kill_criteria.json`.
+- CRC changes airtime only, never the frame count.
 
 **Time on air.** This is the Semtech SX1276/77/78/79 datasheet Rev. 7 formula (§4.1.1.7, p. 31). Low-data-rate optimisation is switched on automatically when T_sym > 16 ms.
 - Unit-tested against **9 published values**: Haxhibeqiri et al., *Sensors* 17:1193 (2017), Table 1, with all parameters stated; and Yasmin et al., *Sensors* 20:6721 (2020), Table 2.
