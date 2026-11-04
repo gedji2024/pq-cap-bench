@@ -1,0 +1,50 @@
+env -u VIRTUAL_ENV uv sync --frozen
+Checked 24 packages in 2ms
+env -u VIRTUAL_ENV uv run --frozen pqcap bench
+[bench] pinning unsupported on darwin (no sched_setaffinity); process not pinned
+liboqs-python faulthandler is disabled
+[bench] run 1 ML-DSA-44                    0.2s
+[bench] run 1 ML-DSA-65                    0.3s
+[bench] run 1 ML-DSA-87                    0.5s
+[bench] run 1 Falcon-512                   3.2s
+[bench] run 1 Falcon-1024                  9.8s
+[bench] run 1 SLH-DSA-SHA2-128s         1071.8s
+[bench] run 1 SLH-DSA-SHA2-128f           38.1s
+[bench] run 1 XMSS-SHA2-10-256           383.8s
+[bench] run 1 ECDSA-P256                   0.2s
+[bench] run 1 Ed25519                      0.2s
+[bench] run 1 HMAC-SHA256-T16              0.0s
+[bench] run 1 HMAC-SHA256-T32              0.0s
+[bench] run 1 ECDSA-P256+ML-DSA-44         0.4s
+[bench] run 1 ML-KEM-512
+[bench] run 1 ML-KEM-768
+[bench] run 2 ML-DSA-44                    0.2s
+[bench] run 2 ML-DSA-65                    0.4s
+[bench] run 2 ML-DSA-87                    0.6s
+[bench] run 2 Falcon-512                   3.5s
+[bench] run 2 Falcon-1024                 10.4s
+[bench] run 2 SLH-DSA-SHA2-128s          761.5s
+[bench] run 2 SLH-DSA-SHA2-128f           36.8s
+[bench] run 2 XMSS-SHA2-10-256           378.8s
+[bench] run 2 ECDSA-P256                   0.2s
+[bench] run 2 Ed25519                      0.2s
+[bench] run 2 HMAC-SHA256-T16              0.0s
+[bench] run 2 HMAC-SHA256-T32              0.0s
+[bench] run 2 ECDSA-P256+ML-DSA-44         0.4s
+[bench] run 2 ML-KEM-512
+[bench] run 2 ML-KEM-768
+[bench] run 3 ML-DSA-44                    0.2s
+[bench] run 3 ML-DSA-65                    0.4s
+[bench] run 3 ML-DSA-87                    0.5s
+[bench] run 3 Falcon-512                   3.4s
+[bench] run 3 Falcon-1024                 10.2s
+[bench] run 3 SLH-DSA-SHA2-128s          747.0s
+[bench] run 3 SLH-DSA-SHA2-128f           36.7s
+[bench] run 3 XMSS-SHA2-10-256           544.8s
+[bench] run 3 ECDSA-P256                   0.2s
+[bench] run 3 Ed25519                      0.2s
+[bench] run 3 HMAC-SHA256-T16              0.0s
+[bench] run 3 HMAC-SHA256-T32              0.0s
+[bench] run 3 ECDSA-P256+ML-DSA-44         0.4s
+[bench] run 3 ML-KEM-512
+[bench] run 3 ML-KEM-768

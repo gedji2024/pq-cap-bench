@@ -1,0 +1,17 @@
+label,kind,status,impl_name,reason,candidates
+ML-DSA-44,pq,ok,ML-DSA-44,,ML-DSA-44
+ML-DSA-65,pq,ok,ML-DSA-65,,ML-DSA-65
+ML-DSA-87,pq,ok,ML-DSA-87,,ML-DSA-87
+Falcon-512,pq,ok,Falcon-512,,FN-DSA-512;Falcon-512
+Falcon-1024,pq,ok,Falcon-1024,,FN-DSA-1024;Falcon-1024
+SLH-DSA-SHA2-128s,pq,ok,SLH_DSA_PURE_SHA2_128S,,SLH-DSA-SHA2-128s;SLH_DSA_PURE_SHA2_128S
+SLH-DSA-SHA2-128f,pq,ok,SLH_DSA_PURE_SHA2_128F,,SLH-DSA-SHA2-128f;SLH_DSA_PURE_SHA2_128F
+LMS-SHA256-H10-W4,stateful,unavailable,LMS_SHA256_H10_W4,"sign not supported by liboqs-python (LMS algorithms are verify‑only supported.); no signature can be produced, so sign/verify are not measured. liboqs nominal sizes (NOT measured): pk=60 sk=64 sig=2512",LMS_SHA256_H10_W4
+XMSS-SHA2-10-256,stateful,ok,XMSS-SHA2_10_256,,XMSS-SHA2_10_256
+ML-KEM-512,kem,ok,ML-KEM-512,,ML-KEM-512
+ML-KEM-768,kem,ok,ML-KEM-768,,ML-KEM-768
+ECDSA-P256,classical,ok,ECDSA-P256,pyca/cryptography (OpenSSL),
+Ed25519,classical,ok,Ed25519,pyca/cryptography (OpenSSL),
+HMAC-SHA256-T16,symmetric,ok,HMAC-SHA256-T16,pyca/cryptography (OpenSSL),
+HMAC-SHA256-T32,symmetric,ok,HMAC-SHA256-T32,pyca/cryptography (OpenSSL),
+ECDSA-P256+ML-DSA-44,hybrid,ok,ECDSA-P256+ML-DSA-44,"concatenated, AND-verify",

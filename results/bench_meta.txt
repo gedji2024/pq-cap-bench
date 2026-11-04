@@ -1,0 +1,1 @@
+pinning unsupported on darwin (no sched_setaffinity); process not pinned

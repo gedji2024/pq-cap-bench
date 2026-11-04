@@ -1,0 +1,359 @@
+{
+  "K1": {
+    "answer": "no",
+    "scheme": "S1",
+    "algorithm": "ML-DSA-44",
+    "window_min": 30,
+    "devices": 50,
+    "region": "US915",
+    "dr": 8,
+    "depth": 0,
+    "token_bytes": 2500,
+    "frames": 50,
+    "airtime_per_cmd_s": 30.49472,
+    "ttd_worst_s": 15001.288768,
+    "ttd_expected_s": 14851.288768,
+    "window_s": 1800,
+    "cmds_per_device": 0,
+    "cmds_gateway": 0,
+    "binding_limit": "device_opportunities"
+  },
+  "K2": {
+    "threshold": 2.0,
+    "answer": "yes: from 100 commands per epoch (ML-KEM-512, T = 24 h), S2/S4 airtime ratio <= 2.0 on every feasible channel",
+    "fixed": [
+      {
+        "kem": "ML-KEM-512",
+        "epoch_hours": 6,
+        "cmds_per_epoch": 1,
+        "ratio_airtime_min": 29.4578313253012,
+        "ratio_airtime_max": 34.88948787061994,
+        "ratio_bytes_min": 34.6875,
+        "ratio_bytes_max": 34.6875,
+        "n_channels": 13,
+        "near_symmetric": false
+      },
+      {
+        "kem": "ML-KEM-512",
+        "epoch_hours": 6,
+        "cmds_per_epoch": 10,
+        "ratio_airtime_min": 3.8457831325301197,
+        "ratio_airtime_max": 4.268330464716006,
+        "ratio_bytes_min": 4.3687499999999995,
+        "ratio_bytes_max": 4.3687499999999995,
+        "n_channels": 9,
+        "near_symmetric": false
+      },
+      {
+        "kem": "ML-KEM-512",
+        "epoch_hours": 24,
+        "cmds_per_epoch": 1,
+        "ratio_airtime_min": 29.4578313253012,
+        "ratio_airtime_max": 34.88948787061994,
+        "ratio_bytes_min": 34.6875,
+        "ratio_bytes_max": 34.6875,
+        "n_channels": 13,
+        "near_symmetric": false
+      },
+      {
+        "kem": "ML-KEM-512",
+        "epoch_hours": 24,
+        "cmds_per_epoch": 10,
+        "ratio_airtime_min": 3.8457831325301197,
+        "ratio_airtime_max": 4.388948787061994,
+        "ratio_bytes_min": 4.3687499999999995,
+        "ratio_bytes_max": 4.3687499999999995,
+        "n_channels": 13,
+        "near_symmetric": false
+      },
+      {
+        "kem": "ML-KEM-512",
+        "epoch_hours": 24,
+        "cmds_per_epoch": 100,
+        "ratio_airtime_min": 1.284578313253012,
+        "ratio_airtime_max": 1.3388948787061994,
+        "ratio_bytes_min": 1.336875,
+        "ratio_bytes_max": 1.336875,
+        "n_channels": 13,
+        "near_symmetric": true
+      },
+      {
+        "kem": "ML-KEM-768",
+        "epoch_hours": 6,
+        "cmds_per_epoch": 1,
+        "ratio_airtime_min": 32.179001721170394,
+        "ratio_airtime_max": 37.1340206185567,
+        "ratio_bytes_min": 38.020833333333336,
+        "ratio_bytes_max": 38.020833333333336,
+        "n_channels": 10,
+        "near_symmetric": false
+      },
+      {
+        "kem": "ML-KEM-768",
+        "epoch_hours": 6,
+        "cmds_per_epoch": 10,
+        "ratio_airtime_min": 4.117900172117039,
+        "ratio_airtime_max": 4.5924268502581755,
+        "ratio_bytes_min": 4.702083333333333,
+        "ratio_bytes_max": 4.702083333333333,
+        "n_channels": 9,
+        "near_symmetric": false
+      },
+      {
+        "kem": "ML-KEM-768",
+        "epoch_hours": 24,
+        "cmds_per_epoch": 1,
+        "ratio_airtime_min": 32.179001721170394,
+        "ratio_airtime_max": 38.34905660377358,
+        "ratio_bytes_min": 38.020833333333336,
+        "ratio_bytes_max": 38.020833333333336,
+        "n_channels": 13,
+        "near_symmetric": false
+      },
+      {
+        "kem": "ML-KEM-768",
+        "epoch_hours": 24,
+        "cmds_per_epoch": 10,
+        "ratio_airtime_min": 4.117900172117039,
+        "ratio_airtime_max": 4.7349056603773585,
+        "ratio_bytes_min": 4.702083333333333,
+        "ratio_bytes_max": 4.702083333333333,
+        "n_channels": 13,
+        "near_symmetric": false
+      },
+      {
+        "kem": "ML-KEM-768",
+        "epoch_hours": 24,
+        "cmds_per_epoch": 100,
+        "ratio_airtime_min": 1.311790017211704,
+        "ratio_airtime_max": 1.373490566037736,
+        "ratio_bytes_min": 1.3702083333333333,
+        "ratio_bytes_max": 1.3702083333333333,
+        "n_channels": 13,
+        "near_symmetric": true
+      }
+    ],
+    "class_a_max": [
+      {
+        "kem": "ML-KEM-512",
+        "epoch_hours": 1,
+        "k_max_min": NaN,
+        "k_max_max": NaN,
+        "ratio_airtime_min": NaN,
+        "ratio_airtime_max": NaN,
+        "ratio_bytes_min": NaN,
+        "ratio_bytes_max": NaN,
+        "n_channels": NaN,
+        "n_infeasible_channels": 13.0,
+        "n_lora_channels": 13
+      },
+      {
+        "kem": "ML-KEM-512",
+        "epoch_hours": 6,
+        "k_max_min": 3.0,
+        "k_max_max": 58.0,
+        "ratio_airtime_min": 1.490652264229331,
+        "ratio_airtime_max": 12.296495956873313,
+        "ratio_bytes_min": 1.5808189655172413,
+        "ratio_bytes_max": 12.229166666666666,
+        "n_channels": 13.0,
+        "n_infeasible_channels": 0.0,
+        "n_lora_channels": 13
+      },
+      {
+        "kem": "ML-KEM-512",
+        "epoch_hours": 24,
+        "k_max_min": 111.0,
+        "k_max_max": 274.0,
+        "ratio_airtime_min": 1.1038606982675225,
+        "ratio_airtime_max": 1.3053107015371166,
+        "ratio_bytes_min": 1.1229470802919708,
+        "ratio_bytes_max": 1.3034909909909909,
+        "n_channels": 13.0,
+        "n_infeasible_channels": 0.0,
+        "n_lora_channels": 13
+      },
+      {
+        "kem": "ML-KEM-768",
+        "epoch_hours": 1,
+        "k_max_min": NaN,
+        "k_max_max": NaN,
+        "ratio_airtime_min": NaN,
+        "ratio_airtime_max": NaN,
+        "ratio_bytes_min": NaN,
+        "ratio_bytes_max": NaN,
+        "n_channels": NaN,
+        "n_infeasible_channels": 13.0,
+        "n_lora_channels": 13
+      },
+      {
+        "kem": "ML-KEM-768",
+        "epoch_hours": 6,
+        "k_max_min": 1.0,
+        "k_max_max": 57.0,
+        "ratio_airtime_min": 1.5470000301959719,
+        "ratio_airtime_max": 37.1340206185567,
+        "ratio_bytes_min": 1.6494883040935673,
+        "ratio_bytes_max": 38.020833333333336,
+        "n_channels": 10.0,
+        "n_infeasible_channels": 3.0,
+        "n_lora_channels": 13
+      },
+      {
+        "kem": "ML-KEM-768",
+        "epoch_hours": 24,
+        "k_max_min": 107.0,
+        "k_max_max": 273.0,
+        "ratio_airtime_min": 1.1142087975134447,
+        "ratio_airtime_max": 1.349056603773585,
+        "ratio_bytes_min": 1.135607448107448,
+        "ratio_bytes_max": 1.3459890965732086,
+        "n_channels": 13.0,
+        "n_infeasible_channels": 0.0,
+        "n_lora_channels": 13
+      }
+    ]
+  },
+  "K3": [
+    {
+      "region": "US915",
+      "dr": 8,
+      "max_app_payload": 53,
+      "fits_one_frame": "none",
+      "fit_token_bytes": null,
+      "smallest_pq": "S1/Falcon-512",
+      "smallest_pq_token_bytes": 744,
+      "smallest_pq_frames": 15
+    },
+    {
+      "region": "US915",
+      "dr": 9,
+      "max_app_payload": 129,
+      "fits_one_frame": "none",
+      "fit_token_bytes": null,
+      "smallest_pq": "S1/Falcon-512",
+      "smallest_pq_token_bytes": 744,
+      "smallest_pq_frames": 6
+    },
+    {
+      "region": "US915",
+      "dr": 10,
+      "max_app_payload": 242,
+      "fits_one_frame": "none",
+      "fit_token_bytes": null,
+      "smallest_pq": "S1/Falcon-512",
+      "smallest_pq_token_bytes": 744,
+      "smallest_pq_frames": 4
+    },
+    {
+      "region": "US915",
+      "dr": 11,
+      "max_app_payload": 242,
+      "fits_one_frame": "none",
+      "fit_token_bytes": null,
+      "smallest_pq": "S1/Falcon-512",
+      "smallest_pq_token_bytes": 744,
+      "smallest_pq_frames": 4
+    },
+    {
+      "region": "US915",
+      "dr": 12,
+      "max_app_payload": 242,
+      "fits_one_frame": "none",
+      "fit_token_bytes": null,
+      "smallest_pq": "S1/Falcon-512",
+      "smallest_pq_token_bytes": 744,
+      "smallest_pq_frames": 4
+    },
+    {
+      "region": "US915",
+      "dr": 13,
+      "max_app_payload": 242,
+      "fits_one_frame": "none",
+      "fit_token_bytes": null,
+      "smallest_pq": "S1/Falcon-512",
+      "smallest_pq_token_bytes": 744,
+      "smallest_pq_frames": 4
+    },
+    {
+      "region": "EU868",
+      "dr": 0,
+      "max_app_payload": 51,
+      "fits_one_frame": "none",
+      "fit_token_bytes": null,
+      "smallest_pq": "S1/Falcon-512",
+      "smallest_pq_token_bytes": 744,
+      "smallest_pq_frames": 16
+    },
+    {
+      "region": "EU868",
+      "dr": 1,
+      "max_app_payload": 51,
+      "fits_one_frame": "none",
+      "fit_token_bytes": null,
+      "smallest_pq": "S1/Falcon-512",
+      "smallest_pq_token_bytes": 744,
+      "smallest_pq_frames": 16
+    },
+    {
+      "region": "EU868",
+      "dr": 2,
+      "max_app_payload": 51,
+      "fits_one_frame": "none",
+      "fit_token_bytes": null,
+      "smallest_pq": "S1/Falcon-512",
+      "smallest_pq_token_bytes": 744,
+      "smallest_pq_frames": 16
+    },
+    {
+      "region": "EU868",
+      "dr": 3,
+      "max_app_payload": 115,
+      "fits_one_frame": "none",
+      "fit_token_bytes": null,
+      "smallest_pq": "S1/Falcon-512",
+      "smallest_pq_token_bytes": 744,
+      "smallest_pq_frames": 7
+    },
+    {
+      "region": "EU868",
+      "dr": 4,
+      "max_app_payload": 242,
+      "fits_one_frame": "none",
+      "fit_token_bytes": null,
+      "smallest_pq": "S1/Falcon-512",
+      "smallest_pq_token_bytes": 744,
+      "smallest_pq_frames": 4
+    },
+    {
+      "region": "EU868",
+      "dr": 5,
+      "max_app_payload": 242,
+      "fits_one_frame": "none",
+      "fit_token_bytes": null,
+      "smallest_pq": "S1/Falcon-512",
+      "smallest_pq_token_bytes": 744,
+      "smallest_pq_frames": 4
+    },
+    {
+      "region": "EU868",
+      "dr": 6,
+      "max_app_payload": 242,
+      "fits_one_frame": "none",
+      "fit_token_bytes": null,
+      "smallest_pq": "S1/Falcon-512",
+      "smallest_pq_token_bytes": 744,
+      "smallest_pq_frames": 4
+    },
+    {
+      "region": "NB-IoT",
+      "dr": 0,
+      "max_app_payload": 1280,
+      "fits_one_frame": "S1/Falcon-512",
+      "fit_token_bytes": 744,
+      "smallest_pq": "S1/Falcon-512",
+      "smallest_pq_token_bytes": 744,
+      "smallest_pq_frames": 1
+    }
+  ]
+}

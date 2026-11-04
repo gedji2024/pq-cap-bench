@@ -1,0 +1,49 @@
+scheme,algorithm,auth_bytes,scheme_desc,depth,token_bytes,auth_overhead_bytes
+S1,ML-DSA-44,2420,per-command PQ signature,0,2500,2420
+S1,ML-DSA-44,2420,per-command PQ signature,1,4960,4880
+S1,ML-DSA-44,2420,per-command PQ signature,2,7420,7340
+S1,ML-DSA-44,2420,per-command PQ signature,3,9880,9800
+S1,ML-DSA-65,3309,per-command PQ signature,0,3389,3309
+S1,ML-DSA-65,3309,per-command PQ signature,1,6738,6658
+S1,ML-DSA-65,3309,per-command PQ signature,2,10087,10007
+S1,ML-DSA-65,3309,per-command PQ signature,3,13436,13356
+S1,ML-DSA-87,4627,per-command PQ signature,0,4707,4627
+S1,ML-DSA-87,4627,per-command PQ signature,1,9374,9294
+S1,ML-DSA-87,4627,per-command PQ signature,2,14041,13961
+S1,ML-DSA-87,4627,per-command PQ signature,3,18708,18628
+S1,Falcon-512,664,per-command PQ signature,0,744,664
+S1,Falcon-512,664,per-command PQ signature,1,1448,1368
+S1,Falcon-512,664,per-command PQ signature,2,2152,2072
+S1,Falcon-512,664,per-command PQ signature,3,2856,2776
+S1,Falcon-1024,1282,per-command PQ signature,0,1362,1282
+S1,Falcon-1024,1282,per-command PQ signature,1,2684,2604
+S1,Falcon-1024,1282,per-command PQ signature,2,4006,3926
+S1,Falcon-1024,1282,per-command PQ signature,3,5328,5248
+S1,SLH-DSA-SHA2-128s,7856,per-command PQ signature,0,7936,7856
+S1,SLH-DSA-SHA2-128s,7856,per-command PQ signature,1,15832,15752
+S1,SLH-DSA-SHA2-128s,7856,per-command PQ signature,2,23728,23648
+S1,SLH-DSA-SHA2-128s,7856,per-command PQ signature,3,31624,31544
+S1,SLH-DSA-SHA2-128f,17088,per-command PQ signature,0,17168,17088
+S1,SLH-DSA-SHA2-128f,17088,per-command PQ signature,1,34296,34216
+S1,SLH-DSA-SHA2-128f,17088,per-command PQ signature,2,51424,51344
+S1,SLH-DSA-SHA2-128f,17088,per-command PQ signature,3,68552,68472
+S1,XMSS-SHA2-10-256,2500,per-command PQ signature,0,2580,2500
+S1,XMSS-SHA2-10-256,2500,per-command PQ signature,1,5120,5040
+S1,XMSS-SHA2-10-256,2500,per-command PQ signature,2,7660,7580
+S1,XMSS-SHA2-10-256,2500,per-command PQ signature,3,10200,10120
+S2,ML-DSA-44+KEM/HMAC-SHA256-T16,16,"PQ-signed epoch cert + KEM, per-command HMAC",0,96,16
+S2,ML-DSA-44+KEM/HMAC-SHA256-T16,16,"PQ-signed epoch cert + KEM, per-command HMAC",1,152,72
+S2,ML-DSA-44+KEM/HMAC-SHA256-T16,16,"PQ-signed epoch cert + KEM, per-command HMAC",2,208,128
+S2,ML-DSA-44+KEM/HMAC-SHA256-T16,16,"PQ-signed epoch cert + KEM, per-command HMAC",3,264,184
+S4,HMAC-SHA256-T16,16,symmetric HMAC only (pre-shared key),0,96,16
+S4,HMAC-SHA256-T16,16,symmetric HMAC only (pre-shared key),1,152,72
+S4,HMAC-SHA256-T16,16,symmetric HMAC only (pre-shared key),2,208,128
+S4,HMAC-SHA256-T16,16,symmetric HMAC only (pre-shared key),3,264,184
+S3,ECDSA-P256+ML-DSA-44,2484,hybrid ECDSA-P256+ML-DSA-44 per command,0,2564,2484
+S3,ECDSA-P256+ML-DSA-44,2484,hybrid ECDSA-P256+ML-DSA-44 per command,1,5088,5008
+S3,ECDSA-P256+ML-DSA-44,2484,hybrid ECDSA-P256+ML-DSA-44 per command,2,7612,7532
+S3,ECDSA-P256+ML-DSA-44,2484,hybrid ECDSA-P256+ML-DSA-44 per command,3,10136,10056
+S5,ECDSA-P256,64,classical ECDSA-P256 per command,0,144,64
+S5,ECDSA-P256,64,classical ECDSA-P256 per command,1,248,168
+S5,ECDSA-P256,64,classical ECDSA-P256 per command,2,352,272
+S5,ECDSA-P256,64,classical ECDSA-P256 per command,3,456,376
