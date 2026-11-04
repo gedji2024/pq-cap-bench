@@ -1,0 +1,49 @@
+device,policy,scheme,compromise,gateway_keys,accepted,catalogue
+EM400-UDL,tight,S6,C1,lorawan_ns,625,17179933927
+EM400-UDL,tight,S6,C1 + filtering gateway,lorawan_ns,625,17179933927
+EM400-UDL,tight,S4-E,C1,lorawan_ns;policy_mac,625,17179933927
+EM400-UDL,tight,S4-E,C1 + filtering gateway,lorawan_ns;policy_mac,17179933927,17179933927
+EM400-UDL,medium,S6,C1,lorawan_ns,42955758,17179933927
+EM400-UDL,medium,S6,C1 + filtering gateway,lorawan_ns,42955758,17179933927
+EM400-UDL,medium,S4-E,C1,lorawan_ns;policy_mac,42955758,17179933927
+EM400-UDL,medium,S4-E,C1 + filtering gateway,lorawan_ns;policy_mac,17179933927,17179933927
+EM400-UDL,loose,S6,C1,lorawan_ns,17179870026,17179933927
+EM400-UDL,loose,S6,C1 + filtering gateway,lorawan_ns,17179870026,17179933927
+EM400-UDL,loose,S4-E,C1,lorawan_ns;policy_mac,17179870026,17179933927
+EM400-UDL,loose,S4-E,C1 + filtering gateway,lorawan_ns;policy_mac,17179933927,17179933927
+EM410-RDL,tight,S6,C1,lorawan_ns,15,21474839362
+EM410-RDL,tight,S6,C1 + filtering gateway,lorawan_ns,15,21474839362
+EM410-RDL,tight,S4-E,C1,lorawan_ns;policy_mac,15,21474839362
+EM410-RDL,tight,S4-E,C1 + filtering gateway,lorawan_ns;policy_mac,21474839362,21474839362
+EM410-RDL,medium,S6,C1,lorawan_ns,42955061,21474839362
+EM410-RDL,medium,S6,C1 + filtering gateway,lorawan_ns,42955061,21474839362
+EM410-RDL,medium,S4-E,C1,lorawan_ns;policy_mac,42955061,21474839362
+EM410-RDL,medium,S4-E,C1 + filtering gateway,lorawan_ns;policy_mac,21474839362,21474839362
+EM410-RDL,loose,S6,C1,lorawan_ns,21474837936,21474839362
+EM410-RDL,loose,S6,C1 + filtering gateway,lorawan_ns,21474837936,21474839362
+EM410-RDL,loose,S4-E,C1,lorawan_ns;policy_mac,21474837936,21474839362
+EM410-RDL,loose,S4-E,C1 + filtering gateway,lorawan_ns;policy_mac,21474839362,21474839362
+LWL01,tight,S6,C1,lorawan_ns,0,16777231
+LWL01,tight,S6,C1 + filtering gateway,lorawan_ns,0,16777231
+LWL01,tight,S4-E,C1,lorawan_ns;policy_mac,0,16777231
+LWL01,tight,S4-E,C1 + filtering gateway,lorawan_ns;policy_mac,16777231,16777231
+LWL01,medium,S6,C1,lorawan_ns,903,16777231
+LWL01,medium,S6,C1 + filtering gateway,lorawan_ns,903,16777231
+LWL01,medium,S4-E,C1,lorawan_ns;policy_mac,903,16777231
+LWL01,medium,S4-E,C1 + filtering gateway,lorawan_ns;policy_mac,16777231,16777231
+LWL01,loose,S6,C1,lorawan_ns,915,16777231
+LWL01,loose,S6,C1 + filtering gateway,lorawan_ns,915,16777231
+LWL01,loose,S4-E,C1,lorawan_ns;policy_mac,915,16777231
+LWL01,loose,S4-E,C1 + filtering gateway,lorawan_ns;policy_mac,16777231,16777231
+PS-LB,tight,S6,C1,lorawan_ns,2213,562949978062740
+PS-LB,tight,S6,C1 + filtering gateway,lorawan_ns,2213,562949978062740
+PS-LB,tight,S4-E,C1,lorawan_ns;policy_mac,2213,562949978062740
+PS-LB,tight,S4-E,C1 + filtering gateway,lorawan_ns;policy_mac,562949978062740,562949978062740
+PS-LB,medium,S6,C1,lorawan_ns,281526599014,562949978062740
+PS-LB,medium,S6,C1 + filtering gateway,lorawan_ns,281526599014,562949978062740
+PS-LB,medium,S4-E,C1,lorawan_ns;policy_mac,281526599014,562949978062740
+PS-LB,medium,S4-E,C1 + filtering gateway,lorawan_ns;policy_mac,562949978062740,562949978062740
+PS-LB,loose,S6,C1,lorawan_ns,562949961286424,562949978062740
+PS-LB,loose,S6,C1 + filtering gateway,lorawan_ns,562949961286424,562949978062740
+PS-LB,loose,S4-E,C1,lorawan_ns;policy_mac,562949961286424,562949978062740
+PS-LB,loose,S4-E,C1 + filtering gateway,lorawan_ns;policy_mac,562949978062740,562949978062740

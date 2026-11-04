@@ -233,6 +233,18 @@ S4-E and S6 differ only in how the envelope is installed:
   - The device then rejects every command for that handle (property-tested).
   - Active-revocation time is compared with S6 and S4-E at every US915 DR in `REPORT.md` §7d.
 
+## Gateway-side filtering (D6, `pqcap.gateway`)
+Under a C1 command flood, an untrusted gateway that holds the public S6 envelopes, verified with pk_PA, drops commands outside the envelope bounds before transmitting them.
+
+**What is reported:**
+- the downlink airtime saved;
+- the share of the gateway budget freed for other tenants;
+- both as ranges over devices × policies × flood mixes, per DR and N.
+
+**Assumption.** The gateway must be able to read command parameters: it is given AppSKey, which is ASSUMED. That key provides confidentiality only, so it gives no forging power.
+
+**Why S4-E cannot do this.** Verifying an S4-E envelope requires the per-device policy MAC key, which also mints envelopes. `forging_power` shows that C1 plus such a gateway reaches the whole catalogue, while an S6 gateway adds nothing.
+
 ## Harm-weighted replay (`pqcap.harm`, `config/harm.yaml`)
 **Input.** USGS 08074000 Buffalo Bayou at Houston, TX, gage height, 2017-08-26..31 (Hurricane Harvey).
 - The raw JSON is cached in `data/`. The query URL, the URL after redirect, the retrieval date and the SHA-256 are in `data/*.meta.json`.

@@ -980,6 +980,111 @@ Reference levels: [0.25, 0.5, 0.75, 0.9] (fractions of each event range); a cros
 | Falcon-512 | 664 | 14 | 6 | 3 | 3 | 3 | 3 | 14 | 14 | 14 | 6 | 3 | 3 | 3 |
 | ML-DSA-44 | 2,420 | 48 | 20 | 11 | 11 | 11 | 11 | 50 | 50 | 50 | 22 | 11 | 11 | 11 |
 
+## 7h. D6: gateway-side filtering of a C1 flood
+
+**D6 - an untrusted gateway verifies S6 envelopes with pk_PA and drops C1 flood commands outside the envelope bounds.** ASSUMED -- AppSKey disclosed to the gateway; integrity key k_{d,e} is not. Flood = one command per Class A downlink slot per device; saved airtime = transmitted flood airtime x out-of-bounds share. Ranges over 4 devices (Sec. 8a catalogue):
+
+**US915 DR8**:
+
+| mix | policy | devices | out_frac_min | out_frac_max | saved_s_per_h_min | saved_s_per_h_max | saved_budget_share_min | saved_budget_share_max |
+|---|---|---|---|---|---|---|---|---|
+| uniform_payload | tight | 10 | 0.990 | 1.000 | 34.3 | 39.6 | 0.010 | 0.011 |
+| uniform_payload | tight | 50 | 0.990 | 1.000 | 171.5 | 197.8 | 0.048 | 0.055 |
+| uniform_payload | tight | 200 | 0.990 | 1.000 | 686.1 | 791.3 | 0.191 | 0.220 |
+| uniform_type | tight | 10 | 0.996 | 0.999 | 34.6 | 37.0 | 0.010 | 0.010 |
+| uniform_type | tight | 50 | 0.996 | 0.999 | 172.9 | 185.1 | 0.048 | 0.051 |
+| uniform_type | tight | 200 | 0.996 | 0.999 | 691.7 | 740.5 | 0.192 | 0.206 |
+| uniform_payload | medium | 10 | 0.900 | 0.999 | 31.2 | 39.5 | 0.009 | 0.011 |
+| uniform_payload | medium | 50 | 0.900 | 0.999 | 155.9 | 197.7 | 0.043 | 0.055 |
+| uniform_payload | medium | 200 | 0.900 | 0.999 | 623.7 | 791.0 | 0.173 | 0.220 |
+| uniform_type | medium | 10 | 0.580 | 0.841 | 20.1 | 30.6 | 0.006 | 0.008 |
+| uniform_type | medium | 50 | 0.580 | 0.841 | 100.5 | 152.8 | 0.028 | 0.042 |
+| uniform_type | medium | 200 | 0.580 | 0.841 | 402.0 | 611.2 | 0.112 | 0.170 |
+| uniform_payload | loose | 10 | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| uniform_payload | loose | 50 | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| uniform_payload | loose | 200 | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| uniform_type | loose | 10 | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| uniform_type | loose | 50 | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| uniform_type | loose | 200 | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+
+**US915 DR13**:
+
+| mix | policy | devices | out_frac_min | out_frac_max | saved_s_per_h_min | saved_s_per_h_max | saved_budget_share_min | saved_budget_share_max |
+|---|---|---|---|---|---|---|---|---|
+| uniform_payload | tight | 10 | 0.990 | 1.000 | 1.4 | 1.7 | 0.000 | 0.000 |
+| uniform_payload | tight | 50 | 0.990 | 1.000 | 6.9 | 8.5 | 0.002 | 0.002 |
+| uniform_payload | tight | 200 | 0.990 | 1.000 | 27.5 | 33.9 | 0.008 | 0.009 |
+| uniform_type | tight | 10 | 0.996 | 0.999 | 1.4 | 1.5 | 0.000 | 0.000 |
+| uniform_type | tight | 50 | 0.996 | 0.999 | 6.9 | 7.7 | 0.002 | 0.002 |
+| uniform_type | tight | 200 | 0.996 | 0.999 | 27.7 | 30.8 | 0.008 | 0.009 |
+| uniform_payload | medium | 10 | 0.900 | 0.999 | 1.3 | 1.7 | 0.000 | 0.000 |
+| uniform_payload | medium | 50 | 0.900 | 0.999 | 6.3 | 8.5 | 0.002 | 0.002 |
+| uniform_payload | medium | 200 | 0.900 | 0.999 | 25.0 | 33.9 | 0.007 | 0.009 |
+| uniform_type | medium | 10 | 0.580 | 0.841 | 0.8 | 1.2 | 0.000 | 0.000 |
+| uniform_type | medium | 50 | 0.580 | 0.841 | 4.0 | 6.2 | 0.001 | 0.002 |
+| uniform_type | medium | 200 | 0.580 | 0.841 | 16.1 | 24.7 | 0.004 | 0.007 |
+| uniform_payload | loose | 10 | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| uniform_payload | loose | 50 | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| uniform_payload | loose | 200 | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| uniform_type | loose | 10 | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| uniform_type | loose | 50 | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| uniform_type | loose | 200 | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+
+**EU868 DR0**:
+
+| mix | policy | devices | out_frac_min | out_frac_max | saved_s_per_h_min | saved_s_per_h_max | saved_budget_share_min | saved_budget_share_max |
+|---|---|---|---|---|---|---|---|---|
+| uniform_payload | tight | 10 | 0.990 | 1.000 | 35.6 | 36.0 | 0.990 | 1.000 |
+| uniform_payload | tight | 50 | 0.990 | 1.000 | 35.6 | 36.0 | 0.990 | 1.000 |
+| uniform_payload | tight | 200 | 0.990 | 1.000 | 35.6 | 36.0 | 0.990 | 1.000 |
+| uniform_type | tight | 10 | 0.996 | 0.999 | 35.9 | 36.0 | 0.996 | 0.999 |
+| uniform_type | tight | 50 | 0.996 | 0.999 | 35.9 | 36.0 | 0.996 | 0.999 |
+| uniform_type | tight | 200 | 0.996 | 0.999 | 35.9 | 36.0 | 0.996 | 0.999 |
+| uniform_payload | medium | 10 | 0.900 | 0.999 | 32.4 | 36.0 | 0.900 | 0.999 |
+| uniform_payload | medium | 50 | 0.900 | 0.999 | 32.4 | 36.0 | 0.900 | 0.999 |
+| uniform_payload | medium | 200 | 0.900 | 0.999 | 32.4 | 36.0 | 0.900 | 0.999 |
+| uniform_type | medium | 10 | 0.580 | 0.841 | 20.9 | 30.6 | 0.580 | 0.850 |
+| uniform_type | medium | 50 | 0.580 | 0.841 | 20.9 | 30.6 | 0.580 | 0.850 |
+| uniform_type | medium | 200 | 0.580 | 0.841 | 20.9 | 30.6 | 0.580 | 0.850 |
+| uniform_payload | loose | 10 | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| uniform_payload | loose | 50 | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| uniform_payload | loose | 200 | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| uniform_type | loose | 10 | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| uniform_type | loose | 50 | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| uniform_type | loose | 200 | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+
+**EU868 DR5**:
+
+| mix | policy | devices | out_frac_min | out_frac_max | saved_s_per_h_min | saved_s_per_h_max | saved_budget_share_min | saved_budget_share_max |
+|---|---|---|---|---|---|---|---|---|
+| uniform_payload | tight | 10 | 0.990 | 1.000 | 5.5 | 6.8 | 0.153 | 0.189 |
+| uniform_payload | tight | 50 | 0.990 | 1.000 | 27.5 | 33.9 | 0.765 | 0.943 |
+| uniform_payload | tight | 200 | 0.990 | 1.000 | 35.6 | 36.0 | 0.990 | 1.000 |
+| uniform_type | tight | 10 | 0.996 | 0.999 | 5.5 | 6.2 | 0.154 | 0.171 |
+| uniform_type | tight | 50 | 0.996 | 0.999 | 27.7 | 30.8 | 0.771 | 0.856 |
+| uniform_type | tight | 200 | 0.996 | 0.999 | 35.9 | 35.9 | 0.996 | 0.999 |
+| uniform_payload | medium | 10 | 0.900 | 0.999 | 5.0 | 6.8 | 0.139 | 0.188 |
+| uniform_payload | medium | 50 | 0.900 | 0.999 | 25.0 | 33.9 | 0.695 | 0.941 |
+| uniform_payload | medium | 200 | 0.900 | 0.999 | 32.4 | 36.0 | 0.900 | 0.999 |
+| uniform_type | medium | 10 | 0.580 | 0.841 | 3.2 | 4.9 | 0.090 | 0.137 |
+| uniform_type | medium | 50 | 0.580 | 0.841 | 16.1 | 24.7 | 0.448 | 0.686 |
+| uniform_type | medium | 200 | 0.580 | 0.841 | 20.9 | 30.5 | 0.580 | 0.848 |
+| uniform_payload | loose | 10 | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| uniform_payload | loose | 50 | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| uniform_payload | loose | 200 | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| uniform_type | loose | 10 | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| uniform_type | loose | 50 | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| uniform_type | loose | 200 | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+
+**Forging power of a filtering gateway** (blast radius as a fraction of the catalogue, ranges over devices x policies). To verify S4-E envelopes the gateway must hold the per-device policy MAC key, which also mints envelopes, so C1 plus that gateway reaches the whole catalogue; an S6 gateway holds only pk_PA and the blast radius stays at the policy bound:
+
+| scheme | compromise | gateway_keys | fraction_min | fraction_max | cases |
+|---|---|---|---|---|---|
+| S6 | C1 | lorawan_ns | 0 | 1 | 12 |
+| S6 | C1 + filtering gateway | lorawan_ns | 0 | 1 | 12 |
+| S4-E | C1 | lorawan_ns;policy_mac | 0 | 1 | 12 |
+| S4-E | C1 + filtering gateway | lorawan_ns;policy_mac | 1 | 1 | 12 |
+
 ## 8. Kill criteria
 
 **K1 - Is S1 with ML-DSA-44 deliverable within W = 30 min for N = 50 at US915 DR8? -> NO.**

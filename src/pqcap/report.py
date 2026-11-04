@@ -493,6 +493,39 @@ def section_d2(results: Path) -> str:
               "(`results/sizes.csv`):\n\n" + md_table(tk.reset_index(), {c: ints for c in tk.columns} | {"token_bytes": ints}))
 
 
+def section_d6(results: Path, model: dict) -> str:
+    p = results / "d6_gateway_filter.csv"
+    if not p.exists():
+        return "_D6 not run_"
+    f, fp = pd.read_csv(p), pd.read_csv(results / "d6_forging_power.csv")
+    out = [f"**D6 - an untrusted gateway verifies S6 envelopes with pk_PA and drops C1 flood commands outside the "
+           f"envelope bounds.** {model['d6']['gateway_reads_parameters']}. Flood = one command per Class A downlink "
+           "slot per device; saved airtime = transmitted flood airtime x out-of-bounds share. Ranges over "
+           f"{f.device.nunique()} devices (Sec. 8a catalogue):"]
+    for reg, dr in model["figure_channels"]:
+        g = f[(f.region == reg) & (f.dr == dr)]
+        t = (g.groupby(["mix", "policy", "devices"], sort=False)
+             .agg(out_frac_min=("out_of_envelope_fraction", "min"), out_frac_max=("out_of_envelope_fraction", "max"),
+                  saved_s_per_h_min=("saved_s_per_h", "min"), saved_s_per_h_max=("saved_s_per_h", "max"),
+                  saved_budget_share_min=("saved_share_of_budget", "min"),
+                  saved_budget_share_max=("saved_share_of_budget", "max")).reset_index())
+        out.append(f"**{reg} DR{dr}**:\n\n" + md_table(t, {"devices": lambda v: f"{int(v)}"}
+                                                        | {c: (lambda v: f"{v:.3f}") for c in t.columns
+                                                           if c.startswith(("out_", "saved_budget"))}
+                                                        | {c: (lambda v: f"{v:,.1f}") for c in t.columns
+                                                           if c.startswith("saved_s")}))
+    fp = fp.assign(fraction=fp.accepted / fp.catalogue)
+    t = (fp.groupby(["scheme", "compromise", "gateway_keys"], sort=False)
+         .agg(fraction_min=("fraction", "min"), fraction_max=("fraction", "max"), cases=("fraction", "size")).reset_index())
+    out.append("**Forging power of a filtering gateway** (blast radius as a fraction of the catalogue, ranges over "
+               "devices x policies). To verify S4-E envelopes the gateway must hold the per-device policy MAC key, "
+               "which also mints envelopes, so C1 plus that gateway reaches the whole catalogue; an S6 gateway holds "
+               "only pk_PA and the blast radius stays at the policy bound:\n\n"
+               + md_table(t, {"fraction_min": lambda v: f"{v:.3g}", "fraction_max": lambda v: f"{v:.3g}",
+                              "cases": lambda v: f"{int(v)}"}))
+    return "\n\n".join(out)
+
+
 def section_kill(results: Path) -> str:
     k = json.loads((results / "kill_criteria.json").read_text())
     k1 = k["K1"]
@@ -561,6 +594,7 @@ def run(config: Path, results: Path, figures: Path) -> None:
         "## 7e. Harm-weighted replay (USGS flood events, manufacturer battery profiles)", section_harm(results, config),
         "## 7f. Device-side envelope verification (pqm4, published)", section_mcu(results, config),
         "## 7g. D2: two-tier defence S6+F", section_d2(results),
+        "## 7h. D6: gateway-side filtering of a C1 flood", section_d6(results, model),
         "## 8. Kill criteria", section_kill(results),
         "## 8a. K5/K6 on the manufacturer device catalogue (supersedes the K5/K6 of Sec. 8)",
         section_catalogue(results, config),

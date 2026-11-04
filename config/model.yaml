@@ -67,3 +67,10 @@ revocation:
   active_push: true
   # D1 S6-R: envelope carries H(r_rev) (32 B, SHA-256); revocation reveals r_rev (16 or 32 B) + handle (4 B)
   s6r_reveal_bytes: [16, 32]
+
+# D6: gateway-side filtering of a C1 command flood (pqcap.gateway).
+d6:
+  # ASSUMED: the filtering gateway is given AppSKey (confidentiality only) so it can read command parameters.
+  gateway_reads_parameters: "ASSUMED -- AppSKey disclosed to the gateway; integrity key k_{d,e} is not"
+  flood_mixes: [uniform_payload, uniform_type]   # attacker draws commands uniformly over payloads / over types
+  devices_per_gateway: [10, 50, 200]

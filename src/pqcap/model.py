@@ -218,6 +218,19 @@ def run(config: Path, results: Path) -> dict[str, pd.DataFrame]:
         cdf.to_csv(results / "catalogue_blast.csv", index=False)
         ck5.to_csv(results / "catalogue_k5_ranges.csv", index=False)
         ck6.to_csv(results / "catalogue_k6_ranges.csv", index=False)
+        if "d6" in model:
+            from . import gateway as gw  # noqa: PLC0415
+            devs_ = devm.load_catalogue(config / "devices")
+            pols = load_yaml(config / "policies.yaml")
+            lc6 = lambda n, ch: link_cost(n, ch, model["fragment_header_bytes"])  # noqa: E731
+            gw.filter_savings(devs_, pols, channels(load_yaml(config / "radio.yaml"), model), model["uplink_interval_s"],
+                              model["d6"]["devices_per_gateway"], lc6, model["d6"]["flood_mixes"]).to_csv(
+                results / "d6_gateway_filter.csv", index=False)
+            acfg_ = load_yaml(config / "actions.yaml")
+            c_ = acfg_.get("count_state", {"alert_active": True, "battery_above_floor": True})
+            gw.forging_power(devs_, pols, load_yaml(config / "threat.yaml"), acfg_["invariants"],
+                             {"alert_active": c_["alert_active"], "battery_below_floor": not c_["battery_above_floor"]}
+                             ).to_csv(results / "d6_forging_power.csv", index=False)
     if (config / "mcu.yaml").exists():
         from . import pqm4  # noqa: PLC0415
         from .config import REPO_ROOT  # noqa: PLC0415

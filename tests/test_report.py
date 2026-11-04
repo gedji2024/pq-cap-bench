@@ -74,6 +74,14 @@ def _fake_results(tmp_path, cfgs):  # noqa: F811
     from pqcap import devices as _d
     cdf, ck5, ck6 = _d.run(CONFIG)
     cdf.to_csv(r / "catalogue_blast.csv", index=False)
+    from pqcap import gateway as _g
+    import pqcap.model as _m
+    _devs = _d.load_catalogue(CONFIG / "devices")
+    _pol = load_yaml(CONFIG / "policies.yaml")
+    _g.filter_savings(_devs, _pol, _m.channels(radio, mdl), 300, [50], lambda n, c: _m.link_cost(n, c, 2),
+                      ["uniform_type"]).to_csv(r / "d6_gateway_filter.csv", index=False)
+    _g.forging_power(_devs, _pol, load_yaml(CONFIG / "threat.yaml"), acfg["invariants"],
+                     {"alert_active": True, "battery_below_floor": False}).to_csv(r / "d6_forging_power.csv", index=False)
     ck5.to_csv(r / "catalogue_k5_ranges.csv", index=False)
     ck6.to_csv(r / "catalogue_k6_ranges.csv", index=False)
     from pqcap import pqm4 as _p
@@ -96,7 +104,7 @@ def test_report_renders(tmp_path, cfgs):  # noqa: F811
     (figs / "fig1_x.png").write_bytes(b"")
     report.run(cfg, r, figs)
     md = (tmp_path / "REPORT.md").read_text()
-    for h in ("## 1. Environment", "## 4. Host timings", "## 8. Kill criteria", "**K1", "**K2", "**K3", "**K4", "**K5 - Blast radius", "**K5 - blast radius per compromise", "## 7d. Revocation", "**D2 - S6+F", "**OP token cost**", "**D1 - active revocation time", "## 8b. Traceability", "## 8a. K5/K6 on the manufacturer", "**SUPERSEDED**", "## 7f. Device-side", "Energy is **not reported**", "## 0. Repository state", "kept `7df90f4`", "T10", "## 7e. Harm-weighted replay", "Gaps > 60 min", "**Battery profiles (D5)**", "**K6 - blast(S4-E)",
+    for h in ("## 1. Environment", "## 4. Host timings", "## 8. Kill criteria", "**K1", "**K2", "**K3", "**K4", "**K5 - Blast radius", "**K5 - blast radius per compromise", "## 7d. Revocation", "**D2 - S6+F", "**D6 - an untrusted gateway", "**Forging power of a filtering gateway**", "**OP token cost**", "**D1 - active revocation time", "## 8b. Traceability", "## 8a. K5/K6 on the manufacturer", "**SUPERSEDED**", "## 7f. Device-side", "Energy is **not reported**", "## 0. Repository state", "kept `7df90f4`", "T10", "## 7e. Harm-weighted replay", "Gaps > 60 min", "**Battery profiles (D5)**", "**K6 - blast(S4-E)",
               "## 7c. S6", "Crisis commands per gateway", "**Why the crisis capacities differ", "its capacity equals S6", "fig1_x.png"):
         assert h in md
     assert "env.json missing" in md
@@ -129,6 +137,7 @@ def test_report_env_and_na(tmp_path, cfgs):  # noqa: F811
     (r / "model_revocation_exposure.csv").unlink()
     (r / "model_harm.csv").unlink()
     (r / "d2_blast_s6f.csv").unlink()
+    (r / "d6_gateway_filter.csv").unlink()
     (cfg / "traceability.yaml").unlink()
     (cfg / "repo_state.yaml").unlink()
     (r / "catalogue_k5_ranges.csv").unlink()
@@ -138,7 +147,7 @@ def test_report_env_and_na(tmp_path, cfgs):  # noqa: F811
     report.run(cfg, r, tmp_path)
     md = (tmp_path / "REPORT.md").read_text()
     assert "## 4. Host timings (cpu host, not MCU)" in md and "**All timings: cpu host, not MCU.**" in md
-    assert "**K1: n/a**" in md and "**K2: n/a**" in md and "**K4: n/a**" in md and "**K5: n/a**" in md and "**K6: n/a**" in md and "_revocation not configured_" in md and "_harm replay not run" in md and "_D2 not run_" in md and "_no traceability map_" in md and "_no pqm4 data_" in md and "_no repository state record_" in md and "_no manufacturer catalogue_" in md and "_S6 not configured_" in md and "| CPU | cpu |" in md
+    assert "**K1: n/a**" in md and "**K2: n/a**" in md and "**K4: n/a**" in md and "**K5: n/a**" in md and "**K6: n/a**" in md and "_revocation not configured_" in md and "_harm replay not run" in md and "_D2 not run_" in md and "_D6 not run_" in md and "_no traceability map_" in md and "_no pqm4 data_" in md and "_no repository state record_" in md and "_no manufacturer catalogue_" in md and "_S6 not configured_" in md and "| CPU | cpu |" in md
 
 
 def test_report_s6_no_signer(tmp_path, cfgs):  # noqa: F811
