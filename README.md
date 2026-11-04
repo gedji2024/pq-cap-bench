@@ -49,7 +49,7 @@ Encodings:
 - The ECDSA public key is the 65-byte SEC1 uncompressed point.
 - HMAC uses a 32-byte key and has no public key.
 
-### Measurement protocol (HOST, not MCU)
+### Measurement protocol (Apple M5 host, not MCU)
 - Each op runs 50 warm-up calls, then 1000 timed calls with `time.perf_counter_ns`.
 - Garbage collection is disabled inside timed loops.
 - Message sizes are 32, 96 and 160 bytes: fixed, seeded content.
@@ -62,7 +62,9 @@ Encodings:
 - **CPU pinning.** `os.sched_setaffinity` is used where it exists (Linux). macOS has no affinity API, so the process is **not pinned**, and this is recorded in `env.json`.
   - Apple-silicon hosts mix performance and efficiency cores under OS-managed DVFS.
   - Check the run-to-run CV before trusting small differences.
-- The reference run was done on an **Apple M5 (arm64)**, not on x86. `env.json` records the actual host. Re-run on the target x86 host for x86 numbers.
+- The reference run was done on an **Apple M5 (arm64)**. Every timing is labelled "Apple M5 host, not MCU".
+  - The label is derived from `results/env.json`, so a re-run on another host relabels itself.
+- **Optional x86 re-run:** on an x86 Linux host, run `make liboqs && make all`. `sched_setaffinity` pinning and the cpufreq governor are then recorded automatically. Not required for the model results, which depend only on sizes.
 
 ### Capability-token model (`config/token.yaml`)
 - token = header 16 B + constraints 64 B + authenticator + d × (32 B hop constraints + 8 B key id + hop authenticator), for d ∈ {0,1,2,3}.

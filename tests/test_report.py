@@ -61,7 +61,7 @@ def test_report_renders(tmp_path, cfgs):  # noqa: F811
               "## 7c. S6", "Crisis commands per gateway", "fig1_x.png"):
         assert h in md
     assert "env.json missing" in md
-    assert "HOST measurements" in md
+    assert "host (unrecorded CPU), not MCU" in md
     assert "## 7b. Sensitivity: downlink CRC" in md and "K1 under primary vs sensitivity" in md
 
 
@@ -90,6 +90,7 @@ def test_report_env_and_na(tmp_path, cfgs):  # noqa: F811
     (r / "kill_criteria.json").write_text(json.dumps(k))
     report.run(cfg, r, tmp_path)
     md = (tmp_path / "REPORT.md").read_text()
+    assert "## 4. Host timings (cpu host, not MCU)" in md and "**All timings: cpu host, not MCU.**" in md
     assert "**K1: n/a**" in md and "**K2: n/a**" in md and "**K4: n/a**" in md and "**K5: n/a**" in md and "_S6 not configured_" in md and "| CPU | cpu |" in md
 
 

@@ -57,10 +57,11 @@ def capture(out: Path) -> dict:
     meta_note = (out.parent / "bench_meta.txt")
     from cryptography.hazmat.backends.openssl import backend as ossl  # noqa: PLC0415
 
+    cpu = cpu_info()
     env = {
-        "label": "HOST measurement (general-purpose CPU) - NOT a microcontroller measurement",
+        "label": f"{cpu['model']} host, not MCU",
         "date_utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
-        "cpu": cpu_info(),
+        "cpu": cpu,
         "os": {"system": platform.system(), "release": platform.release(),
                "version": platform.version(), "platform": platform.platform()},
         "kernel": _sh(["uname", "-a"]),
