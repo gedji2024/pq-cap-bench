@@ -369,18 +369,29 @@ def section_harm(results: Path, config: Path) -> str:
 
 
 def harm_summary_tables(d: pd.DataFrame, results: Path, num) -> list[str]:
-    att = d[d.compromise != "none"]
-    cols = ["event", "battery_profile", "scheme", "compromise", "strategy", "crossings", "missed", "delayed",
-            "max_delay_min", "floor_violating_uplinks", "died", "died_h", "min_soc_pct"]
-    leg = d[d.compromise == "none"][["event", "battery_profile", "scheme", "legit_policy", "missed", "delayed",
-                                     "floor_violating_uplinks", "min_soc_pct", "legit_intents", "legit_intents_rejected",
-                                     "legit_unique_rejection_rate", "legit_sent", "legit_rejected"]]
-    return ["**Under attack** (attacker holds the session key; C1+C3 also replaces envelopes; C1+C3+OP also holds sk_OP):",
-            md_table(att[cols], {"max_delay_min": num, "died_h": num, "min_soc_pct": num}),
-            "**Legitimate operation (D3)** - share of **unique requests** rejected (`legit_unique_rejection_rate`); "
-            "`legit_sent`/`legit_rejected` include retries and are shown for traceability only (raw-retry rate "
-            "**superseded**). `limit_aware` asks only for values the device accepts in its current state:",
-            md_table(leg, {"min_soc_pct": num, "legit_unique_rejection_rate": lambda v: f"{v:.1%}"})]
+    ev = d.drop_duplicates("event")
+    sp = results / "model_harm_summary.csv"
+    if not sp.exists() or ev.shape[0] < 2:
+        att = d[d.compromise != "none"]
+        cols = ["event", "battery_profile", "scheme", "compromise", "strategy", "crossings", "missed", "delayed",
+                "max_delay_min", "floor_violating_uplinks", "died", "died_h", "min_soc_pct"]
+        return ["**Under attack** (single event):", md_table(att[cols], {"max_delay_min": num, "died_h": num,
+                                                                          "min_soc_pct": num})]
+    sm = pd.read_csv(sp)
+    ci = lambda m: (lambda r: f"{r[m + '_median']:.2f} [{r[m + '_ci_lo']:.2f}, {r[m + '_ci_hi']:.2f}]"  # noqa: E731
+                    if r[m + "_median"] == r[m + "_median"] else "-")
+    def tab(rows, metrics):
+        t = rows[["battery_profile", "scheme", "compromise", "strategy", "legit_policy", "events"]].copy()
+        for m in metrics:
+            t[m] = rows.apply(ci(m), axis=1)
+        return md_table(t, {"events": lambda v: f"{int(v)}"})
+    att = sm[sm.compromise != "none"]
+    leg = sm[sm.compromise == "none"]
+    return [f"**D4 - statistics over {ev.shape[0]} events** (median [95 % percentile-bootstrap CI of the median], "
+            "`statistics` in config/harm.yaml; per-event rows in `results/model_harm.csv`). Fractions are per crossing.",
+            "**Under attack:**", tab(att, ["missed_frac", "delayed_frac", "max_delay_min", "floor_violating_uplinks", "died"]),
+            "**Legitimate operation (D3)** - unique-request rejection rate (raw-retry rate superseded):",
+            tab(leg, ["legit_unique_rejection_rate", "missed_frac", "delayed_frac", "floor_violating_uplinks"])]
 
 
 def section_traceability(config: Path) -> str:

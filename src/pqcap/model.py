@@ -205,6 +205,8 @@ def run(config: Path, results: Path) -> dict[str, pd.DataFrame]:
         if series.exists():
             hd, he, hm = harm.run(hcfg, load_yaml(actions_p), REPO_ROOT)
             hd.to_csv(results / "model_harm.csv", index=False)
+            st = hcfg.get("statistics", {"bootstrap": 10000, "seed": 0})
+            harm.summarize_events(hd, st["bootstrap"], st["seed"]).to_csv(results / "model_harm_summary.csv", index=False)
             he.to_csv(results / "model_harm_events.csv", index=False)
             for em in hm["events"]:
                 mp = (REPO_ROOT / em["file"]).with_suffix(".meta.json")

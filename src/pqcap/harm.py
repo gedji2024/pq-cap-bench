@@ -36,7 +36,8 @@ def load_series(path: Path, ft_to_cm: float) -> pd.Series:
     nodata = float(ts["variable"]["noDataValue"])
     pts = [(dt.datetime.fromisoformat(v["dateTime"]), float(v["value"])) for v in ts["values"][0]["value"]
            if float(v["value"]) != nodata]
-    s = pd.Series([v for _, v in pts], index=pd.DatetimeIndex([t for t, _ in pts]), name="stage_cm") * ft_to_cm
+    idx = pd.to_datetime([t for t, _ in pts], utc=True)   # series crossing DST mix UTC offsets: normalise to UTC
+    s = pd.Series([v for _, v in pts], index=idx, name="stage_cm") * ft_to_cm
     return s.sort_index()
 
 
@@ -334,11 +335,49 @@ def score(stage: np.ndarray, delivered: list[tuple[int, float, int]], levels_cm:
             "max_delay_min": float(max(delays)) if delays else math.nan, "events": rows}
 
 
-def event_list(cfg: dict) -> list[dict]:
-    """Events to replay: `events` (D4, list of {name, file, start, end}) or the single legacy `series` entry."""
+def select_events(s: pd.Series, k: int, sep_days: float, half_window_days: float) -> list[dict]:
+    """D4 rule: the k highest stage peaks of the series that are at least `sep_days` apart; each event is the
+    window peak +- half_window_days. Deterministic, no hand-picked dates."""
+    picked = []
+    for t, v in s.sort_values(ascending=False, kind="stable").items():
+        if all(abs((t - p).total_seconds()) >= sep_days * 86400 for p, _ in picked):
+            picked.append((t, v))
+        if len(picked) == k:
+            break
+    w = pd.Timedelta(days=half_window_days)
+    return [{"peak_time": t, "peak": v, "start": t - w, "end": t + w} for t, v in picked]
+
+
+def event_list(cfg: dict, root: Path | None = None) -> list[dict]:
+    """Events to replay: rule-selected (D4 `events_rule`), explicit `events`, or the single legacy `series`."""
+    rule = cfg.get("events_rule")
+    if rule:
+        out = []
+        for g in rule["gauges"]:
+            s = load_series(root / g["file"], cfg["series"]["ft_to_cm"])
+            for i, e in enumerate(select_events(s, rule["top_k"], rule["separation_days"], rule["half_window_days"]), 1):
+                out.append({"name": f"{g['site']} peak {i} ({e['peak_time']:%Y-%m-%d})", "file": g["file"],
+                            "start": str(e["start"]), "end": str(e["end"])})
+        return out
     if cfg.get("events"):
         return cfg["events"]
     return [{"name": "Buffalo Bayou 08074000 (Harvey)", "file": cfg["series"]["file"], "start": None, "end": None}]
+
+
+def relative_profile(actions_cfg: dict, stage: np.ndarray, rel: dict) -> tuple[dict, int]:
+    """D4: gauges differ in stage scale, so the legitimate alert threshold and the envelope threshold band are
+    fractions of the event's own stage range (ASSUMED fractions); S4-F firmware threshold bounds become the
+    full catalogue range (static firmware cannot know the river)."""
+    lo, hi = float(stage.min()), float(stage.max())
+    at = lambda f: int(round(lo + f * (hi - lo)))  # noqa: E731
+    a = {**actions_cfg, "envelope": {**actions_cfg["envelope"], "rules": dict(actions_cfg["envelope"]["rules"])},
+         "firmware_bounds": {**actions_cfg["firmware_bounds"], "rules": dict(actions_cfg["firmware_bounds"]["rules"])}}
+    r = a["envelope"]["rules"]["set_alert_threshold"]
+    a["envelope"]["rules"]["set_alert_threshold"] = {**r, "lo": at(rel["envelope_band"][0]), "hi": at(rel["envelope_band"][1])}
+    c = actions_cfg["catalogue"]["set_alert_threshold"]
+    a["firmware_bounds"]["rules"]["set_alert_threshold"] = {**a["firmware_bounds"]["rules"]["set_alert_threshold"],
+                                                            "lo": c["min"], "hi": c["max"]}
+    return a, at(rel["alert_fraction"])
 
 
 def event_stage(ev_: dict, cfg: dict, root: Path) -> tuple[np.ndarray, pd.Series]:
@@ -357,8 +396,14 @@ def run(cfg: dict, actions_cfg: dict, root: Path) -> tuple[pd.DataFrame, pd.Data
     fw = ev.firmware_policy_from_config(actions_cfg)
     cfg = {**cfg, "_profile_inv": ev.invariants_from_config(actions_cfg)}
     rows, events, metas = [], [], []
-    for ev_ in event_list(cfg):
+    rel = cfg["harm"].get("relative")
+    for ev_ in event_list(cfg, root):
         stage, s = event_stage(ev_, cfg, root)
+        ecfg = cfg
+        if rel:
+            acfg_e, alert = relative_profile(actions_cfg, stage, rel)
+            env, fw = ev.envelope_from_config(acfg_e), ev.firmware_policy_from_config(acfg_e)
+            ecfg = {**cfg, "device": {**cfg["device"], "alert_threshold_cm": alert}}
         # reference levels: absolute (ft) when given, else fractions of the event's own stage range (D4)
         if cfg["harm"].get("reference_levels_ft"):
             levels = [x * cfg["series"]["ft_to_cm"] for x in cfg["harm"]["reference_levels_ft"]]
@@ -368,6 +413,7 @@ def run(cfg: dict, actions_cfg: dict, root: Path) -> tuple[pd.DataFrame, pd.Data
         metas.append({"event": ev_["name"], "file": ev_["file"], "n_readings": int(s.size), "first": str(s.index[0]),
                       "last": str(s.index[-1]), "max_gap_min": max_gap_min(s), "gaps_over_60_min": gaps(s, 60),
                       "peak_cm": float(s.max()), "peak_time": str(s.idxmax()),
+                      "alert_threshold_cm": ecfg["device"]["alert_threshold_cm"],
                       "peak_bracketed_by_gap": any(g["after"] <= str(s.idxmax()) <= g["before"] for g in gaps(s, 60)),
                       "minutes": int(stage.size), "levels_cm": levels})
         for bat in bats:
@@ -376,7 +422,7 @@ def run(cfg: dict, actions_cfg: dict, root: Path) -> tuple[pd.DataFrame, pd.Data
                     runs = ([(None, v) for v in cfg["legit_policy"].get("variants", ["naive"])] if comp == "none"
                             else [(x, "-") for x in cfg["attacker"]["strategies"]])
                     for strat, variant in runs:
-                        r = simulate(stage, scheme, comp, strat, cfg, cat, env, fw,
+                        r = simulate(stage, scheme, comp, strat, ecfg, cat, env, fw,
                                      variant if strat is None else "naive", bat)
                         sc = score(stage, r["delivered"], levels, cfg["harm"]["delay_tolerance_min"])
                         st = r["stats"]
@@ -399,3 +445,34 @@ def run(cfg: dict, actions_cfg: dict, root: Path) -> tuple[pd.DataFrame, pd.Data
                         events += [{**key, **e} for e in sc["events"]]
     meta = {"events": metas, "battery_profiles": bats}
     return pd.DataFrame(rows), pd.DataFrame(events), meta
+
+
+# ---------------------------------------------------------------- D4 statistics
+METRICS = ("missed_frac", "delayed_frac", "max_delay_min", "floor_violating_uplinks", "died",
+           "legit_unique_rejection_rate")
+
+
+def bootstrap_ci(x: np.ndarray, n_boot: int, seed: int, alpha: float = 0.05) -> tuple[float, float, float]:
+    """Median and percentile-bootstrap (1-alpha) CI of the median over events. NaNs are dropped."""
+    x = np.asarray(x, dtype=float)
+    x = x[~np.isnan(x)]
+    if x.size == 0:
+        return (math.nan, math.nan, math.nan)
+    rng = np.random.default_rng(seed)
+    meds = np.median(rng.choice(x, size=(n_boot, x.size), replace=True), axis=1)
+    return float(np.median(x)), float(np.quantile(meds, alpha / 2)), float(np.quantile(meds, 1 - alpha / 2))
+
+
+def summarize_events(df: pd.DataFrame, n_boot: int, seed: int) -> pd.DataFrame:
+    d = df.assign(missed_frac=df.missed / df.crossings.where(df.crossings > 0),
+                  delayed_frac=df.delayed / df.crossings.where(df.crossings > 0), died=df.died.astype(float))
+    keys = ["battery_profile", "scheme", "compromise", "strategy", "legit_policy"]
+    rows = []
+    for k, g in d.groupby(keys, sort=False):
+        r = dict(zip(keys, k))
+        r["events"] = int(g.event.nunique())
+        for m in METRICS:
+            med, lo, hi = bootstrap_ci(g[m].to_numpy(), n_boot, seed)
+            r.update({f"{m}_median": med, f"{m}_ci_lo": lo, f"{m}_ci_hi": hi})
+        rows.append(r)
+    return pd.DataFrame(rows)

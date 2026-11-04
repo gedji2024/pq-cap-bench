@@ -80,7 +80,8 @@ def _fake_results(tmp_path, cfgs):  # noqa: F811
     _p.verification_cost(CONFIG, REPO_ROOT).to_csv(r / "mcu_verify_cost.csv", index=False)
     from pqcap import harm
     h = load_yaml(CONFIG / "harm.yaml")
-    h.update(schemes=["S4", "S6"], compromises=["none", "C1"], attacker={"strategies": ["drain"]})
+    h.update(schemes=["S4", "S6"], compromises=["none", "C1"], attacker={"strategies": ["drain"]}, events_rule=None,
+             battery={**h["battery"], "profiles": h["battery"]["profiles"][-1:]})
     (cfg / "harm.yaml").write_text(json.dumps(h))
     hd, _, hm = harm.run(h, acfg, REPO_ROOT)
     hd.to_csv(r / "model_harm.csv", index=False)
@@ -164,3 +165,14 @@ def test_s6_explain_branches(tmp_path, cfgs):  # noqa: F811
 
 def test_k5_matrix_absent():
     assert report.section_k5_matrix({"state": "x"}) == ""
+
+
+def test_harm_multi_event_tables(tmp_path):
+    d = pd.DataFrame([{"event": e, "battery_profile": "b", "scheme": "S6", "compromise": c, "strategy": "drain",
+                       "legit_policy": "-", "crossings": 4, "missed": 1, "delayed": 0, "max_delay_min": 5.0,
+                       "floor_violating_uplinks": 0, "died": False, "legit_unique_rejection_rate": 0.0}
+                      for e in ("e1", "e2") for c in ("none", "C1")])
+    from pqcap import harm
+    harm.summarize_events(d, 100, 1).to_csv(tmp_path / "model_harm_summary.csv", index=False)
+    out = report.harm_summary_tables(d, tmp_path, lambda v: f"{v:.1f}")
+    assert "statistics over 2 events" in out[0] and "0.25 [0.25, 0.25]" in out[2]

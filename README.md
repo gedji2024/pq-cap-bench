@@ -239,6 +239,12 @@ S4-E and S6 differ only in how the envelope is installed:
 - `make data` re-fetches it.
 - Gaps longer than 60 min, including two that bracket the peak, are filled by linear interpolation and listed in the report.
 
+**D4, statistical weight.** Six events are replayed across three gauges. The 2017 instantaneous gage-height series for 08074000 (Buffalo Bayou), 04174500 (Huron River at Ann Arbor, the Kerkez et al. watershed) and 01646500 (Potomac at Little Falls) are cached in `data/` with their `.meta.json` (query URL, redirect target, date, SHA-256).
+- Events are selected by rule, not by hand: the top-2 independent stage peaks per gauge (≥ 14 days apart, ± 3 days window). Harvey (2017-08-28) is selected as Buffalo Bayou's peak 1.
+- Gauges differ in scale, so the alert threshold, the envelope threshold band and the reference levels are fractions of each event's stage range (ASSUMED).
+- The report gives medians and 95 % percentile-bootstrap CIs (seeded) per scheme / compromise / strategy / battery profile. Every event's gaps longer than 60 min are listed, including the gap-bracketed Harvey peak.
+- Timestamps are normalised to UTC.
+
 **Simulation.** A minute-resolution model of one node, with one downlink opportunity after each uplink. This holds for both LoRaWAN Class A and the cellular nodes of Kerkez et al. §4.1.
 - The device samples, raises a firmware alert (immediate uplink), buffers samples and reports on its interval.
 - Each delivered command goes through the scheme's device check.

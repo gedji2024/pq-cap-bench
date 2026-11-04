@@ -1,8 +1,10 @@
 """Harm replay: data loading, crossings, battery derivation, invariant behaviour (property tests), simulation."""
 
 import json
+import math
 
 import numpy as np
+import pandas as pd
 import pytest
 from hypothesis import given, settings
 from hypothesis import strategies as st
@@ -21,6 +23,7 @@ from pqcap.devices import load_catalogue  # noqa: E402
 
 DEVS = {d.model: d for d in load_catalogue(CONFIG / "devices")}
 BATS = {p["name"]: harm.battery_from_profile(p, DEVS) for p in HCFG["battery"]["profiles"]}
+LEVELS_FT = [10, 20, 30, 40]  # test-only absolute levels for the synthetic hydrographs
 
 
 def _cfg(battery_profile="LWL01/poor", **over):
@@ -119,7 +122,7 @@ def test_s4_drain_kills_and_c1c3_matches_s4():
 
 def test_suppress_and_legit():
     stage = _hydrograph(1000)
-    lv = [x * 30.48 for x in HCFG["harm"]["reference_levels_ft"]]
+    lv = [x * 30.48 for x in LEVELS_FT]
     s4 = harm.simulate(stage, "S4", "C1", "suppress", _cfg(), CAT, ENV, FW)
     assert harm.score(stage, s4["delivered"], lv, 30)["missed"] == harm.score(stage, s4["delivered"], lv, 30)["crossings"]
     s6 = harm.simulate(stage, "S6", "C1", "suppress", _cfg(), CAT, ENV, FW)
@@ -147,13 +150,15 @@ def test_legit_policy_rules():
 
 def test_run_end_to_end():
     one = {**HCFG, "schemes": ["S4", "S6"], "compromises": ["none", "C1"], "attacker": {"strategies": ["drain"]},
-           "battery": {**HCFG["battery"], "profiles": HCFG["battery"]["profiles"][-1:]}, "events": None}
+           "battery": {**HCFG["battery"], "profiles": HCFG["battery"]["profiles"][-1:]}, "events": None,
+           "events_rule": None, "harm": {**HCFG["harm"], "reference_levels_ft": LEVELS_FT, "relative": None},
+           "device": {**HCFG["device"], "alert_threshold_cm": 610}}
     df, evs, meta = harm.run(one, ACFG, REPO_ROOT)
     assert len(df) == 2 * (len(HCFG["legit_policy"]["variants"]) + 1) and set(df.strategy) == {"-", "drain"}
     assert set(df[df.compromise == "none"].legit_policy) == set(HCFG["legit_policy"]["variants"])
     e = meta["events"][0]
     assert e["n_readings"] == 460 and len(e["gaps_over_60_min"]) >= 1 and e["peak_bracketed_by_gap"] is True                 # Harvey peak bracketed by 600- and 405-min gaps
-    assert evs.level_cm.unique().size == len(HCFG["harm"]["reference_levels_ft"])
+    assert evs.level_cm.unique().size == len(LEVELS_FT)
 
 
 def test_limit_aware_policy():
@@ -180,7 +185,7 @@ def test_limit_aware_never_rejected_on_replay():
 
 def test_s6f_resists_suppress_without_op_key():
     stage = _hydrograph(1000)
-    lv = [x * 30.48 for x in HCFG["harm"]["reference_levels_ft"]]
+    lv = [x * 30.48 for x in LEVELS_FT]
     f = harm.simulate(stage, "S4-F", "C1", "suppress", _cfg(), CAT, ENV, FW)
     sf = harm.simulate(stage, "S6+F", "C1+C3", "suppress", _cfg(), CAT, ENV, FW)
     op = harm.simulate(stage, "S6+F", "C1+C3+OP", "suppress", _cfg(), CAT, ENV, FW)
@@ -197,9 +202,59 @@ def test_event_window_and_fraction_levels():
     assert harm.event_list({"series": {"file": f}})[0]["file"] == f
     stage, s = harm.event_stage(evs[0], HCFG, REPO_ROOT)
     assert str(s.index[0]) >= "2017-08-27" and str(s.index[-1]) <= "2017-08-29 00:00:00-05:00"
-    cfg = {**HCFG, "events": evs, "schemes": ["S6"], "compromises": ["C1"], "attacker": {"strategies": ["drain"]},
+    cfg = {**HCFG, "events": evs, "events_rule": None, "schemes": ["S6"], "compromises": ["C1"], "attacker": {"strategies": ["drain"]},
            "battery": {**HCFG["battery"], "profiles": HCFG["battery"]["profiles"][:1]},
            "harm": {**HCFG["harm"], "reference_levels_ft": None, "reference_level_fractions": [0.5]}}
     df, ev_, meta = harm.run(cfg, ACFG, REPO_ROOT)
     lv = meta["events"][0]["levels_cm"][0]
     assert lv == pytest.approx(stage.min() + 0.5 * (stage.max() - stage.min())) and len(df) == 1
+
+
+# ---------------------------------------------------------------- D4
+def test_select_events_rule():
+    t = pd.date_range("2017-01-01", periods=60 * 24, freq="h", tz="UTC")
+    v = np.zeros(t.size)
+    v[[100, 105, 600, 1200]] = [9.0, 8.0, 7.0, 5.0]                    # 100/105 are within 14 days
+    s = pd.Series(v, index=t)
+    e = harm.select_events(s, 2, 14, 3)
+    assert [x["peak"] for x in e] == [9.0, 7.0]
+    assert e[0]["end"] - e[0]["start"] == pd.Timedelta(days=6)
+    assert len(harm.select_events(s, 10, 14, 1)) == 3                  # no 4th time is >=14 d from days 4, 25, 50
+    assert harm.select_events(s, 3, 14, 1)[2]["peak"] == 5.0
+
+
+def test_d4_events_and_provenance():
+    import hashlib
+    evs = harm.event_list(HCFG, REPO_ROOT)
+    rule = HCFG["events_rule"]
+    assert len(evs) == len(rule["gauges"]) * rule["top_k"] >= 5 and len(rule["gauges"]) >= 3
+    assert any("08074000" in e["name"] and "2017-08-28" in e["name"] for e in evs)          # Harvey selected
+    for g in rule["gauges"]:
+        f = REPO_ROOT / g["file"]
+        m = json.loads(f.with_suffix(".meta.json").read_text())
+        assert hashlib.sha256(f.read_bytes()).hexdigest() == m["sha256"] and m["query_url"].startswith("https://")
+
+
+def test_relative_profile():
+    stage = np.array([100.0, 300.0, 500.0])
+    a, alert = harm.relative_profile(ACFG, stage, {"alert_fraction": 0.5, "envelope_band": [0.25, 0.75]})
+    assert alert == 300
+    r = a["envelope"]["rules"]["set_alert_threshold"]
+    assert (r["lo"], r["hi"]) == (200, 400)
+    fw = a["firmware_bounds"]["rules"]["set_alert_threshold"]
+    assert (fw["lo"], fw["hi"]) == (ACFG["catalogue"]["set_alert_threshold"]["min"], ACFG["catalogue"]["set_alert_threshold"]["max"])
+    assert ACFG["envelope"]["rules"]["set_alert_threshold"]["lo"] != 200                     # input not mutated
+
+
+def test_bootstrap_and_summary():
+    med, lo, hi = harm.bootstrap_ci(np.array([1.0, 2.0, 3.0, np.nan]), 2000, 1)
+    assert med == 2.0 and 1.0 <= lo <= med <= hi <= 3.0
+    assert harm.bootstrap_ci(np.array([3.0, 3.0]), 100, 1) == (3.0, 3.0, 3.0)
+    assert all(math.isnan(x) for x in harm.bootstrap_ci(np.array([np.nan]), 10, 1))
+    df = pd.DataFrame([{"event": f"e{i}", "battery_profile": "b", "scheme": "S6", "compromise": "C1",
+                        "strategy": "drain", "legit_policy": "-", "crossings": 4, "missed": i % 2, "delayed": 1,
+                        "max_delay_min": 10.0 * i, "floor_violating_uplinks": 0, "died": False,
+                        "legit_unique_rejection_rate": 0.0} for i in range(5)])
+    s = harm.summarize_events(df, 500, 7).iloc[0]
+    assert s.events == 5 and s.missed_frac_median == 0.0 and s.delayed_frac_median == 0.25
+    assert s.max_delay_min_ci_lo <= s.max_delay_min_median <= s.max_delay_min_ci_hi

@@ -45,10 +45,28 @@ battery:
     - "PS-LB: RX windows, MCU and probe-excitation charge excluded (charge per uplink is a LOWER bound)"
     - "LWL01: sleep drain neglected (no capacity given to convert 5 uA into a battery fraction)"
 
-# Operator reference levels used to score detection (missed / delayed upward crossings).
+# D4: events selected by RULE from cached USGS annual series (scripts/fetch_usgs.py; query URL, date and SHA-256
+# in each data/*.meta.json). Gauge-year choice: Buffalo Bayou 2017 (contains Hurricane Harvey, project
+# requirement); Huron River at Ann Arbor (the Kerkez et al. 2026 watershed) and Potomac River at Little Falls,
+# same calendar year. top_k / separation / window are selection parameters, not data.
+events_rule:
+  gauges:
+    - {site: "USGS 08074000 Buffalo Bayou at Houston, TX", file: data/usgs_08074000_00065_2017-01-01_2017-12-31.json}
+    - {site: "USGS 04174500 Huron River at Ann Arbor, MI", file: data/usgs_04174500_00065_2017-01-01_2017-12-31.json}
+    - {site: "USGS 01646500 Potomac River near Wash, DC Little Falls", file: data/usgs_01646500_00065_2017-01-01_2017-12-31.json}
+  top_k: 2
+  separation_days: 14
+  half_window_days: 3
+statistics: {bootstrap: 10000, seed: 20261104, ci: 0.95}
+
+# Scoring. Gauges differ in stage scale, so thresholds are FRACTIONS of each event's own stage range (ASSUMED).
 harm:
-  reference_levels_ft: [10, 20, 30, 40]   # assumed -- pending field profile
-  delay_tolerance_min: 30                 # a crossing reported later than this is "delayed" -- assumed
+  reference_levels_ft: null               # absolute levels (single-gauge mode); superseded by fractions below
+  reference_level_fractions: [0.25, 0.5, 0.75, 0.9]   # ASSUMED
+  relative:
+    alert_fraction: 0.5                   # legitimate device alert threshold -- ASSUMED
+    envelope_band: [0.35, 0.65]           # S6/S4-E envelope bounds for set_alert_threshold -- ASSUMED (POLICY)
+  delay_tolerance_min: 30                 # a crossing reported later than this is "delayed" -- ASSUMED
 
 # Rule-based adaptive-reporting policy run by the legitimate platform ([K26] Sec. 6 pattern:
 # ramp up on rise, step down when steady).

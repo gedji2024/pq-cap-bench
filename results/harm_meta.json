@@ -1,50 +1,211 @@
 {
   "events": [
     {
-      "event": "Buffalo Bayou 08074000 (Harvey)",
-      "file": "data/usgs_08074000_00065_2017-08-26_2017-08-31.json",
-      "n_readings": 460,
-      "first": "2017-08-26 00:00:00-05:00",
-      "last": "2017-08-31 23:45:00-05:00",
+      "event": "USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",
+      "file": "data/usgs_08074000_00065_2017-01-01_2017-12-31.json",
+      "n_readings": 461,
+      "first": "2017-08-25 06:00:00+00:00",
+      "last": "2017-08-31 06:00:00+00:00",
       "max_gap_min": 780.0,
       "gaps_over_60_min": [
         {
-          "after": "2017-08-26 03:15:00-05:00",
-          "before": "2017-08-26 16:15:00-05:00",
+          "after": "2017-08-26 08:15:00+00:00",
+          "before": "2017-08-26 21:15:00+00:00",
           "minutes": 780.0
         },
         {
-          "after": "2017-08-27 15:00:00-05:00",
-          "before": "2017-08-28 01:00:00-05:00",
+          "after": "2017-08-27 20:00:00+00:00",
+          "before": "2017-08-28 06:00:00+00:00",
           "minutes": 600.0
         },
         {
-          "after": "2017-08-28 01:00:00-05:00",
-          "before": "2017-08-28 07:45:00-05:00",
+          "after": "2017-08-28 06:00:00+00:00",
+          "before": "2017-08-28 12:45:00+00:00",
           "minutes": 405.0
         }
       ],
       "peak_cm": 1277.112,
-      "peak_time": "2017-08-28 01:00:00-05:00",
+      "peak_time": "2017-08-28 06:00:00+00:00",
+      "alert_threshold_cm": 667,
       "peak_bracketed_by_gap": true,
-      "minutes": 8626,
+      "minutes": 8641,
       "levels_cm": [
-        304.8,
-        609.6,
-        914.4,
-        1219.2
+        362.0262,
+        667.0548000000001,
+        972.0834000000001,
+        1155.10056
       ],
       "source": {
-        "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2017-08-26&endDT=2017-08-31&parameterCd=00065&siteStatus=all",
-        "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2017-08-26&endDT=2017-08-31&parameterCd=00065&siteStatus=all",
+        "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
+        "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
         "http_status": 200,
-        "retrieved_utc": "2026-11-04T14:10:01+00:00",
-        "sha256": "2d8509d6ec9baf770cf78987bd481763916c274b712d4964f0d410ab602f9b3f",
-        "bytes": 39493,
+        "retrieved_utc": "2026-11-04T15:13:04+00:00",
+        "sha256": "94c36b3ccf8a9b093d5df0c9099586e0b38555a6b44c238423efb16182d630fb",
+        "bytes": 2763780,
         "site": "08074000",
         "parameter_cd": "00065",
-        "start": "2017-08-26",
-        "end": "2017-08-31"
+        "start": "2017-01-01",
+        "end": "2017-12-31"
+      }
+    },
+    {
+      "event": "USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",
+      "file": "data/usgs_08074000_00065_2017-01-01_2017-12-31.json",
+      "n_readings": 577,
+      "first": "2017-01-15 15:00:00+00:00",
+      "last": "2017-01-21 15:00:00+00:00",
+      "max_gap_min": 15.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 709.2696,
+      "peak_time": "2017-01-18 15:00:00+00:00",
+      "alert_threshold_cm": 376,
+      "peak_bracketed_by_gap": false,
+      "minutes": 8641,
+      "levels_cm": [
+        209.54999999999998,
+        376.1232,
+        542.6963999999999,
+        642.64032
+      ],
+      "source": {
+        "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
+        "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
+        "http_status": 200,
+        "retrieved_utc": "2026-11-04T15:13:04+00:00",
+        "sha256": "94c36b3ccf8a9b093d5df0c9099586e0b38555a6b44c238423efb16182d630fb",
+        "bytes": 2763780,
+        "site": "08074000",
+        "parameter_cd": "00065",
+        "start": "2017-01-01",
+        "end": "2017-12-31"
+      }
+    },
+    {
+      "event": "USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",
+      "file": "data/usgs_04174500_00065_2017-01-01_2017-12-31.json",
+      "n_readings": 577,
+      "first": "2017-11-15 19:30:00+00:00",
+      "last": "2017-11-21 19:30:00+00:00",
+      "max_gap_min": 15.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 418.4904,
+      "peak_time": "2017-11-18 19:30:00+00:00",
+      "alert_threshold_cm": 398,
+      "peak_bracketed_by_gap": false,
+      "minutes": 8641,
+      "levels_cm": [
+        387.4008,
+        397.764,
+        408.1272,
+        414.34512
+      ],
+      "source": {
+        "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=04174500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
+        "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=04174500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
+        "http_status": 200,
+        "retrieved_utc": "2026-11-04T15:13:05+00:00",
+        "sha256": "01938fd925952c77453e222929dce6d7fccbc11842e08aa58976b7648307c59f",
+        "bytes": 709103,
+        "site": "04174500",
+        "parameter_cd": "00065",
+        "start": "2017-01-01",
+        "end": "2017-12-31"
+      }
+    },
+    {
+      "event": "USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",
+      "file": "data/usgs_04174500_00065_2017-01-01_2017-12-31.json",
+      "n_readings": 577,
+      "first": "2017-10-13 22:00:00+00:00",
+      "last": "2017-10-19 22:00:00+00:00",
+      "max_gap_min": 15.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 411.48,
+      "peak_time": "2017-10-16 22:00:00+00:00",
+      "alert_threshold_cm": 394,
+      "peak_bracketed_by_gap": false,
+      "minutes": 8641,
+      "levels_cm": [
+        384.7338,
+        393.6492,
+        402.56460000000004,
+        407.91384
+      ],
+      "source": {
+        "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=04174500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
+        "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=04174500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
+        "http_status": 200,
+        "retrieved_utc": "2026-11-04T15:13:05+00:00",
+        "sha256": "01938fd925952c77453e222929dce6d7fccbc11842e08aa58976b7648307c59f",
+        "bytes": 709103,
+        "site": "04174500",
+        "parameter_cd": "00065",
+        "start": "2017-01-01",
+        "end": "2017-12-31"
+      }
+    },
+    {
+      "event": "USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",
+      "file": "data/usgs_01646500_00065_2017-01-01_2017-12-31.json",
+      "n_readings": 577,
+      "first": "2017-05-04 12:45:00+00:00",
+      "last": "2017-05-10 12:45:00+00:00",
+      "max_gap_min": 15.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 252.98400000000004,
+      "peak_time": "2017-05-07 12:45:00+00:00",
+      "alert_threshold_cm": 189,
+      "peak_bracketed_by_gap": false,
+      "minutes": 8641,
+      "levels_cm": [
+        157.6578,
+        189.43320000000003,
+        221.20860000000005,
+        240.27384000000004
+      ],
+      "source": {
+        "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=01646500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
+        "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=01646500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
+        "http_status": 200,
+        "retrieved_utc": "2026-11-04T15:13:07+00:00",
+        "sha256": "67f029d1739d27856a8162816d05adf5096b469efde429913b3d0e474c89dfd7",
+        "bytes": 2741887,
+        "site": "01646500",
+        "parameter_cd": "00065",
+        "start": "2017-01-01",
+        "end": "2017-12-31"
+      }
+    },
+    {
+      "event": "USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",
+      "file": "data/usgs_01646500_00065_2017-01-01_2017-12-31.json",
+      "n_readings": 577,
+      "first": "2017-01-23 06:15:00+00:00",
+      "last": "2017-01-29 06:15:00+00:00",
+      "max_gap_min": 15.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 211.5312,
+      "peak_time": "2017-01-26 06:15:00+00:00",
+      "alert_threshold_cm": 165,
+      "peak_bracketed_by_gap": false,
+      "minutes": 8641,
+      "levels_cm": [
+        141.351,
+        164.7444,
+        188.13780000000003,
+        202.17384
+      ],
+      "source": {
+        "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=01646500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
+        "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=01646500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
+        "http_status": 200,
+        "retrieved_utc": "2026-11-04T15:13:07+00:00",
+        "sha256": "67f029d1739d27856a8162816d05adf5096b469efde429913b3d0e474c89dfd7",
+        "bytes": 2741887,
+        "site": "01646500",
+        "parameter_cd": "00065",
+        "start": "2017-01-01",
+        "end": "2017-12-31"
       }
     }
   ],

@@ -693,7 +693,12 @@ Message size in frames per DR:
 
 **Events** (USGS NWIS instantaneous values; raw JSON cached in `data/`):
 
-- **Buffalo Bayou 08074000 (Harvey)**: `data/usgs_08074000_00065_2017-08-26_2017-08-31.json`, query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2017-08-26&endDT=2017-08-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-04T14:10:01+00:00, SHA-256 `2d8509d6ec9baf77...`; 460 readings 2017-08-26 00:00:00-05:00 to 2017-08-31 23:45:00-05:00; peak 41.90 ft at 2017-08-28 01:00:00-05:00 - **peak reading lies at the edge of a >60-min gap: its timing and the levels near it are interpolation-dependent**. Gaps > 60 min (linear interpolation): 2017-08-26 03:15:00-05:00 -> 2017-08-26 16:15:00-05:00 (780 min); 2017-08-27 15:00:00-05:00 -> 2017-08-28 01:00:00-05:00 (600 min); 2017-08-28 01:00:00-05:00 -> 2017-08-28 07:45:00-05:00 (405 min).
+- **USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)**: `data/usgs_08074000_00065_2017-01-01_2017-12-31.json`, query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-04T15:13:04+00:00, SHA-256 `94c36b3ccf8a9b09...`; 461 readings 2017-08-25 06:00:00+00:00 to 2017-08-31 06:00:00+00:00; peak 41.90 ft at 2017-08-28 06:00:00+00:00 - **peak reading lies at the edge of a >60-min gap: its timing and the levels near it are interpolation-dependent**. Gaps > 60 min (linear interpolation): 2017-08-26 08:15:00+00:00 -> 2017-08-26 21:15:00+00:00 (780 min); 2017-08-27 20:00:00+00:00 -> 2017-08-28 06:00:00+00:00 (600 min); 2017-08-28 06:00:00+00:00 -> 2017-08-28 12:45:00+00:00 (405 min).
+- **USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)**: `data/usgs_08074000_00065_2017-01-01_2017-12-31.json`, query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-04T15:13:04+00:00, SHA-256 `94c36b3ccf8a9b09...`; 577 readings 2017-01-15 15:00:00+00:00 to 2017-01-21 15:00:00+00:00; peak 23.27 ft at 2017-01-18 15:00:00+00:00. Gaps > 60 min (linear interpolation): none.
+- **USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)**: `data/usgs_04174500_00065_2017-01-01_2017-12-31.json`, query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=04174500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-04T15:13:05+00:00, SHA-256 `01938fd925952c77...`; 577 readings 2017-11-15 19:30:00+00:00 to 2017-11-21 19:30:00+00:00; peak 13.73 ft at 2017-11-18 19:30:00+00:00. Gaps > 60 min (linear interpolation): none.
+- **USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)**: `data/usgs_04174500_00065_2017-01-01_2017-12-31.json`, query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=04174500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-04T15:13:05+00:00, SHA-256 `01938fd925952c77...`; 577 readings 2017-10-13 22:00:00+00:00 to 2017-10-19 22:00:00+00:00; peak 13.50 ft at 2017-10-16 22:00:00+00:00. Gaps > 60 min (linear interpolation): none.
+- **USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)**: `data/usgs_01646500_00065_2017-01-01_2017-12-31.json`, query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=01646500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-04T15:13:07+00:00, SHA-256 `67f029d1739d2785...`; 577 readings 2017-05-04 12:45:00+00:00 to 2017-05-10 12:45:00+00:00; peak 8.30 ft at 2017-05-07 12:45:00+00:00. Gaps > 60 min (linear interpolation): none.
+- **USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)**: `data/usgs_01646500_00065_2017-01-01_2017-12-31.json`, query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=01646500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-04T15:13:07+00:00, SHA-256 `67f029d1739d2785...`; 577 readings 2017-01-23 06:15:00+00:00 to 2017-01-29 06:15:00+00:00; peak 6.94 ft at 2017-01-26 06:15:00+00:00. Gaps > 60 min (linear interpolation): none.
 
 **Battery profiles (D5)** from the manufacturer catalogue (`config/devices/*.yaml`, Sec. 8a); the earlier 'drains in a week' interpretation is **superseded**. `q` = charge per uplink (mAh, or battery fraction for an uplink-budget profile); `lower_bound` = RX windows, MCU and probe power not documented. ASSUMED: initial state of charge; PS-LB: RX windows, MCU and probe-excitation charge excluded (charge per uplink is a LOWER bound); LWL01: sleep drain neglected (no capacity given to convert 5 uA into a battery fraction). Not derivable from the manuals: EM400-UDL, EM410-RDL.
 
@@ -704,177 +709,179 @@ Message size in frames per DR:
 | LWL01/good | battery fraction | 1 | 0 | 8.333e-05 | - | - | 12,000.00 | False |
 | LWL01/poor | battery fraction | 1 | 0 | 0.0007692 | - | - | 1,300.00 | False |
 
-Reference levels: [10, 20, 30, 40] (ft); a crossing is *delayed* if first reported more than 30 min after it occurs. A *floor violation* is an uplink below the battery floor at a rate the battery invariant forbids (firmware alert uplinks exempt), scored identically for every scheme. Device, policy, threshold and invariant values are ASSUMED (config/actions.yaml, config/harm.yaml).
+Reference levels: [0.25, 0.5, 0.75, 0.9] (fractions of each event range); a crossing is *delayed* if first reported more than 30 min after it occurs. A *floor violation* is an uplink below the battery floor at a rate the battery invariant forbids (firmware alert uplinks exempt), scored identically for every scheme. Device, policy, threshold and invariant values are ASSUMED (config/actions.yaml, config/harm.yaml).
 
-**Under attack** (attacker holds the session key; C1+C3 also replaces envelopes; C1+C3+OP also holds sk_OP):
+**D4 - statistics over 6 events** (median [95 % percentile-bootstrap CI of the median], `statistics` in config/harm.yaml; per-event rows in `results/model_harm.csv`). Fractions are per crossing.
 
-| event | battery_profile | scheme | compromise | strategy | crossings | missed | delayed | max_delay_min | floor_violating_uplinks | died | died_h | min_soc_pct |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S4 | C1 | suppress | 4 | 4 | 0 | - | 0 | False | - | 60.0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S4 | C1 | drain | 4 | 0 | 0 | 9.0 | 0 | False | - | 59.9 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S4 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False | - | 60.0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S4 | C1+C3 | drain | 4 | 0 | 0 | 9.0 | 0 | False | - | 59.9 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S4 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False | - | 60.0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S4 | C1+C3+OP | drain | 4 | 0 | 0 | 9.0 | 0 | False | - | 59.9 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S4-F | C1 | suppress | 4 | 4 | 0 | - | 0 | False | - | 60.0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S4-F | C1 | drain | 4 | 0 | 0 | 10.0 | 0 | False | - | 59.9 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S4-F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False | - | 60.0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S4-F | C1+C3 | drain | 4 | 0 | 0 | 10.0 | 0 | False | - | 59.9 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False | - | 60.0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S4-F | C1+C3+OP | drain | 4 | 0 | 0 | 10.0 | 0 | False | - | 59.9 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S4-E | C1 | suppress | 4 | 0 | 1 | 38.0 | 0 | False | - | 60.0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S4-E | C1 | drain | 4 | 0 | 0 | 10.0 | 0 | False | - | 59.9 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S4-E | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False | - | 60.0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S4-E | C1+C3 | drain | 4 | 0 | 0 | 9.0 | 0 | False | - | 59.9 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S4-E | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False | - | 60.0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S4-E | C1+C3+OP | drain | 4 | 0 | 0 | 9.0 | 0 | False | - | 59.9 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S6 | C1 | suppress | 4 | 0 | 1 | 38.0 | 0 | False | - | 60.0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S6 | C1 | drain | 4 | 0 | 0 | 10.0 | 0 | False | - | 59.9 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S6 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False | - | 60.0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S6 | C1+C3 | drain | 4 | 0 | 0 | 9.0 | 0 | False | - | 59.9 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S6 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False | - | 60.0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S6 | C1+C3+OP | drain | 4 | 0 | 0 | 9.0 | 0 | False | - | 59.9 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S6+F | C1 | suppress | 4 | 0 | 1 | 38.0 | 0 | False | - | 60.0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S6+F | C1 | drain | 4 | 0 | 0 | 10.0 | 0 | False | - | 59.9 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S6+F | C1+C3 | suppress | 4 | 0 | 4 | 1,178.0 | 0 | False | - | 60.0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S6+F | C1+C3 | drain | 4 | 0 | 0 | 9.0 | 0 | False | - | 59.9 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False | - | 60.0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S6+F | C1+C3+OP | drain | 4 | 0 | 0 | 9.0 | 0 | False | - | 59.9 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S4 | C1 | suppress | 4 | 4 | 0 | - | 0 | False | - | 60.0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S4 | C1 | drain | 4 | 0 | 0 | 9.0 | 0 | False | - | 59.3 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S4 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False | - | 60.0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S4 | C1+C3 | drain | 4 | 0 | 0 | 9.0 | 0 | False | - | 59.3 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S4 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False | - | 60.0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S4 | C1+C3+OP | drain | 4 | 0 | 0 | 9.0 | 0 | False | - | 59.3 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S4-F | C1 | suppress | 4 | 4 | 0 | - | 0 | False | - | 60.0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S4-F | C1 | drain | 4 | 0 | 0 | 10.0 | 0 | False | - | 59.3 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S4-F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False | - | 60.0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S4-F | C1+C3 | drain | 4 | 0 | 0 | 10.0 | 0 | False | - | 59.3 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False | - | 60.0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S4-F | C1+C3+OP | drain | 4 | 0 | 0 | 10.0 | 0 | False | - | 59.3 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S4-E | C1 | suppress | 4 | 0 | 1 | 38.0 | 0 | False | - | 59.9 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S4-E | C1 | drain | 4 | 0 | 0 | 10.0 | 0 | False | - | 59.3 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S4-E | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False | - | 60.0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S4-E | C1+C3 | drain | 4 | 0 | 0 | 9.0 | 0 | False | - | 59.3 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S4-E | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False | - | 60.0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S4-E | C1+C3+OP | drain | 4 | 0 | 0 | 9.0 | 0 | False | - | 59.3 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S6 | C1 | suppress | 4 | 0 | 1 | 38.0 | 0 | False | - | 59.9 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S6 | C1 | drain | 4 | 0 | 0 | 10.0 | 0 | False | - | 59.3 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S6 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False | - | 60.0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S6 | C1+C3 | drain | 4 | 0 | 0 | 9.0 | 0 | False | - | 59.3 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S6 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False | - | 60.0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S6 | C1+C3+OP | drain | 4 | 0 | 0 | 9.0 | 0 | False | - | 59.3 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S6+F | C1 | suppress | 4 | 0 | 1 | 38.0 | 0 | False | - | 59.9 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S6+F | C1 | drain | 4 | 0 | 0 | 10.0 | 0 | False | - | 59.3 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S6+F | C1+C3 | suppress | 4 | 0 | 4 | 1,178.0 | 0 | False | - | 60.0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S6+F | C1+C3 | drain | 4 | 0 | 0 | 9.0 | 0 | False | - | 59.3 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False | - | 60.0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S6+F | C1+C3+OP | drain | 4 | 0 | 0 | 9.0 | 0 | False | - | 59.3 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S4 | C1 | suppress | 4 | 4 | 0 | - | 0 | False | - | 59.9 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S4 | C1 | drain | 4 | 0 | 0 | 9.0 | 0 | False | - | 24.1 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S4 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False | - | 59.9 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S4 | C1+C3 | drain | 4 | 0 | 0 | 9.0 | 0 | False | - | 24.1 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S4 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False | - | 59.9 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S4 | C1+C3+OP | drain | 4 | 0 | 0 | 9.0 | 0 | False | - | 24.1 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S4-F | C1 | suppress | 4 | 4 | 0 | - | 0 | False | - | 59.9 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S4-F | C1 | drain | 4 | 0 | 0 | 10.0 | 0 | False | - | 24.1 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S4-F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False | - | 59.9 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S4-F | C1+C3 | drain | 4 | 0 | 0 | 10.0 | 0 | False | - | 24.1 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False | - | 59.9 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S4-F | C1+C3+OP | drain | 4 | 0 | 0 | 10.0 | 0 | False | - | 24.1 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S4-E | C1 | suppress | 4 | 0 | 1 | 38.0 | 0 | False | - | 56.0 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S4-E | C1 | drain | 4 | 0 | 0 | 10.0 | 0 | False | - | 24.1 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S4-E | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False | - | 59.9 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S4-E | C1+C3 | drain | 4 | 0 | 0 | 9.0 | 0 | False | - | 24.1 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S4-E | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False | - | 59.9 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S4-E | C1+C3+OP | drain | 4 | 0 | 0 | 9.0 | 0 | False | - | 24.1 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S6 | C1 | suppress | 4 | 0 | 1 | 38.0 | 0 | False | - | 56.0 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S6 | C1 | drain | 4 | 0 | 0 | 10.0 | 0 | False | - | 24.1 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S6 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False | - | 59.9 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S6 | C1+C3 | drain | 4 | 0 | 0 | 9.0 | 0 | False | - | 24.1 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S6 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False | - | 59.9 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S6 | C1+C3+OP | drain | 4 | 0 | 0 | 9.0 | 0 | False | - | 24.1 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S6+F | C1 | suppress | 4 | 0 | 1 | 38.0 | 0 | False | - | 56.0 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S6+F | C1 | drain | 4 | 0 | 0 | 10.0 | 0 | False | - | 24.1 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S6+F | C1+C3 | suppress | 4 | 0 | 4 | 1,178.0 | 0 | False | - | 59.9 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S6+F | C1+C3 | drain | 4 | 0 | 0 | 9.0 | 0 | False | - | 24.1 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False | - | 59.9 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S6+F | C1+C3+OP | drain | 4 | 0 | 0 | 9.0 | 0 | False | - | 24.1 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S4 | C1 | suppress | 4 | 4 | 0 | - | 0 | False | - | 59.4 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S4 | C1 | drain | 4 | 3 | 0 | 7.0 | 260 | True | 26.0 | 0.0 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S4 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False | - | 59.4 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S4 | C1+C3 | drain | 4 | 3 | 0 | 7.0 | 260 | True | 26.0 | 0.0 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S4 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False | - | 59.4 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S4 | C1+C3+OP | drain | 4 | 3 | 0 | 7.0 | 260 | True | 26.0 | 0.0 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S4-F | C1 | suppress | 4 | 4 | 0 | - | 0 | False | - | 58.9 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S4-F | C1 | drain | 4 | 0 | 2 | 111.0 | 0 | False | - | 15.0 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S4-F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False | - | 58.9 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S4-F | C1+C3 | drain | 4 | 0 | 2 | 111.0 | 0 | False | - | 15.0 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False | - | 58.9 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S4-F | C1+C3+OP | drain | 4 | 0 | 2 | 111.0 | 0 | False | - | 15.0 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S4-E | C1 | suppress | 4 | 0 | 1 | 38.0 | 0 | False | - | 23.0 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S4-E | C1 | drain | 4 | 0 | 2 | 111.0 | 0 | False | - | 15.0 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S4-E | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False | - | 59.4 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S4-E | C1+C3 | drain | 4 | 3 | 0 | 7.0 | 260 | True | 26.0 | 0.0 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S4-E | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False | - | 59.4 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S4-E | C1+C3+OP | drain | 4 | 3 | 0 | 7.0 | 260 | True | 26.0 | 0.0 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S6 | C1 | suppress | 4 | 0 | 1 | 38.0 | 0 | False | - | 23.0 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S6 | C1 | drain | 4 | 0 | 2 | 111.0 | 0 | False | - | 15.0 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S6 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False | - | 59.4 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S6 | C1+C3 | drain | 4 | 3 | 0 | 7.0 | 260 | True | 26.0 | 0.0 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S6 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False | - | 59.4 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S6 | C1+C3+OP | drain | 4 | 3 | 0 | 7.0 | 260 | True | 26.0 | 0.0 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S6+F | C1 | suppress | 4 | 0 | 1 | 38.0 | 0 | False | - | 23.0 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S6+F | C1 | drain | 4 | 0 | 2 | 111.0 | 0 | False | - | 15.0 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S6+F | C1+C3 | suppress | 4 | 0 | 4 | 1,178.0 | 0 | False | - | 59.5 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S6+F | C1+C3 | drain | 4 | 0 | 2 | 111.0 | 0 | False | - | 15.0 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False | - | 59.4 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S6+F | C1+C3+OP | drain | 4 | 0 | 2 | 111.0 | 0 | False | - | 15.0 |
+**Under attack:**
 
-**Legitimate operation (D3)** - share of **unique requests** rejected (`legit_unique_rejection_rate`); `legit_sent`/`legit_rejected` include retries and are shown for traceability only (raw-retry rate **superseded**). `limit_aware` asks only for values the device accepts in its current state:
+| battery_profile | scheme | compromise | strategy | legit_policy | events | missed_frac | delayed_frac | max_delay_min | floor_violating_uplinks | died |
+|---|---|---|---|---|---|---|---|---|---|---|
+| PS-LB/good | S4 | C1 | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4 | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [7.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4 | C1+C3 | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4 | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [7.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4 | C1+C3+OP | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4 | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [7.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4-F | C1 | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4-F | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 9.00 [8.00, 10.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4-F | C1+C3 | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4-F | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 9.00 [8.00, 10.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4-F | C1+C3+OP | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4-F | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 9.00 [8.00, 10.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4-E | C1 | suppress | - | 6 | 0.00 [0.00, 0.00] | 0.18 [0.07, 0.28] | 48.00 [25.50, 57.50] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4-E | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 9.00 [8.00, 10.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4-E | C1+C3 | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4-E | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [7.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4-E | C1+C3+OP | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4-E | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [7.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6 | C1 | suppress | - | 6 | 0.00 [0.00, 0.00] | 0.18 [0.07, 0.28] | 48.00 [25.50, 57.50] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6 | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 9.00 [8.00, 10.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6 | C1+C3 | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6 | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [7.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6 | C1+C3+OP | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6 | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [7.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6+F | C1 | suppress | - | 6 | 0.00 [0.00, 0.00] | 0.18 [0.07, 0.28] | 48.00 [25.50, 57.50] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6+F | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 9.00 [8.00, 10.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6+F | C1+C3 | suppress | - | 6 | 0.00 [0.00, 0.27] | 1.00 [0.69, 1.00] | 1261.50 [764.50, 1361.50] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6+F | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [7.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6+F | C1+C3+OP | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6+F | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [7.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4 | C1 | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4 | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [7.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4 | C1+C3 | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4 | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [7.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4 | C1+C3+OP | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4 | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [7.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4-F | C1 | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4-F | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 9.00 [8.00, 10.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4-F | C1+C3 | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4-F | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 9.00 [8.00, 10.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4-F | C1+C3+OP | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4-F | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 9.00 [8.00, 10.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4-E | C1 | suppress | - | 6 | 0.00 [0.00, 0.00] | 0.18 [0.07, 0.28] | 48.00 [25.50, 57.50] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4-E | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 9.00 [8.00, 10.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4-E | C1+C3 | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4-E | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [7.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4-E | C1+C3+OP | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4-E | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [7.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6 | C1 | suppress | - | 6 | 0.00 [0.00, 0.00] | 0.18 [0.07, 0.28] | 48.00 [25.50, 57.50] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6 | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 9.00 [8.00, 10.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6 | C1+C3 | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6 | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [7.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6 | C1+C3+OP | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6 | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [7.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6+F | C1 | suppress | - | 6 | 0.00 [0.00, 0.00] | 0.18 [0.07, 0.28] | 48.00 [25.50, 57.50] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6+F | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 9.00 [8.00, 10.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6+F | C1+C3 | suppress | - | 6 | 0.00 [0.00, 0.27] | 1.00 [0.69, 1.00] | 1261.50 [764.50, 1361.50] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6+F | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [7.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6+F | C1+C3+OP | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6+F | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [7.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4 | C1 | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4 | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [7.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4 | C1+C3 | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4 | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [7.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4 | C1+C3+OP | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4 | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [7.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4-F | C1 | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4-F | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 9.00 [8.00, 10.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4-F | C1+C3 | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4-F | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 9.00 [8.00, 10.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4-F | C1+C3+OP | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4-F | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 9.00 [8.00, 10.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4-E | C1 | suppress | - | 6 | 0.00 [0.00, 0.00] | 0.18 [0.07, 0.28] | 48.00 [25.50, 57.50] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4-E | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 9.00 [8.00, 10.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4-E | C1+C3 | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4-E | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [7.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4-E | C1+C3+OP | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4-E | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [7.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6 | C1 | suppress | - | 6 | 0.00 [0.00, 0.00] | 0.18 [0.07, 0.28] | 48.00 [25.50, 57.50] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6 | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 9.00 [8.00, 10.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6 | C1+C3 | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6 | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [7.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6 | C1+C3+OP | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6 | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [7.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6+F | C1 | suppress | - | 6 | 0.00 [0.00, 0.00] | 0.18 [0.07, 0.28] | 48.00 [25.50, 57.50] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6+F | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 9.00 [8.00, 10.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6+F | C1+C3 | suppress | - | 6 | 0.00 [0.00, 0.27] | 1.00 [0.69, 1.00] | 1261.50 [764.50, 1361.50] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6+F | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [7.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6+F | C1+C3+OP | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6+F | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [7.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4 | C1 | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4 | C1 | drain | - | 6 | 1.00 [0.77, 1.00] | 0.00 [0.00, 0.00] | 4.00 [0.00, 8.00] | 260.00 [260.00, 260.00] | 1.00 [1.00, 1.00] |
+| LWL01/poor | S4 | C1+C3 | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4 | C1+C3 | drain | - | 6 | 1.00 [0.77, 1.00] | 0.00 [0.00, 0.00] | 4.00 [0.00, 8.00] | 260.00 [260.00, 260.00] | 1.00 [1.00, 1.00] |
+| LWL01/poor | S4 | C1+C3+OP | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4 | C1+C3+OP | drain | - | 6 | 1.00 [0.77, 1.00] | 0.00 [0.00, 0.00] | 4.00 [0.00, 8.00] | 260.00 [260.00, 260.00] | 1.00 [1.00, 1.00] |
+| LWL01/poor | S4-F | C1 | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4-F | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.55 [0.27, 0.80] | 104.00 [80.00, 114.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4-F | C1+C3 | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4-F | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.55 [0.27, 0.80] | 104.00 [80.00, 114.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4-F | C1+C3+OP | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4-F | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.55 [0.27, 0.80] | 104.00 [80.00, 114.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4-E | C1 | suppress | - | 6 | 0.00 [0.00, 0.00] | 0.18 [0.07, 0.28] | 48.00 [25.50, 57.50] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4-E | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.55 [0.27, 0.80] | 104.00 [80.00, 114.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4-E | C1+C3 | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4-E | C1+C3 | drain | - | 6 | 1.00 [0.77, 1.00] | 0.00 [0.00, 0.00] | 4.00 [0.00, 8.00] | 260.00 [260.00, 260.00] | 1.00 [1.00, 1.00] |
+| LWL01/poor | S4-E | C1+C3+OP | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4-E | C1+C3+OP | drain | - | 6 | 1.00 [0.77, 1.00] | 0.00 [0.00, 0.00] | 4.00 [0.00, 8.00] | 260.00 [260.00, 260.00] | 1.00 [1.00, 1.00] |
+| LWL01/poor | S6 | C1 | suppress | - | 6 | 0.00 [0.00, 0.00] | 0.18 [0.07, 0.28] | 48.00 [25.50, 57.50] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S6 | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.55 [0.27, 0.80] | 104.00 [80.00, 114.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S6 | C1+C3 | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S6 | C1+C3 | drain | - | 6 | 1.00 [0.77, 1.00] | 0.00 [0.00, 0.00] | 4.00 [0.00, 8.00] | 260.00 [260.00, 260.00] | 1.00 [1.00, 1.00] |
+| LWL01/poor | S6 | C1+C3+OP | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S6 | C1+C3+OP | drain | - | 6 | 1.00 [0.77, 1.00] | 0.00 [0.00, 0.00] | 4.00 [0.00, 8.00] | 260.00 [260.00, 260.00] | 1.00 [1.00, 1.00] |
+| LWL01/poor | S6+F | C1 | suppress | - | 6 | 0.00 [0.00, 0.00] | 0.18 [0.07, 0.28] | 48.00 [25.50, 57.50] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S6+F | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.55 [0.27, 0.80] | 104.00 [80.00, 114.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S6+F | C1+C3 | suppress | - | 6 | 0.00 [0.00, 0.27] | 1.00 [0.69, 1.00] | 1261.50 [764.50, 1361.50] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S6+F | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.55 [0.27, 0.80] | 102.50 [80.00, 114.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S6+F | C1+C3+OP | suppress | - | 6 | 1.00 [0.96, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S6+F | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.55 [0.27, 0.80] | 102.50 [80.00, 114.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 
-| event | battery_profile | scheme | legit_policy | missed | delayed | floor_violating_uplinks | min_soc_pct | legit_intents | legit_intents_rejected | legit_unique_rejection_rate | legit_sent | legit_rejected |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S4 | naive | 0 | 0 | 0 | 60.0 | 8 | 0 | 0.0% | 8 | 0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S4 | limit_aware | 0 | 0 | 0 | 60.0 | 8 | 0 | 0.0% | 8 | 0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S4-F | naive | 0 | 0 | 0 | 60.0 | 6 | 1 | 16.7% | 202 | 197 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S4-F | limit_aware | 0 | 0 | 0 | 60.0 | 8 | 0 | 0.0% | 8 | 0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S4-E | naive | 0 | 0 | 0 | 60.0 | 6 | 1 | 16.7% | 202 | 197 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S4-E | limit_aware | 0 | 0 | 0 | 60.0 | 8 | 0 | 0.0% | 8 | 0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S6 | naive | 0 | 0 | 0 | 60.0 | 6 | 1 | 16.7% | 202 | 197 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S6 | limit_aware | 0 | 0 | 0 | 60.0 | 8 | 0 | 0.0% | 8 | 0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S6+F | naive | 0 | 0 | 0 | 60.0 | 6 | 1 | 16.7% | 202 | 197 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/good | S6+F | limit_aware | 0 | 0 | 0 | 60.0 | 8 | 0 | 0.0% | 8 | 0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S4 | naive | 0 | 0 | 0 | 59.9 | 8 | 0 | 0.0% | 8 | 0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S4 | limit_aware | 0 | 0 | 0 | 59.9 | 8 | 0 | 0.0% | 8 | 0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S4-F | naive | 0 | 0 | 0 | 59.9 | 6 | 1 | 16.7% | 202 | 197 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S4-F | limit_aware | 0 | 0 | 0 | 59.9 | 8 | 0 | 0.0% | 8 | 0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S4-E | naive | 0 | 0 | 0 | 59.9 | 6 | 1 | 16.7% | 202 | 197 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S4-E | limit_aware | 0 | 0 | 0 | 59.9 | 8 | 0 | 0.0% | 8 | 0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S6 | naive | 0 | 0 | 0 | 59.9 | 6 | 1 | 16.7% | 202 | 197 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S6 | limit_aware | 0 | 0 | 0 | 59.9 | 8 | 0 | 0.0% | 8 | 0 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S6+F | naive | 0 | 0 | 0 | 59.9 | 6 | 1 | 16.7% | 202 | 197 |
-| Buffalo Bayou 08074000 (Harvey) | PS-LB/poor | S6+F | limit_aware | 0 | 0 | 0 | 59.9 | 8 | 0 | 0.0% | 8 | 0 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S4 | naive | 0 | 0 | 0 | 56.5 | 8 | 0 | 0.0% | 8 | 0 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S4 | limit_aware | 0 | 0 | 0 | 56.5 | 8 | 0 | 0.0% | 8 | 0 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S4-F | naive | 0 | 0 | 0 | 53.0 | 6 | 1 | 16.7% | 202 | 197 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S4-F | limit_aware | 0 | 0 | 0 | 54.4 | 8 | 0 | 0.0% | 8 | 0 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S4-E | naive | 0 | 0 | 0 | 53.0 | 6 | 1 | 16.7% | 202 | 197 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S4-E | limit_aware | 0 | 0 | 0 | 54.4 | 8 | 0 | 0.0% | 8 | 0 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S6 | naive | 0 | 0 | 0 | 53.0 | 6 | 1 | 16.7% | 202 | 197 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S6 | limit_aware | 0 | 0 | 0 | 54.4 | 8 | 0 | 0.0% | 8 | 0 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S6+F | naive | 0 | 0 | 0 | 53.0 | 6 | 1 | 16.7% | 202 | 197 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/good | S6+F | limit_aware | 0 | 0 | 0 | 54.4 | 8 | 0 | 0.0% | 8 | 0 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S4 | naive | 0 | 0 | 0 | 27.8 | 8 | 0 | 0.0% | 8 | 0 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S4 | limit_aware | 0 | 0 | 0 | 27.8 | 8 | 0 | 0.0% | 8 | 0 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S4-F | naive | 0 | 0 | 0 | 17.9 | 6 | 1 | 16.7% | 28 | 23 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S4-F | limit_aware | 0 | 0 | 0 | 18.5 | 8 | 0 | 0.0% | 8 | 0 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S4-E | naive | 0 | 0 | 0 | 17.9 | 6 | 1 | 16.7% | 28 | 23 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S4-E | limit_aware | 0 | 0 | 0 | 18.5 | 8 | 0 | 0.0% | 8 | 0 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S6 | naive | 0 | 0 | 0 | 17.9 | 6 | 1 | 16.7% | 28 | 23 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S6 | limit_aware | 0 | 0 | 0 | 18.5 | 8 | 0 | 0.0% | 8 | 0 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S6+F | naive | 0 | 0 | 0 | 17.9 | 6 | 1 | 16.7% | 28 | 23 |
-| Buffalo Bayou 08074000 (Harvey) | LWL01/poor | S6+F | limit_aware | 0 | 0 | 0 | 18.5 | 8 | 0 | 0.0% | 8 | 0 |
+**Legitimate operation (D3)** - unique-request rejection rate (raw-retry rate superseded):
+
+| battery_profile | scheme | compromise | strategy | legit_policy | events | legit_unique_rejection_rate | missed_frac | delayed_frac | floor_violating_uplinks |
+|---|---|---|---|---|---|---|---|---|---|
+| PS-LB/good | S4 | none | - | naive | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.28 [0.00, 0.50] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4 | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.28 [0.00, 0.50] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4-F | none | - | naive | 6 | 0.00 [0.00, 0.17] | 0.00 [0.00, 0.00] | 0.07 [0.00, 0.20] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4-F | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.12 [0.00, 0.20] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4-E | none | - | naive | 6 | 0.00 [0.00, 0.17] | 0.00 [0.00, 0.00] | 0.07 [0.00, 0.20] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4-E | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.12 [0.00, 0.20] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6 | none | - | naive | 6 | 0.00 [0.00, 0.17] | 0.00 [0.00, 0.00] | 0.07 [0.00, 0.20] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6 | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.12 [0.00, 0.20] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6+F | none | - | naive | 6 | 0.00 [0.00, 0.17] | 0.00 [0.00, 0.00] | 0.07 [0.00, 0.20] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6+F | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.12 [0.00, 0.20] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4 | none | - | naive | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.28 [0.00, 0.50] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4 | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.28 [0.00, 0.50] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4-F | none | - | naive | 6 | 0.00 [0.00, 0.17] | 0.00 [0.00, 0.00] | 0.07 [0.00, 0.20] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4-F | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.12 [0.00, 0.20] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4-E | none | - | naive | 6 | 0.00 [0.00, 0.17] | 0.00 [0.00, 0.00] | 0.07 [0.00, 0.20] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4-E | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.12 [0.00, 0.20] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6 | none | - | naive | 6 | 0.00 [0.00, 0.17] | 0.00 [0.00, 0.00] | 0.07 [0.00, 0.20] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6 | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.12 [0.00, 0.20] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6+F | none | - | naive | 6 | 0.00 [0.00, 0.17] | 0.00 [0.00, 0.00] | 0.07 [0.00, 0.20] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6+F | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.12 [0.00, 0.20] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4 | none | - | naive | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.28 [0.00, 0.50] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4 | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.28 [0.00, 0.50] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4-F | none | - | naive | 6 | 0.00 [0.00, 0.17] | 0.00 [0.00, 0.00] | 0.07 [0.00, 0.20] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4-F | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.12 [0.00, 0.20] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4-E | none | - | naive | 6 | 0.00 [0.00, 0.17] | 0.00 [0.00, 0.00] | 0.07 [0.00, 0.20] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4-E | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.12 [0.00, 0.20] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6 | none | - | naive | 6 | 0.00 [0.00, 0.17] | 0.00 [0.00, 0.00] | 0.07 [0.00, 0.20] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6 | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.12 [0.00, 0.20] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6+F | none | - | naive | 6 | 0.00 [0.00, 0.17] | 0.00 [0.00, 0.00] | 0.07 [0.00, 0.20] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6+F | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.12 [0.00, 0.20] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4 | none | - | naive | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.28 [0.00, 0.50] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4 | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.28 [0.00, 0.50] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4-F | none | - | naive | 6 | 0.00 [0.00, 0.17] | 0.00 [0.00, 0.00] | 0.07 [0.00, 0.20] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4-F | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.12 [0.00, 0.20] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4-E | none | - | naive | 6 | 0.00 [0.00, 0.17] | 0.00 [0.00, 0.00] | 0.07 [0.00, 0.20] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4-E | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.12 [0.00, 0.20] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S6 | none | - | naive | 6 | 0.00 [0.00, 0.17] | 0.00 [0.00, 0.00] | 0.07 [0.00, 0.20] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S6 | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.12 [0.00, 0.20] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S6+F | none | - | naive | 6 | 0.00 [0.00, 0.17] | 0.00 [0.00, 0.00] | 0.07 [0.00, 0.20] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S6+F | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.12 [0.00, 0.20] | 0.00 [0.00, 0.00] |
 
 ## 7f. Device-side envelope verification (pqm4, published)
 
@@ -910,15 +917,60 @@ Reference levels: [10, 20, 30, 40] (ft); a crossing is *delayed* if first report
 
 | event | scheme | compromise | strategy | crossings | missed | delayed | max_delay_min | floor_violating_uplinks | died |
 |---|---|---|---|---|---|---|---|---|---|
-| Buffalo Bayou 08074000 (Harvey) | S4-F | C1 | suppress | 4 | 4 | 0 | - | 0 | False |
-| Buffalo Bayou 08074000 (Harvey) | S4-F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
-| Buffalo Bayou 08074000 (Harvey) | S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| Buffalo Bayou 08074000 (Harvey) | S6 | C1 | suppress | 4 | 0 | 1 | 38 | 0 | False |
-| Buffalo Bayou 08074000 (Harvey) | S6 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
-| Buffalo Bayou 08074000 (Harvey) | S6 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| Buffalo Bayou 08074000 (Harvey) | S6+F | C1 | suppress | 4 | 0 | 1 | 38 | 0 | False |
-| Buffalo Bayou 08074000 (Harvey) | S6+F | C1+C3 | suppress | 4 | 0 | 4 | 1,178 | 0 | False |
-| Buffalo Bayou 08074000 (Harvey) | S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28) | S4-F | C1 | suppress | 5 | 5 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28) | S4-F | C1+C3 | suppress | 5 | 5 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28) | S4-F | C1+C3+OP | suppress | 5 | 5 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28) | S6 | C1 | suppress | 5 | 0 | 1 | 42 | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28) | S6 | C1+C3 | suppress | 5 | 5 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28) | S6 | C1+C3+OP | suppress | 5 | 5 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28) | S6+F | C1 | suppress | 5 | 0 | 1 | 42 | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28) | S6+F | C1+C3 | suppress | 5 | 0 | 5 | 1,203 | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28) | S6+F | C1+C3+OP | suppress | 5 | 5 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18) | S4-F | C1 | suppress | 6 | 6 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18) | S4-F | C1+C3 | suppress | 6 | 6 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18) | S4-F | C1+C3+OP | suppress | 6 | 6 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18) | S6 | C1 | suppress | 6 | 0 | 1 | 54 | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18) | S6 | C1+C3 | suppress | 6 | 6 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18) | S6 | C1+C3+OP | suppress | 6 | 6 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18) | S6+F | C1 | suppress | 6 | 0 | 1 | 54 | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18) | S6+F | C1+C3 | suppress | 6 | 2 | 4 | 376 | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18) | S6+F | C1+C3+OP | suppress | 6 | 6 | 0 | - | 0 | False |
+| USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18) | S4-F | C1 | suppress | 14 | 13 | 0 | 0 | 0 | False |
+| USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18) | S4-F | C1+C3 | suppress | 14 | 13 | 0 | 0 | 0 | False |
+| USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18) | S4-F | C1+C3+OP | suppress | 14 | 13 | 0 | 0 | 0 | False |
+| USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18) | S6 | C1 | suppress | 14 | 0 | 2 | 57 | 0 | False |
+| USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18) | S6 | C1+C3 | suppress | 14 | 13 | 0 | 0 | 0 | False |
+| USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18) | S6 | C1+C3+OP | suppress | 14 | 13 | 0 | 0 | 0 | False |
+| USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18) | S6+F | C1 | suppress | 14 | 0 | 2 | 57 | 0 | False |
+| USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18) | S6+F | C1+C3 | suppress | 14 | 3 | 10 | 1,320 | 0 | False |
+| USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18) | S6+F | C1+C3+OP | suppress | 14 | 13 | 0 | 0 | 0 | False |
+| USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16) | S4-F | C1 | suppress | 11 | 11 | 0 | - | 0 | False |
+| USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16) | S4-F | C1+C3 | suppress | 11 | 11 | 0 | - | 0 | False |
+| USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16) | S4-F | C1+C3+OP | suppress | 11 | 11 | 0 | - | 0 | False |
+| USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16) | S6 | C1 | suppress | 11 | 0 | 4 | 58 | 0 | False |
+| USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16) | S6 | C1+C3 | suppress | 11 | 11 | 0 | - | 0 | False |
+| USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16) | S6 | C1+C3+OP | suppress | 11 | 11 | 0 | - | 0 | False |
+| USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16) | S6+F | C1 | suppress | 11 | 0 | 4 | 58 | 0 | False |
+| USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16) | S6+F | C1+C3 | suppress | 11 | 0 | 11 | 1,398 | 0 | False |
+| USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16) | S6+F | C1+C3+OP | suppress | 11 | 11 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07) | S4-F | C1 | suppress | 5 | 5 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07) | S4-F | C1+C3 | suppress | 5 | 5 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07) | S4-F | C1+C3+OP | suppress | 5 | 5 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07) | S6 | C1 | suppress | 5 | 0 | 0 | 18 | 0 | False |
+| USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07) | S6 | C1+C3 | suppress | 5 | 5 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07) | S6 | C1+C3+OP | suppress | 5 | 5 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07) | S6+F | C1 | suppress | 5 | 0 | 0 | 18 | 0 | False |
+| USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07) | S6+F | C1+C3 | suppress | 5 | 0 | 5 | 1,153 | 0 | False |
+| USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07) | S6+F | C1+C3+OP | suppress | 5 | 5 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26) | S4-F | C1 | suppress | 5 | 5 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26) | S4-F | C1+C3 | suppress | 5 | 5 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26) | S4-F | C1+C3+OP | suppress | 5 | 5 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26) | S6 | C1 | suppress | 5 | 0 | 1 | 33 | 0 | False |
+| USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26) | S6 | C1+C3 | suppress | 5 | 5 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26) | S6 | C1+C3+OP | suppress | 5 | 5 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26) | S6+F | C1 | suppress | 5 | 0 | 1 | 33 | 0 | False |
+| USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26) | S6+F | C1+C3 | suppress | 5 | 0 | 5 | 1,325 | 0 | False |
+| USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26) | S6+F | C1+C3+OP | suppress | 5 | 5 | 0 | - | 0 | False |
 
 **OP token cost** - one signature over the command, frames per DR for each measured algorithm (`results/sizes.csv`):
 

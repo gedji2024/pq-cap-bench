@@ -1,161 +1,961 @@
 event,battery_profile,scheme,compromise,strategy,legit_policy,crossings,missed,delayed,on_time,mean_delay_min,max_delay_min,floor_violating_uplinks,battery_floor_violated,hours_below_floor,min_soc_pct,died,died_h,uplinks,legit_sent,legit_rejected,legit_intents,legit_intents_rejected,legit_unique_rejection_rate,legit_reject_reasons,attacker_sent,attacker_accepted
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4,none,-,naive,4,0,0,4,6.25,9.0,0,False,0.0,59.985205885696566,False,,418,8,0,8,0,0.0,,0,0
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,0.0,59.985205885696566,False,,418,8,0,8,0,0.0,,0,0
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4,C1,suppress,-,4,4,0,0,,,0,False,0.0,59.991421850142046,False,,8,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4,C1,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.926154223464515,False,,4313,0,0,0,0,0.0,,4313,4313
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,59.991421850142046,False,,8,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4,C1+C3,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.926154223464515,False,,4313,0,0,0,0,0.0,,4313,4313
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.991421850142046,False,,8,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4,C1+C3+OP,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.926154223464515,False,,4313,0,0,0,0,0.0,,4313,4313
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4-F,none,-,naive,4,0,0,4,6.25,9.0,0,False,0.0,59.97883831236218,False,,838,202,197,6,1,0.16666666666666666,invariant:alert_min_rate=197,0,0
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4-F,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,0.0,59.98138534169593,False,,670,8,0,8,0,0.0,,0,0
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4-F,C1,suppress,-,4,4,0,0,,,0,False,0.0,59.991330884808704,False,,14,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4-F,C1,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,59.92618454524229,False,,4312,0,0,0,0,0.0,,4312,4312
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4-F,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,59.991330884808704,False,,14,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4-F,C1+C3,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,59.92618454524229,False,,4312,0,0,0,0,0.0,,4312,4312
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4-F,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.991330884808704,False,,14,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4-F,C1+C3+OP,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,59.92618454524229,False,,4312,0,0,0,0,0.0,,4312,4312
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4-E,none,-,naive,4,0,0,4,6.25,9.0,0,False,0.0,59.97883831236218,False,,838,202,197,6,1,0.16666666666666666,invariant:alert_min_rate=197,0,0
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4-E,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,0.0,59.98138534169593,False,,670,8,0,8,0,0.0,,0,0
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4-E,C1,suppress,-,4,0,1,3,21.25,38.0,0,False,0.0,59.98425074969641,False,,482,0,0,0,0,0.0,,1,1
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4-E,C1,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,59.92618454524229,False,,4312,0,0,0,0,0.0,,4312,4312
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4-E,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,59.991421850142046,False,,8,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4-E,C1+C3,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.926154223464515,False,,4313,0,0,0,0,0.0,,4313,4313
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4-E,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.991421850142046,False,,8,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S4-E,C1+C3+OP,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.926154223464515,False,,4313,0,0,0,0,0.0,,4313,4313
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S6,none,-,naive,4,0,0,4,6.25,9.0,0,False,0.0,59.97883831236218,False,,838,202,197,6,1,0.16666666666666666,invariant:alert_min_rate=197,0,0
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S6,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,0.0,59.98138534169593,False,,670,8,0,8,0,0.0,,0,0
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S6,C1,suppress,-,4,0,1,3,21.25,38.0,0,False,0.0,59.98425074969641,False,,482,0,0,0,0,0.0,,1,1
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S6,C1,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,59.92618454524229,False,,4312,0,0,0,0,0.0,,4312,4312
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S6,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,59.991421850142046,False,,8,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S6,C1+C3,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.926154223464515,False,,4313,0,0,0,0,0.0,,4313,4313
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S6,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.991421850142046,False,,8,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S6,C1+C3+OP,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.926154223464515,False,,4313,0,0,0,0,0.0,,4313,4313
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S6+F,none,-,naive,4,0,0,4,6.25,9.0,0,False,0.0,59.97883831236218,False,,838,202,197,6,1,0.16666666666666666,invariant:alert_min_rate=197,0,0
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S6+F,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,0.0,59.98138534169593,False,,670,8,0,8,0,0.0,,0,0
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S6+F,C1,suppress,-,4,0,1,3,21.25,38.0,0,False,0.0,59.98425074969641,False,,482,0,0,0,0,0.0,,1,1
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S6+F,C1,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,59.92618454524229,False,,4312,0,0,0,0,0.0,,4312,4312
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S6+F,C1+C3,suppress,-,4,0,4,0,658.75,1178.0,0,False,0.0,59.99143701103094,False,,7,0,0,0,0,0.0,,2,2
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S6+F,C1+C3,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.926154223464515,False,,4313,0,0,0,0,0.0,,4313,4313
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S6+F,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.991421850142046,False,,8,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),PS-LB/good,S6+F,C1+C3+OP,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.926154223464515,False,,4313,0,0,0,0,0.0,,4313,4313
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4,none,-,naive,4,0,0,4,6.25,9.0,0,False,0.0,59.928247555554115,False,,418,8,0,8,0,0.0,,0,0
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,0.0,59.928247555554115,False,,418,8,0,8,0,0.0,,0,0
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4,C1,suppress,-,4,4,0,0,,,0,False,0.0,59.99033173856037,False,,8,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4,C1,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.33844781699467,False,,4313,0,0,0,0,0.0,,4313,4313
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,59.99033173856037,False,,8,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4,C1+C3,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.33844781699467,False,,4313,0,0,0,0,0.0,,4313,4313
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.99033173856037,False,,8,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4,C1+C3+OP,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.33844781699467,False,,4313,0,0,0,0,0.0,,4313,4313
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4-F,none,-,naive,4,0,0,4,6.25,9.0,0,False,0.0,59.86464912418186,False,,838,202,197,6,1,0.16666666666666666,invariant:alert_min_rate=197,0,0
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4-F,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,0.0,59.89008849673076,False,,670,8,0,8,0,0.0,,0,0
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4-F,C1,suppress,-,4,4,0,0,,,0,False,0.0,59.98942318954077,False,,14,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4-F,C1,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,59.33875066666787,False,,4312,0,0,0,0,0.0,,4312,4312
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4-F,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,59.98942318954077,False,,14,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4-F,C1+C3,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,59.33875066666787,False,,4312,0,0,0,0,0.0,,4312,4312
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4-F,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.98942318954077,False,,14,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4-F,C1+C3+OP,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,59.33875066666787,False,,4312,0,0,0,0,0.0,,4312,4312
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4-E,none,-,naive,4,0,0,4,6.25,9.0,0,False,0.0,59.86464912418186,False,,838,202,197,6,1,0.16666666666666666,invariant:alert_min_rate=197,0,0
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4-E,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,0.0,59.89008849673076,False,,670,8,0,8,0,0.0,,0,0
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4-E,C1,suppress,-,4,0,1,3,21.25,38.0,0,False,0.0,59.91870779084828,False,,482,0,0,0,0,0.0,,1,1
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4-E,C1,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,59.33875066666787,False,,4312,0,0,0,0,0.0,,4312,4312
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4-E,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,59.99033173856037,False,,8,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4-E,C1+C3,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.33844781699467,False,,4313,0,0,0,0,0.0,,4313,4313
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4-E,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.99033173856037,False,,8,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S4-E,C1+C3+OP,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.33844781699467,False,,4313,0,0,0,0,0.0,,4313,4313
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S6,none,-,naive,4,0,0,4,6.25,9.0,0,False,0.0,59.86464912418186,False,,838,202,197,6,1,0.16666666666666666,invariant:alert_min_rate=197,0,0
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S6,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,0.0,59.89008849673076,False,,670,8,0,8,0,0.0,,0,0
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S6,C1,suppress,-,4,0,1,3,21.25,38.0,0,False,0.0,59.91870779084828,False,,482,0,0,0,0,0.0,,1,1
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S6,C1,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,59.33875066666787,False,,4312,0,0,0,0,0.0,,4312,4312
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S6,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,59.99033173856037,False,,8,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S6,C1+C3,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.33844781699467,False,,4313,0,0,0,0,0.0,,4313,4313
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S6,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.99033173856037,False,,8,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S6,C1+C3+OP,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.33844781699467,False,,4313,0,0,0,0,0.0,,4313,4313
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S6+F,none,-,naive,4,0,0,4,6.25,9.0,0,False,0.0,59.86464912418186,False,,838,202,197,6,1,0.16666666666666666,invariant:alert_min_rate=197,0,0
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S6+F,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,0.0,59.89008849673076,False,,670,8,0,8,0,0.0,,0,0
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S6+F,C1,suppress,-,4,0,1,3,21.25,38.0,0,False,0.0,59.91870779084828,False,,482,0,0,0,0,0.0,,1,1
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S6+F,C1,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,59.33875066666787,False,,4312,0,0,0,0,0.0,,4312,4312
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S6+F,C1+C3,suppress,-,4,0,4,0,658.75,1178.0,0,False,0.0,59.99048316339697,False,,7,0,0,0,0,0.0,,2,2
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S6+F,C1+C3,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.33844781699467,False,,4313,0,0,0,0,0.0,,4313,4313
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S6+F,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.99033173856037,False,,8,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),PS-LB/poor,S6+F,C1+C3+OP,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,59.33844781699467,False,,4313,0,0,0,0,0.0,,4313,4313
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S4,none,-,naive,4,0,0,4,6.25,9.0,0,False,0.0,56.51666666666705,False,,418,8,0,8,0,0.0,,0,0
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S4,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,0.0,56.51666666666705,False,,418,8,0,8,0,0.0,,0,0
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S4,C1,suppress,-,4,4,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S4,C1,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,24.058333333337288,False,,4313,0,0,0,0,0.0,,4313,4313
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S4,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S4,C1+C3,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,24.058333333337288,False,,4313,0,0,0,0,0.0,,4313,4313
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S4,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S4,C1+C3+OP,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,24.058333333337288,False,,4313,0,0,0,0,0.0,,4313,4313
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S4-F,none,-,naive,4,0,0,4,6.25,9.0,0,False,0.0,53.01666666666743,False,,838,202,197,6,1,0.16666666666666666,invariant:alert_min_rate=197,0,0
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S4-F,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,0.0,54.41666666666728,False,,670,8,0,8,0,0.0,,0,0
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S4-F,C1,suppress,-,4,4,0,0,,,0,False,0.0,59.88333333333335,False,,14,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S4-F,C1,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,24.075000000003953,False,,4312,0,0,0,0,0.0,,4312,4312
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S4-F,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,59.88333333333335,False,,14,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S4-F,C1+C3,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,24.075000000003953,False,,4312,0,0,0,0,0.0,,4312,4312
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S4-F,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.88333333333335,False,,14,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S4-F,C1+C3+OP,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,24.075000000003953,False,,4312,0,0,0,0,0.0,,4312,4312
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S4-E,none,-,naive,4,0,0,4,6.25,9.0,0,False,0.0,53.01666666666743,False,,838,202,197,6,1,0.16666666666666666,invariant:alert_min_rate=197,0,0
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S4-E,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,0.0,54.41666666666728,False,,670,8,0,8,0,0.0,,0,0
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S4-E,C1,suppress,-,4,0,1,3,21.25,38.0,0,False,0.0,55.99166666666711,False,,482,0,0,0,0,0.0,,1,1
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S4-E,C1,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,24.075000000003953,False,,4312,0,0,0,0,0.0,,4312,4312
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S4-E,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S4-E,C1+C3,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,24.058333333337288,False,,4313,0,0,0,0,0.0,,4313,4313
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S4-E,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S4-E,C1+C3+OP,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,24.058333333337288,False,,4313,0,0,0,0,0.0,,4313,4313
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S6,none,-,naive,4,0,0,4,6.25,9.0,0,False,0.0,53.01666666666743,False,,838,202,197,6,1,0.16666666666666666,invariant:alert_min_rate=197,0,0
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S6,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,0.0,54.41666666666728,False,,670,8,0,8,0,0.0,,0,0
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S6,C1,suppress,-,4,0,1,3,21.25,38.0,0,False,0.0,55.99166666666711,False,,482,0,0,0,0,0.0,,1,1
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S6,C1,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,24.075000000003953,False,,4312,0,0,0,0,0.0,,4312,4312
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S6,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S6,C1+C3,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,24.058333333337288,False,,4313,0,0,0,0,0.0,,4313,4313
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S6,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S6,C1+C3+OP,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,24.058333333337288,False,,4313,0,0,0,0,0.0,,4313,4313
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S6+F,none,-,naive,4,0,0,4,6.25,9.0,0,False,0.0,53.01666666666743,False,,838,202,197,6,1,0.16666666666666666,invariant:alert_min_rate=197,0,0
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S6+F,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,0.0,54.41666666666728,False,,670,8,0,8,0,0.0,,0,0
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S6+F,C1,suppress,-,4,0,1,3,21.25,38.0,0,False,0.0,55.99166666666711,False,,482,0,0,0,0,0.0,,1,1
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S6+F,C1,drain,-,4,0,0,4,7.25,10.0,0,False,0.0,24.075000000003953,False,,4312,0,0,0,0,0.0,,4312,4312
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S6+F,C1+C3,suppress,-,4,0,4,0,658.75,1178.0,0,False,0.0,59.94166666666667,False,,7,0,0,0,0,0.0,,2,2
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S6+F,C1+C3,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,24.058333333337288,False,,4313,0,0,0,0,0.0,,4313,4313
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S6+F,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),LWL01/good,S6+F,C1+C3+OP,drain,-,4,0,0,4,6.25,9.0,0,False,0.0,24.058333333337288,False,,4313,0,0,0,0,0.0,,4313,4313
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4,none,-,naive,4,0,0,4,6.25,9.0,0,False,0.0,27.846153846154888,False,,418,8,0,8,0,0.0,,0,0
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,0.0,27.846153846154888,False,,418,8,0,8,0,0.0,,0,0
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4,C1,suppress,-,4,4,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4,C1,drain,-,4,3,0,1,7.0,7.0,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4,C1+C3,drain,-,4,3,0,1,7.0,7.0,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4,C1+C3+OP,drain,-,4,3,0,1,7.0,7.0,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4-F,none,-,naive,4,0,0,4,6.25,9.0,0,False,52.916666666666664,17.92307692307803,False,,547,28,23,6,1,0.16666666666666666,invariant:alert_min_rate=23,0,0
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4-F,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,37.416666666666664,18.53846153846265,False,,539,8,0,8,0,0.0,,0,0
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4-F,C1,suppress,-,4,4,0,0,,,0,False,0.0,58.923076923076955,False,,14,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4-F,C1,drain,-,4,0,2,2,46.5,111.0,0,False,126.36666666666666,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4-F,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,58.923076923076955,False,,14,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4-F,C1+C3,drain,-,4,0,2,2,46.5,111.0,0,False,126.36666666666666,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4-F,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,58.923076923076955,False,,14,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4-F,C1+C3+OP,drain,-,4,0,2,2,46.5,111.0,0,False,126.36666666666666,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4-E,none,-,naive,4,0,0,4,6.25,9.0,0,False,52.916666666666664,17.92307692307803,False,,547,28,23,6,1,0.16666666666666666,invariant:alert_min_rate=23,0,0
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4-E,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,37.416666666666664,18.53846153846265,False,,539,8,0,8,0,0.0,,0,0
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4-E,C1,suppress,-,4,0,1,3,21.25,38.0,0,False,0.0,23.000000000001126,False,,482,0,0,0,0,0.0,,1,1
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4-E,C1,drain,-,4,0,2,2,46.5,111.0,0,False,126.36666666666666,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4-E,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4-E,C1+C3,drain,-,4,3,0,1,7.0,7.0,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4-E,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S4-E,C1+C3+OP,drain,-,4,3,0,1,7.0,7.0,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S6,none,-,naive,4,0,0,4,6.25,9.0,0,False,52.916666666666664,17.92307692307803,False,,547,28,23,6,1,0.16666666666666666,invariant:alert_min_rate=23,0,0
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S6,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,37.416666666666664,18.53846153846265,False,,539,8,0,8,0,0.0,,0,0
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S6,C1,suppress,-,4,0,1,3,21.25,38.0,0,False,0.0,23.000000000001126,False,,482,0,0,0,0,0.0,,1,1
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S6,C1,drain,-,4,0,2,2,46.5,111.0,0,False,126.36666666666666,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S6,C1+C3,suppress,-,4,4,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S6,C1+C3,drain,-,4,3,0,1,7.0,7.0,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S6,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S6,C1+C3+OP,drain,-,4,3,0,1,7.0,7.0,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S6+F,none,-,naive,4,0,0,4,6.25,9.0,0,False,52.916666666666664,17.92307692307803,False,,547,28,23,6,1,0.16666666666666666,invariant:alert_min_rate=23,0,0
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S6+F,none,-,limit_aware,4,0,0,4,6.25,9.0,0,False,37.416666666666664,18.53846153846265,False,,539,8,0,8,0,0.0,,0,0
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S6+F,C1,suppress,-,4,0,1,3,21.25,38.0,0,False,0.0,23.000000000001126,False,,482,0,0,0,0,0.0,,1,1
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S6+F,C1,drain,-,4,0,2,2,46.5,111.0,0,False,126.36666666666666,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S6+F,C1+C3,suppress,-,4,0,4,0,658.75,1178.0,0,False,0.0,59.461538461538474,False,,7,0,0,0,0,0.0,,2,2
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S6+F,C1+C3,drain,-,4,0,2,2,46.25,111.0,0,False,126.41666666666667,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S6+F,C1+C3+OP,suppress,-,4,4,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
-Buffalo Bayou 08074000 (Harvey),LWL01/poor,S6+F,C1+C3+OP,drain,-,4,0,2,2,46.25,111.0,0,False,126.41666666666667,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S4,none,-,naive,5,0,1,4,11.8,42.0,0,False,0.0,59.98456958336966,False,,459,12,0,12,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S4,none,-,limit_aware,5,0,1,4,11.8,42.0,0,False,0.0,59.98456958336966,False,,459,12,0,12,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S4,C1,suppress,-,5,5,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S4,C1,drain,-,5,0,0,5,3.8,8.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S4,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S4,C1+C3,drain,-,5,0,0,5,3.8,8.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S4,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S4,C1+C3+OP,drain,-,5,0,0,5,3.8,8.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S4-F,none,-,naive,5,0,1,4,11.8,42.0,0,False,0.0,59.979945512257785,False,,765,97,88,10,1,0.1,invariant:alert_min_rate=88,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S4-F,none,-,limit_aware,5,0,1,4,11.8,42.0,0,False,0.0,59.98179514070254,False,,642,12,0,12,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S4-F,C1,suppress,-,5,5,0,0,,,0,False,0.0,59.99131617892634,False,,14,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S4-F,C1,drain,-,5,0,0,5,4.8,9.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S4-F,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.99131617892634,False,,14,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S4-F,C1+C3,drain,-,5,0,0,5,4.8,9.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S4-F,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.99131617892634,False,,14,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S4-F,C1+C3+OP,drain,-,5,0,0,5,4.8,9.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S4-E,none,-,naive,5,0,1,4,11.8,42.0,0,False,0.0,59.979945512257785,False,,765,97,88,10,1,0.1,invariant:alert_min_rate=88,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S4-E,none,-,limit_aware,5,0,1,4,11.8,42.0,0,False,0.0,59.98179514070254,False,,642,12,0,12,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S4-E,C1,suppress,-,5,0,1,4,14.8,42.0,0,False,0.0,59.98678307314781,False,,314,0,0,0,0,0.0,,1,1
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S4-E,C1,drain,-,5,0,0,5,4.8,9.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S4-E,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S4-E,C1+C3,drain,-,5,0,0,5,3.8,8.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S4-E,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S4-E,C1+C3+OP,drain,-,5,0,0,5,3.8,8.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S6,none,-,naive,5,0,1,4,11.8,42.0,0,False,0.0,59.979945512257785,False,,765,97,88,10,1,0.1,invariant:alert_min_rate=88,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S6,none,-,limit_aware,5,0,1,4,11.8,42.0,0,False,0.0,59.98179514070254,False,,642,12,0,12,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S6,C1,suppress,-,5,0,1,4,14.8,42.0,0,False,0.0,59.98678307314781,False,,314,0,0,0,0,0.0,,1,1
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S6,C1,drain,-,5,0,0,5,4.8,9.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S6,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S6,C1+C3,drain,-,5,0,0,5,3.8,8.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S6,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S6,C1+C3+OP,drain,-,5,0,0,5,3.8,8.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S6+F,none,-,naive,5,0,1,4,11.8,42.0,0,False,0.0,59.979945512257785,False,,765,97,88,10,1,0.1,invariant:alert_min_rate=88,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S6+F,none,-,limit_aware,5,0,1,4,11.8,42.0,0,False,0.0,59.98179514070254,False,,642,12,0,12,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S6+F,C1,suppress,-,5,0,1,4,14.8,42.0,0,False,0.0,59.98678307314781,False,,314,0,0,0,0,0.0,,1,1
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S6+F,C1,drain,-,5,0,0,5,4.8,9.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S6+F,C1+C3,suppress,-,5,0,5,0,587.8,1203.0,0,False,0.0,59.99142230514858,False,,7,0,0,0,0,0.0,,2,2
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S6+F,C1+C3,drain,-,5,0,0,5,3.8,8.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S6+F,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/good,S6+F,C1+C3+OP,drain,-,5,0,0,5,3.8,8.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S4,none,-,naive,5,0,1,4,11.8,42.0,0,False,0.0,59.922024431371135,False,,459,12,0,12,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S4,none,-,limit_aware,5,0,1,4,11.8,42.0,0,False,0.0,59.922024431371135,False,,459,12,0,12,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S4,C1,suppress,-,5,5,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S4,C1,drain,-,5,0,0,5,3.8,8.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S4,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S4,C1+C3,drain,-,5,0,0,5,3.8,8.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S4,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S4,C1+C3+OP,drain,-,5,0,0,5,3.8,8.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S4-F,none,-,naive,5,0,1,4,11.8,42.0,0,False,0.0,59.875839856207946,False,,765,97,88,10,1,0.1,invariant:alert_min_rate=88,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S4-F,none,-,limit_aware,5,0,1,4,11.8,42.0,0,False,0.0,59.89431368627322,False,,642,12,0,12,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S4-F,C1,suppress,-,5,5,0,0,,,0,False,0.0,59.989408483658416,False,,14,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S4-F,C1,drain,-,5,0,0,5,4.8,9.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S4-F,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.989408483658416,False,,14,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S4-F,C1+C3,drain,-,5,0,0,5,4.8,9.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S4-F,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.989408483658416,False,,14,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S4-F,C1+C3+OP,drain,-,5,0,0,5,4.8,9.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S4-E,none,-,naive,5,0,1,4,11.8,42.0,0,False,0.0,59.875839856207946,False,,765,97,88,10,1,0.1,invariant:alert_min_rate=88,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S4-E,none,-,limit_aware,5,0,1,4,11.8,42.0,0,False,0.0,59.89431368627322,False,,642,12,0,12,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S4-E,C1,suppress,-,5,0,1,4,14.8,42.0,0,False,0.0,59.944132457514826,False,,314,0,0,0,0,0.0,,1,1
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S4-E,C1,drain,-,5,0,0,5,4.8,9.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S4-E,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S4-E,C1+C3,drain,-,5,0,0,5,3.8,8.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S4-E,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S4-E,C1+C3+OP,drain,-,5,0,0,5,3.8,8.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S6,none,-,naive,5,0,1,4,11.8,42.0,0,False,0.0,59.875839856207946,False,,765,97,88,10,1,0.1,invariant:alert_min_rate=88,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S6,none,-,limit_aware,5,0,1,4,11.8,42.0,0,False,0.0,59.89431368627322,False,,642,12,0,12,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S6,C1,suppress,-,5,0,1,4,14.8,42.0,0,False,0.0,59.944132457514826,False,,314,0,0,0,0,0.0,,1,1
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S6,C1,drain,-,5,0,0,5,4.8,9.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S6,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S6,C1+C3,drain,-,5,0,0,5,3.8,8.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S6,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S6,C1+C3+OP,drain,-,5,0,0,5,3.8,8.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S6+F,none,-,naive,5,0,1,4,11.8,42.0,0,False,0.0,59.875839856207946,False,,765,97,88,10,1,0.1,invariant:alert_min_rate=88,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S6+F,none,-,limit_aware,5,0,1,4,11.8,42.0,0,False,0.0,59.89431368627322,False,,642,12,0,12,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S6+F,C1,suppress,-,5,0,1,4,14.8,42.0,0,False,0.0,59.944132457514826,False,,314,0,0,0,0,0.0,,1,1
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S6+F,C1,drain,-,5,0,0,5,4.8,9.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S6+F,C1+C3,suppress,-,5,0,5,0,587.8,1203.0,0,False,0.0,59.990468457514616,False,,7,0,0,0,0,0.0,,2,2
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S6+F,C1+C3,drain,-,5,0,0,5,3.8,8.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S6+F,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",PS-LB/poor,S6+F,C1+C3+OP,drain,-,5,0,0,5,3.8,8.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S4,none,-,naive,5,0,1,4,11.8,42.0,0,False,0.0,56.175000000000416,False,,459,12,0,12,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S4,none,-,limit_aware,5,0,1,4,11.8,42.0,0,False,0.0,56.175000000000416,False,,459,12,0,12,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S4,C1,suppress,-,5,5,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S4,C1,drain,-,5,0,0,5,3.8,8.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S4,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S4,C1+C3,drain,-,5,0,0,5,3.8,8.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S4,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S4,C1+C3+OP,drain,-,5,0,0,5,3.8,8.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S4-F,none,-,naive,5,0,1,4,11.8,42.0,0,False,0.0,53.63333333333403,False,,765,97,88,10,1,0.1,invariant:alert_min_rate=88,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S4-F,none,-,limit_aware,5,0,1,4,11.8,42.0,0,False,0.0,54.65000000000059,False,,642,12,0,12,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S4-F,C1,suppress,-,5,5,0,0,,,0,False,0.0,59.88333333333335,False,,14,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S4-F,C1,drain,-,5,0,0,5,4.8,9.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S4-F,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.88333333333335,False,,14,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S4-F,C1+C3,drain,-,5,0,0,5,4.8,9.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S4-F,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.88333333333335,False,,14,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S4-F,C1+C3+OP,drain,-,5,0,0,5,4.8,9.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S4-E,none,-,naive,5,0,1,4,11.8,42.0,0,False,0.0,53.63333333333403,False,,765,97,88,10,1,0.1,invariant:alert_min_rate=88,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S4-E,none,-,limit_aware,5,0,1,4,11.8,42.0,0,False,0.0,54.65000000000059,False,,642,12,0,12,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S4-E,C1,suppress,-,5,0,1,4,14.8,42.0,0,False,0.0,57.39166666666695,False,,314,0,0,0,0,0.0,,1,1
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S4-E,C1,drain,-,5,0,0,5,4.8,9.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S4-E,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S4-E,C1+C3,drain,-,5,0,0,5,3.8,8.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S4-E,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S4-E,C1+C3+OP,drain,-,5,0,0,5,3.8,8.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S6,none,-,naive,5,0,1,4,11.8,42.0,0,False,0.0,53.63333333333403,False,,765,97,88,10,1,0.1,invariant:alert_min_rate=88,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S6,none,-,limit_aware,5,0,1,4,11.8,42.0,0,False,0.0,54.65000000000059,False,,642,12,0,12,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S6,C1,suppress,-,5,0,1,4,14.8,42.0,0,False,0.0,57.39166666666695,False,,314,0,0,0,0,0.0,,1,1
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S6,C1,drain,-,5,0,0,5,4.8,9.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S6,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S6,C1+C3,drain,-,5,0,0,5,3.8,8.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S6,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S6,C1+C3+OP,drain,-,5,0,0,5,3.8,8.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S6+F,none,-,naive,5,0,1,4,11.8,42.0,0,False,0.0,53.63333333333403,False,,765,97,88,10,1,0.1,invariant:alert_min_rate=88,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S6+F,none,-,limit_aware,5,0,1,4,11.8,42.0,0,False,0.0,54.65000000000059,False,,642,12,0,12,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S6+F,C1,suppress,-,5,0,1,4,14.8,42.0,0,False,0.0,57.39166666666695,False,,314,0,0,0,0,0.0,,1,1
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S6+F,C1,drain,-,5,0,0,5,4.8,9.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S6+F,C1+C3,suppress,-,5,0,5,0,587.8,1203.0,0,False,0.0,59.94166666666667,False,,7,0,0,0,0,0.0,,2,2
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S6+F,C1+C3,drain,-,5,0,0,5,3.8,8.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S6+F,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/good,S6+F,C1+C3+OP,drain,-,5,0,0,5,3.8,8.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S4,none,-,naive,5,0,1,4,11.8,42.0,0,False,0.0,24.692307692308823,False,,459,12,0,12,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S4,none,-,limit_aware,5,0,1,4,11.8,42.0,0,False,0.0,24.692307692308823,False,,459,12,0,12,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S4,C1,suppress,-,5,5,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S4,C1,drain,-,5,5,0,0,,,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S4,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S4,C1+C3,drain,-,5,5,0,0,,,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S4,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S4,C1+C3+OP,drain,-,5,5,0,0,,,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S4-F,none,-,naive,5,0,1,4,11.8,42.0,0,False,40.666666666666664,18.38461538461649,False,,541,23,14,10,1,0.1,invariant:alert_min_rate=14,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S4-F,none,-,limit_aware,5,0,1,4,11.8,42.0,0,False,30.416666666666668,18.76923076923188,False,,536,12,0,12,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S4-F,C1,suppress,-,5,5,0,0,,,0,False,0.0,58.923076923076955,False,,14,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S4-F,C1,drain,-,5,0,3,2,45.0,111.0,0,False,126.61666666666666,15.076923076924173,False,,584,0,0,0,0,0.0,,520,520
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S4-F,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,58.923076923076955,False,,14,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S4-F,C1+C3,drain,-,5,0,3,2,45.0,111.0,0,False,126.61666666666666,15.076923076924173,False,,584,0,0,0,0,0.0,,520,520
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S4-F,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,58.923076923076955,False,,14,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S4-F,C1+C3+OP,drain,-,5,0,3,2,45.0,111.0,0,False,126.61666666666666,15.076923076924173,False,,584,0,0,0,0,0.0,,520,520
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S4-E,none,-,naive,5,0,1,4,11.8,42.0,0,False,40.666666666666664,18.38461538461649,False,,541,23,14,10,1,0.1,invariant:alert_min_rate=14,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S4-E,none,-,limit_aware,5,0,1,4,11.8,42.0,0,False,30.416666666666668,18.76923076923188,False,,536,12,0,12,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S4-E,C1,suppress,-,5,0,1,4,14.8,42.0,0,False,0.0,35.9230769230777,False,,314,0,0,0,0,0.0,,1,1
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S4-E,C1,drain,-,5,0,3,2,45.0,111.0,0,False,126.61666666666666,15.076923076924173,False,,584,0,0,0,0,0.0,,520,520
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S4-E,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S4-E,C1+C3,drain,-,5,5,0,0,,,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S4-E,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S4-E,C1+C3+OP,drain,-,5,5,0,0,,,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S6,none,-,naive,5,0,1,4,11.8,42.0,0,False,40.666666666666664,18.38461538461649,False,,541,23,14,10,1,0.1,invariant:alert_min_rate=14,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S6,none,-,limit_aware,5,0,1,4,11.8,42.0,0,False,30.416666666666668,18.76923076923188,False,,536,12,0,12,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S6,C1,suppress,-,5,0,1,4,14.8,42.0,0,False,0.0,35.9230769230777,False,,314,0,0,0,0,0.0,,1,1
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S6,C1,drain,-,5,0,3,2,45.0,111.0,0,False,126.61666666666666,15.076923076924173,False,,584,0,0,0,0,0.0,,520,520
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S6,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S6,C1+C3,drain,-,5,5,0,0,,,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S6,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S6,C1+C3+OP,drain,-,5,5,0,0,,,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S6+F,none,-,naive,5,0,1,4,11.8,42.0,0,False,40.666666666666664,18.38461538461649,False,,541,23,14,10,1,0.1,invariant:alert_min_rate=14,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S6+F,none,-,limit_aware,5,0,1,4,11.8,42.0,0,False,30.416666666666668,18.76923076923188,False,,536,12,0,12,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S6+F,C1,suppress,-,5,0,1,4,14.8,42.0,0,False,0.0,35.9230769230777,False,,314,0,0,0,0,0.0,,1,1
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S6+F,C1,drain,-,5,0,3,2,45.0,111.0,0,False,126.61666666666666,15.076923076924173,False,,584,0,0,0,0,0.0,,520,520
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S6+F,C1+C3,suppress,-,5,0,5,0,587.8,1203.0,0,False,0.0,59.461538461538474,False,,7,0,0,0,0,0.0,,2,2
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S6+F,C1+C3,drain,-,5,0,3,2,43.8,111.0,0,False,126.66666666666667,15.076923076924173,False,,584,0,0,0,0,0.0,,520,520
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S6+F,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",LWL01/poor,S6+F,C1+C3+OP,drain,-,5,0,3,2,43.8,111.0,0,False,126.66666666666667,15.076923076924173,False,,584,0,0,0,0,0.0,,520,520
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S4,none,-,naive,6,0,0,6,9.0,26.0,0,False,0.0,59.985934063369896,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S4,none,-,limit_aware,6,0,0,6,9.0,26.0,0,False,0.0,59.985934063369896,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S4,C1,suppress,-,6,6,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S4,C1,drain,-,6,0,0,6,4.0,9.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S4,C1+C3,suppress,-,6,6,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S4,C1+C3,drain,-,6,0,0,6,4.0,9.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S4,C1+C3+OP,suppress,-,6,6,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S4,C1+C3+OP,drain,-,6,0,0,6,4.0,9.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S4-F,none,-,naive,6,0,0,6,9.0,26.0,0,False,0.0,59.985934063369896,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S4-F,none,-,limit_aware,6,0,0,6,9.0,26.0,0,False,0.0,59.985934063369896,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S4-F,C1,suppress,-,6,6,0,0,,,0,False,0.0,59.99131617892634,False,,14,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S4-F,C1,drain,-,6,0,0,6,5.0,10.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S4-F,C1+C3,suppress,-,6,6,0,0,,,0,False,0.0,59.99131617892634,False,,14,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S4-F,C1+C3,drain,-,6,0,0,6,5.0,10.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S4-F,C1+C3+OP,suppress,-,6,6,0,0,,,0,False,0.0,59.99131617892634,False,,14,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S4-F,C1+C3+OP,drain,-,6,0,0,6,5.0,10.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S4-E,none,-,naive,6,0,0,6,9.0,26.0,0,False,0.0,59.985934063369896,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S4-E,none,-,limit_aware,6,0,0,6,9.0,26.0,0,False,0.0,59.985934063369896,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S4-E,C1,suppress,-,6,0,1,5,19.0,54.0,0,False,0.0,59.98866302337034,False,,189,0,0,0,0,0.0,,1,1
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S4-E,C1,drain,-,6,0,0,6,5.0,10.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S4-E,C1+C3,suppress,-,6,6,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S4-E,C1+C3,drain,-,6,0,0,6,4.0,9.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S4-E,C1+C3+OP,suppress,-,6,6,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S4-E,C1+C3+OP,drain,-,6,0,0,6,4.0,9.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S6,none,-,naive,6,0,0,6,9.0,26.0,0,False,0.0,59.985934063369896,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S6,none,-,limit_aware,6,0,0,6,9.0,26.0,0,False,0.0,59.985934063369896,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S6,C1,suppress,-,6,0,1,5,19.0,54.0,0,False,0.0,59.98866302337034,False,,189,0,0,0,0,0.0,,1,1
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S6,C1,drain,-,6,0,0,6,5.0,10.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S6,C1+C3,suppress,-,6,6,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S6,C1+C3,drain,-,6,0,0,6,4.0,9.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S6,C1+C3+OP,suppress,-,6,6,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S6,C1+C3+OP,drain,-,6,0,0,6,4.0,9.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S6+F,none,-,naive,6,0,0,6,9.0,26.0,0,False,0.0,59.985934063369896,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S6+F,none,-,limit_aware,6,0,0,6,9.0,26.0,0,False,0.0,59.985934063369896,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S6+F,C1,suppress,-,6,0,1,5,19.0,54.0,0,False,0.0,59.98866302337034,False,,189,0,0,0,0,0.0,,1,1
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S6+F,C1,drain,-,6,0,0,6,5.0,10.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S6+F,C1+C3,suppress,-,6,2,4,0,283.25,376.0,0,False,0.0,59.99142230514858,False,,7,0,0,0,0,0.0,,2,2
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S6+F,C1+C3,drain,-,6,0,0,6,4.0,9.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S6+F,C1+C3+OP,suppress,-,6,6,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/good,S6+F,C1+C3+OP,drain,-,6,0,0,6,4.0,9.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S4,none,-,naive,6,0,0,6,9.0,26.0,0,False,0.0,59.93565266666519,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S4,none,-,limit_aware,6,0,0,6,9.0,26.0,0,False,0.0,59.93565266666519,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S4,C1,suppress,-,6,6,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S4,C1,drain,-,6,0,0,6,4.0,9.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S4,C1+C3,suppress,-,6,6,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S4,C1+C3,drain,-,6,0,0,6,4.0,9.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S4,C1+C3+OP,suppress,-,6,6,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S4,C1+C3+OP,drain,-,6,0,0,6,4.0,9.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S4-F,none,-,naive,6,0,0,6,9.0,26.0,0,False,0.0,59.93565266666519,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S4-F,none,-,limit_aware,6,0,0,6,9.0,26.0,0,False,0.0,59.93565266666519,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S4-F,C1,suppress,-,6,6,0,0,,,0,False,0.0,59.989408483658416,False,,14,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S4-F,C1,drain,-,6,0,0,6,5.0,10.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S4-F,C1+C3,suppress,-,6,6,0,0,,,0,False,0.0,59.989408483658416,False,,14,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S4-F,C1+C3,drain,-,6,0,0,6,5.0,10.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S4-F,C1+C3+OP,suppress,-,6,6,0,0,,,0,False,0.0,59.989408483658416,False,,14,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S4-F,C1+C3+OP,drain,-,6,0,0,6,5.0,10.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S4-E,none,-,naive,6,0,0,6,9.0,26.0,0,False,0.0,59.93565266666519,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S4-E,none,-,limit_aware,6,0,0,6,9.0,26.0,0,False,0.0,59.93565266666519,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S4-E,C1,suppress,-,6,0,1,5,19.0,54.0,0,False,0.0,59.962909137253305,False,,189,0,0,0,0,0.0,,1,1
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S4-E,C1,drain,-,6,0,0,6,5.0,10.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S4-E,C1+C3,suppress,-,6,6,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S4-E,C1+C3,drain,-,6,0,0,6,4.0,9.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S4-E,C1+C3+OP,suppress,-,6,6,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S4-E,C1+C3+OP,drain,-,6,0,0,6,4.0,9.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S6,none,-,naive,6,0,0,6,9.0,26.0,0,False,0.0,59.93565266666519,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S6,none,-,limit_aware,6,0,0,6,9.0,26.0,0,False,0.0,59.93565266666519,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S6,C1,suppress,-,6,0,1,5,19.0,54.0,0,False,0.0,59.962909137253305,False,,189,0,0,0,0,0.0,,1,1
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S6,C1,drain,-,6,0,0,6,5.0,10.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S6,C1+C3,suppress,-,6,6,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S6,C1+C3,drain,-,6,0,0,6,4.0,9.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S6,C1+C3+OP,suppress,-,6,6,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S6,C1+C3+OP,drain,-,6,0,0,6,4.0,9.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S6+F,none,-,naive,6,0,0,6,9.0,26.0,0,False,0.0,59.93565266666519,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S6+F,none,-,limit_aware,6,0,0,6,9.0,26.0,0,False,0.0,59.93565266666519,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S6+F,C1,suppress,-,6,0,1,5,19.0,54.0,0,False,0.0,59.962909137253305,False,,189,0,0,0,0,0.0,,1,1
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S6+F,C1,drain,-,6,0,0,6,5.0,10.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S6+F,C1+C3,suppress,-,6,2,4,0,283.25,376.0,0,False,0.0,59.990468457514616,False,,7,0,0,0,0,0.0,,2,2
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S6+F,C1+C3,drain,-,6,0,0,6,4.0,9.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S6+F,C1+C3+OP,suppress,-,6,6,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",PS-LB/poor,S6+F,C1+C3+OP,drain,-,6,0,0,6,4.0,9.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S4,none,-,naive,6,0,0,6,9.0,26.0,0,False,0.0,56.92500000000034,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S4,none,-,limit_aware,6,0,0,6,9.0,26.0,0,False,0.0,56.92500000000034,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S4,C1,suppress,-,6,6,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S4,C1,drain,-,6,0,0,6,4.0,9.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S4,C1+C3,suppress,-,6,6,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S4,C1+C3,drain,-,6,0,0,6,4.0,9.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S4,C1+C3+OP,suppress,-,6,6,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S4,C1+C3+OP,drain,-,6,0,0,6,4.0,9.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S4-F,none,-,naive,6,0,0,6,9.0,26.0,0,False,0.0,56.92500000000034,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S4-F,none,-,limit_aware,6,0,0,6,9.0,26.0,0,False,0.0,56.92500000000034,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S4-F,C1,suppress,-,6,6,0,0,,,0,False,0.0,59.88333333333335,False,,14,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S4-F,C1,drain,-,6,0,0,6,5.0,10.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S4-F,C1+C3,suppress,-,6,6,0,0,,,0,False,0.0,59.88333333333335,False,,14,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S4-F,C1+C3,drain,-,6,0,0,6,5.0,10.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S4-F,C1+C3+OP,suppress,-,6,6,0,0,,,0,False,0.0,59.88333333333335,False,,14,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S4-F,C1+C3+OP,drain,-,6,0,0,6,5.0,10.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S4-E,none,-,naive,6,0,0,6,9.0,26.0,0,False,0.0,56.92500000000034,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S4-E,none,-,limit_aware,6,0,0,6,9.0,26.0,0,False,0.0,56.92500000000034,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S4-E,C1,suppress,-,6,0,1,5,19.0,54.0,0,False,0.0,58.42500000000017,False,,189,0,0,0,0,0.0,,1,1
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S4-E,C1,drain,-,6,0,0,6,5.0,10.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S4-E,C1+C3,suppress,-,6,6,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S4-E,C1+C3,drain,-,6,0,0,6,4.0,9.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S4-E,C1+C3+OP,suppress,-,6,6,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S4-E,C1+C3+OP,drain,-,6,0,0,6,4.0,9.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S6,none,-,naive,6,0,0,6,9.0,26.0,0,False,0.0,56.92500000000034,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S6,none,-,limit_aware,6,0,0,6,9.0,26.0,0,False,0.0,56.92500000000034,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S6,C1,suppress,-,6,0,1,5,19.0,54.0,0,False,0.0,58.42500000000017,False,,189,0,0,0,0,0.0,,1,1
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S6,C1,drain,-,6,0,0,6,5.0,10.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S6,C1+C3,suppress,-,6,6,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S6,C1+C3,drain,-,6,0,0,6,4.0,9.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S6,C1+C3+OP,suppress,-,6,6,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S6,C1+C3+OP,drain,-,6,0,0,6,4.0,9.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S6+F,none,-,naive,6,0,0,6,9.0,26.0,0,False,0.0,56.92500000000034,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S6+F,none,-,limit_aware,6,0,0,6,9.0,26.0,0,False,0.0,56.92500000000034,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S6+F,C1,suppress,-,6,0,1,5,19.0,54.0,0,False,0.0,58.42500000000017,False,,189,0,0,0,0,0.0,,1,1
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S6+F,C1,drain,-,6,0,0,6,5.0,10.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S6+F,C1+C3,suppress,-,6,2,4,0,283.25,376.0,0,False,0.0,59.94166666666667,False,,7,0,0,0,0,0.0,,2,2
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S6+F,C1+C3,drain,-,6,0,0,6,4.0,9.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S6+F,C1+C3+OP,suppress,-,6,6,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/good,S6+F,C1+C3+OP,drain,-,6,0,0,6,4.0,9.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S4,none,-,naive,6,0,0,6,9.0,26.0,0,False,0.0,31.615384615385533,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S4,none,-,limit_aware,6,0,0,6,9.0,26.0,0,False,0.0,31.615384615385533,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S4,C1,suppress,-,6,6,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S4,C1,drain,-,6,6,0,0,,,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S4,C1+C3,suppress,-,6,6,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S4,C1+C3,drain,-,6,6,0,0,,,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S4,C1+C3+OP,suppress,-,6,6,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S4,C1+C3+OP,drain,-,6,6,0,0,,,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S4-F,none,-,naive,6,0,0,6,9.0,26.0,0,False,0.0,31.615384615385533,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S4-F,none,-,limit_aware,6,0,0,6,9.0,26.0,0,False,0.0,31.615384615385533,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S4-F,C1,suppress,-,6,6,0,0,,,0,False,0.0,58.923076923076955,False,,14,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S4-F,C1,drain,-,6,0,3,3,24.5,62.0,0,False,126.61666666666666,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S4-F,C1+C3,suppress,-,6,6,0,0,,,0,False,0.0,58.923076923076955,False,,14,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S4-F,C1+C3,drain,-,6,0,3,3,24.5,62.0,0,False,126.61666666666666,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S4-F,C1+C3+OP,suppress,-,6,6,0,0,,,0,False,0.0,58.923076923076955,False,,14,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S4-F,C1+C3+OP,drain,-,6,0,3,3,24.5,62.0,0,False,126.61666666666666,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S4-E,none,-,naive,6,0,0,6,9.0,26.0,0,False,0.0,31.615384615385533,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S4-E,none,-,limit_aware,6,0,0,6,9.0,26.0,0,False,0.0,31.615384615385533,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S4-E,C1,suppress,-,6,0,1,5,19.0,54.0,0,False,0.0,45.46153846153893,False,,189,0,0,0,0,0.0,,1,1
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S4-E,C1,drain,-,6,0,3,3,24.5,62.0,0,False,126.61666666666666,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S4-E,C1+C3,suppress,-,6,6,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S4-E,C1+C3,drain,-,6,6,0,0,,,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S4-E,C1+C3+OP,suppress,-,6,6,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S4-E,C1+C3+OP,drain,-,6,6,0,0,,,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S6,none,-,naive,6,0,0,6,9.0,26.0,0,False,0.0,31.615384615385533,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S6,none,-,limit_aware,6,0,0,6,9.0,26.0,0,False,0.0,31.615384615385533,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S6,C1,suppress,-,6,0,1,5,19.0,54.0,0,False,0.0,45.46153846153893,False,,189,0,0,0,0,0.0,,1,1
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S6,C1,drain,-,6,0,3,3,24.5,62.0,0,False,126.61666666666666,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S6,C1+C3,suppress,-,6,6,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S6,C1+C3,drain,-,6,6,0,0,,,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S6,C1+C3+OP,suppress,-,6,6,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S6,C1+C3+OP,drain,-,6,6,0,0,,,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S6+F,none,-,naive,6,0,0,6,9.0,26.0,0,False,0.0,31.615384615385533,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S6+F,none,-,limit_aware,6,0,0,6,9.0,26.0,0,False,0.0,31.615384615385533,False,,370,7,0,7,0,0.0,,0,0
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S6+F,C1,suppress,-,6,0,1,5,19.0,54.0,0,False,0.0,45.46153846153893,False,,189,0,0,0,0,0.0,,1,1
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S6+F,C1,drain,-,6,0,3,3,24.5,62.0,0,False,126.61666666666666,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S6+F,C1+C3,suppress,-,6,2,4,0,283.25,376.0,0,False,0.0,59.461538461538474,False,,7,0,0,0,0,0.0,,2,2
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S6+F,C1+C3,drain,-,6,0,3,3,24.0,62.0,0,False,126.66666666666667,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S6+F,C1+C3+OP,suppress,-,6,6,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",LWL01/poor,S6+F,C1+C3+OP,drain,-,6,0,3,3,24.0,62.0,0,False,126.66666666666667,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S4,none,-,naive,14,0,5,9,21.928571428571427,57.0,0,False,0.0,59.989330102481574,False,,145,0,0,0,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S4,none,-,limit_aware,14,0,5,9,21.928571428571427,57.0,0,False,0.0,59.989330102481574,False,,145,0,0,0,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S4,C1,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S4,C1,drain,-,14,0,0,14,2.642857142857143,7.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S4,C1+C3,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S4,C1+C3,drain,-,14,0,0,14,2.642857142857143,7.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S4,C1+C3+OP,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S4,C1+C3+OP,drain,-,14,0,0,14,2.642857142857143,7.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S4-F,none,-,naive,14,0,2,12,13.357142857142858,57.0,0,False,0.0,59.98353864292505,False,,527,404,401,4,1,0.25,invariant:alert_min_rate=401,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S4-F,none,-,limit_aware,14,0,2,12,13.0,57.0,0,False,0.0,59.98566116736985,False,,387,5,0,5,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S4-F,C1,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.99131617892634,False,,14,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S4-F,C1,drain,-,14,0,0,14,3.5714285714285716,8.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S4-F,C1+C3,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.99131617892634,False,,14,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S4-F,C1+C3,drain,-,14,0,0,14,3.5714285714285716,8.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S4-F,C1+C3+OP,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.99131617892634,False,,14,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S4-F,C1+C3+OP,drain,-,14,0,0,14,3.5714285714285716,8.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S4-E,none,-,naive,14,0,2,12,13.357142857142858,57.0,0,False,0.0,59.98353864292505,False,,527,404,401,4,1,0.25,invariant:alert_min_rate=401,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S4-E,none,-,limit_aware,14,0,2,12,13.0,57.0,0,False,0.0,59.98566116736985,False,,387,5,0,5,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S4-E,C1,suppress,-,14,0,2,12,15.142857142857142,57.0,0,False,0.0,59.98597954603657,False,,366,0,0,0,0,0.0,,1,1
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S4-E,C1,drain,-,14,0,0,14,3.5714285714285716,8.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S4-E,C1+C3,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S4-E,C1+C3,drain,-,14,0,0,14,2.642857142857143,7.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S4-E,C1+C3+OP,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S4-E,C1+C3+OP,drain,-,14,0,0,14,2.642857142857143,7.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S6,none,-,naive,14,0,2,12,13.357142857142858,57.0,0,False,0.0,59.98353864292505,False,,527,404,401,4,1,0.25,invariant:alert_min_rate=401,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S6,none,-,limit_aware,14,0,2,12,13.0,57.0,0,False,0.0,59.98566116736985,False,,387,5,0,5,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S6,C1,suppress,-,14,0,2,12,15.142857142857142,57.0,0,False,0.0,59.98597954603657,False,,366,0,0,0,0,0.0,,1,1
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S6,C1,drain,-,14,0,0,14,3.5714285714285716,8.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S6,C1+C3,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S6,C1+C3,drain,-,14,0,0,14,2.642857142857143,7.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S6,C1+C3+OP,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S6,C1+C3+OP,drain,-,14,0,0,14,2.642857142857143,7.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S6+F,none,-,naive,14,0,2,12,13.357142857142858,57.0,0,False,0.0,59.98353864292505,False,,527,404,401,4,1,0.25,invariant:alert_min_rate=401,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S6+F,none,-,limit_aware,14,0,2,12,13.0,57.0,0,False,0.0,59.98566116736985,False,,387,5,0,5,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S6+F,C1,suppress,-,14,0,2,12,15.142857142857142,57.0,0,False,0.0,59.98597954603657,False,,366,0,0,0,0,0.0,,1,1
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S6+F,C1,drain,-,14,0,0,14,3.5714285714285716,8.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S6+F,C1+C3,suppress,-,14,3,10,1,554.0909090909091,1320.0,0,False,0.0,59.99142230514858,False,,7,0,0,0,0,0.0,,2,2
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S6+F,C1+C3,drain,-,14,0,0,14,2.642857142857143,7.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S6+F,C1+C3+OP,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/good,S6+F,C1+C3+OP,drain,-,14,0,0,14,2.642857142857143,7.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S4,none,-,naive,14,0,5,9,21.928571428571427,57.0,0,False,0.0,59.96957183006373,False,,145,0,0,0,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S4,none,-,limit_aware,14,0,5,9,21.928571428571427,57.0,0,False,0.0,59.96957183006373,False,,145,0,0,0,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S4,C1,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S4,C1,drain,-,14,0,0,14,2.642857142857143,7.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S4,C1+C3,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S4,C1+C3,drain,-,14,0,0,14,2.642857142857143,7.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S4,C1+C3+OP,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S4,C1+C3+OP,drain,-,14,0,0,14,2.642857142857143,7.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S4-F,none,-,naive,14,0,2,12,13.357142857142858,57.0,0,False,0.0,59.91172754248229,False,,527,404,401,4,1,0.25,invariant:alert_min_rate=401,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S4-F,none,-,limit_aware,14,0,2,12,13.0,57.0,0,False,0.0,59.93292701960638,False,,387,5,0,5,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S4-F,C1,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.989408483658416,False,,14,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S4-F,C1,drain,-,14,0,0,14,3.5714285714285716,8.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S4-F,C1+C3,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.989408483658416,False,,14,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S4-F,C1+C3,drain,-,14,0,0,14,3.5714285714285716,8.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S4-F,C1+C3+OP,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.989408483658416,False,,14,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S4-F,C1+C3+OP,drain,-,14,0,0,14,3.5714285714285716,8.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S4-E,none,-,naive,14,0,2,12,13.357142857142858,57.0,0,False,0.0,59.91172754248229,False,,527,404,401,4,1,0.25,invariant:alert_min_rate=401,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S4-E,none,-,limit_aware,14,0,2,12,13.0,57.0,0,False,0.0,59.93292701960638,False,,387,5,0,5,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S4-E,C1,suppress,-,14,0,2,12,15.142857142857142,57.0,0,False,0.0,59.936106941175,False,,366,0,0,0,0,0.0,,1,1
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S4-E,C1,drain,-,14,0,0,14,3.5714285714285716,8.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S4-E,C1+C3,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S4-E,C1+C3,drain,-,14,0,0,14,2.642857142857143,7.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S4-E,C1+C3+OP,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S4-E,C1+C3+OP,drain,-,14,0,0,14,2.642857142857143,7.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S6,none,-,naive,14,0,2,12,13.357142857142858,57.0,0,False,0.0,59.91172754248229,False,,527,404,401,4,1,0.25,invariant:alert_min_rate=401,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S6,none,-,limit_aware,14,0,2,12,13.0,57.0,0,False,0.0,59.93292701960638,False,,387,5,0,5,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S6,C1,suppress,-,14,0,2,12,15.142857142857142,57.0,0,False,0.0,59.936106941175,False,,366,0,0,0,0,0.0,,1,1
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S6,C1,drain,-,14,0,0,14,3.5714285714285716,8.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S6,C1+C3,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S6,C1+C3,drain,-,14,0,0,14,2.642857142857143,7.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S6,C1+C3+OP,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S6,C1+C3+OP,drain,-,14,0,0,14,2.642857142857143,7.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S6+F,none,-,naive,14,0,2,12,13.357142857142858,57.0,0,False,0.0,59.91172754248229,False,,527,404,401,4,1,0.25,invariant:alert_min_rate=401,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S6+F,none,-,limit_aware,14,0,2,12,13.0,57.0,0,False,0.0,59.93292701960638,False,,387,5,0,5,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S6+F,C1,suppress,-,14,0,2,12,15.142857142857142,57.0,0,False,0.0,59.936106941175,False,,366,0,0,0,0,0.0,,1,1
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S6+F,C1,drain,-,14,0,0,14,3.5714285714285716,8.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S6+F,C1+C3,suppress,-,14,3,10,1,554.0909090909091,1320.0,0,False,0.0,59.990468457514616,False,,7,0,0,0,0,0.0,,2,2
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S6+F,C1+C3,drain,-,14,0,0,14,2.642857142857143,7.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S6+F,C1+C3+OP,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",PS-LB/poor,S6+F,C1+C3+OP,drain,-,14,0,0,14,2.642857142857143,7.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S4,none,-,naive,14,0,5,9,21.928571428571427,57.0,0,False,0.0,58.7916666666668,False,,145,0,0,0,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S4,none,-,limit_aware,14,0,5,9,21.928571428571427,57.0,0,False,0.0,58.7916666666668,False,,145,0,0,0,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S4,C1,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S4,C1,drain,-,14,0,0,14,2.642857142857143,7.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S4,C1+C3,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S4,C1+C3,drain,-,14,0,0,14,2.642857142857143,7.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S4,C1+C3+OP,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S4,C1+C3+OP,drain,-,14,0,0,14,2.642857142857143,7.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S4-F,none,-,naive,14,0,2,12,13.357142857142858,57.0,0,False,0.0,55.60833333333382,False,,527,404,401,4,1,0.25,invariant:alert_min_rate=401,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S4-F,none,-,limit_aware,14,0,2,12,13.0,57.0,0,False,0.0,56.775000000000354,False,,387,5,0,5,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S4-F,C1,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.88333333333335,False,,14,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S4-F,C1,drain,-,14,0,0,14,3.5714285714285716,8.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S4-F,C1+C3,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.88333333333335,False,,14,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S4-F,C1+C3,drain,-,14,0,0,14,3.5714285714285716,8.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S4-F,C1+C3+OP,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.88333333333335,False,,14,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S4-F,C1+C3+OP,drain,-,14,0,0,14,3.5714285714285716,8.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S4-E,none,-,naive,14,0,2,12,13.357142857142858,57.0,0,False,0.0,55.60833333333382,False,,527,404,401,4,1,0.25,invariant:alert_min_rate=401,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S4-E,none,-,limit_aware,14,0,2,12,13.0,57.0,0,False,0.0,56.775000000000354,False,,387,5,0,5,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S4-E,C1,suppress,-,14,0,2,12,15.142857142857142,57.0,0,False,0.0,56.95000000000034,False,,366,0,0,0,0,0.0,,1,1
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S4-E,C1,drain,-,14,0,0,14,3.5714285714285716,8.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S4-E,C1+C3,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S4-E,C1+C3,drain,-,14,0,0,14,2.642857142857143,7.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S4-E,C1+C3+OP,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S4-E,C1+C3+OP,drain,-,14,0,0,14,2.642857142857143,7.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S6,none,-,naive,14,0,2,12,13.357142857142858,57.0,0,False,0.0,55.60833333333382,False,,527,404,401,4,1,0.25,invariant:alert_min_rate=401,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S6,none,-,limit_aware,14,0,2,12,13.0,57.0,0,False,0.0,56.775000000000354,False,,387,5,0,5,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S6,C1,suppress,-,14,0,2,12,15.142857142857142,57.0,0,False,0.0,56.95000000000034,False,,366,0,0,0,0,0.0,,1,1
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S6,C1,drain,-,14,0,0,14,3.5714285714285716,8.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S6,C1+C3,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S6,C1+C3,drain,-,14,0,0,14,2.642857142857143,7.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S6,C1+C3+OP,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S6,C1+C3+OP,drain,-,14,0,0,14,2.642857142857143,7.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S6+F,none,-,naive,14,0,2,12,13.357142857142858,57.0,0,False,0.0,55.60833333333382,False,,527,404,401,4,1,0.25,invariant:alert_min_rate=401,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S6+F,none,-,limit_aware,14,0,2,12,13.0,57.0,0,False,0.0,56.775000000000354,False,,387,5,0,5,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S6+F,C1,suppress,-,14,0,2,12,15.142857142857142,57.0,0,False,0.0,56.95000000000034,False,,366,0,0,0,0,0.0,,1,1
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S6+F,C1,drain,-,14,0,0,14,3.5714285714285716,8.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S6+F,C1+C3,suppress,-,14,3,10,1,554.0909090909091,1320.0,0,False,0.0,59.94166666666667,False,,7,0,0,0,0,0.0,,2,2
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S6+F,C1+C3,drain,-,14,0,0,14,2.642857142857143,7.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S6+F,C1+C3+OP,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/good,S6+F,C1+C3+OP,drain,-,14,0,0,14,2.642857142857143,7.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S4,none,-,naive,14,0,5,9,21.928571428571427,57.0,0,False,0.0,48.84615384615421,False,,145,0,0,0,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S4,none,-,limit_aware,14,0,5,9,21.928571428571427,57.0,0,False,0.0,48.84615384615421,False,,145,0,0,0,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S4,C1,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S4,C1,drain,-,14,10,0,4,0.0,0.0,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S4,C1+C3,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S4,C1+C3,drain,-,14,10,0,4,0.0,0.0,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S4,C1+C3+OP,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S4,C1+C3+OP,drain,-,14,10,0,4,0.0,0.0,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S4-F,none,-,naive,14,0,2,12,13.357142857142858,57.0,0,False,1.0833333333333333,19.923076923078035,False,,521,401,398,4,1,0.25,invariant:alert_min_rate=398,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S4-F,none,-,limit_aware,14,0,2,12,13.0,57.0,0,False,0.0,30.230769230770193,False,,387,5,0,5,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S4-F,C1,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,58.923076923076955,False,,14,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S4-F,C1,drain,-,14,0,5,9,32.857142857142854,107.0,0,False,126.61666666666666,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S4-F,C1+C3,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,58.923076923076955,False,,14,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S4-F,C1+C3,drain,-,14,0,5,9,32.857142857142854,107.0,0,False,126.61666666666666,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S4-F,C1+C3+OP,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,58.923076923076955,False,,14,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S4-F,C1+C3+OP,drain,-,14,0,5,9,32.857142857142854,107.0,0,False,126.61666666666666,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S4-E,none,-,naive,14,0,2,12,13.357142857142858,57.0,0,False,1.0833333333333333,19.923076923078035,False,,521,401,398,4,1,0.25,invariant:alert_min_rate=398,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S4-E,none,-,limit_aware,14,0,2,12,13.0,57.0,0,False,0.0,30.230769230770193,False,,387,5,0,5,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S4-E,C1,suppress,-,14,0,2,12,15.142857142857142,57.0,0,False,0.0,31.846153846154756,False,,366,0,0,0,0,0.0,,1,1
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S4-E,C1,drain,-,14,0,5,9,32.857142857142854,107.0,0,False,126.61666666666666,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S4-E,C1+C3,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S4-E,C1+C3,drain,-,14,10,0,4,0.0,0.0,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S4-E,C1+C3+OP,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S4-E,C1+C3+OP,drain,-,14,10,0,4,0.0,0.0,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S6,none,-,naive,14,0,2,12,13.357142857142858,57.0,0,False,1.0833333333333333,19.923076923078035,False,,521,401,398,4,1,0.25,invariant:alert_min_rate=398,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S6,none,-,limit_aware,14,0,2,12,13.0,57.0,0,False,0.0,30.230769230770193,False,,387,5,0,5,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S6,C1,suppress,-,14,0,2,12,15.142857142857142,57.0,0,False,0.0,31.846153846154756,False,,366,0,0,0,0,0.0,,1,1
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S6,C1,drain,-,14,0,5,9,32.857142857142854,107.0,0,False,126.61666666666666,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S6,C1+C3,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S6,C1+C3,drain,-,14,10,0,4,0.0,0.0,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S6,C1+C3+OP,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S6,C1+C3+OP,drain,-,14,10,0,4,0.0,0.0,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S6+F,none,-,naive,14,0,2,12,13.357142857142858,57.0,0,False,1.0833333333333333,19.923076923078035,False,,521,401,398,4,1,0.25,invariant:alert_min_rate=398,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S6+F,none,-,limit_aware,14,0,2,12,13.0,57.0,0,False,0.0,30.230769230770193,False,,387,5,0,5,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S6+F,C1,suppress,-,14,0,2,12,15.142857142857142,57.0,0,False,0.0,31.846153846154756,False,,366,0,0,0,0,0.0,,1,1
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S6+F,C1,drain,-,14,0,5,9,32.857142857142854,107.0,0,False,126.61666666666666,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S6+F,C1+C3,suppress,-,14,3,10,1,554.0909090909091,1320.0,0,False,0.0,59.461538461538474,False,,7,0,0,0,0,0.0,,2,2
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S6+F,C1+C3,drain,-,14,0,5,9,31.928571428571427,107.0,0,False,126.66666666666667,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S6+F,C1+C3+OP,suppress,-,14,13,0,1,0.0,0.0,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",LWL01/poor,S6+F,C1+C3+OP,drain,-,14,0,5,9,31.928571428571427,107.0,0,False,126.66666666666667,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S4,none,-,naive,11,0,0,11,15.090909090909092,29.0,0,False,0.0,59.989133010925975,False,,158,2,0,2,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S4,none,-,limit_aware,11,0,0,11,15.090909090909092,29.0,0,False,0.0,59.989133010925975,False,,158,2,0,2,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S4,C1,suppress,-,11,11,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S4,C1,drain,-,11,0,0,11,6.909090909090909,9.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S4,C1+C3,suppress,-,11,11,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S4,C1+C3,drain,-,11,0,0,11,6.909090909090909,9.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S4,C1+C3+OP,suppress,-,11,11,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S4,C1+C3+OP,drain,-,11,0,0,11,6.909090909090909,9.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S4-F,none,-,naive,11,0,0,11,16.454545454545453,29.0,0,False,0.0,59.98769272648129,False,,253,2,0,2,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S4-F,none,-,limit_aware,11,0,1,10,15.545454545454545,37.0,0,False,0.0,59.987571439370164,False,,261,9,0,9,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S4-F,C1,suppress,-,11,11,0,0,,,0,False,0.0,59.99131617892634,False,,14,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S4-F,C1,drain,-,11,0,0,11,7.909090909090909,10.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S4-F,C1+C3,suppress,-,11,11,0,0,,,0,False,0.0,59.99131617892634,False,,14,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S4-F,C1+C3,drain,-,11,0,0,11,7.909090909090909,10.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S4-F,C1+C3+OP,suppress,-,11,11,0,0,,,0,False,0.0,59.99131617892634,False,,14,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S4-F,C1+C3+OP,drain,-,11,0,0,11,7.909090909090909,10.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S4-E,none,-,naive,11,0,0,11,16.454545454545453,29.0,0,False,0.0,59.98769272648129,False,,253,2,0,2,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S4-E,none,-,limit_aware,11,0,1,10,15.545454545454545,37.0,0,False,0.0,59.987571439370164,False,,261,9,0,9,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S4-E,C1,suppress,-,11,0,4,7,28.272727272727273,58.0,0,False,0.0,59.98866302337034,False,,189,0,0,0,0,0.0,,1,1
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S4-E,C1,drain,-,11,0,0,11,7.909090909090909,10.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S4-E,C1+C3,suppress,-,11,11,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S4-E,C1+C3,drain,-,11,0,0,11,6.909090909090909,9.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S4-E,C1+C3+OP,suppress,-,11,11,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S4-E,C1+C3+OP,drain,-,11,0,0,11,6.909090909090909,9.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S6,none,-,naive,11,0,0,11,16.454545454545453,29.0,0,False,0.0,59.98769272648129,False,,253,2,0,2,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S6,none,-,limit_aware,11,0,1,10,15.545454545454545,37.0,0,False,0.0,59.987571439370164,False,,261,9,0,9,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S6,C1,suppress,-,11,0,4,7,28.272727272727273,58.0,0,False,0.0,59.98866302337034,False,,189,0,0,0,0,0.0,,1,1
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S6,C1,drain,-,11,0,0,11,7.909090909090909,10.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S6,C1+C3,suppress,-,11,11,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S6,C1+C3,drain,-,11,0,0,11,6.909090909090909,9.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S6,C1+C3+OP,suppress,-,11,11,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S6,C1+C3+OP,drain,-,11,0,0,11,6.909090909090909,9.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S6+F,none,-,naive,11,0,0,11,16.454545454545453,29.0,0,False,0.0,59.98769272648129,False,,253,2,0,2,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S6+F,none,-,limit_aware,11,0,1,10,15.545454545454545,37.0,0,False,0.0,59.987571439370164,False,,261,9,0,9,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S6+F,C1,suppress,-,11,0,4,7,28.272727272727273,58.0,0,False,0.0,59.98866302337034,False,,189,0,0,0,0,0.0,,1,1
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S6+F,C1,drain,-,11,0,0,11,7.909090909090909,10.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S6+F,C1+C3,suppress,-,11,0,11,0,754.1818181818181,1398.0,0,False,0.0,59.99142230514858,False,,7,0,0,0,0,0.0,,2,2
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S6+F,C1+C3,drain,-,11,0,0,11,6.909090909090909,9.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S6+F,C1+C3+OP,suppress,-,11,11,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/good,S6+F,C1+C3+OP,drain,-,11,0,0,11,6.909090909090909,9.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S4,none,-,naive,11,0,0,11,15.090909090909092,29.0,0,False,0.0,59.96760330718793,False,,158,2,0,2,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S4,none,-,limit_aware,11,0,0,11,15.090909090909092,29.0,0,False,0.0,59.96760330718793,False,,158,2,0,2,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S4,C1,suppress,-,11,11,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S4,C1,drain,-,11,0,0,11,6.909090909090909,9.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S4,C1+C3,suppress,-,11,11,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S4,C1+C3,drain,-,11,0,0,11,6.909090909090909,9.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S4,C1+C3+OP,suppress,-,11,11,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S4,C1+C3+OP,drain,-,11,0,0,11,6.909090909090909,9.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S4-F,none,-,naive,11,0,0,11,16.454545454545453,29.0,0,False,0.0,59.95321794771087,False,,253,2,0,2,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S4-F,none,-,limit_aware,11,0,1,10,15.545454545454545,37.0,0,False,0.0,59.95200654901806,False,,261,9,0,9,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S4-F,C1,suppress,-,11,11,0,0,,,0,False,0.0,59.989408483658416,False,,14,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S4-F,C1,drain,-,11,0,0,11,7.909090909090909,10.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S4-F,C1+C3,suppress,-,11,11,0,0,,,0,False,0.0,59.989408483658416,False,,14,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S4-F,C1+C3,drain,-,11,0,0,11,7.909090909090909,10.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S4-F,C1+C3+OP,suppress,-,11,11,0,0,,,0,False,0.0,59.989408483658416,False,,14,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S4-F,C1+C3+OP,drain,-,11,0,0,11,7.909090909090909,10.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S4-E,none,-,naive,11,0,0,11,16.454545454545453,29.0,0,False,0.0,59.95321794771087,False,,253,2,0,2,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S4-E,none,-,limit_aware,11,0,1,10,15.545454545454545,37.0,0,False,0.0,59.95200654901806,False,,261,9,0,9,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S4-E,C1,suppress,-,11,0,4,7,28.272727272727273,58.0,0,False,0.0,59.962909137253305,False,,189,0,0,0,0,0.0,,1,1
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S4-E,C1,drain,-,11,0,0,11,7.909090909090909,10.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S4-E,C1+C3,suppress,-,11,11,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S4-E,C1+C3,drain,-,11,0,0,11,6.909090909090909,9.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S4-E,C1+C3+OP,suppress,-,11,11,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S4-E,C1+C3+OP,drain,-,11,0,0,11,6.909090909090909,9.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S6,none,-,naive,11,0,0,11,16.454545454545453,29.0,0,False,0.0,59.95321794771087,False,,253,2,0,2,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S6,none,-,limit_aware,11,0,1,10,15.545454545454545,37.0,0,False,0.0,59.95200654901806,False,,261,9,0,9,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S6,C1,suppress,-,11,0,4,7,28.272727272727273,58.0,0,False,0.0,59.962909137253305,False,,189,0,0,0,0,0.0,,1,1
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S6,C1,drain,-,11,0,0,11,7.909090909090909,10.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S6,C1+C3,suppress,-,11,11,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S6,C1+C3,drain,-,11,0,0,11,6.909090909090909,9.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S6,C1+C3+OP,suppress,-,11,11,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S6,C1+C3+OP,drain,-,11,0,0,11,6.909090909090909,9.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S6+F,none,-,naive,11,0,0,11,16.454545454545453,29.0,0,False,0.0,59.95321794771087,False,,253,2,0,2,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S6+F,none,-,limit_aware,11,0,1,10,15.545454545454545,37.0,0,False,0.0,59.95200654901806,False,,261,9,0,9,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S6+F,C1,suppress,-,11,0,4,7,28.272727272727273,58.0,0,False,0.0,59.962909137253305,False,,189,0,0,0,0,0.0,,1,1
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S6+F,C1,drain,-,11,0,0,11,7.909090909090909,10.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S6+F,C1+C3,suppress,-,11,0,11,0,754.1818181818181,1398.0,0,False,0.0,59.990468457514616,False,,7,0,0,0,0,0.0,,2,2
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S6+F,C1+C3,drain,-,11,0,0,11,6.909090909090909,9.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S6+F,C1+C3+OP,suppress,-,11,11,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",PS-LB/poor,S6+F,C1+C3+OP,drain,-,11,0,0,11,6.909090909090909,9.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S4,none,-,naive,11,0,0,11,15.090909090909092,29.0,0,False,0.0,58.68333333333348,False,,158,2,0,2,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S4,none,-,limit_aware,11,0,0,11,15.090909090909092,29.0,0,False,0.0,58.68333333333348,False,,158,2,0,2,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S4,C1,suppress,-,11,11,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S4,C1,drain,-,11,0,0,11,6.909090909090909,9.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S4,C1+C3,suppress,-,11,11,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S4,C1+C3,drain,-,11,0,0,11,6.909090909090909,9.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S4,C1+C3+OP,suppress,-,11,11,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S4,C1+C3+OP,drain,-,11,0,0,11,6.909090909090909,9.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S4-F,none,-,naive,11,0,0,11,16.454545454545453,29.0,0,False,0.0,57.89166666666689,False,,253,2,0,2,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S4-F,none,-,limit_aware,11,0,1,10,15.545454545454545,37.0,0,False,0.0,57.82500000000024,False,,261,9,0,9,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S4-F,C1,suppress,-,11,11,0,0,,,0,False,0.0,59.88333333333335,False,,14,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S4-F,C1,drain,-,11,0,0,11,7.909090909090909,10.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S4-F,C1+C3,suppress,-,11,11,0,0,,,0,False,0.0,59.88333333333335,False,,14,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S4-F,C1+C3,drain,-,11,0,0,11,7.909090909090909,10.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S4-F,C1+C3+OP,suppress,-,11,11,0,0,,,0,False,0.0,59.88333333333335,False,,14,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S4-F,C1+C3+OP,drain,-,11,0,0,11,7.909090909090909,10.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S4-E,none,-,naive,11,0,0,11,16.454545454545453,29.0,0,False,0.0,57.89166666666689,False,,253,2,0,2,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S4-E,none,-,limit_aware,11,0,1,10,15.545454545454545,37.0,0,False,0.0,57.82500000000024,False,,261,9,0,9,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S4-E,C1,suppress,-,11,0,4,7,28.272727272727273,58.0,0,False,0.0,58.42500000000017,False,,189,0,0,0,0,0.0,,1,1
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S4-E,C1,drain,-,11,0,0,11,7.909090909090909,10.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S4-E,C1+C3,suppress,-,11,11,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S4-E,C1+C3,drain,-,11,0,0,11,6.909090909090909,9.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S4-E,C1+C3+OP,suppress,-,11,11,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S4-E,C1+C3+OP,drain,-,11,0,0,11,6.909090909090909,9.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S6,none,-,naive,11,0,0,11,16.454545454545453,29.0,0,False,0.0,57.89166666666689,False,,253,2,0,2,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S6,none,-,limit_aware,11,0,1,10,15.545454545454545,37.0,0,False,0.0,57.82500000000024,False,,261,9,0,9,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S6,C1,suppress,-,11,0,4,7,28.272727272727273,58.0,0,False,0.0,58.42500000000017,False,,189,0,0,0,0,0.0,,1,1
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S6,C1,drain,-,11,0,0,11,7.909090909090909,10.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S6,C1+C3,suppress,-,11,11,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S6,C1+C3,drain,-,11,0,0,11,6.909090909090909,9.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S6,C1+C3+OP,suppress,-,11,11,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S6,C1+C3+OP,drain,-,11,0,0,11,6.909090909090909,9.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S6+F,none,-,naive,11,0,0,11,16.454545454545453,29.0,0,False,0.0,57.89166666666689,False,,253,2,0,2,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S6+F,none,-,limit_aware,11,0,1,10,15.545454545454545,37.0,0,False,0.0,57.82500000000024,False,,261,9,0,9,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S6+F,C1,suppress,-,11,0,4,7,28.272727272727273,58.0,0,False,0.0,58.42500000000017,False,,189,0,0,0,0,0.0,,1,1
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S6+F,C1,drain,-,11,0,0,11,7.909090909090909,10.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S6+F,C1+C3,suppress,-,11,0,11,0,754.1818181818181,1398.0,0,False,0.0,59.94166666666667,False,,7,0,0,0,0,0.0,,2,2
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S6+F,C1+C3,drain,-,11,0,0,11,6.909090909090909,9.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S6+F,C1+C3+OP,suppress,-,11,11,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/good,S6+F,C1+C3+OP,drain,-,11,0,0,11,6.909090909090909,9.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S4,none,-,naive,11,0,0,11,15.090909090909092,29.0,0,False,0.0,47.84615384615424,False,,158,2,0,2,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S4,none,-,limit_aware,11,0,0,11,15.090909090909092,29.0,0,False,0.0,47.84615384615424,False,,158,2,0,2,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S4,C1,suppress,-,11,11,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S4,C1,drain,-,11,9,0,2,5.5,8.0,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S4,C1+C3,suppress,-,11,11,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S4,C1+C3,drain,-,11,9,0,2,5.5,8.0,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S4,C1+C3+OP,suppress,-,11,11,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S4,C1+C3+OP,drain,-,11,9,0,2,5.5,8.0,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S4-F,none,-,naive,11,0,0,11,16.454545454545453,29.0,0,False,0.0,40.538461538462165,False,,253,2,0,2,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S4-F,none,-,limit_aware,11,0,1,10,15.545454545454545,37.0,0,False,0.0,39.92307692307757,False,,261,9,0,9,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S4-F,C1,suppress,-,11,11,0,0,,,0,False,0.0,58.923076923076955,False,,14,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S4-F,C1,drain,-,11,0,2,9,27.272727272727273,101.0,0,False,126.61666666666666,14.92307692307802,False,,586,0,0,0,0,0.0,,520,520
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S4-F,C1+C3,suppress,-,11,11,0,0,,,0,False,0.0,58.923076923076955,False,,14,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S4-F,C1+C3,drain,-,11,0,2,9,27.272727272727273,101.0,0,False,126.61666666666666,14.92307692307802,False,,586,0,0,0,0,0.0,,520,520
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S4-F,C1+C3+OP,suppress,-,11,11,0,0,,,0,False,0.0,58.923076923076955,False,,14,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S4-F,C1+C3+OP,drain,-,11,0,2,9,27.272727272727273,101.0,0,False,126.61666666666666,14.92307692307802,False,,586,0,0,0,0,0.0,,520,520
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S4-E,none,-,naive,11,0,0,11,16.454545454545453,29.0,0,False,0.0,40.538461538462165,False,,253,2,0,2,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S4-E,none,-,limit_aware,11,0,1,10,15.545454545454545,37.0,0,False,0.0,39.92307692307757,False,,261,9,0,9,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S4-E,C1,suppress,-,11,0,4,7,28.272727272727273,58.0,0,False,0.0,45.46153846153893,False,,189,0,0,0,0,0.0,,1,1
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S4-E,C1,drain,-,11,0,2,9,27.272727272727273,101.0,0,False,126.61666666666666,14.92307692307802,False,,586,0,0,0,0,0.0,,520,520
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S4-E,C1+C3,suppress,-,11,11,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S4-E,C1+C3,drain,-,11,9,0,2,5.5,8.0,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S4-E,C1+C3+OP,suppress,-,11,11,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S4-E,C1+C3+OP,drain,-,11,9,0,2,5.5,8.0,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S6,none,-,naive,11,0,0,11,16.454545454545453,29.0,0,False,0.0,40.538461538462165,False,,253,2,0,2,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S6,none,-,limit_aware,11,0,1,10,15.545454545454545,37.0,0,False,0.0,39.92307692307757,False,,261,9,0,9,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S6,C1,suppress,-,11,0,4,7,28.272727272727273,58.0,0,False,0.0,45.46153846153893,False,,189,0,0,0,0,0.0,,1,1
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S6,C1,drain,-,11,0,2,9,27.272727272727273,101.0,0,False,126.61666666666666,14.92307692307802,False,,586,0,0,0,0,0.0,,520,520
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S6,C1+C3,suppress,-,11,11,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S6,C1+C3,drain,-,11,9,0,2,5.5,8.0,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S6,C1+C3+OP,suppress,-,11,11,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S6,C1+C3+OP,drain,-,11,9,0,2,5.5,8.0,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S6+F,none,-,naive,11,0,0,11,16.454545454545453,29.0,0,False,0.0,40.538461538462165,False,,253,2,0,2,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S6+F,none,-,limit_aware,11,0,1,10,15.545454545454545,37.0,0,False,0.0,39.92307692307757,False,,261,9,0,9,0,0.0,,0,0
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S6+F,C1,suppress,-,11,0,4,7,28.272727272727273,58.0,0,False,0.0,45.46153846153893,False,,189,0,0,0,0,0.0,,1,1
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S6+F,C1,drain,-,11,0,2,9,27.272727272727273,101.0,0,False,126.61666666666666,14.92307692307802,False,,586,0,0,0,0,0.0,,520,520
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S6+F,C1+C3,suppress,-,11,0,11,0,754.1818181818181,1398.0,0,False,0.0,59.461538461538474,False,,7,0,0,0,0,0.0,,2,2
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S6+F,C1+C3,drain,-,11,0,2,9,26.90909090909091,98.0,0,False,126.66666666666667,14.92307692307802,False,,586,0,0,0,0,0.0,,520,520
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S6+F,C1+C3+OP,suppress,-,11,11,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",LWL01/poor,S6+F,C1+C3+OP,drain,-,11,0,2,9,26.90909090909091,98.0,0,False,126.66666666666667,14.92307692307802,False,,586,0,0,0,0,0.0,,520,520
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S4,none,-,naive,5,0,3,2,25.4,38.0,0,False,0.0,59.989330102481574,False,,145,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S4,none,-,limit_aware,5,0,3,2,25.4,38.0,0,False,0.0,59.989330102481574,False,,145,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S4,C1,suppress,-,5,5,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S4,C1,drain,-,5,0,0,5,5.4,8.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S4,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S4,C1+C3,drain,-,5,0,0,5,5.4,8.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S4,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S4,C1+C3+OP,drain,-,5,0,0,5,5.4,8.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S4-F,none,-,naive,5,0,0,5,7.4,13.0,0,False,0.0,59.986555659814435,False,,328,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S4-F,none,-,limit_aware,5,0,0,5,7.4,13.0,0,False,0.0,59.98654049892555,False,,329,2,0,2,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S4-F,C1,suppress,-,5,5,0,0,,,0,False,0.0,59.99131617892634,False,,14,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S4-F,C1,drain,-,5,0,0,5,6.4,9.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S4-F,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.99131617892634,False,,14,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S4-F,C1+C3,drain,-,5,0,0,5,6.4,9.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S4-F,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.99131617892634,False,,14,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S4-F,C1+C3+OP,drain,-,5,0,0,5,6.4,9.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S4-E,none,-,naive,5,0,0,5,7.4,13.0,0,False,0.0,59.986555659814435,False,,328,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S4-E,none,-,limit_aware,5,0,0,5,7.4,13.0,0,False,0.0,59.98654049892555,False,,329,2,0,2,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S4-E,C1,suppress,-,5,0,0,5,15.4,18.0,0,False,0.0,59.98728338248122,False,,280,0,0,0,0,0.0,,1,1
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S4-E,C1,drain,-,5,0,0,5,6.4,9.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S4-E,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S4-E,C1+C3,drain,-,5,0,0,5,5.4,8.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S4-E,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S4-E,C1+C3+OP,drain,-,5,0,0,5,5.4,8.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S6,none,-,naive,5,0,0,5,7.4,13.0,0,False,0.0,59.986555659814435,False,,328,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S6,none,-,limit_aware,5,0,0,5,7.4,13.0,0,False,0.0,59.98654049892555,False,,329,2,0,2,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S6,C1,suppress,-,5,0,0,5,15.4,18.0,0,False,0.0,59.98728338248122,False,,280,0,0,0,0,0.0,,1,1
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S6,C1,drain,-,5,0,0,5,6.4,9.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S6,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S6,C1+C3,drain,-,5,0,0,5,5.4,8.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S6,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S6,C1+C3+OP,drain,-,5,0,0,5,5.4,8.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S6+F,none,-,naive,5,0,0,5,7.4,13.0,0,False,0.0,59.986555659814435,False,,328,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S6+F,none,-,limit_aware,5,0,0,5,7.4,13.0,0,False,0.0,59.98654049892555,False,,329,2,0,2,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S6+F,C1,suppress,-,5,0,0,5,15.4,18.0,0,False,0.0,59.98728338248122,False,,280,0,0,0,0,0.0,,1,1
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S6+F,C1,drain,-,5,0,0,5,6.4,9.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S6+F,C1+C3,suppress,-,5,0,5,0,645.4,1153.0,0,False,0.0,59.99142230514858,False,,7,0,0,0,0,0.0,,2,2
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S6+F,C1+C3,drain,-,5,0,0,5,5.4,8.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S6+F,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/good,S6+F,C1+C3+OP,drain,-,5,0,0,5,5.4,8.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S4,none,-,naive,5,0,3,2,25.4,38.0,0,False,0.0,59.96957183006373,False,,145,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S4,none,-,limit_aware,5,0,3,2,25.4,38.0,0,False,0.0,59.96957183006373,False,,145,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S4,C1,suppress,-,5,5,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S4,C1,drain,-,5,0,0,5,5.4,8.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S4,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S4,C1+C3,drain,-,5,0,0,5,5.4,8.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S4,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S4,C1+C3+OP,drain,-,5,0,0,5,5.4,8.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S4-F,none,-,naive,5,0,0,5,7.4,13.0,0,False,0.0,59.941861084965815,False,,328,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S4-F,none,-,limit_aware,5,0,0,5,7.4,13.0,0,False,0.0,59.94170966012922,False,,329,2,0,2,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S4-F,C1,suppress,-,5,5,0,0,,,0,False,0.0,59.989408483658416,False,,14,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S4-F,C1,drain,-,5,0,0,5,6.4,9.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S4-F,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.989408483658416,False,,14,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S4-F,C1+C3,drain,-,5,0,0,5,6.4,9.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S4-F,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.989408483658416,False,,14,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S4-F,C1+C3+OP,drain,-,5,0,0,5,6.4,9.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S4-E,none,-,naive,5,0,0,5,7.4,13.0,0,False,0.0,59.941861084965815,False,,328,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S4-E,none,-,limit_aware,5,0,0,5,7.4,13.0,0,False,0.0,59.94170966012922,False,,329,2,0,2,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S4-E,C1,suppress,-,5,0,0,5,15.4,18.0,0,False,0.0,59.949129477122646,False,,280,0,0,0,0,0.0,,1,1
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S4-E,C1,drain,-,5,0,0,5,6.4,9.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S4-E,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S4-E,C1+C3,drain,-,5,0,0,5,5.4,8.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S4-E,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S4-E,C1+C3+OP,drain,-,5,0,0,5,5.4,8.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S6,none,-,naive,5,0,0,5,7.4,13.0,0,False,0.0,59.941861084965815,False,,328,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S6,none,-,limit_aware,5,0,0,5,7.4,13.0,0,False,0.0,59.94170966012922,False,,329,2,0,2,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S6,C1,suppress,-,5,0,0,5,15.4,18.0,0,False,0.0,59.949129477122646,False,,280,0,0,0,0,0.0,,1,1
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S6,C1,drain,-,5,0,0,5,6.4,9.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S6,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S6,C1+C3,drain,-,5,0,0,5,5.4,8.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S6,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S6,C1+C3+OP,drain,-,5,0,0,5,5.4,8.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S6+F,none,-,naive,5,0,0,5,7.4,13.0,0,False,0.0,59.941861084965815,False,,328,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S6+F,none,-,limit_aware,5,0,0,5,7.4,13.0,0,False,0.0,59.94170966012922,False,,329,2,0,2,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S6+F,C1,suppress,-,5,0,0,5,15.4,18.0,0,False,0.0,59.949129477122646,False,,280,0,0,0,0,0.0,,1,1
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S6+F,C1,drain,-,5,0,0,5,6.4,9.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S6+F,C1+C3,suppress,-,5,0,5,0,645.4,1153.0,0,False,0.0,59.990468457514616,False,,7,0,0,0,0,0.0,,2,2
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S6+F,C1+C3,drain,-,5,0,0,5,5.4,8.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S6+F,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",PS-LB/poor,S6+F,C1+C3+OP,drain,-,5,0,0,5,5.4,8.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S4,none,-,naive,5,0,3,2,25.4,38.0,0,False,0.0,58.7916666666668,False,,145,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S4,none,-,limit_aware,5,0,3,2,25.4,38.0,0,False,0.0,58.7916666666668,False,,145,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S4,C1,suppress,-,5,5,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S4,C1,drain,-,5,0,0,5,5.4,8.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S4,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S4,C1+C3,drain,-,5,0,0,5,5.4,8.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S4,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S4,C1+C3+OP,drain,-,5,0,0,5,5.4,8.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S4-F,none,-,naive,5,0,0,5,7.4,13.0,0,False,0.0,57.266666666666964,False,,328,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S4-F,none,-,limit_aware,5,0,0,5,7.4,13.0,0,False,0.0,57.25833333333363,False,,329,2,0,2,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S4-F,C1,suppress,-,5,5,0,0,,,0,False,0.0,59.88333333333335,False,,14,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S4-F,C1,drain,-,5,0,0,5,6.4,9.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S4-F,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.88333333333335,False,,14,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S4-F,C1+C3,drain,-,5,0,0,5,6.4,9.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S4-F,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.88333333333335,False,,14,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S4-F,C1+C3+OP,drain,-,5,0,0,5,6.4,9.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S4-E,none,-,naive,5,0,0,5,7.4,13.0,0,False,0.0,57.266666666666964,False,,328,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S4-E,none,-,limit_aware,5,0,0,5,7.4,13.0,0,False,0.0,57.25833333333363,False,,329,2,0,2,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S4-E,C1,suppress,-,5,0,0,5,15.4,18.0,0,False,0.0,57.66666666666692,False,,280,0,0,0,0,0.0,,1,1
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S4-E,C1,drain,-,5,0,0,5,6.4,9.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S4-E,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S4-E,C1+C3,drain,-,5,0,0,5,5.4,8.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S4-E,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S4-E,C1+C3+OP,drain,-,5,0,0,5,5.4,8.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S6,none,-,naive,5,0,0,5,7.4,13.0,0,False,0.0,57.266666666666964,False,,328,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S6,none,-,limit_aware,5,0,0,5,7.4,13.0,0,False,0.0,57.25833333333363,False,,329,2,0,2,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S6,C1,suppress,-,5,0,0,5,15.4,18.0,0,False,0.0,57.66666666666692,False,,280,0,0,0,0,0.0,,1,1
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S6,C1,drain,-,5,0,0,5,6.4,9.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S6,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S6,C1+C3,drain,-,5,0,0,5,5.4,8.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S6,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S6,C1+C3+OP,drain,-,5,0,0,5,5.4,8.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S6+F,none,-,naive,5,0,0,5,7.4,13.0,0,False,0.0,57.266666666666964,False,,328,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S6+F,none,-,limit_aware,5,0,0,5,7.4,13.0,0,False,0.0,57.25833333333363,False,,329,2,0,2,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S6+F,C1,suppress,-,5,0,0,5,15.4,18.0,0,False,0.0,57.66666666666692,False,,280,0,0,0,0,0.0,,1,1
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S6+F,C1,drain,-,5,0,0,5,6.4,9.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S6+F,C1+C3,suppress,-,5,0,5,0,645.4,1153.0,0,False,0.0,59.94166666666667,False,,7,0,0,0,0,0.0,,2,2
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S6+F,C1+C3,drain,-,5,0,0,5,5.4,8.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S6+F,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/good,S6+F,C1+C3+OP,drain,-,5,0,0,5,5.4,8.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S4,none,-,naive,5,0,3,2,25.4,38.0,0,False,0.0,48.84615384615421,False,,145,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S4,none,-,limit_aware,5,0,3,2,25.4,38.0,0,False,0.0,48.84615384615421,False,,145,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S4,C1,suppress,-,5,5,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S4,C1,drain,-,5,5,0,0,,,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S4,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S4,C1+C3,drain,-,5,5,0,0,,,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S4,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S4,C1+C3+OP,drain,-,5,5,0,0,,,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S4-F,none,-,naive,5,0,0,5,7.4,13.0,0,False,0.0,34.769230769231584,False,,328,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S4-F,none,-,limit_aware,5,0,0,5,7.4,13.0,0,False,0.0,34.69230769230851,False,,329,2,0,2,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S4-F,C1,suppress,-,5,5,0,0,,,0,False,0.0,58.923076923076955,False,,14,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S4-F,C1,drain,-,5,0,4,1,66.0,98.0,0,False,126.61666666666666,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S4-F,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,58.923076923076955,False,,14,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S4-F,C1+C3,drain,-,5,0,4,1,66.0,98.0,0,False,126.61666666666666,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S4-F,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,58.923076923076955,False,,14,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S4-F,C1+C3+OP,drain,-,5,0,4,1,66.0,98.0,0,False,126.61666666666666,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S4-E,none,-,naive,5,0,0,5,7.4,13.0,0,False,0.0,34.769230769231584,False,,328,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S4-E,none,-,limit_aware,5,0,0,5,7.4,13.0,0,False,0.0,34.69230769230851,False,,329,2,0,2,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S4-E,C1,suppress,-,5,0,0,5,15.4,18.0,0,False,0.0,38.461538461539156,False,,280,0,0,0,0,0.0,,1,1
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S4-E,C1,drain,-,5,0,4,1,66.0,98.0,0,False,126.61666666666666,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S4-E,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S4-E,C1+C3,drain,-,5,5,0,0,,,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S4-E,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S4-E,C1+C3+OP,drain,-,5,5,0,0,,,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S6,none,-,naive,5,0,0,5,7.4,13.0,0,False,0.0,34.769230769231584,False,,328,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S6,none,-,limit_aware,5,0,0,5,7.4,13.0,0,False,0.0,34.69230769230851,False,,329,2,0,2,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S6,C1,suppress,-,5,0,0,5,15.4,18.0,0,False,0.0,38.461538461539156,False,,280,0,0,0,0,0.0,,1,1
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S6,C1,drain,-,5,0,4,1,66.0,98.0,0,False,126.61666666666666,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S6,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S6,C1+C3,drain,-,5,5,0,0,,,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S6,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S6,C1+C3+OP,drain,-,5,5,0,0,,,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S6+F,none,-,naive,5,0,0,5,7.4,13.0,0,False,0.0,34.769230769231584,False,,328,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S6+F,none,-,limit_aware,5,0,0,5,7.4,13.0,0,False,0.0,34.69230769230851,False,,329,2,0,2,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S6+F,C1,suppress,-,5,0,0,5,15.4,18.0,0,False,0.0,38.461538461539156,False,,280,0,0,0,0,0.0,,1,1
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S6+F,C1,drain,-,5,0,4,1,66.0,98.0,0,False,126.61666666666666,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S6+F,C1+C3,suppress,-,5,0,5,0,645.4,1153.0,0,False,0.0,59.461538461538474,False,,7,0,0,0,0,0.0,,2,2
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S6+F,C1+C3,drain,-,5,0,4,1,65.4,98.0,0,False,126.66666666666667,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S6+F,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",LWL01/poor,S6+F,C1+C3+OP,drain,-,5,0,4,1,65.4,98.0,0,False,126.66666666666667,15.000000000001096,False,,585,0,0,0,0,0.0,,520,520
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S4,none,-,naive,5,0,2,3,20.2,57.0,0,False,0.0,59.98934526337046,False,,145,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S4,none,-,limit_aware,5,0,2,3,20.2,57.0,0,False,0.0,59.98934526337046,False,,145,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S4,C1,suppress,-,5,5,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S4,C1,drain,-,5,0,0,5,4.2,7.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S4,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S4,C1+C3,drain,-,5,0,0,5,4.2,7.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S4,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S4,C1+C3+OP,drain,-,5,0,0,5,4.2,7.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S4-F,none,-,naive,5,0,1,4,11.2,33.0,0,False,0.0,59.9857521327032,False,,382,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S4-F,none,-,limit_aware,5,0,1,4,11.2,33.0,0,False,0.0,59.985736971814305,False,,382,2,0,2,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S4-F,C1,suppress,-,5,5,0,0,,,0,False,0.0,59.99131617892634,False,,14,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S4-F,C1,drain,-,5,0,0,5,5.2,8.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S4-F,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.99131617892634,False,,14,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S4-F,C1+C3,drain,-,5,0,0,5,5.2,8.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S4-F,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.99131617892634,False,,14,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S4-F,C1+C3+OP,drain,-,5,0,0,5,5.2,8.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S4-E,none,-,naive,5,0,1,4,11.2,33.0,0,False,0.0,59.9857521327032,False,,382,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S4-E,none,-,limit_aware,5,0,1,4,11.2,33.0,0,False,0.0,59.985736971814305,False,,382,2,0,2,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S4-E,C1,suppress,-,5,0,1,4,12.2,33.0,0,False,0.0,59.98672242959224,False,,317,0,0,0,0,0.0,,1,1
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S4-E,C1,drain,-,5,0,0,5,5.2,8.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S4-E,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S4-E,C1+C3,drain,-,5,0,0,5,4.2,7.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S4-E,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S4-E,C1+C3+OP,drain,-,5,0,0,5,4.2,7.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S6,none,-,naive,5,0,1,4,11.2,33.0,0,False,0.0,59.9857521327032,False,,382,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S6,none,-,limit_aware,5,0,1,4,11.2,33.0,0,False,0.0,59.985736971814305,False,,382,2,0,2,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S6,C1,suppress,-,5,0,1,4,12.2,33.0,0,False,0.0,59.98672242959224,False,,317,0,0,0,0,0.0,,1,1
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S6,C1,drain,-,5,0,0,5,5.2,8.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S6,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S6,C1+C3,drain,-,5,0,0,5,4.2,7.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S6,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S6,C1+C3+OP,drain,-,5,0,0,5,4.2,7.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S6+F,none,-,naive,5,0,1,4,11.2,33.0,0,False,0.0,59.9857521327032,False,,382,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S6+F,none,-,limit_aware,5,0,1,4,11.2,33.0,0,False,0.0,59.985736971814305,False,,382,2,0,2,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S6+F,C1,suppress,-,5,0,1,4,12.2,33.0,0,False,0.0,59.98672242959224,False,,317,0,0,0,0,0.0,,1,1
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S6+F,C1,drain,-,5,0,0,5,5.2,8.0,0,False,0.0,59.92604855224881,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S6+F,C1+C3,suppress,-,5,0,5,0,728.2,1325.0,0,False,0.0,59.99142230514858,False,,7,0,0,0,0,0.0,,2,2
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S6+F,C1+C3,drain,-,5,0,0,5,4.2,7.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S6+F,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.99140714425969,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/good,S6+F,C1+C3+OP,drain,-,5,0,0,5,4.2,7.0,0,False,0.0,59.926033391359915,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S4,none,-,naive,5,0,2,3,20.2,57.0,0,False,0.0,59.96972325490033,False,,145,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S4,none,-,limit_aware,5,0,2,3,20.2,57.0,0,False,0.0,59.96972325490033,False,,145,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S4,C1,suppress,-,5,5,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S4,C1,drain,-,5,0,0,5,4.2,7.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S4,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S4,C1+C3,drain,-,5,0,0,5,4.2,7.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S4,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S4,C1+C3+OP,drain,-,5,0,0,5,4.2,7.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S4-F,none,-,naive,5,0,1,4,11.2,33.0,0,False,0.0,59.93383556862599,False,,382,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S4-F,none,-,limit_aware,5,0,1,4,11.2,33.0,0,False,0.0,59.933684143789385,False,,382,2,0,2,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S4-F,C1,suppress,-,5,5,0,0,,,0,False,0.0,59.989408483658416,False,,14,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S4-F,C1,drain,-,5,0,0,5,5.2,8.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S4-F,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.989408483658416,False,,14,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S4-F,C1+C3,drain,-,5,0,0,5,5.2,8.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S4-F,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.989408483658416,False,,14,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S4-F,C1+C3+OP,drain,-,5,0,0,5,5.2,8.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S4-E,none,-,naive,5,0,1,4,11.2,33.0,0,False,0.0,59.93383556862599,False,,382,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S4-E,none,-,limit_aware,5,0,1,4,11.2,33.0,0,False,0.0,59.933684143789385,False,,382,2,0,2,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S4-E,C1,suppress,-,5,0,1,4,12.2,33.0,0,False,0.0,59.943526758168424,False,,317,0,0,0,0,0.0,,1,1
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S4-E,C1,drain,-,5,0,0,5,5.2,8.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S4-E,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S4-E,C1+C3,drain,-,5,0,0,5,4.2,7.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S4-E,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S4-E,C1+C3+OP,drain,-,5,0,0,5,4.2,7.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S6,none,-,naive,5,0,1,4,11.2,33.0,0,False,0.0,59.93383556862599,False,,382,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S6,none,-,limit_aware,5,0,1,4,11.2,33.0,0,False,0.0,59.933684143789385,False,,382,2,0,2,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S6,C1,suppress,-,5,0,1,4,12.2,33.0,0,False,0.0,59.943526758168424,False,,317,0,0,0,0,0.0,,1,1
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S6,C1,drain,-,5,0,0,5,5.2,8.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S6,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S6,C1+C3,drain,-,5,0,0,5,4.2,7.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S6,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S6,C1+C3+OP,drain,-,5,0,0,5,4.2,7.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S6+F,none,-,naive,5,0,1,4,11.2,33.0,0,False,0.0,59.93383556862599,False,,382,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S6+F,none,-,limit_aware,5,0,1,4,11.2,33.0,0,False,0.0,59.933684143789385,False,,382,2,0,2,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S6+F,C1,suppress,-,5,0,1,4,12.2,33.0,0,False,0.0,59.943526758168424,False,,317,0,0,0,0,0.0,,1,1
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S6+F,C1,drain,-,5,0,0,5,5.2,8.0,0,False,0.0,59.33752456209272,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S6+F,C1+C3,suppress,-,5,0,5,0,728.2,1325.0,0,False,0.0,59.990468457514616,False,,7,0,0,0,0,0.0,,2,2
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S6+F,C1+C3,drain,-,5,0,0,5,4.2,7.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S6+F,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.99031703267802,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",PS-LB/poor,S6+F,C1+C3+OP,drain,-,5,0,0,5,4.2,7.0,0,False,0.0,59.33737313725611,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S4,none,-,naive,5,0,2,3,20.2,57.0,0,False,0.0,58.80000000000013,False,,145,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S4,none,-,limit_aware,5,0,2,3,20.2,57.0,0,False,0.0,58.80000000000013,False,,145,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S4,C1,suppress,-,5,5,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S4,C1,drain,-,5,0,0,5,4.2,7.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S4,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S4,C1+C3,drain,-,5,0,0,5,4.2,7.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S4,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S4,C1+C3+OP,drain,-,5,0,0,5,4.2,7.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S4-F,none,-,naive,5,0,1,4,11.2,33.0,0,False,0.0,56.825000000000344,False,,382,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S4-F,none,-,limit_aware,5,0,1,4,11.2,33.0,0,False,0.0,56.81666666666702,False,,382,2,0,2,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S4-F,C1,suppress,-,5,5,0,0,,,0,False,0.0,59.88333333333335,False,,14,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S4-F,C1,drain,-,5,0,0,5,5.2,8.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S4-F,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.88333333333335,False,,14,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S4-F,C1+C3,drain,-,5,0,0,5,5.2,8.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S4-F,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.88333333333335,False,,14,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S4-F,C1+C3+OP,drain,-,5,0,0,5,5.2,8.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S4-E,none,-,naive,5,0,1,4,11.2,33.0,0,False,0.0,56.825000000000344,False,,382,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S4-E,none,-,limit_aware,5,0,1,4,11.2,33.0,0,False,0.0,56.81666666666702,False,,382,2,0,2,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S4-E,C1,suppress,-,5,0,1,4,12.2,33.0,0,False,0.0,57.35833333333362,False,,317,0,0,0,0,0.0,,1,1
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S4-E,C1,drain,-,5,0,0,5,5.2,8.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S4-E,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S4-E,C1+C3,drain,-,5,0,0,5,4.2,7.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S4-E,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S4-E,C1+C3+OP,drain,-,5,0,0,5,4.2,7.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S6,none,-,naive,5,0,1,4,11.2,33.0,0,False,0.0,56.825000000000344,False,,382,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S6,none,-,limit_aware,5,0,1,4,11.2,33.0,0,False,0.0,56.81666666666702,False,,382,2,0,2,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S6,C1,suppress,-,5,0,1,4,12.2,33.0,0,False,0.0,57.35833333333362,False,,317,0,0,0,0,0.0,,1,1
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S6,C1,drain,-,5,0,0,5,5.2,8.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S6,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S6,C1+C3,drain,-,5,0,0,5,4.2,7.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S6,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S6,C1+C3+OP,drain,-,5,0,0,5,4.2,7.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S6+F,none,-,naive,5,0,1,4,11.2,33.0,0,False,0.0,56.825000000000344,False,,382,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S6+F,none,-,limit_aware,5,0,1,4,11.2,33.0,0,False,0.0,56.81666666666702,False,,382,2,0,2,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S6+F,C1,suppress,-,5,0,1,4,12.2,33.0,0,False,0.0,57.35833333333362,False,,317,0,0,0,0,0.0,,1,1
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S6+F,C1,drain,-,5,0,0,5,5.2,8.0,0,False,0.0,24.008333333337294,False,,4319,0,0,0,0,0.0,,4319,4319
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S6+F,C1+C3,suppress,-,5,0,5,0,728.2,1325.0,0,False,0.0,59.94166666666667,False,,7,0,0,0,0,0.0,,2,2
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S6+F,C1+C3,drain,-,5,0,0,5,4.2,7.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S6+F,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.93333333333334,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/good,S6+F,C1+C3+OP,drain,-,5,0,0,5,4.2,7.0,0,False,0.0,24.00000000000396,False,,4321,0,0,0,0,0.0,,4321,4321
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S4,none,-,naive,5,0,2,3,20.2,57.0,0,False,0.0,48.92307692307728,False,,145,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S4,none,-,limit_aware,5,0,2,3,20.2,57.0,0,False,0.0,48.92307692307728,False,,145,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S4,C1,suppress,-,5,5,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S4,C1,drain,-,5,5,0,0,,,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S4,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S4,C1+C3,drain,-,5,5,0,0,,,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S4,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S4,C1+C3+OP,drain,-,5,5,0,0,,,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S4-F,none,-,naive,5,0,1,4,11.2,33.0,0,False,0.0,30.69230769230864,False,,382,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S4-F,none,-,limit_aware,5,0,1,4,11.2,33.0,0,False,0.0,30.615384615385565,False,,382,2,0,2,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S4-F,C1,suppress,-,5,5,0,0,,,0,False,0.0,58.923076923076955,False,,14,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S4-F,C1,drain,-,5,0,4,1,77.4,117.0,0,False,126.61666666666666,15.076923076924173,False,,585,0,0,0,0,0.0,,520,520
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S4-F,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,58.923076923076955,False,,14,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S4-F,C1+C3,drain,-,5,0,4,1,77.4,117.0,0,False,126.61666666666666,15.076923076924173,False,,585,0,0,0,0,0.0,,520,520
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S4-F,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,58.923076923076955,False,,14,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S4-F,C1+C3+OP,drain,-,5,0,4,1,77.4,117.0,0,False,126.61666666666666,15.076923076924173,False,,585,0,0,0,0,0.0,,520,520
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S4-E,none,-,naive,5,0,1,4,11.2,33.0,0,False,0.0,30.69230769230864,False,,382,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S4-E,none,-,limit_aware,5,0,1,4,11.2,33.0,0,False,0.0,30.615384615385565,False,,382,2,0,2,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S4-E,C1,suppress,-,5,0,1,4,12.2,33.0,0,False,0.0,35.6153846153854,False,,317,0,0,0,0,0.0,,1,1
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S4-E,C1,drain,-,5,0,4,1,77.4,117.0,0,False,126.61666666666666,15.076923076924173,False,,585,0,0,0,0,0.0,,520,520
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S4-E,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S4-E,C1+C3,drain,-,5,5,0,0,,,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S4-E,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S4-E,C1+C3+OP,drain,-,5,5,0,0,,,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S6,none,-,naive,5,0,1,4,11.2,33.0,0,False,0.0,30.69230769230864,False,,382,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S6,none,-,limit_aware,5,0,1,4,11.2,33.0,0,False,0.0,30.615384615385565,False,,382,2,0,2,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S6,C1,suppress,-,5,0,1,4,12.2,33.0,0,False,0.0,35.6153846153854,False,,317,0,0,0,0,0.0,,1,1
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S6,C1,drain,-,5,0,4,1,77.4,117.0,0,False,126.61666666666666,15.076923076924173,False,,585,0,0,0,0,0.0,,520,520
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S6,C1+C3,suppress,-,5,5,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S6,C1+C3,drain,-,5,5,0,0,,,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S6,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S6,C1+C3+OP,drain,-,5,5,0,0,,,260,True,8.666666666666666,1.054169772307656e-12,True,26.016666666666666,781,0,0,0,0,0.0,,781,781
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S6+F,none,-,naive,5,0,1,4,11.2,33.0,0,False,0.0,30.69230769230864,False,,382,0,0,0,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S6+F,none,-,limit_aware,5,0,1,4,11.2,33.0,0,False,0.0,30.615384615385565,False,,382,2,0,2,0,0.0,,0,0
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S6+F,C1,suppress,-,5,0,1,4,12.2,33.0,0,False,0.0,35.6153846153854,False,,317,0,0,0,0,0.0,,1,1
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S6+F,C1,drain,-,5,0,4,1,77.4,117.0,0,False,126.61666666666666,15.076923076924173,False,,585,0,0,0,0,0.0,,520,520
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S6+F,C1+C3,suppress,-,5,0,5,0,728.2,1325.0,0,False,0.0,59.461538461538474,False,,7,0,0,0,0,0.0,,2,2
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S6+F,C1+C3,drain,-,5,0,4,1,76.2,117.0,0,False,126.66666666666667,15.076923076924173,False,,585,0,0,0,0,0.0,,520,520
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S6+F,C1+C3+OP,suppress,-,5,5,0,0,,,0,False,0.0,59.3846153846154,False,,8,0,0,0,0,0.0,,3,3
+"USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",LWL01/poor,S6+F,C1+C3+OP,drain,-,5,0,4,1,76.2,117.0,0,False,126.66666666666667,15.076923076924173,False,,585,0,0,0,0,0.0,,520,520
