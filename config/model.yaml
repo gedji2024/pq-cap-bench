@@ -61,3 +61,5 @@ revocation:
   # Active revocation = the policy authority pushes a replacement (empty-bounds) envelope over its own
   # downlink path (assumed independent of the compromised cloud platform).
   active_push: true
+  # D1 S6-R: envelope carries H(r_rev) (32 B, SHA-256); revocation reveals r_rev (16 or 32 B) + handle (4 B)
+  s6r_reveal_bytes: [16, 32]

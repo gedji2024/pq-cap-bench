@@ -85,6 +85,7 @@ class DeviceState:
     alert_active: bool = False
     soc_pct: float = 100.0
     now: int = 0                          # seconds, same clock as envelope validity
+    revoked: frozenset[int] = frozenset()  # S6-R: handles revoked by a revealed r_rev
 
 
 @dataclass(frozen=True)
@@ -272,11 +273,42 @@ def check_enveloped(env: Policy, catalogue, state, msg, key, tag_len):
     handle, counter, (aid, target, value, reserved) = parsed
     if handle != env.handle:
         return Decision(False, "handle"), state
+    if handle in state.revoked:
+        return Decision(False, "revoked"), state
     return _check_policy(env, catalogue, state, aid, target, value, reserved, counter)
 
 
 check_s6 = check_enveloped
 check_s4e = check_enveloped
+
+
+# ---------------------------------------------------------------- S6-R: revocation committed in advance (D1)
+REV_COMMIT_BYTES = 32  # SHA-256 output
+REVOCATION = struct.Struct(">I")
+
+
+def rev_commitment(r_rev: bytes) -> bytes:
+    """H(r_rev), carried inside the PQ-signed S6-R envelope."""
+    return hashlib.sha256(r_rev).digest()
+
+
+def make_revocation(handle: int, r_rev: bytes) -> bytes:
+    """Single-frame revocation message: handle u32 | r_rev (16 or 32 B). Needs no signature: only the
+    PA knows a preimage of the commitment signed into the envelope."""
+    if len(r_rev) not in (16, 32):
+        raise ValueError("r_rev must be 16 or 32 bytes")
+    return REVOCATION.pack(handle) + r_rev
+
+
+def apply_revocation(commitments: dict[int, bytes], state: DeviceState, msg: bytes) -> tuple[Decision, DeviceState]:
+    """commitments: handle -> H(r_rev) of each installed S6-R envelope."""
+    if len(msg) not in (REVOCATION.size + 16, REVOCATION.size + 32):
+        return Decision(False, "length"), state
+    (handle,) = REVOCATION.unpack_from(msg)
+    c = commitments.get(handle)
+    if c is None or not hmac.compare_digest(rev_commitment(msg[REVOCATION.size:]), c):
+        return Decision(False, "bad_reveal"), state
+    return Decision(True, "revoked"), replace(state, revoked=state.revoked | {handle})
 
 
 # ---------------------------------------------------------------- envelope installation

@@ -54,7 +54,8 @@ def _fake_results(tmp_path, cfgs):  # noqa: F811
     from pqcap import revocation as rv
     chans = M.channels(radio, mdl)
     lc = lambda n, ch: M.link_cost(n, ch, 2)  # noqa: E731
-    rv.exposure(chans, {"S4-E": 144, "S6": 2532}, mdl["revocation"], 300, lc).to_csv(
+    rv.exposure(chans, {"S4-E": 144, "S6": 2532, "S6-R": 2564}, mdl["revocation"], 300, lc,
+                {"S6-R": [20, 36]}).to_csv(
         r / "model_revocation_exposure.csv", index=False)
     rv.renewal_cost(chans, {"S4-E": 144, "S6": 2532}, mdl["revocation"], 300, lc).to_csv(
         r / "model_renewal_cost.csv", index=False)
@@ -90,7 +91,7 @@ def test_report_renders(tmp_path, cfgs):  # noqa: F811
     (figs / "fig1_x.png").write_bytes(b"")
     report.run(cfg, r, figs)
     md = (tmp_path / "REPORT.md").read_text()
-    for h in ("## 1. Environment", "## 4. Host timings", "## 8. Kill criteria", "**K1", "**K2", "**K3", "**K4", "**K5 - Blast radius", "**K5 - blast radius per compromise", "## 7d. Revocation", "## 8b. Traceability", "## 8a. K5/K6 on the manufacturer", "**SUPERSEDED**", "## 7f. Device-side", "Energy is **not reported**", "## 0. Repository state", "kept `7df90f4`", "T10", "## 7e. Harm-weighted replay", "**Data gaps > 60 min", "**K6 - blast(S4-E)",
+    for h in ("## 1. Environment", "## 4. Host timings", "## 8. Kill criteria", "**K1", "**K2", "**K3", "**K4", "**K5 - Blast radius", "**K5 - blast radius per compromise", "## 7d. Revocation", "**D1 - active revocation time", "## 8b. Traceability", "## 8a. K5/K6 on the manufacturer", "**SUPERSEDED**", "## 7f. Device-side", "Energy is **not reported**", "## 0. Repository state", "kept `7df90f4`", "T10", "## 7e. Harm-weighted replay", "**Data gaps > 60 min", "**K6 - blast(S4-E)",
               "## 7c. S6", "Crisis commands per gateway", "**Why the crisis capacities differ", "its capacity equals S6", "fig1_x.png"):
         assert h in md
     assert "env.json missing" in md

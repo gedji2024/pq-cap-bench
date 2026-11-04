@@ -221,6 +221,11 @@ S4-E and S6 differ only in how the envelope is installed:
   - S4-E / S6, active push: the time to deliver a replacement envelope to all N devices, capped at V. The authority's downlink path is assumed independent of the compromised platform.
   - S4-E / S6 under C3: each minted envelope is capped at V. Rotating the root key is not modelled.
 - **Renewal cost:** the gateway airtime per day of re-sending envelopes every V, against the duty-cycle budget, per DR and N.
+- **S6-R (D1), revocation committed in advance.**
+  - Each envelope carries H(r_rev), 32 B of SHA-256.
+  - Revoking means revealing r_rev (16 or 32 B) plus the 4 B handle, in one frame. No signature is needed: only the PA knows a preimage of the signed commitment.
+  - The device then rejects every command for that handle (property-tested).
+  - Active-revocation time is compared with S6 and S4-E at every US915 DR in `REPORT.md` §7d.
 
 ## Harm-weighted replay (`pqcap.harm`, `config/harm.yaml`)
 **Input.** USGS 08074000 Buffalo Bayou at Houston, TX, gage height, 2017-08-26..31 (Hurricane Harvey).

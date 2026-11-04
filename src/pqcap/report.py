@@ -280,6 +280,22 @@ def section_k6(k6: dict) -> str:
             + md_table(p))
 
 
+def section_d1(e: pd.DataFrame, model: dict) -> str:
+    """D1: active-revocation time for S6-R vs S6 vs S4-E at every US915 downlink DR (validity-independent)."""
+    V = min(model["revocation"]["validity_hours"])
+    a = e[(e.region == "US915") & (e.validity_h == V) & e.mechanism.str.startswith(("active push", "reveal"))].copy()
+    a["variant"] = a.scheme + " / " + a.mechanism
+    p = a.pivot_table(index=["devices", "dr"], columns="variant", values="push_time_h", sort=False)
+    f = a.pivot_table(index="variant", columns="dr", values="envelope_frames", aggfunc="first", sort=False)
+    f.columns = [f"DR{c} frames" for c in f.columns]
+    hh = lambda v: f"{v:,.3f}"  # noqa: E731
+    return ("**D1 - active revocation time (hours) at every US915 downlink DR: S6-R reveals r_rev in one message; "
+            "S6 and S4-E push a replacement envelope.** Time = max(per-device Class A delivery, gateway airtime). "
+            "Exposure after revocation = min(V, this time).\n\n"
+            + md_table(p.reset_index(), {c: hh for c in p.columns} | {"devices": lambda v: f"{int(v)}", "dr": lambda v: f"DR{int(v)}"})
+            + "\n\nMessage size in frames per DR:\n\n" + md_table(f.reset_index(), {c: lambda v: f"{int(v)}" for c in f.columns}))
+
+
 def section_revocation(results: Path, model: dict) -> str:
     pe, pr = results / "model_revocation_exposure.csv", results / "model_renewal_cost.csv"
     if not pe.exists():
@@ -287,9 +303,9 @@ def section_revocation(results: Path, model: dict) -> str:
     e, r = pd.read_csv(pe), pd.read_csv(pr)
     k1 = model["kill_criteria"]["K1"]
     h = lambda v: "unbounded" if v == float("inf") else f"{v:,.2f}"  # noqa: E731
-    fixed = e[e.mechanism != "active push"][["scheme", "compromise", "validity_h", "mechanism", "exposure_worst_h",
+    fixed = e[~e.mechanism.str.startswith(("active push", "reveal"))][["scheme", "compromise", "validity_h", "mechanism", "exposure_worst_h",
                                              "exposure_expected_h"]]
-    push = e[(e.mechanism == "active push") & (e.region == k1["region"]) & (e.dr == k1["dr"])]
+    push = e[(e.mechanism.str.startswith(("active push", "reveal"))) & (e.region == k1["region"]) & (e.dr == k1["dr"])]
     push = push[["scheme", "validity_h", "devices", "envelope_bytes", "envelope_frames", "push_time_h",
                  "exposure_worst_h", "exposure_expected_h"]]
     out = ["Exposure window after revocation starts (hours; detection delay excluded, identical for all schemes). "
@@ -300,6 +316,7 @@ def section_revocation(results: Path, model: dict) -> str:
            "exposure = min(V, push time)):",
            md_table(push, {"envelope_bytes": lambda v: f"{int(v):,}", "envelope_frames": lambda v: f"{int(v)}",
                            "push_time_h": h, "exposure_worst_h": h, "exposure_expected_h": h})]
+    out.append(section_d1(e, model))
     for reg, dr in model["figure_channels"]:
         g = r[(r.region == reg) & (r.dr == dr)]
         p = g.pivot_table(index=["scheme", "envelope_bytes", "devices"], columns="validity_h",

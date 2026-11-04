@@ -255,9 +255,11 @@ def run(config: Path, results: Path) -> dict[str, pd.DataFrame]:
                 chans = channels(radio, model)
                 lc = lambda n, ch: link_cost(n, ch, model["fragment_header_bytes"])  # noqa: E731
                 U = model["uplink_interval_s"]
-                rv.exposure(chans, env_b, model["revocation"], U, lc).to_csv(results / "model_revocation_exposure.csv",
-                                                                            index=False)
-                rv.renewal_cost(chans, env_b, model["revocation"], U, lc).to_csv(results / "model_renewal_cost.csv",
+                env_r = {**env_b, "S6-R": env_b["S6"] + ev.REV_COMMIT_BYTES}   # D1: + H(r_rev) in the envelope
+                reveal = {"S6-R": [ev.REVOCATION.size + b for b in model["revocation"]["s6r_reveal_bytes"]]}
+                rv.exposure(chans, env_r, model["revocation"], U, lc, reveal).to_csv(
+                    results / "model_revocation_exposure.csv", index=False)
+                rv.renewal_cost(chans, env_r, model["revocation"], U, lc).to_csv(results / "model_renewal_cost.csv",
                                                                                 index=False)
     (results / "kill_criteria.json").write_text(json.dumps(k, indent=2, default=str))
     return out

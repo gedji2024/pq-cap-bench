@@ -33,7 +33,11 @@ def push_time_s(frames: int, airtime_s: float, last_toa_s: float, n_devices: int
     return max(per_device, gateway)
 
 
-def exposure(chans, envelope_bytes: dict[str, int], cfg: dict, uplink_s: float, link_cost) -> pd.DataFrame:
+def exposure(chans, envelope_bytes: dict[str, int], cfg: dict, uplink_s: float, link_cost,
+             reveal_bytes: dict[str, list[int]] | None = None) -> pd.DataFrame:
+    """reveal_bytes: scheme -> revocation message sizes for S6-R (active revocation pushes the reveal, not an
+    envelope)."""
+    reveal_bytes = reveal_bytes or {}
     rows = []
     for V in cfg["validity_hours"]:
         for scheme in ("S4", "S4-F"):
@@ -50,16 +54,20 @@ def exposure(chans, envelope_bytes: dict[str, int], cfg: dict, uplink_s: float, 
                          "exposure_worst_h": float(V), "exposure_expected_h": float(V)})
             if not cfg.get("active_push"):
                 continue
-            for ch in chans:
-                if ch.phy is None:
-                    continue
-                lc = link_cost(eb, ch)
-                for N in cfg["devices"]:
-                    t = push_time_s(lc["frames"], lc["airtime_s"], lc["last_frame_toa_s"], N, uplink_s, ch.duty) / 3600
-                    rows.append({"scheme": scheme, "compromise": "C1", "validity_h": V, "mechanism": "active push",
-                                 "region": ch.region, "dr": ch.dr, "devices": N, "envelope_bytes": eb,
-                                 "envelope_frames": lc["frames"], "push_time_h": t,
-                                 "exposure_worst_h": min(float(V), t), "exposure_expected_h": min(V / 2, t)})
+            pushes = ([(f"reveal r_rev ({b - 4} B)", b) for b in reveal_bytes[scheme]] if scheme in reveal_bytes
+                      else [("active push", eb)])
+            for mech, nbytes in pushes:
+                for ch in chans:
+                    if ch.phy is None:
+                        continue
+                    lc = link_cost(nbytes, ch)
+                    for N in cfg["devices"]:
+                        t = push_time_s(lc["frames"], lc["airtime_s"], lc["last_frame_toa_s"], N, uplink_s,
+                                        ch.duty) / 3600
+                        rows.append({"scheme": scheme, "compromise": "C1", "validity_h": V, "mechanism": mech,
+                                     "region": ch.region, "dr": ch.dr, "devices": N, "envelope_bytes": eb,
+                                     "push_bytes": nbytes, "envelope_frames": lc["frames"], "push_time_h": t,
+                                     "exposure_worst_h": min(float(V), t), "exposure_expected_h": min(V / 2, t)})
     return pd.DataFrame(rows)
 
 
