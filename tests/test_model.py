@@ -136,6 +136,9 @@ def test_build_outputs(cfgs):
     r1 = s[s.cmds_per_epoch == 1].iloc[0]
     assert r1.epoch_bytes == ep and r1.ratio_bytes_s2_s4 == pytest.approx((96 + ep) / 96)
     assert s.is_class_a_max.sum() == 1
+    # 1 h epoch at EU868 DR0: epoch message needs more frames than the 12 downlink opportunities
+    inf = a[(a.region == "EU868") & (a.dr == 0) & (a.epoch_hours == 1)]
+    assert len(inf) == 1 and not inf.iloc[0].feasible and inf.iloc[0].epoch_frames > 12
     assert set(a.kem) == {"KEM-X"}                           # unavailable KEM skipped
 
 
@@ -156,7 +159,11 @@ def test_kill_criteria(cfgs):
     k1b = kill.k1(out, spec)                                          # 110 B -> 3 frames @ DR8
     assert k1b["frames"] == 3 and k1b["answer"] == "yes"
     assert kill.k1(out, dict(spec, algorithm="NONE"))["answer"] == "n/a"
-    assert k["K2"]["answer"].startswith(("yes", "no"))
+    k2 = k["K2"]
+    assert k2["answer"].startswith("yes")                             # fixture: 100 cmds/epoch amortises
+    cm = {(r["kem"], r["epoch_hours"]): r for r in k2["class_a_max"]}
+    assert cm[("KEM-X", 1)]["n_infeasible_channels"] >= 1
+    assert kill.k2(out, 1.0)["answer"].startswith("no")
     k3 = {(r["region"], r["dr"]): r for r in k["K3"]}
     assert k3[("US915", 8)]["fits_one_frame"] == "none"               # 110 B > 53 B
     assert k3[("US915", 10)]["fits_one_frame"] == "S1/PQ-B"           # 110 B <= 242 B

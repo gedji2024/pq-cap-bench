@@ -133,6 +133,14 @@ def s2_amortization(tm: TokenModel, chans, model, sig, kem) -> pd.DataFrame:
             ep, cmd = link_cost(ep_bytes, ch, fh), link_cost(cmd_bytes, ch, fh)
             for T in model["epoch_hours"]:
                 k_max = (dl.downlink_opportunities(T * 3600, U) - ep["frames"]) // cmd["frames"]
+                if k_max < 1:  # epoch message alone exhausts the epoch's downlink opportunities
+                    rows.append({"kem": k_name, "cert_signer": signer, "region": ch.region, "dr": ch.dr,
+                                 "epoch_hours": T, "cmds_per_epoch": 0, "is_class_a_max": True,
+                                 "is_configured_point": False, "feasible": False,
+                                 "epoch_bytes": ep_bytes, "epoch_frames": ep["frames"],
+                                 "epoch_airtime_s": ep["airtime_s"], "cmd_bytes": cmd_bytes,
+                                 "cmd_frames": cmd["frames"]})
+                    continue
                 for k in sorted(set(model["s2_commands_per_epoch"] + [max(k_max, 0)])):
                     if k < 1 or k > k_max:
                         continue
@@ -140,12 +148,13 @@ def s2_amortization(tm: TokenModel, chans, model, sig, kem) -> pd.DataFrame:
                     s2_b = cmd_bytes + ep_bytes / k
                     rows.append({"kem": k_name, "cert_signer": signer, "region": ch.region, "dr": ch.dr,
                                  "epoch_hours": T, "cmds_per_epoch": k, "is_class_a_max": k == k_max,
+                                 "is_configured_point": k in model["s2_commands_per_epoch"],
                                  "epoch_bytes": ep_bytes, "epoch_frames": ep["frames"],
                                  "epoch_airtime_s": ep["airtime_s"], "cmd_bytes": cmd_bytes,
                                  "cmd_frames": cmd["frames"], "s4_airtime_per_cmd_s": cmd["airtime_s"],
                                  "s2_airtime_per_cmd_s": s2_air, "ratio_airtime_s2_s4": s2_air / cmd["airtime_s"],
                                  "s4_bytes_per_cmd": cmd_bytes, "s2_bytes_per_cmd": s2_b,
-                                 "ratio_bytes_s2_s4": s2_b / cmd_bytes})
+                                 "ratio_bytes_s2_s4": s2_b / cmd_bytes, "feasible": True})
     return pd.DataFrame(rows)
 
 
