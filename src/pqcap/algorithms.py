@@ -11,7 +11,6 @@ and `name` (report label) / `impl_name` (exact library mechanism name).
 
 from __future__ import annotations
 
-import hashlib
 import hmac as _hmac
 import os
 from dataclasses import dataclass, field
@@ -330,6 +329,3 @@ def build_algorithms(cfg: dict, oqs):
 
     return list(algs.values()), kems, res
 
-
-def sha256(b: bytes) -> bytes:
-    return hashlib.sha256(b).digest()
