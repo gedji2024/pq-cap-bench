@@ -256,6 +256,26 @@ def section_k5(k5: dict) -> str:
                        | {"ratio_s6_s4": lambda v: f"{v:.4f}"}))
 
 
+def section_k5_matrix(k5: dict) -> str:
+    if "matrix" not in k5:
+        return ""
+    m = pd.DataFrame(k5["matrix"])
+    return ("\n\n**K5 - blast radius per compromise** (accepted catalogue commands, state "
+            f"{k5['state']}; C1 = cloud agent platform, C2 = one gateway / network server, C3 = policy authority HSM, "
+            "C1+C3 = both, extra row; key custody in `config/threat.yaml`, assumed):\n\n"
+            + md_table(m, {c: (lambda v: f"{int(v):,}") for c in m.columns if c != "compromise"}))
+
+
+def section_k6(k6: dict) -> str:
+    r = pd.DataFrame(k6["rows"])
+    p = pd.DataFrame(k6["properties"])
+    return (f"**K6 - blast(S4-E) / blast(S6) per compromise -> {k6['answer']}.**\n\n"
+            + md_table(r, {c: (lambda v: f"{int(v):,}") for c in ("S4", "S4-F", "S4-E", "S6")}
+                       | {"ratio_s4e_s6": lambda v: f"{v:.3f}"})
+            + "\n\nProperties that differ (blast radius does not separate S4-E from S6; these do):\n\n"
+            + md_table(p))
+
+
 def section_kill(results: Path) -> str:
     k = json.loads((results / "kill_criteria.json").read_text())
     k1 = k["K1"]
@@ -295,7 +315,9 @@ def section_kill(results: Path) -> str:
               + md_table(pd.DataFrame(k4["rows"]), {"cmd_bytes": lambda v: f"{int(v)}",
                                                     "min_max_app_payload": lambda v: f"{int(v)}"}))
     parts = [s1, s2, s3, s4,
-             section_k5(k["K5"]) if "K5" in k else "**K5: n/a** - no action catalogue (config/actions.yaml)"]
+             (section_k5(k["K5"]) + section_k5_matrix(k["K5"])) if "K5" in k
+             else "**K5: n/a** - no action catalogue (config/actions.yaml)",
+             section_k6(k["K6"]) if "K6" in k else "**K6: n/a** - no threat model (config/threat.yaml)"]
     return "\n\n".join(parts)
 
 

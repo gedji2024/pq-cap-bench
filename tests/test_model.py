@@ -16,7 +16,8 @@ from pqcap.config import CONFIG, load_yaml
 from pqcap.radio import fragment
 from pqcap.token import TokenModel, epoch_message_bytes
 
-FIX_SIG = {"PQ-A": 1000, "PQ-B": 30, "HMAC-SHA256-T16": 16, "ECDSA-P256": 64, "HYB": 1064}
+FIX_SIG = {"PQ-A": 1000, "PQ-B": 30, "HMAC-SHA256-T16": 16, "HMAC-SHA256-T32": 32, "ECDSA-P256": 64,
+           "HYB": 1064}
 FIX_KEM = {"KEM-X": 500}
 
 
@@ -200,10 +201,11 @@ def test_run_end_to_end(tmp_path, cfgs):
     for name, obj in {"token": token, "radio": radio, "model": model}.items():
         (cfg / f"{name}.yaml").write_text(json.dumps(obj))           # JSON is valid YAML
     (cfg / "actions.yaml").write_text((CONFIG / "actions.yaml").read_text())
+    (cfg / "threat.yaml").write_text((CONFIG / "threat.yaml").read_text())
     M.run(cfg, tmp_path)
     for f in ("model_tokens", "model_delivery", "model_capacity", "model_s2_amortization"):
         assert (tmp_path / f"{f}.csv").exists()
     kc = json.loads((tmp_path / "kill_criteria.json").read_text())
     assert kc["K1"]["answer"] == "no" and kc["K1_crc_sensitivity"]["frames"] == kc["K1"]["frames"]
     assert (tmp_path / "model_sensitivity_crc.csv").exists() and (tmp_path / "model_blast_radius.csv").exists()
-    assert 0 < kc["K5"]["ratio"] < 1
+    assert 0 < kc["K5"]["ratio"] < 1 and "K6" in kc and (tmp_path / "model_blast_compromise.csv").exists()

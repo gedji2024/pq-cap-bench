@@ -1,0 +1,257 @@
+compromise,compromise_label,scheme,state,action,catalogue_commands,accepted,attacker_has_session_key,attacker_replaced_envelope
+C1,cloud agent platform,S4,"alert=True,battery=above_floor",set_reporting_interval,1440,1440,True,False
+C1,cloud agent platform,S4,"alert=True,battery=above_floor",request_immediate_uplink,1,1,True,False
+C1,cloud agent platform,S4,"alert=True,battery=above_floor",sensor_enable,2,2,True,False
+C1,cloud agent platform,S4,"alert=True,battery=above_floor",set_alert_threshold,1501,1501,True,False
+C1,cloud agent platform,S4,"alert=True,battery=below_floor",set_reporting_interval,1440,1440,True,False
+C1,cloud agent platform,S4,"alert=True,battery=below_floor",request_immediate_uplink,1,1,True,False
+C1,cloud agent platform,S4,"alert=True,battery=below_floor",sensor_enable,2,2,True,False
+C1,cloud agent platform,S4,"alert=True,battery=below_floor",set_alert_threshold,1501,1501,True,False
+C1,cloud agent platform,S4,"alert=False,battery=above_floor",set_reporting_interval,1440,1440,True,False
+C1,cloud agent platform,S4,"alert=False,battery=above_floor",request_immediate_uplink,1,1,True,False
+C1,cloud agent platform,S4,"alert=False,battery=above_floor",sensor_enable,2,2,True,False
+C1,cloud agent platform,S4,"alert=False,battery=above_floor",set_alert_threshold,1501,1501,True,False
+C1,cloud agent platform,S4,"alert=False,battery=below_floor",set_reporting_interval,1440,1440,True,False
+C1,cloud agent platform,S4,"alert=False,battery=below_floor",request_immediate_uplink,1,1,True,False
+C1,cloud agent platform,S4,"alert=False,battery=below_floor",sensor_enable,2,2,True,False
+C1,cloud agent platform,S4,"alert=False,battery=below_floor",set_alert_threshold,1501,1501,True,False
+C1,cloud agent platform,S4-F,"alert=True,battery=above_floor",set_reporting_interval,1440,11,True,False
+C1,cloud agent platform,S4-F,"alert=True,battery=above_floor",request_immediate_uplink,1,1,True,False
+C1,cloud agent platform,S4-F,"alert=True,battery=above_floor",sensor_enable,2,1,True,False
+C1,cloud agent platform,S4-F,"alert=True,battery=above_floor",set_alert_threshold,1501,1351,True,False
+C1,cloud agent platform,S4-F,"alert=True,battery=below_floor",set_reporting_interval,1440,0,True,False
+C1,cloud agent platform,S4-F,"alert=True,battery=below_floor",request_immediate_uplink,1,0,True,False
+C1,cloud agent platform,S4-F,"alert=True,battery=below_floor",sensor_enable,2,1,True,False
+C1,cloud agent platform,S4-F,"alert=True,battery=below_floor",set_alert_threshold,1501,1351,True,False
+C1,cloud agent platform,S4-F,"alert=False,battery=above_floor",set_reporting_interval,1440,716,True,False
+C1,cloud agent platform,S4-F,"alert=False,battery=above_floor",request_immediate_uplink,1,1,True,False
+C1,cloud agent platform,S4-F,"alert=False,battery=above_floor",sensor_enable,2,2,True,False
+C1,cloud agent platform,S4-F,"alert=False,battery=above_floor",set_alert_threshold,1501,1351,True,False
+C1,cloud agent platform,S4-F,"alert=False,battery=below_floor",set_reporting_interval,1440,601,True,False
+C1,cloud agent platform,S4-F,"alert=False,battery=below_floor",request_immediate_uplink,1,0,True,False
+C1,cloud agent platform,S4-F,"alert=False,battery=below_floor",sensor_enable,2,2,True,False
+C1,cloud agent platform,S4-F,"alert=False,battery=below_floor",set_alert_threshold,1501,1351,True,False
+C1,cloud agent platform,S4-E,"alert=True,battery=above_floor",set_reporting_interval,1440,11,True,False
+C1,cloud agent platform,S4-E,"alert=True,battery=above_floor",request_immediate_uplink,1,1,True,False
+C1,cloud agent platform,S4-E,"alert=True,battery=above_floor",sensor_enable,2,1,True,False
+C1,cloud agent platform,S4-E,"alert=True,battery=above_floor",set_alert_threshold,1501,301,True,False
+C1,cloud agent platform,S4-E,"alert=True,battery=below_floor",set_reporting_interval,1440,0,True,False
+C1,cloud agent platform,S4-E,"alert=True,battery=below_floor",request_immediate_uplink,1,0,True,False
+C1,cloud agent platform,S4-E,"alert=True,battery=below_floor",sensor_enable,2,1,True,False
+C1,cloud agent platform,S4-E,"alert=True,battery=below_floor",set_alert_threshold,1501,301,True,False
+C1,cloud agent platform,S4-E,"alert=False,battery=above_floor",set_reporting_interval,1440,56,True,False
+C1,cloud agent platform,S4-E,"alert=False,battery=above_floor",request_immediate_uplink,1,1,True,False
+C1,cloud agent platform,S4-E,"alert=False,battery=above_floor",sensor_enable,2,1,True,False
+C1,cloud agent platform,S4-E,"alert=False,battery=above_floor",set_alert_threshold,1501,301,True,False
+C1,cloud agent platform,S4-E,"alert=False,battery=below_floor",set_reporting_interval,1440,0,True,False
+C1,cloud agent platform,S4-E,"alert=False,battery=below_floor",request_immediate_uplink,1,0,True,False
+C1,cloud agent platform,S4-E,"alert=False,battery=below_floor",sensor_enable,2,1,True,False
+C1,cloud agent platform,S4-E,"alert=False,battery=below_floor",set_alert_threshold,1501,301,True,False
+C1,cloud agent platform,S6,"alert=True,battery=above_floor",set_reporting_interval,1440,11,True,False
+C1,cloud agent platform,S6,"alert=True,battery=above_floor",request_immediate_uplink,1,1,True,False
+C1,cloud agent platform,S6,"alert=True,battery=above_floor",sensor_enable,2,1,True,False
+C1,cloud agent platform,S6,"alert=True,battery=above_floor",set_alert_threshold,1501,301,True,False
+C1,cloud agent platform,S6,"alert=True,battery=below_floor",set_reporting_interval,1440,0,True,False
+C1,cloud agent platform,S6,"alert=True,battery=below_floor",request_immediate_uplink,1,0,True,False
+C1,cloud agent platform,S6,"alert=True,battery=below_floor",sensor_enable,2,1,True,False
+C1,cloud agent platform,S6,"alert=True,battery=below_floor",set_alert_threshold,1501,301,True,False
+C1,cloud agent platform,S6,"alert=False,battery=above_floor",set_reporting_interval,1440,56,True,False
+C1,cloud agent platform,S6,"alert=False,battery=above_floor",request_immediate_uplink,1,1,True,False
+C1,cloud agent platform,S6,"alert=False,battery=above_floor",sensor_enable,2,1,True,False
+C1,cloud agent platform,S6,"alert=False,battery=above_floor",set_alert_threshold,1501,301,True,False
+C1,cloud agent platform,S6,"alert=False,battery=below_floor",set_reporting_interval,1440,0,True,False
+C1,cloud agent platform,S6,"alert=False,battery=below_floor",request_immediate_uplink,1,0,True,False
+C1,cloud agent platform,S6,"alert=False,battery=below_floor",sensor_enable,2,1,True,False
+C1,cloud agent platform,S6,"alert=False,battery=below_floor",set_alert_threshold,1501,301,True,False
+C2,one gateway / network server,S4,"alert=True,battery=above_floor",set_reporting_interval,1440,0,False,False
+C2,one gateway / network server,S4,"alert=True,battery=above_floor",request_immediate_uplink,1,0,False,False
+C2,one gateway / network server,S4,"alert=True,battery=above_floor",sensor_enable,2,0,False,False
+C2,one gateway / network server,S4,"alert=True,battery=above_floor",set_alert_threshold,1501,0,False,False
+C2,one gateway / network server,S4,"alert=True,battery=below_floor",set_reporting_interval,1440,0,False,False
+C2,one gateway / network server,S4,"alert=True,battery=below_floor",request_immediate_uplink,1,0,False,False
+C2,one gateway / network server,S4,"alert=True,battery=below_floor",sensor_enable,2,0,False,False
+C2,one gateway / network server,S4,"alert=True,battery=below_floor",set_alert_threshold,1501,0,False,False
+C2,one gateway / network server,S4,"alert=False,battery=above_floor",set_reporting_interval,1440,0,False,False
+C2,one gateway / network server,S4,"alert=False,battery=above_floor",request_immediate_uplink,1,0,False,False
+C2,one gateway / network server,S4,"alert=False,battery=above_floor",sensor_enable,2,0,False,False
+C2,one gateway / network server,S4,"alert=False,battery=above_floor",set_alert_threshold,1501,0,False,False
+C2,one gateway / network server,S4,"alert=False,battery=below_floor",set_reporting_interval,1440,0,False,False
+C2,one gateway / network server,S4,"alert=False,battery=below_floor",request_immediate_uplink,1,0,False,False
+C2,one gateway / network server,S4,"alert=False,battery=below_floor",sensor_enable,2,0,False,False
+C2,one gateway / network server,S4,"alert=False,battery=below_floor",set_alert_threshold,1501,0,False,False
+C2,one gateway / network server,S4-F,"alert=True,battery=above_floor",set_reporting_interval,1440,0,False,False
+C2,one gateway / network server,S4-F,"alert=True,battery=above_floor",request_immediate_uplink,1,0,False,False
+C2,one gateway / network server,S4-F,"alert=True,battery=above_floor",sensor_enable,2,0,False,False
+C2,one gateway / network server,S4-F,"alert=True,battery=above_floor",set_alert_threshold,1501,0,False,False
+C2,one gateway / network server,S4-F,"alert=True,battery=below_floor",set_reporting_interval,1440,0,False,False
+C2,one gateway / network server,S4-F,"alert=True,battery=below_floor",request_immediate_uplink,1,0,False,False
+C2,one gateway / network server,S4-F,"alert=True,battery=below_floor",sensor_enable,2,0,False,False
+C2,one gateway / network server,S4-F,"alert=True,battery=below_floor",set_alert_threshold,1501,0,False,False
+C2,one gateway / network server,S4-F,"alert=False,battery=above_floor",set_reporting_interval,1440,0,False,False
+C2,one gateway / network server,S4-F,"alert=False,battery=above_floor",request_immediate_uplink,1,0,False,False
+C2,one gateway / network server,S4-F,"alert=False,battery=above_floor",sensor_enable,2,0,False,False
+C2,one gateway / network server,S4-F,"alert=False,battery=above_floor",set_alert_threshold,1501,0,False,False
+C2,one gateway / network server,S4-F,"alert=False,battery=below_floor",set_reporting_interval,1440,0,False,False
+C2,one gateway / network server,S4-F,"alert=False,battery=below_floor",request_immediate_uplink,1,0,False,False
+C2,one gateway / network server,S4-F,"alert=False,battery=below_floor",sensor_enable,2,0,False,False
+C2,one gateway / network server,S4-F,"alert=False,battery=below_floor",set_alert_threshold,1501,0,False,False
+C2,one gateway / network server,S4-E,"alert=True,battery=above_floor",set_reporting_interval,1440,0,False,False
+C2,one gateway / network server,S4-E,"alert=True,battery=above_floor",request_immediate_uplink,1,0,False,False
+C2,one gateway / network server,S4-E,"alert=True,battery=above_floor",sensor_enable,2,0,False,False
+C2,one gateway / network server,S4-E,"alert=True,battery=above_floor",set_alert_threshold,1501,0,False,False
+C2,one gateway / network server,S4-E,"alert=True,battery=below_floor",set_reporting_interval,1440,0,False,False
+C2,one gateway / network server,S4-E,"alert=True,battery=below_floor",request_immediate_uplink,1,0,False,False
+C2,one gateway / network server,S4-E,"alert=True,battery=below_floor",sensor_enable,2,0,False,False
+C2,one gateway / network server,S4-E,"alert=True,battery=below_floor",set_alert_threshold,1501,0,False,False
+C2,one gateway / network server,S4-E,"alert=False,battery=above_floor",set_reporting_interval,1440,0,False,False
+C2,one gateway / network server,S4-E,"alert=False,battery=above_floor",request_immediate_uplink,1,0,False,False
+C2,one gateway / network server,S4-E,"alert=False,battery=above_floor",sensor_enable,2,0,False,False
+C2,one gateway / network server,S4-E,"alert=False,battery=above_floor",set_alert_threshold,1501,0,False,False
+C2,one gateway / network server,S4-E,"alert=False,battery=below_floor",set_reporting_interval,1440,0,False,False
+C2,one gateway / network server,S4-E,"alert=False,battery=below_floor",request_immediate_uplink,1,0,False,False
+C2,one gateway / network server,S4-E,"alert=False,battery=below_floor",sensor_enable,2,0,False,False
+C2,one gateway / network server,S4-E,"alert=False,battery=below_floor",set_alert_threshold,1501,0,False,False
+C2,one gateway / network server,S6,"alert=True,battery=above_floor",set_reporting_interval,1440,0,False,False
+C2,one gateway / network server,S6,"alert=True,battery=above_floor",request_immediate_uplink,1,0,False,False
+C2,one gateway / network server,S6,"alert=True,battery=above_floor",sensor_enable,2,0,False,False
+C2,one gateway / network server,S6,"alert=True,battery=above_floor",set_alert_threshold,1501,0,False,False
+C2,one gateway / network server,S6,"alert=True,battery=below_floor",set_reporting_interval,1440,0,False,False
+C2,one gateway / network server,S6,"alert=True,battery=below_floor",request_immediate_uplink,1,0,False,False
+C2,one gateway / network server,S6,"alert=True,battery=below_floor",sensor_enable,2,0,False,False
+C2,one gateway / network server,S6,"alert=True,battery=below_floor",set_alert_threshold,1501,0,False,False
+C2,one gateway / network server,S6,"alert=False,battery=above_floor",set_reporting_interval,1440,0,False,False
+C2,one gateway / network server,S6,"alert=False,battery=above_floor",request_immediate_uplink,1,0,False,False
+C2,one gateway / network server,S6,"alert=False,battery=above_floor",sensor_enable,2,0,False,False
+C2,one gateway / network server,S6,"alert=False,battery=above_floor",set_alert_threshold,1501,0,False,False
+C2,one gateway / network server,S6,"alert=False,battery=below_floor",set_reporting_interval,1440,0,False,False
+C2,one gateway / network server,S6,"alert=False,battery=below_floor",request_immediate_uplink,1,0,False,False
+C2,one gateway / network server,S6,"alert=False,battery=below_floor",sensor_enable,2,0,False,False
+C2,one gateway / network server,S6,"alert=False,battery=below_floor",set_alert_threshold,1501,0,False,False
+C3,policy authority HSM,S4,"alert=True,battery=above_floor",set_reporting_interval,1440,0,False,False
+C3,policy authority HSM,S4,"alert=True,battery=above_floor",request_immediate_uplink,1,0,False,False
+C3,policy authority HSM,S4,"alert=True,battery=above_floor",sensor_enable,2,0,False,False
+C3,policy authority HSM,S4,"alert=True,battery=above_floor",set_alert_threshold,1501,0,False,False
+C3,policy authority HSM,S4,"alert=True,battery=below_floor",set_reporting_interval,1440,0,False,False
+C3,policy authority HSM,S4,"alert=True,battery=below_floor",request_immediate_uplink,1,0,False,False
+C3,policy authority HSM,S4,"alert=True,battery=below_floor",sensor_enable,2,0,False,False
+C3,policy authority HSM,S4,"alert=True,battery=below_floor",set_alert_threshold,1501,0,False,False
+C3,policy authority HSM,S4,"alert=False,battery=above_floor",set_reporting_interval,1440,0,False,False
+C3,policy authority HSM,S4,"alert=False,battery=above_floor",request_immediate_uplink,1,0,False,False
+C3,policy authority HSM,S4,"alert=False,battery=above_floor",sensor_enable,2,0,False,False
+C3,policy authority HSM,S4,"alert=False,battery=above_floor",set_alert_threshold,1501,0,False,False
+C3,policy authority HSM,S4,"alert=False,battery=below_floor",set_reporting_interval,1440,0,False,False
+C3,policy authority HSM,S4,"alert=False,battery=below_floor",request_immediate_uplink,1,0,False,False
+C3,policy authority HSM,S4,"alert=False,battery=below_floor",sensor_enable,2,0,False,False
+C3,policy authority HSM,S4,"alert=False,battery=below_floor",set_alert_threshold,1501,0,False,False
+C3,policy authority HSM,S4-F,"alert=True,battery=above_floor",set_reporting_interval,1440,0,False,False
+C3,policy authority HSM,S4-F,"alert=True,battery=above_floor",request_immediate_uplink,1,0,False,False
+C3,policy authority HSM,S4-F,"alert=True,battery=above_floor",sensor_enable,2,0,False,False
+C3,policy authority HSM,S4-F,"alert=True,battery=above_floor",set_alert_threshold,1501,0,False,False
+C3,policy authority HSM,S4-F,"alert=True,battery=below_floor",set_reporting_interval,1440,0,False,False
+C3,policy authority HSM,S4-F,"alert=True,battery=below_floor",request_immediate_uplink,1,0,False,False
+C3,policy authority HSM,S4-F,"alert=True,battery=below_floor",sensor_enable,2,0,False,False
+C3,policy authority HSM,S4-F,"alert=True,battery=below_floor",set_alert_threshold,1501,0,False,False
+C3,policy authority HSM,S4-F,"alert=False,battery=above_floor",set_reporting_interval,1440,0,False,False
+C3,policy authority HSM,S4-F,"alert=False,battery=above_floor",request_immediate_uplink,1,0,False,False
+C3,policy authority HSM,S4-F,"alert=False,battery=above_floor",sensor_enable,2,0,False,False
+C3,policy authority HSM,S4-F,"alert=False,battery=above_floor",set_alert_threshold,1501,0,False,False
+C3,policy authority HSM,S4-F,"alert=False,battery=below_floor",set_reporting_interval,1440,0,False,False
+C3,policy authority HSM,S4-F,"alert=False,battery=below_floor",request_immediate_uplink,1,0,False,False
+C3,policy authority HSM,S4-F,"alert=False,battery=below_floor",sensor_enable,2,0,False,False
+C3,policy authority HSM,S4-F,"alert=False,battery=below_floor",set_alert_threshold,1501,0,False,False
+C3,policy authority HSM,S4-E,"alert=True,battery=above_floor",set_reporting_interval,1440,0,False,True
+C3,policy authority HSM,S4-E,"alert=True,battery=above_floor",request_immediate_uplink,1,0,False,True
+C3,policy authority HSM,S4-E,"alert=True,battery=above_floor",sensor_enable,2,0,False,True
+C3,policy authority HSM,S4-E,"alert=True,battery=above_floor",set_alert_threshold,1501,0,False,True
+C3,policy authority HSM,S4-E,"alert=True,battery=below_floor",set_reporting_interval,1440,0,False,True
+C3,policy authority HSM,S4-E,"alert=True,battery=below_floor",request_immediate_uplink,1,0,False,True
+C3,policy authority HSM,S4-E,"alert=True,battery=below_floor",sensor_enable,2,0,False,True
+C3,policy authority HSM,S4-E,"alert=True,battery=below_floor",set_alert_threshold,1501,0,False,True
+C3,policy authority HSM,S4-E,"alert=False,battery=above_floor",set_reporting_interval,1440,0,False,True
+C3,policy authority HSM,S4-E,"alert=False,battery=above_floor",request_immediate_uplink,1,0,False,True
+C3,policy authority HSM,S4-E,"alert=False,battery=above_floor",sensor_enable,2,0,False,True
+C3,policy authority HSM,S4-E,"alert=False,battery=above_floor",set_alert_threshold,1501,0,False,True
+C3,policy authority HSM,S4-E,"alert=False,battery=below_floor",set_reporting_interval,1440,0,False,True
+C3,policy authority HSM,S4-E,"alert=False,battery=below_floor",request_immediate_uplink,1,0,False,True
+C3,policy authority HSM,S4-E,"alert=False,battery=below_floor",sensor_enable,2,0,False,True
+C3,policy authority HSM,S4-E,"alert=False,battery=below_floor",set_alert_threshold,1501,0,False,True
+C3,policy authority HSM,S6,"alert=True,battery=above_floor",set_reporting_interval,1440,0,False,True
+C3,policy authority HSM,S6,"alert=True,battery=above_floor",request_immediate_uplink,1,0,False,True
+C3,policy authority HSM,S6,"alert=True,battery=above_floor",sensor_enable,2,0,False,True
+C3,policy authority HSM,S6,"alert=True,battery=above_floor",set_alert_threshold,1501,0,False,True
+C3,policy authority HSM,S6,"alert=True,battery=below_floor",set_reporting_interval,1440,0,False,True
+C3,policy authority HSM,S6,"alert=True,battery=below_floor",request_immediate_uplink,1,0,False,True
+C3,policy authority HSM,S6,"alert=True,battery=below_floor",sensor_enable,2,0,False,True
+C3,policy authority HSM,S6,"alert=True,battery=below_floor",set_alert_threshold,1501,0,False,True
+C3,policy authority HSM,S6,"alert=False,battery=above_floor",set_reporting_interval,1440,0,False,True
+C3,policy authority HSM,S6,"alert=False,battery=above_floor",request_immediate_uplink,1,0,False,True
+C3,policy authority HSM,S6,"alert=False,battery=above_floor",sensor_enable,2,0,False,True
+C3,policy authority HSM,S6,"alert=False,battery=above_floor",set_alert_threshold,1501,0,False,True
+C3,policy authority HSM,S6,"alert=False,battery=below_floor",set_reporting_interval,1440,0,False,True
+C3,policy authority HSM,S6,"alert=False,battery=below_floor",request_immediate_uplink,1,0,False,True
+C3,policy authority HSM,S6,"alert=False,battery=below_floor",sensor_enable,2,0,False,True
+C3,policy authority HSM,S6,"alert=False,battery=below_floor",set_alert_threshold,1501,0,False,True
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4,"alert=True,battery=above_floor",set_reporting_interval,1440,1440,True,False
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4,"alert=True,battery=above_floor",request_immediate_uplink,1,1,True,False
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4,"alert=True,battery=above_floor",sensor_enable,2,2,True,False
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4,"alert=True,battery=above_floor",set_alert_threshold,1501,1501,True,False
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4,"alert=True,battery=below_floor",set_reporting_interval,1440,1440,True,False
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4,"alert=True,battery=below_floor",request_immediate_uplink,1,1,True,False
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4,"alert=True,battery=below_floor",sensor_enable,2,2,True,False
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4,"alert=True,battery=below_floor",set_alert_threshold,1501,1501,True,False
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4,"alert=False,battery=above_floor",set_reporting_interval,1440,1440,True,False
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4,"alert=False,battery=above_floor",request_immediate_uplink,1,1,True,False
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4,"alert=False,battery=above_floor",sensor_enable,2,2,True,False
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4,"alert=False,battery=above_floor",set_alert_threshold,1501,1501,True,False
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4,"alert=False,battery=below_floor",set_reporting_interval,1440,1440,True,False
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4,"alert=False,battery=below_floor",request_immediate_uplink,1,1,True,False
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4,"alert=False,battery=below_floor",sensor_enable,2,2,True,False
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4,"alert=False,battery=below_floor",set_alert_threshold,1501,1501,True,False
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4-F,"alert=True,battery=above_floor",set_reporting_interval,1440,11,True,False
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4-F,"alert=True,battery=above_floor",request_immediate_uplink,1,1,True,False
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4-F,"alert=True,battery=above_floor",sensor_enable,2,1,True,False
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4-F,"alert=True,battery=above_floor",set_alert_threshold,1501,1351,True,False
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4-F,"alert=True,battery=below_floor",set_reporting_interval,1440,0,True,False
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4-F,"alert=True,battery=below_floor",request_immediate_uplink,1,0,True,False
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4-F,"alert=True,battery=below_floor",sensor_enable,2,1,True,False
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4-F,"alert=True,battery=below_floor",set_alert_threshold,1501,1351,True,False
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4-F,"alert=False,battery=above_floor",set_reporting_interval,1440,716,True,False
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4-F,"alert=False,battery=above_floor",request_immediate_uplink,1,1,True,False
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4-F,"alert=False,battery=above_floor",sensor_enable,2,2,True,False
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4-F,"alert=False,battery=above_floor",set_alert_threshold,1501,1351,True,False
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4-F,"alert=False,battery=below_floor",set_reporting_interval,1440,601,True,False
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4-F,"alert=False,battery=below_floor",request_immediate_uplink,1,0,True,False
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4-F,"alert=False,battery=below_floor",sensor_enable,2,2,True,False
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4-F,"alert=False,battery=below_floor",set_alert_threshold,1501,1351,True,False
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4-E,"alert=True,battery=above_floor",set_reporting_interval,1440,1440,True,True
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4-E,"alert=True,battery=above_floor",request_immediate_uplink,1,1,True,True
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4-E,"alert=True,battery=above_floor",sensor_enable,2,2,True,True
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4-E,"alert=True,battery=above_floor",set_alert_threshold,1501,1501,True,True
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4-E,"alert=True,battery=below_floor",set_reporting_interval,1440,1440,True,True
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4-E,"alert=True,battery=below_floor",request_immediate_uplink,1,1,True,True
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4-E,"alert=True,battery=below_floor",sensor_enable,2,2,True,True
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4-E,"alert=True,battery=below_floor",set_alert_threshold,1501,1501,True,True
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4-E,"alert=False,battery=above_floor",set_reporting_interval,1440,1440,True,True
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4-E,"alert=False,battery=above_floor",request_immediate_uplink,1,1,True,True
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4-E,"alert=False,battery=above_floor",sensor_enable,2,2,True,True
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4-E,"alert=False,battery=above_floor",set_alert_threshold,1501,1501,True,True
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4-E,"alert=False,battery=below_floor",set_reporting_interval,1440,1440,True,True
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4-E,"alert=False,battery=below_floor",request_immediate_uplink,1,1,True,True
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4-E,"alert=False,battery=below_floor",sensor_enable,2,2,True,True
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S4-E,"alert=False,battery=below_floor",set_alert_threshold,1501,1501,True,True
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S6,"alert=True,battery=above_floor",set_reporting_interval,1440,1440,True,True
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S6,"alert=True,battery=above_floor",request_immediate_uplink,1,1,True,True
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S6,"alert=True,battery=above_floor",sensor_enable,2,2,True,True
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S6,"alert=True,battery=above_floor",set_alert_threshold,1501,1501,True,True
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S6,"alert=True,battery=below_floor",set_reporting_interval,1440,1440,True,True
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S6,"alert=True,battery=below_floor",request_immediate_uplink,1,1,True,True
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S6,"alert=True,battery=below_floor",sensor_enable,2,2,True,True
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S6,"alert=True,battery=below_floor",set_alert_threshold,1501,1501,True,True
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S6,"alert=False,battery=above_floor",set_reporting_interval,1440,1440,True,True
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S6,"alert=False,battery=above_floor",request_immediate_uplink,1,1,True,True
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S6,"alert=False,battery=above_floor",sensor_enable,2,2,True,True
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S6,"alert=False,battery=above_floor",set_alert_threshold,1501,1501,True,True
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S6,"alert=False,battery=below_floor",set_reporting_interval,1440,1440,True,True
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S6,"alert=False,battery=below_floor",request_immediate_uplink,1,1,True,True
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S6,"alert=False,battery=below_floor",sensor_enable,2,2,True,True
+C1+C3,"cloud platform AND policy HSM (extra, combined)",S6,"alert=False,battery=below_floor",set_alert_threshold,1501,1501,True,True

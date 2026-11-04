@@ -168,6 +168,17 @@ S4-E and S6 differ only in how the envelope is installed:
 - S4-E: HMAC with a per-device policy key.
 - S6: PQ signature, verified with the authority's public key.
 
+**Baselines and compromises (`config/threat.yaml`, assumed key custody).**
+- **S4-F:** per-command HMAC plus static bounds and invariants compiled into firmware. Not updatable over the air.
+- **S4-E:** the same envelopes as S6, but authenticated with HMAC-SHA256 under a per-device key that only the policy authority holds; the cloud platform does not.
+- **Compromises:**
+  - C1: the cloud agent platform, which holds the per-command session keys.
+  - C2: one gateway / network server, which holds only LoRaWAN network keys. Application-layer authentication is assumed end-to-end.
+  - C3: the policy authority's HSM, which holds the S6 signing key and the S4-E per-device keys.
+  - C1+C3: both, reported as an extra row.
+- An attacker holding a scheme's envelope key installs a permissive envelope (the whole catalogue, no invariants).
+- **K6** = blast(S4-E) / blast(S6) per compromise, plus the properties that separate the two. Third-party verification without forging power is demonstrated with real ML-DSA-44 and HMAC in `tests/test_threat.py`.
+
 **Counting.** Blast radius = the number of (action, target, value) commands the device accepts. It is counted by running every candidate through the device check in an explicit device state (alert × battery). K5 uses `count_state`; all four states are in `results/model_blast_radius.csv`.
 
 **Hypothesis property tests:**

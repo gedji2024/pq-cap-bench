@@ -441,6 +441,128 @@
         "S6": 314,
         "ratio_s6_s4": 0.10665760869565218
       }
+    ],
+    "matrix": [
+      {
+        "compromise": "C1",
+        "S4": 2944,
+        "S4-F": 1364,
+        "S4-E": 314,
+        "S6": 314
+      },
+      {
+        "compromise": "C2",
+        "S4": 0,
+        "S4-F": 0,
+        "S4-E": 0,
+        "S6": 0
+      },
+      {
+        "compromise": "C3",
+        "S4": 0,
+        "S4-F": 0,
+        "S4-E": 0,
+        "S6": 0
+      },
+      {
+        "compromise": "C1+C3",
+        "S4": 2944,
+        "S4-F": 1364,
+        "S4-E": 2944,
+        "S6": 2944
+      }
     ]
+  },
+  "K6": {
+    "state": "alert=True,battery=above_floor",
+    "rows": [
+      {
+        "compromise": "C1",
+        "S4": 2944,
+        "S4-F": 1364,
+        "S4-E": 314,
+        "S6": 314,
+        "ratio_s4e_s6": 1.0,
+        "ratio_note": ""
+      },
+      {
+        "compromise": "C2",
+        "S4": 0,
+        "S4-F": 0,
+        "S4-E": 0,
+        "S6": 0,
+        "ratio_s4e_s6": null,
+        "ratio_note": "both 0"
+      },
+      {
+        "compromise": "C3",
+        "S4": 0,
+        "S4-F": 0,
+        "S4-E": 0,
+        "S6": 0,
+        "ratio_s4e_s6": null,
+        "ratio_note": "both 0"
+      },
+      {
+        "compromise": "C1+C3",
+        "S4": 2944,
+        "S4-F": 1364,
+        "S4-E": 2944,
+        "S6": 2944,
+        "ratio_s4e_s6": 1.0,
+        "ratio_note": ""
+      }
+    ],
+    "properties": [
+      {
+        "property": "Third-party verifiability of the policy without forging power",
+        "S4": "n/a (no policy)",
+        "S4-F": "n/a (no OTA policy)",
+        "S4-E": "no: verifying needs the per-device key, which also forges",
+        "S6": "yes: verified with the authority's public key",
+        "evidence": "tests/test_threat.py::test_third_party_verification"
+      },
+      {
+        "property": "Policy provisioning without shared secrets",
+        "S4": "n/a",
+        "S4-F": "yes (compiled in)",
+        "S4-E": "no: per-device secret in device and HSM",
+        "S6": "yes: device stores a public key",
+        "evidence": "config/threat.yaml custody"
+      },
+      {
+        "property": "Policy updatable over the air",
+        "S4": "n/a (no bounds)",
+        "S4-F": "no",
+        "S4-E": "yes",
+        "S6": "yes",
+        "evidence": "scheme definition"
+      },
+      {
+        "property": "One extracted device lets attacker forge envelopes",
+        "S4": "n/a",
+        "S4-F": "n/a",
+        "S4-E": "yes, for that device only",
+        "S6": "no",
+        "evidence": "custody: S4-E device holds policy_mac"
+      },
+      {
+        "property": "Blast radius under C1+C3 bounded below S4's",
+        "evidence": "results/model_blast_compromise.csv",
+        "S4": "no (2944)",
+        "S4-F": "yes (1364)",
+        "S4-E": "no (2944)",
+        "S6": "no (2944)"
+      },
+      {
+        "property": "Envelope bytes on air (measured authenticator sizes)",
+        "S4": "-",
+        "S4-F": "-",
+        "S4-E": "144 B",
+        "S6": "2532 B",
+        "evidence": "results/sizes.csv"
+      }
+    ],
+    "answer": "S4-E and S6 have the same blast radius under every compromise; they differ in the properties listed"
   }
 }

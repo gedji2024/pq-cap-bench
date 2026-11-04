@@ -206,8 +206,20 @@ def run(config: Path, results: Path) -> dict[str, pd.DataFrame]:
         acfg = load_yaml(actions)
         cat, env, inv = ev.catalogue_from_config(acfg), ev.envelope_from_config(acfg), ev.invariants_from_config(acfg)
         ev.encode_envelope(env)  # scenario must fit the 112-B envelope (64-B bounds, 32-B invariants)
-        br = blast.blast_s4_s6(cat, env, inv, model["s6"]["tag_bytes"][0])
+        ref = blast.reference_state_name(acfg)
+        tag_len = model["s6"]["tag_bytes"][0]
+        br = blast.blast_s4_s6(cat, env, inv, tag_len)
         br.to_csv(results / "model_blast_radius.csv", index=False)
-        k["K5"] = blast.k5(br, blast.reference_state_name(acfg))
+        k["K5"] = blast.k5(br, ref)
+        threat_p = config / "threat.yaml"
+        if threat_p.exists():
+            fw = ev.firmware_policy_from_config(acfg)
+            bc = blast.blast_compromise(cat, env, fw, inv, load_yaml(threat_p), tag_len)
+            bc.to_csv(results / "model_blast_compromise.csv", index=False)
+            k["K5"]["matrix"] = (bc[bc.state == ref].groupby(["compromise", "scheme"], sort=False).accepted.sum()
+                                 .unstack().reset_index().to_dict("records"))
+            env_b = {"S4-E": ev.ENVELOPE_BYTES + sig[model["s4e_envelope_mac"]],
+                     "S6": ev.ENVELOPE_BYTES + sig[model["s6"]["signers"][0]]}
+            k["K6"] = blast.k6(bc, ref, env_b)
     (results / "kill_criteria.json").write_text(json.dumps(k, indent=2, default=str))
     return out

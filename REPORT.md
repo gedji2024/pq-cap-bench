@@ -595,6 +595,35 @@ Counted by running every (action, target, value) in `config/actions.yaml` throug
 | set_alert_threshold | 1,501 | 1,501 | 301 | 0.2005 |
 | TOTAL | 2,944 | 2,944 | 314 | 0.1067 |
 
+**K5 - blast radius per compromise** (accepted catalogue commands, state alert=True,battery=above_floor; C1 = cloud agent platform, C2 = one gateway / network server, C3 = policy authority HSM, C1+C3 = both, extra row; key custody in `config/threat.yaml`, assumed):
+
+| compromise | S4 | S4-F | S4-E | S6 |
+|---|---|---|---|---|
+| C1 | 2,944 | 1,364 | 314 | 314 |
+| C2 | 0 | 0 | 0 | 0 |
+| C3 | 0 | 0 | 0 | 0 |
+| C1+C3 | 2,944 | 1,364 | 2,944 | 2,944 |
+
+**K6 - blast(S4-E) / blast(S6) per compromise -> S4-E and S6 have the same blast radius under every compromise; they differ in the properties listed.**
+
+| compromise | S4 | S4-F | S4-E | S6 | ratio_s4e_s6 | ratio_note |
+|---|---|---|---|---|---|---|
+| C1 | 2,944 | 1,364 | 314 | 314 | 1.000 | - |
+| C2 | 0 | 0 | 0 | 0 | - | both 0 |
+| C3 | 0 | 0 | 0 | 0 | - | both 0 |
+| C1+C3 | 2,944 | 1,364 | 2,944 | 2,944 | 1.000 | - |
+
+Properties that differ (blast radius does not separate S4-E from S6; these do):
+
+| property | S4 | S4-F | S4-E | S6 | evidence |
+|---|---|---|---|---|---|
+| Third-party verifiability of the policy without forging power | n/a (no policy) | n/a (no OTA policy) | no: verifying needs the per-device key, which also forges | yes: verified with the authority's public key | tests/test_threat.py::test_third_party_verification |
+| Policy provisioning without shared secrets | n/a | yes (compiled in) | no: per-device secret in device and HSM | yes: device stores a public key | config/threat.yaml custody |
+| Policy updatable over the air | n/a (no bounds) | no | yes | yes | scheme definition |
+| One extracted device lets attacker forge envelopes | n/a | n/a | yes, for that device only | no | custody: S4-E device holds policy_mac |
+| Blast radius under C1+C3 bounded below S4's | no (2944) | yes (1364) | no (2944) | no (2944) | results/model_blast_compromise.csv |
+| Envelope bytes on air (measured authenticator sizes) | - | - | 144 B | 2532 B | results/sizes.csv |
+
 ## 9. Figures
 
 - [fig1_token_frames_per_dr.png](figures/fig1_token_frames_per_dr.png) ([pdf](figures/fig1_token_frames_per_dr.pdf))

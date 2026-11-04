@@ -70,3 +70,92 @@ def k5(df: pd.DataFrame, state: str) -> dict:
     return {"state": state, "ratio": r, "s6_accepted": int(tot["S6"]), "s4_accepted": int(tot["S4"]),
             "answer": f"S6/S4 = {r:.4f} ({int(tot['S6']):,} of {int(tot['S4']):,} commands, state {state})",
             "rows": p.reset_index().to_dict("records")}
+
+
+# ---------------------------------------------------------------- compromise matrix (K6)
+SCHEMES = ("S4", "S4-F", "S4-E", "S6")
+DEVICE_KEY = bytes(range(100, 132))  # the device's real per-command session key in the count
+
+
+def attacker_keys(threat: dict, compromise: str) -> set[str]:
+    return {k for p in threat["compromises"][compromise]["parties"] for k in threat["custody"][p]}
+
+
+def blast_compromise(catalogue, env: ev.Policy, firmware: ev.Policy, inv: ev.Invariants, threat: dict,
+                     tag_len: int = TAG_LEN_DEFAULT) -> pd.DataFrame:
+    """Accepted commands per (scheme, compromise, device state, action).
+
+    The attacker MACs with the device's session key only if a compromised party holds `session` keys;
+    otherwise with a key of its own (and the device's MAC check rejects it). For S6 / S4-E the policy in
+    force is the legitimate envelope, unless the attacker holds that scheme's envelope key, in which case
+    it installs a permissive envelope (whole catalogue, no invariants). Every count runs the device check.
+    """
+    rows = []
+    for comp in threat["compromises"]:
+        keys = attacker_keys(threat, comp)
+        mac_key = DEVICE_KEY if "session" in keys else ATTACKER_KEY
+        for scheme in SCHEMES:
+            pol = env
+            if scheme in threat["envelope_key"] and threat["envelope_key"][scheme] in keys:
+                pol = ev.permissive_policy(catalogue, env.handle)
+            if scheme == "S4":
+                chk, h = (lambda s, m: ev.check_s4(catalogue, s, m, DEVICE_KEY, tag_len)), 0
+            elif scheme == "S4-F":
+                chk, h = (lambda s, m: ev.check_s4f(firmware, catalogue, s, m, DEVICE_KEY, tag_len)), 0
+            else:
+                chk, h = (lambda s, m, p=pol: ev.check_enveloped(p, catalogue, s, m, DEVICE_KEY, tag_len)), env.handle
+            for sname, st in device_states(inv).items():
+                for aid, n in _count_with_key(chk, catalogue, st, h, tag_len, mac_key).items():
+                    a = catalogue[aid]
+                    rows.append({"compromise": comp, "compromise_label": threat["compromises"][comp]["label"],
+                                 "scheme": scheme, "state": sname, "action": a.name,
+                                 "catalogue_commands": a.targets * (a.max - a.min + 1), "accepted": n,
+                                 "attacker_has_session_key": "session" in keys,
+                                 "attacker_replaced_envelope": pol is not env})
+    return pd.DataFrame(rows)
+
+
+def _count_with_key(check, catalogue, state, handle, tag_len, key) -> dict[int, int]:
+    out = {a.id: 0 for a in catalogue.values()}
+    for n, (a, t, v) in enumerate(candidates(catalogue), start=1):
+        s = ev.DeviceState(n - 1, state.alert_active, state.soc_pct, state.now)
+        out[a.id] += check(s, ev.make_command(key, handle, n, a.id, t, v, tag_len))[0].accepted
+    return out
+
+
+PROPERTIES = [
+    # (property, S4, S4-F, S4-E, S6, evidence)
+    ("Third-party verifiability of the policy without forging power", "n/a (no policy)", "n/a (no OTA policy)",
+     "no: verifying needs the per-device key, which also forges",
+     "yes: verified with the authority's public key", "tests/test_threat.py::test_third_party_verification"),
+    ("Policy provisioning without shared secrets", "n/a", "yes (compiled in)",
+     "no: per-device secret in device and HSM", "yes: device stores a public key",
+     "config/threat.yaml custody"),
+    ("Policy updatable over the air", "n/a (no bounds)", "no", "yes", "yes", "scheme definition"),
+    ("One extracted device lets attacker forge envelopes", "n/a", "n/a", "yes, for that device only", "no",
+     "custody: S4-E device holds policy_mac"),
+]
+
+
+def k6(df: pd.DataFrame, state: str, envelope_bytes: dict[str, int]) -> dict:
+    d = df[df.state == state].groupby(["compromise", "scheme"], sort=False).accepted.sum().unstack()
+    rows = []
+    for comp, r in d.iterrows():
+        e, s6 = int(r["S4-E"]), int(r["S6"])
+        rows.append({"compromise": comp, **{k: int(r[k]) for k in SCHEMES},
+                     "ratio_s4e_s6": (e / s6) if s6 else None,
+                     "ratio_note": "" if s6 else ("both 0" if e == 0 else "S6 is 0")})
+    props = [dict(zip(("property", *SCHEMES, "evidence"), p)) for p in PROPERTIES]
+    if "C1+C3" in d.index:  # derived from the matrix, not asserted
+        full = d.loc["C1+C3", "S4"]
+        props.append({"property": "Blast radius under C1+C3 bounded below S4's", "evidence":
+                      "results/model_blast_compromise.csv",
+                      **{k: ("yes" if d.loc["C1+C3", k] < full else "no") + f" ({int(d.loc['C1+C3', k])})"
+                         for k in SCHEMES}})
+    props.append({"property": "Envelope bytes on air (measured authenticator sizes)", "S4": "-", "S4-F": "-",
+                  "S4-E": f"{envelope_bytes['S4-E']} B", "S6": f"{envelope_bytes['S6']} B",
+                  "evidence": "results/sizes.csv"})
+    same = all(r["S4-E"] == r["S6"] for r in rows)
+    return {"state": state, "rows": rows, "properties": props,
+            "answer": ("S4-E and S6 have the same blast radius under every compromise; they differ in the "
+                       "properties listed" if same else "S4-E and S6 blast radii differ (see table)")}

@@ -1,0 +1,25 @@
+# Key custody and compromise scenarios for K5/K6. Modelling assumptions, not measurements.
+#
+# Keys:
+#   session    per-command HMAC session keys (all schemes)
+#   policy_pq  S6 policy authority's PQ signing key (device stores only the public key)
+#   policy_mac S4-E per-device envelope HMAC keys (stored in the device AND in the authority's HSM)
+#   lorawan_ns LoRaWAN network-session keys (MIC / frame counters) held by the network server
+#
+# Assumption: application-layer command authentication is end-to-end between the cloud agent
+# platform and the device, so the gateway / network server never holds `session` keys.
+status: "assumed -- key custody model"
+
+custody:
+  cloud_agent_platform: [session]
+  gateway_network_server: [lorawan_ns]
+  policy_authority_hsm: [policy_pq, policy_mac]
+
+compromises:
+  C1: {label: "cloud agent platform", parties: [cloud_agent_platform]}
+  C2: {label: "one gateway / network server", parties: [gateway_network_server]}
+  C3: {label: "policy authority HSM", parties: [policy_authority_hsm]}
+  C1+C3: {label: "cloud platform AND policy HSM (extra, combined)", parties: [cloud_agent_platform, policy_authority_hsm]}
+
+# Which key lets an attacker replace the installed envelope with one of its own.
+envelope_key: {S6: policy_pq, S4-E: policy_mac}
