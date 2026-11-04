@@ -152,6 +152,56 @@ def section_crc(results: Path, config: Path, model: dict) -> str:
     return "\n\n".join(out) + "\n\n_ttd columns in hours; `_alt` = sensitivity setting._"
 
 
+def section_s6(results: Path, model: dict) -> str:
+    p = results / "model_s6_calm.csv"
+    if not p.exists():
+        return "_S6 not configured_"
+    if p.stat().st_size <= 1:
+        return "_S6: none of the configured envelope signers was measured (see results/algorithms.csv)._"
+    calm, crisis = pd.read_csv(p), pd.read_csv(results / "model_s6_crisis.csv")
+    cmp_ = pd.read_csv(results / "model_s6_compare.csv")
+    ints = lambda v: f"{int(v):,}"  # noqa: E731
+    env = calm.drop_duplicates(["signer", "region", "dr"])
+    t_env = env.pivot_table(index=["signer", "envelope_bytes"], columns=["region", "dr"], values="envelope_frames",
+                            sort=False)
+    t_env.columns = [f"{r} DR{d}" for r, d in t_env.columns]
+    feas = (calm.groupby(["signer", "calm_hours", "devices", "region"], sort=False)
+            .apply(lambda g: pd.Series({
+                "feasible_drs": ", ".join(f"DR{d}" for d in g[g.feasible].dr) or "none",
+                "infeasible_drs": ", ".join(f"DR{d}" for d in g[~g.feasible].dr) or "-",
+                "max_gateway_utilisation": g.gateway_utilisation.max()}), include_groups=False).reset_index())
+    cr = crisis.drop_duplicates(["tag_bytes", "region", "dr"])
+    t_cr = cr.pivot_table(index=["tag_bytes", "cmd_bytes"], columns=["region", "dr"], values="frames", sort=False)
+    t_cr.columns = [f"{r} DR{d}" for r, d in t_cr.columns]
+    n_ref = model["kill_criteria"]["K1"]["devices"]
+    out = [
+        "Envelope = " + " + ".join(f"{k} {v} B" for k, v in model["s6"]["envelope_fields"].items())
+        + " + signature (measured). Crisis command = "
+        + " + ".join(f"{k} {v} B" for k, v in model["s6"]["crisis_fields"].items())
+        + " + truncated HMAC-SHA256 tag. Assumes the crisis HMAC key is already provisioned (as in S4); "
+          "envelope verification (one PQ verify per device per calm period) happens before the event.",
+        "**Calm phase: envelope frames per DR**\n\n" + md_table(t_env.reset_index(), {c: ints for c in t_env.columns}),
+        "**Calm phase feasibility** (feasible = envelope frames <= Class A downlink opportunities in P, and "
+        "N x envelope airtime <= gateway airtime budget in P):\n\n"
+        + md_table(feas, {"devices": ints, "max_gateway_utilisation": lambda v: f"{v:.2%}"}),
+        "**Crisis phase: frames per command** (1 = fits one frame):\n\n"
+        + md_table(t_cr.reset_index(), {c: ints for c in t_cr.columns}),
+    ]
+    for reg, dr in model["figure_channels"]:
+        g = cmp_[(cmp_.region == reg) & (cmp_.dr == dr) & (cmp_.devices == n_ref)]
+        p2 = g.pivot_table(index=["scheme", "algorithm", "cmd_bytes", "frames"], columns="window_min",
+                           values="cmds_gateway", sort=False)
+        p2.columns = [f"W={w} min" for w in p2.columns]
+        out.append(f"**Crisis commands per gateway, {reg} DR{dr}, N = {n_ref}** "
+                   "(S1/S2/S4 at depth 0; S2 per-command cost only, epoch message excluded):\n\n"
+                   + md_table(p2.reset_index(), {c: ints for c in list(p2.columns) + ["cmd_bytes", "frames"]}))
+    return "\n\n".join(out)
+
+
+def section_k5(k5: dict) -> str:  # filled in by the blast-radius step
+    return f"**K5: {k5.get('answer', 'n/a')}**"
+
+
 def section_kill(results: Path) -> str:
     k = json.loads((results / "kill_criteria.json").read_text())
     k1 = k["K1"]
@@ -182,7 +232,18 @@ def section_kill(results: Path) -> str:
                               if c not in ("kem", "epoch_hours")}))
     s3 = ("**K3 - Smallest PQ scheme (S1 or S3, depth 0) whose token fits in one frame, per DR:**\n\n"
           + md_table(pd.DataFrame(k["K3"]), {"fit_token_bytes": lambda v: f"{int(v):,}"}))
-    return "\n\n".join([s1, s2, s3])
+    k4 = k.get("K4", {"answer": "n/a", "reason": "not computed"})
+    if k4["answer"] == "n/a":
+        s4 = f"**K4: n/a** - {k4['reason']}"
+    else:
+        s4 = (f"**K4 - Does every S6 crisis command fit in one frame at every {k4['region']} downlink DR? "
+              f"-> {k4['answer'].upper()}.**\n\n"
+              + md_table(pd.DataFrame(k4["rows"]), {"cmd_bytes": lambda v: f"{int(v)}",
+                                                    "min_max_app_payload": lambda v: f"{int(v)}"}))
+    parts = [s1, s2, s3, s4]
+    if "K5" in k:
+        parts.append(section_k5(k["K5"]))
+    return "\n\n".join(parts)
 
 
 def run(config: Path, results: Path, figures: Path) -> None:
@@ -202,6 +263,7 @@ def run(config: Path, results: Path, figures: Path) -> None:
         "## 6. LoRaWAN / NB-IoT delivery", section_delivery(results, model),
         "## 7. Commands within window", section_capacity(results, model),
         "## 7b. Sensitivity: downlink CRC", section_crc(results, config, model),
+        "## 7c. S6 pre-positioned capability envelopes", section_s6(results, model),
         "## 8. Kill criteria", section_kill(results),
         "## 9. Figures", "\n".join(f"- [{f}](figures/{f}) ([pdf](figures/{f[:-4]}.pdf))" for f in figs),
     ]

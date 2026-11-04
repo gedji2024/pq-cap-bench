@@ -76,6 +76,22 @@ def k3(out: dict[str, pd.DataFrame]) -> list[dict]:
     return res
 
 
+def k4(out: dict[str, pd.DataFrame], region: str = "US915") -> dict:
+    """Does every S6 crisis command fit in one frame at every downlink DR of `region`?"""
+    c = out.get("model_s6_crisis")
+    if c is None or c.empty:
+        return {"answer": "n/a", "reason": "S6 not configured", "rows": []}
+    c = c[c.region == region].drop_duplicates(["tag_bytes", "dr"])
+    rows = (c.groupby("tag_bytes", as_index=False)
+            .agg(cmd_bytes=("cmd_bytes", "first"), min_max_app_payload=("max_app_payload", "min"),
+                 max_frames=("frames", "max"), all_fit=("fits_one_frame", "all"),
+                 n_drs=("dr", "count")))
+    rows["failing_drs"] = [", ".join(f"DR{d}" for d in c[(c.tag_bytes == t) & ~c.fits_one_frame].dr) or "-"
+                           for t in rows.tag_bytes]
+    return {"region": region, "answer": "yes" if rows.all_fit.all() else "no", "rows": rows.to_dict("records")}
+
+
 def evaluate(out: dict[str, pd.DataFrame], model: dict) -> dict:
     kc = model["kill_criteria"]
-    return {"K1": k1(out, kc["K1"]), "K2": k2(out, kc["K2"]["near_symmetric_ratio"]), "K3": k3(out)}
+    return {"K1": k1(out, kc["K1"]), "K2": k2(out, kc["K2"]["near_symmetric_ratio"]), "K3": k3(out),
+            "K4": k4(out, kc.get("K4", {}).get("region", "US915"))}

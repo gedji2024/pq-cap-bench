@@ -391,6 +391,109 @@ Relative airtime change with downlink CRC on (depth 0, all LoRa channels): min +
 
 _ttd columns in hours; `_alt` = sensitivity setting._
 
+## 7c. S6 pre-positioned capability envelopes
+
+Envelope = header 16 B + bounds 64 B + invariants 32 B + signature (measured). Crisis command = envelope_handle 4 B + counter 4 B + params 8 B + truncated HMAC-SHA256 tag. Assumes the crisis HMAC key is already provisioned (as in S4); envelope verification (one PQ verify per device per calm period) happens before the event.
+
+**Calm phase: envelope frames per DR**
+
+| signer | envelope_bytes | US915 DR8 | US915 DR9 | US915 DR10 | US915 DR11 | US915 DR12 | US915 DR13 | EU868 DR0 | EU868 DR1 | EU868 DR2 | EU868 DR3 | EU868 DR4 | EU868 DR5 | EU868 DR6 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| ML-DSA-44 | 2532 | 50 | 20 | 11 | 11 | 11 | 11 | 52 | 52 | 52 | 23 | 11 | 11 | 11 |
+| Falcon-512 | 776 | 16 | 7 | 4 | 4 | 4 | 4 | 16 | 16 | 16 | 7 | 4 | 4 | 4 |
+
+**Calm phase feasibility** (feasible = envelope frames <= Class A downlink opportunities in P, and N x envelope airtime <= gateway airtime budget in P):
+
+| signer | calm_hours | devices | region | feasible_drs | infeasible_drs | max_gateway_utilisation |
+|---|---|---|---|---|---|---|
+| ML-DSA-44 | 6 | 10 | US915 | DR8, DR9, DR10, DR11, DR12, DR13 | - | 1.42% |
+| ML-DSA-44 | 6 | 50 | US915 | DR8, DR9, DR10, DR11, DR12, DR13 | - | 7.11% |
+| ML-DSA-44 | 6 | 200 | US915 | DR8, DR9, DR10, DR11, DR12, DR13 | - | 28.43% |
+| ML-DSA-44 | 24 | 10 | US915 | DR8, DR9, DR10, DR11, DR12, DR13 | - | 0.36% |
+| ML-DSA-44 | 24 | 50 | US915 | DR8, DR9, DR10, DR11, DR12, DR13 | - | 1.78% |
+| ML-DSA-44 | 24 | 200 | US915 | DR8, DR9, DR10, DR11, DR12, DR13 | - | 7.11% |
+| ML-DSA-44 | 72 | 10 | US915 | DR8, DR9, DR10, DR11, DR12, DR13 | - | 0.12% |
+| ML-DSA-44 | 72 | 50 | US915 | DR8, DR9, DR10, DR11, DR12, DR13 | - | 0.59% |
+| ML-DSA-44 | 72 | 200 | US915 | DR8, DR9, DR10, DR11, DR12, DR13 | - | 2.37% |
+| ML-DSA-44 | 6 | 10 | EU868 | DR3, DR4, DR5, DR6 | DR0, DR1, DR2 | 670.23% |
+| ML-DSA-44 | 6 | 50 | EU868 | DR5, DR6 | DR0, DR1, DR2, DR3, DR4 | 3351.13% |
+| ML-DSA-44 | 6 | 200 | EU868 | none | DR0, DR1, DR2, DR3, DR4, DR5, DR6 | 13404.54% |
+| ML-DSA-44 | 24 | 10 | EU868 | DR1, DR2, DR3, DR4, DR5, DR6 | DR0 | 167.56% |
+| ML-DSA-44 | 24 | 50 | EU868 | DR3, DR4, DR5, DR6 | DR0, DR1, DR2 | 837.78% |
+| ML-DSA-44 | 24 | 200 | EU868 | DR5, DR6 | DR0, DR1, DR2, DR3, DR4 | 3351.13% |
+| ML-DSA-44 | 72 | 10 | EU868 | DR0, DR1, DR2, DR3, DR4, DR5, DR6 | - | 55.85% |
+| ML-DSA-44 | 72 | 50 | EU868 | DR2, DR3, DR4, DR5, DR6 | DR0, DR1 | 279.26% |
+| ML-DSA-44 | 72 | 200 | EU868 | DR4, DR5, DR6 | DR0, DR1, DR2, DR3 | 1117.04% |
+| Falcon-512 | 6 | 10 | US915 | DR8, DR9, DR10, DR11, DR12, DR13 | - | 0.44% |
+| Falcon-512 | 6 | 50 | US915 | DR8, DR9, DR10, DR11, DR12, DR13 | - | 2.22% |
+| Falcon-512 | 6 | 200 | US915 | DR8, DR9, DR10, DR11, DR12, DR13 | - | 8.87% |
+| Falcon-512 | 24 | 10 | US915 | DR8, DR9, DR10, DR11, DR12, DR13 | - | 0.11% |
+| Falcon-512 | 24 | 50 | US915 | DR8, DR9, DR10, DR11, DR12, DR13 | - | 0.55% |
+| Falcon-512 | 24 | 200 | US915 | DR8, DR9, DR10, DR11, DR12, DR13 | - | 2.22% |
+| Falcon-512 | 72 | 10 | US915 | DR8, DR9, DR10, DR11, DR12, DR13 | - | 0.04% |
+| Falcon-512 | 72 | 50 | US915 | DR8, DR9, DR10, DR11, DR12, DR13 | - | 0.18% |
+| Falcon-512 | 72 | 200 | US915 | DR8, DR9, DR10, DR11, DR12, DR13 | - | 0.74% |
+| Falcon-512 | 6 | 10 | EU868 | DR2, DR3, DR4, DR5, DR6 | DR0, DR1 | 205.41% |
+| Falcon-512 | 6 | 50 | EU868 | DR4, DR5, DR6 | DR0, DR1, DR2, DR3 | 1027.03% |
+| Falcon-512 | 6 | 200 | EU868 | DR6 | DR0, DR1, DR2, DR3, DR4, DR5 | 4108.14% |
+| Falcon-512 | 24 | 10 | EU868 | DR0, DR1, DR2, DR3, DR4, DR5, DR6 | - | 51.35% |
+| Falcon-512 | 24 | 50 | EU868 | DR2, DR3, DR4, DR5, DR6 | DR0, DR1 | 256.76% |
+| Falcon-512 | 24 | 200 | EU868 | DR4, DR5, DR6 | DR0, DR1, DR2, DR3 | 1027.03% |
+| Falcon-512 | 72 | 10 | EU868 | DR0, DR1, DR2, DR3, DR4, DR5, DR6 | - | 17.12% |
+| Falcon-512 | 72 | 50 | EU868 | DR0, DR1, DR2, DR3, DR4, DR5, DR6 | - | 85.59% |
+| Falcon-512 | 72 | 200 | EU868 | DR2, DR3, DR4, DR5, DR6 | DR0, DR1 | 342.34% |
+
+**Crisis phase: frames per command** (1 = fits one frame):
+
+| tag_bytes | cmd_bytes | US915 DR8 | US915 DR9 | US915 DR10 | US915 DR11 | US915 DR12 | US915 DR13 | EU868 DR0 | EU868 DR1 | EU868 DR2 | EU868 DR3 | EU868 DR4 | EU868 DR5 | EU868 DR6 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 8 | 24 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
+| 16 | 32 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
+
+**Crisis commands per gateway, US915 DR8, N = 50** (S1/S2/S4 at depth 0; S2 per-command cost only, epoch message excluded):
+
+| scheme | algorithm | cmd_bytes | frames | W=15 min | W=30 min | W=60 min |
+|---|---|---|---|---|---|---|
+| S6 | envelope+HMAC-SHA256-T8 | 24 | 1 | 150 | 300 | 600 |
+| S6 | envelope+HMAC-SHA256-T16 | 32 | 1 | 150 | 300 | 600 |
+| S1 | ML-DSA-44 | 2,500 | 50 | 0 | 0 | 0 |
+| S1 | Falcon-512 | 744 | 15 | 0 | 0 | 0 |
+| S2 | ML-DSA-44+KEM/HMAC-SHA256-T16 | 96 | 2 | 50 | 150 | 300 |
+| S4 | HMAC-SHA256-T16 | 96 | 2 | 50 | 150 | 300 |
+
+**Crisis commands per gateway, US915 DR13, N = 50** (S1/S2/S4 at depth 0; S2 per-command cost only, epoch message excluded):
+
+| scheme | algorithm | cmd_bytes | frames | W=15 min | W=30 min | W=60 min |
+|---|---|---|---|---|---|---|
+| S6 | envelope+HMAC-SHA256-T8 | 24 | 1 | 150 | 300 | 600 |
+| S6 | envelope+HMAC-SHA256-T16 | 32 | 1 | 150 | 300 | 600 |
+| S1 | ML-DSA-44 | 2,500 | 11 | 0 | 0 | 50 |
+| S1 | Falcon-512 | 744 | 4 | 0 | 50 | 150 |
+| S2 | ML-DSA-44+KEM/HMAC-SHA256-T16 | 96 | 1 | 150 | 300 | 600 |
+| S4 | HMAC-SHA256-T16 | 96 | 1 | 150 | 300 | 600 |
+
+**Crisis commands per gateway, EU868 DR0, N = 50** (S1/S2/S4 at depth 0; S2 per-command cost only, epoch message excluded):
+
+| scheme | algorithm | cmd_bytes | frames | W=15 min | W=30 min | W=60 min |
+|---|---|---|---|---|---|---|
+| S6 | envelope+HMAC-SHA256-T8 | 24 | 1 | 4 | 9 | 19 |
+| S6 | envelope+HMAC-SHA256-T16 | 32 | 1 | 4 | 8 | 16 |
+| S1 | ML-DSA-44 | 2,500 | 52 | 0 | 0 | 0 |
+| S1 | Falcon-512 | 744 | 16 | 0 | 0 | 0 |
+| S2 | ML-DSA-44+KEM/HMAC-SHA256-T16 | 96 | 2 | 1 | 3 | 6 |
+| S4 | HMAC-SHA256-T16 | 96 | 2 | 1 | 3 | 6 |
+
+**Crisis commands per gateway, EU868 DR5, N = 50** (S1/S2/S4 at depth 0; S2 per-command cost only, epoch message excluded):
+
+| scheme | algorithm | cmd_bytes | frames | W=15 min | W=30 min | W=60 min |
+|---|---|---|---|---|---|---|
+| S6 | envelope+HMAC-SHA256-T8 | 24 | 1 | 116 | 233 | 467 |
+| S6 | envelope+HMAC-SHA256-T16 | 32 | 1 | 103 | 206 | 412 |
+| S1 | ML-DSA-44 | 2,500 | 11 | 0 | 0 | 8 |
+| S1 | Falcon-512 | 744 | 4 | 0 | 14 | 28 |
+| S2 | ML-DSA-44+KEM/HMAC-SHA256-T16 | 96 | 1 | 48 | 97 | 195 |
+| S4 | HMAC-SHA256-T16 | 96 | 1 | 48 | 97 | 195 |
+
 ## 8. Kill criteria
 
 **K1 - Is S1 with ML-DSA-44 deliverable within W = 30 min for N = 50 at US915 DR8? -> NO.**
@@ -443,6 +546,13 @@ At the Class A maximum commands per epoch (every downlink opportunity used; infe
 | EU868 | 5 | 242 | none | - | S1/Falcon-512 | 744 | 4 |
 | EU868 | 6 | 242 | none | - | S1/Falcon-512 | 744 | 4 |
 | NB-IoT | 0 | 1280 | S1/Falcon-512 | 744 | S1/Falcon-512 | 744 | 1 |
+
+**K4 - Does every S6 crisis command fit in one frame at every US915 downlink DR? -> YES.**
+
+| tag_bytes | cmd_bytes | min_max_app_payload | max_frames | all_fit | n_drs | failing_drs |
+|---|---|---|---|---|---|---|
+| 8 | 24 | 53 | 1 | True | 6 | - |
+| 16 | 32 | 53 | 1 | True | 6 | - |
 
 ## 9. Figures
 

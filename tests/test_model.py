@@ -28,6 +28,7 @@ def cfgs():
     model.update(s1_algorithms=["PQ-A", "PQ-B", "MISSING"], s2_cert_signer="PQ-A", s2_kem=["KEM-X", "NOPE"],
                  hybrid_label="HYB")
     model["kill_criteria"]["K1"]["algorithm"] = "PQ-A"
+    model["s6"] = {**model["s6"], "signers": ["PQ-A"], "compare": [["S1", "PQ-A"], ["S4", "HMAC-SHA256-T16"]]}
     return token, radio, model
 
 

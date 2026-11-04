@@ -30,7 +30,22 @@ nbiot_max_payload_bytes: 1280      # NB-IoT application payload per downlink (co
 kill_criteria:
   K1: {scheme: S1, algorithm: ML-DSA-44, window_min: 30, devices: 50, region: US915, dr: 8, depth: 0}
   K2: {near_symmetric_ratio: 2.0}  # S2/S4 per-command airtime ratio considered "near-symmetric"
+  K4: {region: US915}              # S6 crisis command fits one frame at every downlink DR of this region
 
 # Channels shown in the per-channel figures (all channels are always in the CSVs).
 figure_channels: [[US915, 8], [US915, 13], [EU868, 0], [EU868, 5]]
 figure_depth_algorithms: [ML-DSA-44, Falcon-512, SLH-DSA-SHA2-128f]  # S1 lines in the depth figure
+
+# S6 "pre-positioned capability envelopes".
+# Calm phase: one PQ-signed envelope per device, delivered during a calm period P before the event.
+# Crisis phase: compact per-command message authenticated by a truncated HMAC-SHA256 tag and
+# checked by the device against the envelope bounds. Tag length is a design parameter (truncation),
+# not a measured value; HMAC timing is in results/bench_summary.csv (HMAC-SHA256-T16).
+s6:
+  envelope_fields: {header: 16, bounds: 64, invariants: 32}
+  signers: [ML-DSA-44, Falcon-512]           # envelope signature algorithms (measured sizes)
+  calm_period_hours: [6, 24, 72]
+  crisis_fields: {envelope_handle: 4, counter: 4, params: 8}
+  tag_bytes: [8, 16]
+  crisis_windows_min: [15, 30, 60]
+  compare: [[S1, ML-DSA-44], [S1, Falcon-512], [S2, ML-DSA-44+KEM/HMAC-SHA256-T16], [S4, HMAC-SHA256-T16]]

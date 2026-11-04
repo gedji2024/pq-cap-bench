@@ -10,6 +10,7 @@ from pathlib import Path
 import pandas as pd
 
 from . import delivery as dl
+from . import s6 as s6m
 from .config import load_yaml
 from .radio import LoraPhy, MacOverhead, duty_cycle_off_time_s, fragment, frames_airtime_s, time_on_air_s
 from .token import SCHEME_DESC, TokenModel, epoch_message_bytes
@@ -112,8 +113,16 @@ def build(token_cfg: dict, radio: dict, model: dict, sig: dict, kem: dict) -> di
                 deliv.append(row)
 
     amort = s2_amortization(tm, chans, model, sig, kem)
-    return {"model_tokens": pd.DataFrame(tokens), "model_delivery": pd.DataFrame(deliv),
-            "model_capacity": pd.DataFrame(cap), "model_s2_amortization": amort}
+    out = {"model_tokens": pd.DataFrame(tokens), "model_delivery": pd.DataFrame(deliv),
+           "model_capacity": pd.DataFrame(cap), "model_s2_amortization": amort}
+    if "s6" in model:
+        lc = lambda n, ch: link_cost(n, ch, fh)  # noqa: E731
+        Ns = model["devices_per_gateway"]
+        out["model_s6_calm"] = s6m.calm_feasibility(chans, model["s6"], sig, U, Ns, lc)
+        out["model_s6_crisis"] = s6m.crisis_capacity(chans, model["s6"], U, Ns, lc)
+        out["model_s6_compare"] = s6m.compare(out["model_s6_crisis"], out["model_capacity"],
+                                              out["model_delivery"], model["s6"])
+    return out
 
 
 def s2_amortization(tm: TokenModel, chans, model, sig, kem) -> pd.DataFrame:

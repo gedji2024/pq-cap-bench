@@ -52,7 +52,8 @@ def test_report_renders(tmp_path, cfgs):  # noqa: F811
     (figs / "fig1_x.png").write_bytes(b"")
     report.run(cfg, r, figs)
     md = (tmp_path / "REPORT.md").read_text()
-    for h in ("## 1. Environment", "## 4. Host timings", "## 8. Kill criteria", "**K1", "**K2", "**K3", "fig1_x.png"):
+    for h in ("## 1. Environment", "## 4. Host timings", "## 8. Kill criteria", "**K1", "**K2", "**K3", "**K4",
+              "## 7c. S6", "Crisis commands per gateway", "fig1_x.png"):
         assert h in md
     assert "env.json missing" in md
     assert "HOST measurements" in md
@@ -78,10 +79,19 @@ def test_report_env_and_na(tmp_path, cfgs):  # noqa: F811
     k = json.loads((r / "kill_criteria.json").read_text())
     k["K1"] = {"answer": "n/a", "reason": "missing"}
     k["K2"] = {"answer": "n/a", "reason": "missing"}
+    k["K4"] = {"answer": "n/a", "reason": "missing"}
+    (r / "model_s6_calm.csv").unlink()
     (r / "kill_criteria.json").write_text(json.dumps(k))
     report.run(cfg, r, tmp_path)
     md = (tmp_path / "REPORT.md").read_text()
-    assert "**K1: n/a**" in md and "**K2: n/a**" in md and "| CPU | cpu |" in md
+    assert "**K1: n/a**" in md and "**K2: n/a**" in md and "**K4: n/a**" in md and "_S6 not configured_" in md and "| CPU | cpu |" in md
+
+
+def test_report_s6_no_signer(tmp_path, cfgs):  # noqa: F811
+    r, cfg = _fake_results(tmp_path, cfgs)
+    (r / "model_s6_calm.csv").write_text("\n")
+    report.run(cfg, r, tmp_path)
+    assert "none of the configured envelope signers" in (tmp_path / "REPORT.md").read_text()
 
 
 def test_md_table_formats():

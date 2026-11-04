@@ -356,6 +356,30 @@
       "smallest_pq_frames": 1
     }
   ],
+  "K4": {
+    "region": "US915",
+    "answer": "yes",
+    "rows": [
+      {
+        "tag_bytes": 8,
+        "cmd_bytes": 24,
+        "min_max_app_payload": 53,
+        "max_frames": 1,
+        "all_fit": true,
+        "n_drs": 6,
+        "failing_drs": "-"
+      },
+      {
+        "tag_bytes": 16,
+        "cmd_bytes": 32,
+        "min_max_app_payload": 53,
+        "max_frames": 1,
+        "all_fit": true,
+        "n_drs": 6,
+        "failing_drs": "-"
+      }
+    ]
+  },
   "K1_crc_sensitivity": {
     "answer": "no",
     "scheme": "S1",

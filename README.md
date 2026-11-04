@@ -76,6 +76,14 @@ Encodings:
 | S4 | HMAC-SHA256-T16 with a pre-shared key: the "MAC suffices" baseline | - |
 | S5 | ECDSA-P256 | - |
 
+**S6 "pre-positioned capability envelopes"** (`model.yaml: s6`).
+- **Calm phase.** Each device receives one PQ-signed envelope during a calm period P ∈ {6, 24, 72} h before the event: header 16 + bounds 64 + invariants 32 B + signature (ML-DSA-44 or Falcon-512, measured).
+  - Feasible means the envelope frames fit within the Class A downlink opportunities in P, **and** N × envelope airtime fits within the gateway's airtime budget in P.
+- **Crisis phase.** Each command = envelope handle 4 + counter 4 + params 8 + HMAC-SHA256 truncated to 8 or 16 B. The device accepts it only if it lies inside the envelope bounds (`pqcap.envelope`, added with the blast-radius metric).
+- The tag length is a truncation design parameter, not a measurement.
+- The crisis HMAC key is assumed pre-provisioned, as in S4.
+- Outputs: `model_s6_calm.csv`, `model_s6_crisis.csv`, and `model_s6_compare.csv` (vs S1/S2/S4; S2 counts per-command cost only).
+
 **S2 requires a key-establishment step.** The server encapsulates to the device's ML-KEM public key, and the ciphertext travels downlink inside the epoch message.
 - The device must have registered its KEM public key beforehand (uplink, **not modelled**), and the device must hold an ML-KEM secret key.
 - The S2 per-command token is byte-identical to the S4 token. The difference is the amortised epoch message: `results/model_s2_amortization.csv`.

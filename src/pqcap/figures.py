@@ -28,8 +28,8 @@ plt.rcParams.update({
 
 
 def _save(fig, out: Path, name: str) -> None:
-    fig.savefig(out / f"{name}.pdf")
-    fig.savefig(out / f"{name}.png", dpi=200)
+    fig.savefig(out / f"{name}.pdf", metadata={"CreationDate": None, "ModDate": None})  # reproducible bytes
+    fig.savefig(out / f"{name}.png", dpi=200, metadata={"Software": None})
     plt.close(fig)
 
 
