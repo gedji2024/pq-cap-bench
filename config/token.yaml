@@ -1,0 +1,15 @@
+# Capability token wire model (all sizes in bytes).
+header:
+  version: 1
+  alg_id: 1
+  token_id: 14            # header total = 16
+constraints:
+  action: 4
+  target_set: 16
+  param_bounds: 16
+  validity_window: 12
+  provenance_label_hash: 16   # constraints total = 64
+delegation:
+  depths: [0, 1, 2, 3]
+  constraints_per_hop: 32
+  key_id: 8               # each hop adds constraints + key id + one signature

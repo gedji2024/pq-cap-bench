@@ -1,0 +1,49 @@
+# Benchmark protocol (host measurements; NOT microcontroller measurements).
+seed: 20261103            # seeds the fixed test messages (deterministic content)
+runs: 3                   # full benchmark repetitions -> run-to-run variation
+warmup: 50
+iterations: 1000
+message_sizes: [32, 96, 160]   # bytes
+disable_gc_during_timing: true
+pin_cpu: 0                # core index for os.sched_setaffinity (Linux only; logged if unsupported)
+
+# Requested post-quantum signature algorithms, in report order.
+# `candidates` are tried in order against liboqs' enabled mechanisms at runtime;
+# the first one present is used and the exact liboqs name is logged.
+# Nothing is substituted outside this list.
+pq_signatures:
+  - label: ML-DSA-44
+    candidates: [ML-DSA-44]
+  - label: ML-DSA-65
+    candidates: [ML-DSA-65]
+  - label: ML-DSA-87
+    candidates: [ML-DSA-87]
+  - label: Falcon-512
+    candidates: [FN-DSA-512, Falcon-512]
+  - label: Falcon-1024
+    candidates: [FN-DSA-1024, Falcon-1024]
+  - label: SLH-DSA-SHA2-128s
+    candidates: [SLH-DSA-SHA2-128s, SLH_DSA_PURE_SHA2_128S]
+  - label: SLH-DSA-SHA2-128f
+    candidates: [SLH-DSA-SHA2-128f, SLH_DSA_PURE_SHA2_128F]
+
+# Stateful hash-based signatures (liboqs StatefulSignature API).
+# Smallest tree height (2^10 signatures) per family; keys are regenerated
+# outside the timed region when the remaining-signature budget runs out.
+stateful_signatures:
+  - label: LMS-SHA256-H10-W4
+    candidates: [LMS_SHA256_H10_W4]
+  - label: XMSS-SHA2-10-256
+    candidates: [XMSS-SHA2_10_256]
+
+kems:
+  - label: ML-KEM-512
+    candidates: [ML-KEM-512]
+  - label: ML-KEM-768
+    candidates: [ML-KEM-768]
+
+classical: [ECDSA-P256, Ed25519]
+symmetric: [HMAC-SHA256-T16, HMAC-SHA256-T32]
+hybrid:
+  - label: ECDSA-P256+ML-DSA-44
+    parts: [ECDSA-P256, ML-DSA-44]

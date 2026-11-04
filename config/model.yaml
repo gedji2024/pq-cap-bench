@@ -1,0 +1,32 @@
+# Delivery-model scenario parameters.
+signature_size_statistic: max      # which observed signature size to use: min | median | max
+fragment_header_bytes: 2
+uplink_interval_s: 300             # Class A: one downlink opportunity per uplink
+windows_min: [15, 30, 60, 120]
+devices_per_gateway: [10, 50, 200]
+epoch_hours: [1, 6, 24]            # S2: epoch certificate period T
+s2_kem: [ML-KEM-512, ML-KEM-768]   # S2 key-establishment ciphertext source (measured via liboqs)
+s2_cert_signer: ML-DSA-44          # S2 epoch certificate signature algorithm
+s2_epoch_cert_fields:              # unsigned body of the S2 epoch certificate (bytes, summed)
+  version: 1
+  alg_id: 1
+  epoch_id: 8
+  validity_window: 12
+  device_id: 8
+  sym_key_id: 8
+  issuer_key_id: 8
+s2_commands_per_epoch: [1, 10, 100]  # amortisation points; the Class A maximum is also reported
+hmac_label: HMAC-SHA256-T16        # S2/S4 per-command tag (measured algorithm label)
+hybrid_label: ECDSA-P256+ML-DSA-44
+classical_label: ECDSA-P256
+
+# Per-scheme PQ algorithms evaluated for S1 (labels from config/bench.yaml).
+s1_algorithms: [ML-DSA-44, ML-DSA-65, ML-DSA-87, Falcon-512, Falcon-1024,
+                SLH-DSA-SHA2-128s, SLH-DSA-SHA2-128f, XMSS-SHA2-10-256]
+
+eu868_duty_cycle: 0.01             # gateway downlink duty cycle (configurable; see README on RX2 sub-band)
+nbiot_max_payload_bytes: 1280      # NB-IoT application payload per downlink (configurable default)
+
+kill_criteria:
+  K1: {scheme: S1, algorithm: ML-DSA-44, window_min: 30, devices: 50, region: US915, dr: 8, depth: 0}
+  K2: {near_symmetric_ratio: 2.0}  # S2/S4 per-command airtime ratio considered "near-symmetric"
