@@ -1,0 +1,66 @@
+# Radio specification tables. Every value is transcribed from the cited document;
+# nothing here is measured. PLEASE VERIFY against your own copy before publication.
+#
+# [RP002] LoRa Alliance, "RP002-1.0.3 LoRaWAN Regional Parameters", 2021.
+#         https://lora-alliance.org/wp-content/uploads/2021/05/RP002-1.0.3-FINAL-1.pdf
+# [SX1276] Semtech, "SX1276/77/78/79 datasheet", Rev. 7, May 2020, Sec. 4.1.1.7 "Time on air", p. 31.
+# [ERC7003] CEPT ERC Recommendation 70-03, Annex 1, Table 1 (bands h1.5 / h1.7);
+#         ETSI EN 300 220-2 V3.2.1 (2018-06), Table B.1.
+#
+# M = max MACPayload size; N = max application (FRMPayload) size with empty FOpts.
+# [RP002] states N is "for information only" and MAY be smaller if FOpts is not empty.
+
+payload_table_variant: not_repeater_compatible   # or: repeater_compatible
+
+lorawan_overhead:
+  # PHYPayload = MHDR(1) + MACPayload + MIC(4); MACPayload = FHDR(7, empty FOpts) + FPort(1) + FRMPayload
+  # [RP002] M - N = 8 in every table (FHDR 7 + FPort 1) -- VERIFIED from tables.
+  # MHDR (1) and MIC (4): LoRaWAN L2 1.0.4 Sec. 4 frame format -- NOT re-read for this
+  # project; standard values, please verify.
+  mhdr: 1
+  fhdr_min: 7
+  fport: 1
+  mic: 4
+
+phy:
+  # [RP002] Sec. 4.1.2, Table 109 "LoRa physical layer settings": preamble 8 symbols,
+  # explicit header, CR 4/5, CRC True uplink / FALSE downlink.
+  preamble_symbols: 8
+  explicit_header: true
+  coding_rate: 1          # 1 => 4/5 ... 4 => 4/8
+  # NOTE: [RP002] Table 109 specifies NO payload CRC on downlink. The project brief
+  # requested CRC on; the default follows the brief (adds 16 bits, conservative) and is
+  # flagged in README. Set to false to follow RP002 Table 109 strictly.
+  crc_on: true
+  ldro_symbol_time_threshold_ms: 16   # [SX1276] p. 31: LDRO mandated when T_sym > 16 ms
+
+regions:
+  US915:
+    # [RP002] Sec. 2.5.3, Table 16 (DR8..13 downlink-only), Sec. 2.5.6 Tables 20/21 (M/N).
+    duty_cycle: null      # no duty-cycle limit modelled for US902-928 (FCC Part 15.247 dwell rules not modelled)
+    downlink_drs:
+      8:  {sf: 12, bw_khz: 500, rep: {M: 61,  N: 53},  norep: {M: 61,  N: 53}}
+      9:  {sf: 11, bw_khz: 500, rep: {M: 137, N: 129}, norep: {M: 137, N: 129}}
+      10: {sf: 10, bw_khz: 500, rep: {M: 230, N: 222}, norep: {M: 250, N: 242}}
+      11: {sf: 9,  bw_khz: 500, rep: {M: 230, N: 222}, norep: {M: 250, N: 242}}
+      12: {sf: 8,  bw_khz: 500, rep: {M: 230, N: 222}, norep: {M: 250, N: 242}}
+      13: {sf: 7,  bw_khz: 500, rep: {M: 230, N: 222}, norep: {M: 250, N: 242}}
+  EU868:
+    # [RP002] Sec. 2.4.3 Table 8 (DR map), Sec. 2.4.6 Tables 12/13 (M/N).
+    # DR7 is FSK 50 kbps: out of scope of the LoRa ToA formula -> excluded.
+    # Duty cycle: [ERC7003] 868.0-868.6 MHz (RX1 default channels) <= 1 %;
+    #             869.4-869.65 MHz (RX2, 869.525 MHz) <= 10 %. Model default = 1 % (config/model.yaml).
+    duty_cycle: from_model_config
+    downlink_drs:
+      0: {sf: 12, bw_khz: 125, rep: {M: 59,  N: 51},  norep: {M: 59,  N: 51}}
+      1: {sf: 11, bw_khz: 125, rep: {M: 59,  N: 51},  norep: {M: 59,  N: 51}}
+      2: {sf: 10, bw_khz: 125, rep: {M: 59,  N: 51},  norep: {M: 59,  N: 51}}
+      3: {sf: 9,  bw_khz: 125, rep: {M: 123, N: 115}, norep: {M: 123, N: 115}}
+      4: {sf: 8,  bw_khz: 125, rep: {M: 230, N: 222}, norep: {M: 250, N: 242}}
+      5: {sf: 7,  bw_khz: 125, rep: {M: 230, N: 222}, norep: {M: 250, N: 242}}
+      6: {sf: 7,  bw_khz: 250, rep: {M: 230, N: 222}, norep: {M: 250, N: 242}}
+
+nbiot:
+  # Not a specification value: a configurable modelling assumption (brief default 1280 B).
+  # NB-IoT airtime is not modelled; only the number of downlink messages is.
+  max_payload_bytes_from_model_config: true
