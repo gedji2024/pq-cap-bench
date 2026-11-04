@@ -362,6 +362,39 @@ def section_traceability(config: Path) -> str:
             + md_table(atk[["id", "name", "adversary", "covered_by", "status"]]))
 
 
+def section_mcu(results: Path, config: Path) -> str:
+    p = results / "mcu_verify_cost.csv"
+    if not p.exists():
+        return "_no pqm4 data_"
+    d, cfg = pd.read_csv(p), load_yaml(config / "mcu.yaml")
+    ints = lambda v: f"{int(v):,}"  # noqa: E731
+    ms = lambda v: f"{v:,.2f}"  # noqa: E731
+    d = d.assign(pqm4_commit=d.pqm4_commit.str[:12])
+    cols = [c for c in d.columns if c not in ("source_label", "pqm4_scheme")]
+    energy = ("Energy is **not reported**: no cited current-draw figure for the board at the measurement clock is "
+              "stored in this repository (`config/mcu.yaml: energy`)." if not cfg.get("energy") else "")
+    return (f"**{cfg['label']}** - no hardware was run for this project. Envelope verification = one signature "
+            f"verify per envelope (S6). Times are at the pqm4 measurement clock ({cfg['measurement_clock_mhz']} MHz, "
+            "stated in pqm4's README) and are not scaled to other clocks (flash wait states above it). "
+            "Falcon-512 m4-ct was removed from pqm4 in commit dfc3a754, so it is read from that commit's parent; its "
+            "successor fndsa_provisional-512 is shown from the head pin. `verify_ms_per_day_V*` = one verification per "
+            "renewal of validity V. " + energy + " Provenance: `data/pqm4/SOURCE.json`.\n\n"
+            + md_table(d[cols], {c: ints for c in ("executions", "verify_cycles_avg", "verify_cycles_min",
+                                                   "verify_cycles_max", "verify_stack_bytes", "clock_mhz")}
+                       | {c: ms for c in cols if c.startswith("verify_ms")}))
+
+
+def section_repo_state(config: Path) -> str:
+    p = config / "repo_state.yaml"
+    if not p.exists():
+        return "_no repository state record_"
+    r = load_yaml(p)
+    lines = [f"- kept `{k['commit']}` - {k['subject']} ({k['check']})" for k in r["kept"]]
+    lines += [f"- discarded (uncommitted): {x}" for x in r["discarded_uncommitted"]]
+    lines += [f"- redone: {x}" for x in r["redone"]]
+    return "\n".join(lines)
+
+
 def section_kill(results: Path) -> str:
     k = json.loads((results / "kill_criteria.json").read_text())
     k1 = k["K1"]
@@ -416,6 +449,7 @@ def run(config: Path, results: Path, figures: Path) -> None:
         "produced by an actual run (`make bench`, `make model`) or from the cited specification tables in `config/radio.yaml`._",
         f"> **All timings: {timing_label(results)}.** They rank algorithms on a general-purpose CPU; "
         "they do not predict MCU cycles or energy. An x86 re-run is optional (`make bench` on that host).",
+        "## 0. Repository state", section_repo_state(config),
         "## 1. Environment", section_env(results),
         "## 2. Algorithm resolution", section_algorithms(results),
         f"## 3. Sizes (observed; model uses `{model['signature_size_statistic']}`)", section_sizes(results),
@@ -427,6 +461,7 @@ def run(config: Path, results: Path, figures: Path) -> None:
         "## 7c. S6 pre-positioned capability envelopes", section_s6(results, model),
         "## 7d. Revocation: envelope validity and renewal", section_revocation(results, model),
         "## 7e. Harm-weighted replay: USGS Buffalo Bayou, Hurricane Harvey", section_harm(results, config),
+        "## 7f. Device-side envelope verification (pqm4, published)", section_mcu(results, config),
         "## 8. Kill criteria", section_kill(results),
         "## 8b. Traceability to the Étape 2 threat model", section_traceability(config),
         "## 9. Figures", "\n".join(f"- [{f}](figures/{f}) ([pdf](figures/{f[:-4]}.pdf))" for f in figs),

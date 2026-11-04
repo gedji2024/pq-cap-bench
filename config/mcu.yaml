@@ -1,0 +1,14 @@
+# Device-side envelope verification cost from pqm4 PUBLISHED measurements (no hardware run here).
+# Provenance: data/pqm4/SOURCE.json (two pinned commits, SHA-256 of each file).
+label: "pqm4, NUCLEO-L4R5ZI, published measurements"
+measurement_clock_mhz: 24     # pqm4 README (both pins): "All cycle counts were obtained at 24MHz ..."
+# Time is reported at the measurement clock only: above 24 MHz the STM32L4R5 flash inserts wait states,
+# which pqm4 avoided, so linear scaling to another clock would be unsound.
+selections:
+  - {label: ML-DSA-44,  scheme: ml-dsa-44,             impl: m4f,      pin: head}
+  - {label: ML-DSA-44,  scheme: ml-dsa-44,             impl: m4fstack, pin: head}
+  - {label: Falcon-512, scheme: falcon-512,            impl: m4-ct,    pin: pre-falcon-removal}
+  - {label: "FN-DSA-512 (provisional)", scheme: fndsa_provisional-512, impl: m4f, pin: head}
+# Energy: NOT reported. No current-draw figure for this board at 24 MHz is stored with a citation in this
+# repository. Add {current_mA: <value>, source: <url + section>} to enable it.
+energy: null

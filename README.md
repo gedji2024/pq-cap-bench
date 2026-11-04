@@ -224,8 +224,16 @@ S4-E and S6 differ only in how the envelope is installed:
 
 **Property tests:** with invariants below the agent, a C1 attacker never causes a floor-violating uplink or device death under S4-F, S4-E or S6.
 
+## Device-side verification cost (`pqcap.pqm4`, `config/mcu.yaml`, `data/pqm4/`)
+**Published pqm4 measurements on the NUCLEO-L4R5ZI.** No hardware is run in this project.
+- `benchmarks.md` and `README.md` are stored at two pinned commits, with SHA-256 hashes in `data/pqm4/SOURCE.json`:
+  - Head `6ff2be97`: ML-DSA-44 m4f/m4fstack, plus fndsa_provisional-512.
+  - `94435189`, the last commit before pqm4 removed its old Falcon code: Falcon-512 m4-ct.
+- Verify cycles and stack come from the parsed tables. Time is given at the 24 MHz measurement clock stated in pqm4's README and is not scaled.
+- Energy is not reported: no cited current figure is stored.
+
 ## What is NOT measured
-- **MCU cost:** cycles, RAM, flash and energy for verification on the device. Host timings rank algorithms; they do not predict Cortex-M figures.
+- **MCU cost on our own hardware.** Only pqm4's *published* verify cycles and stack are used (`REPORT.md` §7f), with no energy figures. Host timings rank algorithms; they do not predict Cortex-M figures.
 - **Real radio:** loss, collisions, gateway scheduling and regulatory dwell time. Everything radio-related is analytical.
 - Side-channel resistance, and secure state handling for XMSS/LMS.
 

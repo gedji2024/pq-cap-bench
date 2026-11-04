@@ -1,0 +1,7 @@
+# Repository state record (task 0), written 2026-11-04 after a cancelled run on tasks A/B/C.
+kept:
+  - {commit: 7df90f4, subject: "Align naming with the Étape 2 threat model: C0-C4, A1-A5, P1-P8, T1-T10",
+     check: "make cov: 93 passed, 100 % coverage at that commit"}
+discarded_uncommitted:
+  - "task B partial work: config/mcu.yaml, data/pqm4/, src/pqcap/pqm4.py, tests/test_pqm4.py and edits to README.md, model.py, report.py, tests"
+redone: ["task B from a clean tree (same pqm4 pins; SHA-256 identical to the cancelled fetch)"]

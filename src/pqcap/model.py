@@ -209,6 +209,14 @@ def run(config: Path, results: Path) -> dict[str, pd.DataFrame]:
             meta_p = series.with_suffix(".meta.json")
             hm["source"] = json.loads(meta_p.read_text()) if meta_p.exists() else {}
             (results / "harm_meta.json").write_text(json.dumps(hm, indent=2, default=str))
+    if (config / "mcu.yaml").exists():
+        from . import pqm4  # noqa: PLC0415
+        from .config import REPO_ROOT  # noqa: PLC0415
+        if (REPO_ROOT / "data/pqm4/SOURCE.json").exists():
+            mc = pqm4.verification_cost(config, REPO_ROOT)
+            for V in model.get("revocation", {}).get("validity_hours", []):  # one verify per renewal
+                mc[f"verify_ms_per_day_V{V}h"] = mc.verify_ms_avg * 24 / V
+            mc.to_csv(results / "mcu_verify_cost.csv", index=False)
     from .kill import evaluate  # noqa: PLC0415
     k = evaluate(out, model)
     k["K1_crc_sensitivity"] = evaluate(out_alt, model)["K1"]

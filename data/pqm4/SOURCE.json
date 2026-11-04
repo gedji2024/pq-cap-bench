@@ -1,0 +1,42 @@
+{
+  "repository": "https://github.com/mupq/pqm4",
+  "retrieved_utc": "2026-11-04T14:39:08+00:00",
+  "pins": {
+    "head": {
+      "commit": "6ff2be970f6f4592b341d432042063ceacf424a2",
+      "commit_date": "2026-10-23T20:57:46Z",
+      "why": "master at retrieval: ml-dsa-44 m4f/m4fstack, fndsa_provisional-512",
+      "files": {
+        "benchmarks.md": {
+          "path": "data/pqm4/benchmarks.md",
+          "url": "https://raw.githubusercontent.com/mupq/pqm4/6ff2be970f6f4592b341d432042063ceacf424a2/benchmarks.md",
+          "sha256": "1f1d6f022a12643c0514dc8a8f5a7375f0c04df5d4a695950ccd343015cd639a"
+        },
+        "README.md": {
+          "path": "data/pqm4/README.md",
+          "url": "https://raw.githubusercontent.com/mupq/pqm4/6ff2be970f6f4592b341d432042063ceacf424a2/README.md",
+          "sha256": "308aec6cf6ddff94b5095057cf2ea0585997cd9815085b3de35a544368370947"
+        }
+      }
+    },
+    "pre-falcon-removal": {
+      "commit": "94435189596a70ee62815a9ff31f5bb5a74a3c8a",
+      "commit_date": "2025-02-03T03:39:56Z",
+      "why": "parent of dfc3a754 'Remove outdated Falcon implementations': last commit with falcon-512 m4-ct",
+      "files": {
+        "benchmarks.md": {
+          "path": "data/pqm4/pre-falcon-removal/benchmarks.md",
+          "url": "https://raw.githubusercontent.com/mupq/pqm4/94435189596a70ee62815a9ff31f5bb5a74a3c8a/benchmarks.md",
+          "sha256": "9749522908878ac8f1227b9ee7f5fcc5495db506675e1f0ef395481a7f682fad"
+        },
+        "README.md": {
+          "path": "data/pqm4/pre-falcon-removal/README.md",
+          "url": "https://raw.githubusercontent.com/mupq/pqm4/94435189596a70ee62815a9ff31f5bb5a74a3c8a/README.md",
+          "sha256": "4f0cd4c37bc8868015f8dd8ab084e6bfae63bf0b2a67495931a9b8428d7bf90e"
+        }
+      }
+    }
+  },
+  "clock_statement": "README.md (both pins): 'All cycle counts were obtained at 24MHz to avoid wait cycles due to the speed of the memory controller.'",
+  "board_statement": "README.md: '`nucleo-l4r5zi` (default): The NUCLEO-L4R5ZI board'"
+}
