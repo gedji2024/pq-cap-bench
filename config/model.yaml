@@ -30,3 +30,7 @@ nbiot_max_payload_bytes: 1280      # NB-IoT application payload per downlink (co
 kill_criteria:
   K1: {scheme: S1, algorithm: ML-DSA-44, window_min: 30, devices: 50, region: US915, dr: 8, depth: 0}
   K2: {near_symmetric_ratio: 2.0}  # S2/S4 per-command airtime ratio considered "near-symmetric"
+
+# Channels shown in the per-channel figures (all channels are always in the CSVs).
+figure_channels: [[US915, 8], [US915, 13], [EU868, 0], [EU868, 5]]
+figure_depth_algorithms: [ML-DSA-44, Falcon-512, SLH-DSA-SHA2-128f]  # S1 lines in the depth figure
