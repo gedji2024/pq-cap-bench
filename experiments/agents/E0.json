@@ -1,0 +1,5 @@
+{"prereg_commit": "3b476340fbe290d89330a91cd782c7186e8ddea9",
+ "prereg_sha256": "8166d90a8e2eb68fb9c16e5816ec6d0ad10fb0f3246cd6bbb2d39a6b77671a64",
+ "design_sha256": "e0fe10aff42d00d652656c6bdf5560a3d68826e9847111c193cd8372587faf71",
+ "models": ["qwen3:8b", "llama3.1:8b", "mistral-nemo:12b"],
+ "recorded": "2026-11-05, before any test-split episode (logs/static empty)"}

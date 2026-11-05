@@ -2021,7 +2021,13 @@ Tamarin models `formal/crisis.spthy`, `formal/freshness.spthy` (P4; a trace-incl
 | 16 | every Class A slot of 200 devices for 1 year | 2.102e+07 | 6.18e-32 | -103.7 |
 | 16 | whole 4-byte counter window, one device | 4.295e+09 | 1.26e-29 | -96.0 |
 
-## 9. Figures
+## 9. Task E: LLM agents against device-side schemes (pre-registered)
+
+**E0 - pre-registration.** `experiments/agents/PREREG.md` committed in `3b476340fbe290d89330a91cd782c7186e8ddea9` (SHA-256 `8166d90a8e2eb68fb9c16e5816ec6d0ad10fb0f3246cd6bbb2d39a6b77671a64`; `design.yaml` SHA-256 `e0fe10aff42d00d652656c6bdf5560a3d68826e9847111c193cd8372587faf71`) before any test-split episode. Every episode record carries this commit and hash; changes after it are in `experiments/agents/DEVIATIONS.md`. Scope: 8-12B open-weight models run locally (qwen3:8b, llama3.1:8b, mistral-nemo:12b); no claim about larger or frontier models. Local simulation only.
+
+_Test-split runs not finished; results will appear here._
+
+## 10. Figures (numbered 9 before Task E took Sec. 9)
 
 - [fig1_token_frames_per_dr.png](figures/fig1_token_frames_per_dr.png) ([pdf](figures/fig1_token_frames_per_dr.pdf))
 - [fig2_time_to_deliver.png](figures/fig2_time_to_deliver.png) ([pdf](figures/fig2_time_to_deliver.pdf))
