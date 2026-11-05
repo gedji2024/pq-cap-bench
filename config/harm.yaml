@@ -93,7 +93,10 @@ energy_budget:
   # H2: sweep of the per-epoch budget (POLICY parameter, not derived): legitimate p90 delay vs attack excess
   # late-or-missed share, storm-cluster bootstrap CIs. null = no budget (reference point). Values are a CHOICE.
   sweep:
-    values_per_epoch: [null, 10, 20, 30, 50, 75, 100, 150, 200]
+    values_per_epoch: [null, 10, 20, 30, 50, 75, 85, 90, 100, 150, 200, 300, 400]   # 85, 90, 300, 400 added (CHOICE)
+    floor_timing_budgets: [75, 85, 90, 100]    # H3: when LWL01/poor reaches its floor under the attack (CHOICE)
+    soc_sensitivity: [40, 60, 80]              # H4: ASSUMED initial SOC varied (CHOICE)
+    excess_threshold: 0.10                     # H4: "cliff" = smallest budget with excess > this (CHOICE)
     battery_profile: LWL01/poor
     scheme: S6+F
     compromise: C1

@@ -434,13 +434,27 @@ def test_budget_sweep_h2():
     cfg = {**HCFG, "events": evs, "events_rule": None, "events_prereg": None, "workers": 1,
            "statistics": {**HCFG["statistics"], "bootstrap": 50},
            "energy_budget": {**HCFG["energy_budget"], "sweep": sw}}
-    t = harm.budget_sweep(cfg, ACFG, REPO_ROOT, {"w": 0, "v": 1})
-    assert len(t) == 3
+    t, fl = harm.budget_sweep(cfg, ACFG, REPO_ROOT, {"w": 0, "v": 1})
+    assert len(t) == 3 and (t.initial_soc_pct == HCFG["battery"]["initial_soc_pct"]).all()
+    assert (t.derived_budget == 50).all() and len(fl) == 2 * 3 * 2
+    ft = harm.floor_timing(fl, [None, 0, 50]).set_index("events_reaching_floor", drop=False)
+    assert list(ft.events) == [2, 2, 2]
+    assert ft.events_reaching_floor.max() >= 1 and ft.earliest_event.notna().any()       # no budget: drained
+    assert harm.floor_timing(fl, [0]).events_reaching_floor.iloc[0] == 0                 # budget 0: never
+    lo, _ = harm.budget_sweep(cfg, ACFG, REPO_ROOT, {"w": 0, "v": 1}, soc_pct=40)
+    assert (lo.derived_budget < 50).all() and (lo.initial_soc_pct == 40).all()
+    sens = harm.soc_sensitivity(pd.concat([t, lo]), 0.10).set_index("initial_soc_pct")
+    assert sens.loc[60, "derived_budget"] == 50 and sens.loc[40, "derived_budget"] < 50
+    none = harm.soc_sensitivity(t.assign(excess=0.0), 0.10).iloc[0]
+    assert pd.isna(none.smallest_budget_excess_over) and none.largest_budget_at_or_below == 50
+    allover = harm.soc_sensitivity(t.assign(excess=1.0), 0.10).iloc[0]
+    assert allover.smallest_budget_excess_over == 0 and pd.isna(allover.largest_budget_at_or_below)
     assert (t.legit_resampling_units == 2).all() and (t.scheme == "S6+F").all() and (t.epoch_h == 24).all()
     off = t[t.budget_per_epoch.isna()].iloc[0]
     zero = t[t.budget_per_epoch == 0].iloc[0]
     assert zero.excess <= off.excess                                     # no command-caused uplinks: no drain
     for c in ("legit_p90_delay_min", "excess"):
         assert (t[f"{c}_ci_lo"] <= t[c] + 1e-9).all() and (t[c] <= t[f"{c}_ci_hi"] + 1e-9).all()
-    a = harm.budget_sweep({**cfg, "workers": 2}, ACFG, REPO_ROOT, {"w": 0, "v": 1})
+    a, _ = harm.budget_sweep({**cfg, "workers": 2}, ACFG, REPO_ROOT, {"w": 0, "v": 1})
     pd.testing.assert_frame_equal(a, t)
+

@@ -231,9 +231,23 @@ def run(config: Path, results: Path) -> dict[str, pd.DataFrame]:
                     results / "model_harm_delays.csv", index=False)
                 harm.excess_over_baseline(he, tol, st["bootstrap"], st["seed"], clusters=cl).to_csv(
                     results / "model_harm_excess.csv", index=False)
-                if (hcfg.get("energy_budget") or {}).get("sweep"):    # H2
-                    harm.budget_sweep(hcfg, load_yaml(actions_p), REPO_ROOT, cl).to_csv(
-                        results / "g3_budget_sweep.csv", index=False)
+                sw = (hcfg.get("energy_budget") or {}).get("sweep")
+                if sw:                                                # H2 sweep, H3 floor timing, H4 SOC
+                    base_soc = hcfg["battery"]["initial_soc_pct"]
+                    sweeps, floors = [], []
+                    for soc in sw.get("soc_sensitivity") or [base_soc]:
+                        t, f = harm.budget_sweep(hcfg, load_yaml(actions_p), REPO_ROOT, cl, soc)
+                        sweeps.append(t)
+                        floors.append(f)
+                    allsw, allfl = pd.concat(sweeps), pd.concat(floors)
+                    allsw[allsw.initial_soc_pct == base_soc].to_csv(results / "g3_budget_sweep.csv", index=False)
+                    allsw.to_csv(results / "g3_soc_sweep.csv", index=False)
+                    allfl.to_csv(results / "g3_floor_runs.csv", index=False)
+                    harm.floor_timing(allfl[allfl.initial_soc_pct == base_soc],
+                                      sw.get("floor_timing_budgets") or []).to_csv(
+                        results / "g3_floor_timing.csv", index=False)
+                    harm.soc_sensitivity(allsw, sw.get("excess_threshold", 0.10)).to_csv(
+                        results / "g3_soc_sensitivity.csv", index=False)
             for em in hm["events"]:
                 srcs = []
                 for f in em["files"]:

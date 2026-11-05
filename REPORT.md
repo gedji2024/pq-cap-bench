@@ -1713,7 +1713,7 @@ One-off commissioning message (commitment + OP signature), frames, US915:
 | LWL01/poor | S6+F | C1+C3 | on | 0.022 | 0.059 | 0.037 | 0.000 | 0.077 |
 | LWL01/poor | S6+F | C1+C3+OP | on | 0.022 | 0.059 | 0.037 | 0.000 | 0.077 |
 
-**H2 - budget sweep (POLICY parameter).** The per-24 h budget is swept instead of derived: S6+F under C1 drain, battery profile LWL01/poor, all events, 23 storm clusters (cluster-bootstrap 95 % CIs). Legitimate columns: naive legitimate policy with that budget. `attack_excess` = attack late-or-missed share minus the legitimate share, crossings paired. Values swept are a CHOICE (`config/harm.yaml: energy_budget.sweep`); `results/g3_budget_sweep.csv`, `figures/fig_g3_budget_sweep.png`.
+**H2 - budget sweep (POLICY parameter).** The per-24 h budget is swept instead of derived: S6+F under C1 drain, battery profile LWL01/poor, all events, 23 storm clusters (cluster-bootstrap 95 % CIs). Legitimate columns: naive legitimate policy with that budget. `attack_excess` = attack late-or-missed share minus the legitimate share, crossings paired. Values swept are a CHOICE (`config/harm.yaml: energy_budget.sweep`); `results/g3_budget_sweep.csv`, `figures/fig_g3_budget_sweep.png`. *Change note (H3/H4 round):* 85, 90, 300 and 400/day were added (CHOICE). The bootstrap shares one random stream across budget values, so adding rows moved the CI bounds of the existing 100, 150 and 200/day rows by at most 0.002 relative to commit `7bddc42`; no point estimate changed.
 
 | budget_per_epoch | legit_p90_delay_min | legit_late_or_missed | attack_late_or_missed | attack_excess |
 |---|---|---|---|---|
@@ -1722,12 +1722,33 @@ One-off commissioning message (commitment + OP signature), frames, US915:
 | 30 | 15 [13, 18] | 0.02 [0.00, 0.05] | 0.03 | 0.007 [0.000, 0.028] |
 | 50 | 14 [9, 17] | 0.02 [0.00, 0.05] | 0.06 | 0.037 [0.000, 0.077] |
 | 75 | 12 [9, 15] | 0.02 [0.00, 0.05] | 0.07 | 0.052 [0.019, 0.099] |
-| 100 | 11 [9, 15] | 0.02 [0.00, 0.05] | 0.48 | 0.459 [0.395, 0.532] |
-| 150 | 9 [8, 15] | 0.02 [0.00, 0.05] | 0.52 | 0.496 [0.402, 0.571] |
-| 200 | 9 [8, 15] | 0.02 [0.00, 0.05] | 0.52 | 0.496 [0.398, 0.572] |
+| 85 | 12 [9, 15] | 0.02 [0.00, 0.05] | 0.41 | 0.385 [0.291, 0.495] |
+| 90 | 10 [9, 15] | 0.02 [0.00, 0.05] | 0.48 | 0.459 [0.402, 0.530] |
+| 100 | 11 [9, 15] | 0.02 [0.00, 0.05] | 0.48 | 0.459 [0.394, 0.530] |
+| 150 | 9 [8, 15] | 0.02 [0.00, 0.05] | 0.52 | 0.496 [0.402, 0.570] |
+| 200 | 9 [8, 15] | 0.02 [0.00, 0.05] | 0.52 | 0.496 [0.396, 0.572] |
+| 300 | 9 [8, 15] | 0.02 [0.00, 0.05] | 0.53 | 0.504 [0.412, 0.578] |
+| 400 | 9 [8, 15] | 0.02 [0.00, 0.05] | 0.52 | 0.496 [0.400, 0.571] |
 | no budget | 9 [8, 15] | 0.02 [0.00, 0.05] | 0.53 | 0.511 [0.421, 0.582] |
 
 ![G3 budget sweep](figures/fig_g3_budget_sweep.png)
+
+**H3 - mechanism of the cliff.** The budget only limits *command-caused* uplinks; the attacker spends all of it every day. Whether that matters depends on when the battery falls below its floor (LWL01/poor, floor from the action profile): below the floor the low-battery invariant slows reporting, so a crossing that comes after the floor is reported late. Under the drain attack (window = 5 d before to 2 d after the peak, day 1 = first day): at 75/day 41 of 41 events reach the floor (median day 6.0 of the window, +0.0 d from the peak; earliest: USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29), day 4; 0 before their first scored crossing); at 85/day 41 of 41 events reach the floor (median day 5.0 of the window, -0.4 d from the peak; earliest: USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29), day 4; 25 before their first scored crossing); at 90/day 41 of 41 events reach the floor (median day 5.0 of the window, -0.9 d from the peak; earliest: USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29), day 3; 29 before their first scored crossing); at 100/day 41 of 41 events reach the floor (median day 5.0 of the window, -0.9 d from the peak; earliest: USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29), day 3; 32 before their first scored crossing). The excess jumps where the floor moves from after the crossings to before them: the cliff is the budget at which the attacker's daily spend exhausts the charge above the floor within the window before the flood rises. 85 and 90/day were added to the sweep to locate it (CHOICE). `results/g3_floor_timing.csv`, per-run rows in `results/g3_floor_runs.csv`.
+
+| budget_per_epoch | events | events_reaching_floor | median_floor_day | median_floor_day_rel_peak | earliest_event | earliest_floor_day | floor_before_first_crossing |
+|---|---|---|---|---|---|---|---|
+| 75 | 41 | 41 | 6.0 | +0.0 | USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29) | 4 | 0 |
+| 85 | 41 | 41 | 5.0 | -0.4 | USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29) | 4 | 25 |
+| 90 | 41 | 41 | 5.0 | -0.9 | USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29) | 3 | 29 |
+| 100 | 41 | 41 | 5.0 | -0.9 | USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29) | 3 | 32 |
+
+**H4 - sensitivity to the ASSUMED initial state of charge** (40, 60, 80 %, CHOICE; 60 % is the headline value). For each SOC: the derived budget (`pqcap.harm.epoch_budget`) and, on the swept grid, the budgets on either side of an attack excess of 0.10 (CHOICE), with storm-cluster bootstrap 95 % CIs. The cliff is located only to the grid resolution. `results/g3_soc_sensitivity.csv`, full sweeps in `results/g3_soc_sweep.csv`.
+
+| initial_soc_pct | derived_budget_per_day | largest_budget_excess<=thr | its_excess | smallest_budget_excess>thr | its_excess  |
+|---|---|---|---|---|---|
+| 40 | 13 | 20 | 0.015 [-0.013, 0.054] | 30 | 0.356 [0.255, 0.452] |
+| 60 | 50 | 75 | 0.052 [0.019, 0.099] | 85 | 0.385 [0.291, 0.495] |
+| 80 | 87 | 100 | 0.037 [0.000, 0.076] | 150 | 0.437 [0.370, 0.513] |
 
 ## 8. Kill criteria
 

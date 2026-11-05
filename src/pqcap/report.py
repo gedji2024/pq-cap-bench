@@ -672,8 +672,53 @@ def section_g3(results: Path, config: Path) -> str:
                 "Legitimate columns: naive legitimate policy with that budget. `attack_excess` = attack late-or-missed "
                 "share minus the legitimate share, crossings paired. Values swept are a CHOICE "
                 "(`config/harm.yaml: energy_budget.sweep`); `results/g3_budget_sweep.csv`, "
-                "`figures/fig_g3_budget_sweep.png`.", md_table(t),
+                "`figures/fig_g3_budget_sweep.png`. *Change note (H3/H4 round):* 85, 90, 300 and 400/day were added "
+                "(CHOICE). The bootstrap shares one random stream across budget values, so adding rows moved the CI "
+                "bounds of the existing 100, 150 and 200/day rows by at most 0.002 relative to commit `7bddc42`; "
+                "no point estimate changed.", md_table(t),
                 "![G3 budget sweep](figures/fig_g3_budget_sweep.png)"]
+    ftp = results / "g3_floor_timing.csv"
+    if ftp.exists():
+        f = pd.read_csv(ftp)
+        hb = load_yaml(config / "harm.yaml")
+        q = lambda v, fmt="{:.1f}": "-" if pd.isna(v) else fmt.format(v)  # noqa: E731
+        sent = "; ".join(
+            f"at {int(r.budget_per_epoch)}/day {int(r.events_reaching_floor)} of {int(r.events)} events reach the floor "
+            f"(median day {q(r.median_floor_day)} of the window, {q(r.median_floor_day_rel_peak, '{:+.1f}')} d from "
+            f"the peak; earliest: {r.earliest_event if isinstance(r.earliest_event, str) else '-'}, day "
+            f"{q(r.earliest_floor_day, '{:.0f}')}; {int(r.floor_before_first_crossing)} before their first scored "
+            "crossing)" for r in f.itertuples())
+        out += ["**H3 - mechanism of the cliff.** The budget only limits *command-caused* uplinks; the attacker spends "
+                "all of it every day. Whether that matters depends on when the battery falls below its floor "
+                f"({hb['battery']['profiles'][-1]['name']}, floor from the action profile): below the floor the "
+                "low-battery invariant slows reporting, so a crossing that comes after the floor is reported late. "
+                "Under the drain attack (window = 5 d before to 2 d after the peak, day 1 = first day): " + sent + ". "
+                "The excess jumps where the floor moves from after the crossings to before them: the cliff is the "
+                "budget at which the attacker's daily spend exhausts the charge above the floor within the window "
+                "before the flood rises. 85 and 90/day were added to the sweep to locate it (CHOICE). "
+                "`results/g3_floor_timing.csv`, per-run rows in `results/g3_floor_runs.csv`.",
+                md_table(f, {"budget_per_epoch": lambda v: f"{int(v)}", "events": lambda v: f"{int(v)}",
+                             "events_reaching_floor": lambda v: f"{int(v)}",
+                             "median_floor_day": q, "median_floor_day_rel_peak": lambda v: q(v, "{:+.1f}"),
+                             "earliest_floor_day": lambda v: q(v, "{:.0f}"),
+                             "floor_before_first_crossing": lambda v: f"{int(v)}"})]
+    ssp = results / "g3_soc_sensitivity.csv"
+    if ssp.exists():
+        z = pd.read_csv(ssp)
+        nb = lambda v: "none in sweep" if pd.isna(v) else f"{int(v)}"  # noqa: E731
+        cx = lambda a, lo, hi: "-" if pd.isna(a) else f"{a:.3f} [{lo:.3f}, {hi:.3f}]"  # noqa: E731
+        t = pd.DataFrame({"initial_soc_pct": z.initial_soc_pct.map(lambda v: f"{v:g}"),
+                          "derived_budget_per_day": z.derived_budget.map(lambda v: f"{int(v)}"),
+                          "largest_budget_excess<=thr": z.largest_budget_at_or_below.map(nb),
+                          "its_excess": [cx(*r) for r in zip(z.its_excess_below, z.its_excess_below_ci_lo,
+                                                             z.its_excess_below_ci_hi)],
+                          "smallest_budget_excess>thr": z.smallest_budget_excess_over.map(nb),
+                          "its_excess ": [cx(*r) for r in zip(z.its_excess, z.its_excess_ci_lo, z.its_excess_ci_hi)]})
+        out += [f"**H4 - sensitivity to the ASSUMED initial state of charge** ({', '.join(f'{v:g}' for v in z.initial_soc_pct)} %, "
+                "CHOICE; 60 % is the headline value). For each SOC: the derived budget (`pqcap.harm.epoch_budget`) "
+                f"and, on the swept grid, the budgets on either side of an attack excess of {z.threshold.iloc[0]:.2f} "
+                "(CHOICE), with storm-cluster bootstrap 95 % CIs. The cliff is located only to the grid resolution. "
+                "`results/g3_soc_sensitivity.csv`, full sweeps in `results/g3_soc_sweep.csv`.", md_table(t)]
     return "\n\n".join(out)
 
 
