@@ -261,19 +261,21 @@ def epoch_budget(bat: dict, cfg: dict, floor_pct: float, eb: dict) -> int:
 
 def simulate(stage: np.ndarray, scheme: str, compromise: str, strategy: str | None, cfg: dict, cat,
              env: ev.Policy, fw: ev.Policy, legit_variant: str = "naive", bat: dict | None = None,
-             budget: int | None = None) -> dict:
+             budget: int | None = None, init: dict | None = None) -> dict:
     """`budget` (G3): command-caused uplinks allowed per epoch of cfg["energy_budget"]["epoch_h"] (None = no budget).
     An uplink is command-caused if it is requested by `request_immediate_uplink` or comes sooner than the default
     reporting interval would (with the alert-mode and low-battery invariants applied). With no budget left in the
-    epoch the device keeps the default schedule and drops immediate-uplink requests; firmware alerts always go."""
+    epoch the device keeps the default schedule and drops immediate-uplink requests; firmware alerts always go.
+    `init` (Task E): starting configuration {interval, threshold, enabled, soc_pct} instead of the defaults."""
     dv = cfg["device"]
     bat = bat or cfg["_battery"]
     sch = Scheme(scheme, cat, env, fw, replaced=compromise.startswith("C1+C3"), op_key=compromise.endswith("+OP"),
                  max_alert_threshold=cfg.get("_max_alert_threshold", 0))
     inv, floor = sch.invariants, sch.floor
     cap, q_tx, sleep_per_min = bat["capacity"], bat["q"], bat["sleep_per_h"] / 60
-    d = Dev(dv["default_reporting_interval_min"], dv["alert_threshold_cm"],
-            soc_mAh=cap * cfg["battery"]["initial_soc_pct"] / 100)
+    init = init or {}
+    d = Dev(init.get("interval", dv["default_reporting_interval_min"]), init.get("threshold", dv["alert_threshold_cm"]),
+            enabled=init.get("enabled", True), soc_mAh=cap * init.get("soc_pct", cfg["battery"]["initial_soc_pct"]) / 100)
     ia = cat[ev.A_INTERVAL]
     legit = LegitPolicy(cfg["legit_policy"], legit_variant, ia.min, ia.max) if compromise == "none" else None
     prof = cfg["_profile_inv"]                                       # scored against the PROFILE invariants, all schemes
@@ -512,15 +514,13 @@ def event_stage(ev_: dict, cfg: dict, root: Path) -> tuple[np.ndarray, pd.Series
     return to_minutes(s), s
 
 
-def _event(args) -> tuple[list, list, dict]:
-    """Replay one event over the whole grid (top-level so it can run in a worker process)."""
-    ev_, cfg, actions_cfg, root, bats = args
+def _setup(ev_: dict, cfg: dict, actions_cfg: dict, root: Path):
+    """Stage series, event config, envelope/firmware policies and scoring levels of one event."""
     cat = ev.catalogue_from_config(actions_cfg)
     env = ev.envelope_from_config(actions_cfg)  # routine renewal assumed to succeed: validity never lapses
     fw = ev.firmware_policy_from_config(actions_cfg)
     rel = cfg["harm"].get("relative")
     nws_cfg = cfg.get("nws")
-    rows, events, metas = [], [], []
     stage, s = event_stage(ev_, cfg, root)
     ecfg = cfg
     th = None
@@ -547,6 +547,14 @@ def _event(args) -> tuple[list, list, dict]:
             lo, hi = float(stage.min()), float(stage.max())
             levels = [lo + f * (hi - lo) for f in cfg["harm"]["reference_level_fractions"]]
             level_src = "fractions of event range (ASSUMED)"
+    return cat, env, fw, stage, s, ecfg, th, levels, level_src
+
+
+def _event(args) -> tuple[list, list, dict]:
+    """Replay one event over the whole grid (top-level so it can run in a worker process)."""
+    ev_, cfg, actions_cfg, root, bats = args
+    rows, events, metas = [], [], []
+    cat, env, fw, stage, s, ecfg, th, levels, level_src = _setup(ev_, cfg, actions_cfg, root)
     metas.append({"event": ev_["name"], "file": ev_.get("file"), "files": ev_.get("files") or [ev_["file"]], "n_readings": int(s.size), "first": str(s.index[0]),
                   "last": str(s.index[-1]), "max_gap_min": max_gap_min(s), "gaps_over_60_min": gaps(s, 60),
                   "peak_cm": float(s.max()), "peak_time": str(s.idxmax()),
@@ -595,19 +603,62 @@ def _event(args) -> tuple[list, list, dict]:
     return rows, events, metas[0]
 
 
-def run(cfg: dict, actions_cfg: dict, root: Path) -> tuple[pd.DataFrame, pd.DataFrame, dict]:
-    from .devices import load_catalogue  # noqa: PLC0415
-    devs = {d.model: d for d in load_catalogue(root / "config/devices")}
-    bats = [battery_from_profile(p, devs) for p in cfg["battery"]["profiles"]]
-    cfg = {**cfg, "_profile_inv": ev.invariants_from_config(actions_cfg)}
-    jobs = [(e, cfg, actions_cfg, root, bats) for e in event_list(cfg, root)]
-    workers = int(cfg.get("workers", 1))
+def _sweep_event(args) -> list:
+    """H2: legitimate baseline and the attack of `sweep`, for every per-epoch budget value (POLICY), one event."""
+    ev_, cfg, actions_cfg, root, bat, sw = args
+    cat, env, fw, stage, _, ecfg, _, levels, _ = _setup(ev_, cfg, actions_cfg, root)
+    out = []
+    for v in sw["values_per_epoch"]:
+        b = None if v is None else int(v)
+        for comp, strat in (("none", None), (sw["compromise"], sw["strategy"])):
+            r = simulate(stage, sw["scheme"], comp, strat, ecfg, cat, env, fw, "naive", bat, b)
+            sc = score(stage, r["delivered"], levels, cfg["harm"]["delay_tolerance_min"])
+            key = {"event": ev_["name"], "battery_profile": bat["name"], "scheme": sw["scheme"], "compromise": comp,
+                   "strategy": strat or "-", "legit_policy": "naive", "energy_budget": "off" if b is None else str(b)}
+            out += [{**key, **e} for e in sc["events"]]
+    return out
+
+
+def _jobs_map(fn, jobs: list, workers: int) -> list:
     if workers > 1:
         from concurrent.futures import ProcessPoolExecutor  # noqa: PLC0415
         with ProcessPoolExecutor(max_workers=workers) as ex:
-            out = list(ex.map(_event, jobs))
-    else:
-        out = [_event(j) for j in jobs]
+            return list(ex.map(fn, jobs))
+    return [fn(j) for j in jobs]
+
+
+def _prepare(cfg: dict, actions_cfg: dict, root: Path) -> tuple[dict, list]:
+    from .devices import load_catalogue  # noqa: PLC0415
+    devs = {d.model: d for d in load_catalogue(root / "config/devices")}
+    bats = [battery_from_profile(p, devs) for p in cfg["battery"]["profiles"]]
+    return {**cfg, "_profile_inv": ev.invariants_from_config(actions_cfg)}, bats
+
+
+def budget_sweep(cfg: dict, actions_cfg: dict, root: Path, clusters: dict | None = None) -> pd.DataFrame:
+    """H2: per-epoch command-uplink budget (POLICY parameter) against (i) the legitimate p90 detection delay and
+    late-or-missed share, and (ii) the attack's excess late-or-missed share over that baseline, both with
+    storm-cluster bootstrap CIs. Configured by cfg["energy_budget"]["sweep"]; value None = no budget."""
+    sw = cfg["energy_budget"]["sweep"]
+    cfg, bats = _prepare(cfg, actions_cfg, root)
+    bat = next(b for b in bats if b["name"] == sw["battery_profile"])
+    jobs = [(e, cfg, actions_cfg, root, bat, sw) for e in event_list(cfg, root)]
+    evdf = pd.DataFrame([r for o in _jobs_map(_sweep_event, jobs, int(cfg.get("workers", 1))) for r in o])
+    st, tol = cfg["statistics"], cfg["harm"]["delay_tolerance_min"]
+    dd = delay_distribution(evdf[evdf.compromise == "none"], tol, st["bootstrap"], st["seed"], clusters=clusters)
+    xx = excess_over_baseline(evdf, tol, st["bootstrap"], st["seed"], clusters=clusters)
+    keep = ["energy_budget", "crossings", "resampling_units", "p90_delay_min", "p90_delay_min_ci_lo",
+            "p90_delay_min_ci_hi", "late_or_missed_share", "late_or_missed_share_ci_lo", "late_or_missed_share_ci_hi"]
+    out = dd[keep].rename(columns=lambda c: c if c == "energy_budget" else f"legit_{c}").merge(
+        xx[["energy_budget", "attack_share", "excess", "excess_ci_lo", "excess_ci_hi"]], on="energy_budget")
+    out.insert(0, "budget_per_epoch", [None if v == "off" else int(v) for v in out.energy_budget])
+    return out.assign(epoch_h=cfg["energy_budget"]["epoch_h"], battery_profile=bat["name"], scheme=sw["scheme"],
+                      compromise=sw["compromise"], strategy=sw["strategy"]).drop(columns="energy_budget")
+
+
+def run(cfg: dict, actions_cfg: dict, root: Path) -> tuple[pd.DataFrame, pd.DataFrame, dict]:
+    cfg, bats = _prepare(cfg, actions_cfg, root)
+    jobs = [(e, cfg, actions_cfg, root, bats) for e in event_list(cfg, root)]
+    out = _jobs_map(_event, jobs, int(cfg.get("workers", 1)))
     rows = [r for o in out for r in o[0]]
     events = [e for o in out for e in o[1]]
     metas = [o[2] for o in out]

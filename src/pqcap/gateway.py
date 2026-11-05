@@ -111,23 +111,36 @@ def forging_power(devices, policies: dict, threat: dict, inv: dict, state: dict)
 
 
 # ---------------------------------------------------------------- G1: how the filter learns the envelope bounds
-BOUNDS_SOURCES = ("in_frame", "out_of_band_verified", "out_of_band_unverified")
+BOUNDS_SOURCES = ("in_frame", "out_of_band_verified", "out_of_band_tls", "out_of_band_unverified")
 
 
 def bounds_source_table(filt: pd.DataFrame, forge: pd.DataFrame, region: str, dr: int, devices: int, policy: str,
                         mix: str) -> pd.DataFrame:
     """filter point x scheme x bounds source -> keys the filter must hold, forging power, blast radius under C1 +
-    that filter, and airtime saved (ranges over the catalogue devices).
+    that filter, consistency and third-party evidence, and airtime saved (ranges over the catalogue devices).
 
     in_frame: the filter reads the envelope from the install downlink. Its FRMPayload is AppSKey-encrypted
       (TS001-1.0.4 Table 11), so only a filter given AppSKey can read it; a standard NS cannot.
     out_of_band_verified: the PA publishes each envelope to the NS, which verifies it -- with pk_PA for S6 (verifies,
       cannot forge), with the S4-E per-device envelope MAC key for S4-E (the same key mints envelopes).
-    out_of_band_unverified: the NS takes the bounds from the PA over a channel it trusts, without verifying the
-      envelope. No key, so no forging power, but whoever controls that channel sets the bounds: wider bounds cancel
-      the saving, narrower ones make the filter drop in-envelope commands. The device still checks every command,
-      so the filter never widens what is accepted: filtering is an airtime optimisation and needs no signature by
-      itself; the signature only decides whether the NS can authenticate the bounds without gaining forging power.
+    out_of_band_tls (H1 baseline): the PA sends the bounds to the NS over a mutually authenticated channel (TLS); the
+      NS does not verify the envelope itself. No envelope key, so no forging power; the bounds are only as good as
+      the PA's word, which TLS does not make transferable.
+    out_of_band_unverified: the NS takes the bounds from the PA over a channel it does not authenticate. No key,
+      so no forging power, but whoever controls that channel sets the bounds: wider bounds cancel the saving,
+      narrower ones make the filter drop in-envelope commands.
+
+    The device still checks every command, so no filter widens what is accepted: filtering is an airtime
+    optimisation that needs no signature by itself, and the airtime saved depends on the filter point only.
+
+    ns_checks_installed: can the NS check that its bounds equal the envelope the device installed? Yes when it
+      holds the authenticated envelope object the device installs (S6 signed envelope, or the S4-E MACed envelope
+      with the MAC key) -- under the one-envelope-per-handle rule (`install_once`); a PA that issues two
+      envelopes for one handle is not detected by the MAC, and is detected with two PA signatures under S6.
+      No for TLS or unverified bounds: the NS has the PA's statement of the bounds, not the installed object.
+    aud_verifiable: can a third party (AUD) verify after the fact, trusting neither PA nor NS, that the bounds
+      were issued by the PA? Only a PA signature (S6) is transferable; a MAC (S4-E) can be made by every holder
+      of the key, and a TLS session gives the NS no evidence it can show to others.
     """
     f = filt[(filt.region == region) & (filt.dr == dr) & (filt.devices == devices) & (filt.policy == policy)
              & (filt.mix == mix)]
@@ -135,20 +148,25 @@ def bounds_source_table(filt: pd.DataFrame, forge: pd.DataFrame, region: str, dr
     rows = []
     for point, src, scheme in itertools.product(dict.fromkeys(f.filter_point), BOUNDS_SOURCES, ("S6", "S4-E")):
         possible = not (src == "in_frame" and point != "appskey_upper_bound")
-        verified = src != "out_of_band_unverified"
+        verified = src in ("in_frame", "out_of_band_verified")
         forging = possible and verified and scheme == "S4-E"
         keys = ["NwkSKey"] + (["AppSKey"] if point == "appskey_upper_bound" else [])
         if verified:
             keys.append("pk_PA" if scheme == "S6" else "S4-E envelope MAC key")
+        if src == "out_of_band_tls":
+            keys.append("TLS credentials (PA-to-NS)")
         g = fp[(fp.scheme == scheme) & (fp.compromise == ("C1 + filtering gateway" if forging else "C1"))]
         sv = f[f.filter_point == point]
+        na = lambda v: v if possible else None  # noqa: E731
         rows.append({"filter_point": point, "scheme": scheme, "bounds_source": src, "possible": possible,
-                     "filter_keys": "; ".join(keys) if possible else None, "forging_power": forging if possible else None,
-                     "blast_fraction_c1_plus_filter_min": g.fraction.min() if possible else None,
-                     "blast_fraction_c1_plus_filter_max": g.fraction.max() if possible else None,
-                     "bounds_set_by_channel_attacker": (not verified) if possible else None,
-                     "saved_s_per_h_min": sv.saved_s_per_h.min() if possible else None,
-                     "saved_s_per_h_max": sv.saved_s_per_h.max() if possible else None,
-                     "saved_share_of_budget_min": sv.saved_share_of_budget.min() if possible else None,
-                     "saved_share_of_budget_max": sv.saved_share_of_budget.max() if possible else None})
+                     "filter_keys": na("; ".join(keys)), "forging_power": na(forging),
+                     "ns_checks_installed": na(verified),
+                     "aud_verifiable": na(verified and scheme == "S6"),
+                     "blast_fraction_c1_plus_filter_min": na(g.fraction.min()),
+                     "blast_fraction_c1_plus_filter_max": na(g.fraction.max()),
+                     "bounds_set_by_channel_attacker": na(src == "out_of_band_unverified"),
+                     "saved_s_per_h_min": na(sv.saved_s_per_h.min()),
+                     "saved_s_per_h_max": na(sv.saved_s_per_h.max()),
+                     "saved_share_of_budget_min": na(sv.saved_share_of_budget.min()),
+                     "saved_share_of_budget_max": na(sv.saved_share_of_budget.max())})
     return pd.DataFrame(rows)

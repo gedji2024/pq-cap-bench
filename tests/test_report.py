@@ -111,6 +111,13 @@ def _fake_results(tmp_path, cfgs):  # noqa: F811
     harm.delay_distribution(he2, 30, 50, 1, clusters=cl).to_csv(r / "model_harm_delays.csv", index=False)
     harm.excess_over_baseline(he2, 30, 50, 1, clusters=cl).to_csv(r / "model_harm_excess.csv", index=False)
     (r / "harm_meta.json").write_text(json.dumps({**hm, "source": {"query_url": "q"}}, default=str))
+    pd.DataFrame([{"budget_per_epoch": b, "legit_crossings": 3, "legit_resampling_units": 1,
+                   "legit_p90_delay_min": 9.0, "legit_p90_delay_min_ci_lo": 5.0, "legit_p90_delay_min_ci_hi": 14.0,
+                   "legit_late_or_missed_share": 0.0, "legit_late_or_missed_share_ci_lo": 0.0,
+                   "legit_late_or_missed_share_ci_hi": 0.1, "attack_share": 0.5, "excess": 0.5, "excess_ci_lo": 0.4,
+                   "excess_ci_hi": 0.6, "epoch_h": 24, "battery_profile": "LWL01/poor", "scheme": "S6+F",
+                   "compromise": "C1", "strategy": "drain"} for b in (None, 10)]).to_csv(
+        r / "g3_budget_sweep.csv", index=False)
     return r, cfg
 
 
@@ -121,7 +128,7 @@ def test_report_renders(tmp_path, cfgs):  # noqa: F811
     (figs / "fig1_x.png").write_bytes(b"")
     report.run(cfg, r, figs)
     md = (tmp_path / "REPORT.md").read_text()
-    for h in ("## 1. Environment", "## 4. Host timings", "## 8. Kill criteria", "**K1", "**K2", "**K3", "**K4", "**K5 - Blast radius", "**K5 - blast radius per compromise", "## 7d. Revocation", "**D2 - S6+F", "**D6 - an untrusted gateway", "**Forging power of a filtering gateway**", "**OP token cost**", "**D1 - active revocation time", "## 8b. Traceability", "## 8a. K5/K6 on the manufacturer", "**SUPERSEDED**", "## 7f. Device-side", "Energy is **not reported**", "## 0. Repository state", "kept `7df90f4`", "T10", "## 7e. Harm-weighted replay", "Gaps > 60 min", "**Battery profiles (D5)**", "**K6 - blast(S4-E)", "**F1 - C4 fairness", "**F6 - pre-committed operator approvals.**", "**F2 - realistic filtering points**", "**Gateway given AppSKey (upper bound)**", "**G1 - how the filter learns", "**G2 - what C4 assumes", "not meaningful", "**G3 - energy budget per epoch", "**Drain effect relative to the legitimate baseline**", "**Attack effect relative to the legitimate baseline**", "storm clusters", "1 clusters for 1 events",
+    for h in ("## 1. Environment", "## 4. Host timings", "## 8. Kill criteria", "**K1", "**K2", "**K3", "**K4", "**K5 - Blast radius", "**K5 - blast radius per compromise", "## 7d. Revocation", "**D2 - S6+F", "**D6 - an untrusted gateway", "**Forging power of a filtering gateway**", "**OP token cost**", "**D1 - active revocation time", "## 8b. Traceability", "## 8a. K5/K6 on the manufacturer", "**SUPERSEDED**", "## 7f. Device-side", "Energy is **not reported**", "## 0. Repository state", "kept `7df90f4`", "T10", "## 7e. Harm-weighted replay", "Gaps > 60 min", "**Battery profiles (D5)**", "**K6 - blast(S4-E)", "**F1 - C4 fairness", "**F6 - pre-committed operator approvals.**", "**F2 - realistic filtering points**", "**Gateway given AppSKey (upper bound)**", "**G1 - how the filter learns", "**G2 - what C4 assumes", "not meaningful", "**G3 - energy budget per epoch", "**H2 - budget sweep", "no budget", "S6 therefore has no filtering advantage", "**Drain effect relative to the legitimate baseline**", "**Attack effect relative to the legitimate baseline**", "storm clusters", "1 clusters for 1 events",
               "## 7c. S6", "Crisis commands per gateway", "**Why the crisis capacities differ", "its capacity equals S6", "fig1_x.png"):
         assert h in md
     assert "env.json missing" in md

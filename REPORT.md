@@ -1437,28 +1437,34 @@ Reference levels: NWS flood categories where the gauge has them (Sec. 7i, F4); o
 | uniform_type | loose | 50 | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
 | uniform_type | loose | 200 | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
 
-**G1 - how the filter learns the envelope bounds** (US915 DR8, N = 50, tight policy, uniform_type flood; ranges over devices). *In frame*: the bounds travel in the envelope install downlink, whose FRMPayload is AppSKey-encrypted (TS001-1.0.4 Table 11), so a standard network server cannot read them; only the AppSKey upper bound can. *Out of band*: the PA publishes each envelope to the network server. With S6 the NS verifies it with pk_PA and cannot forge; with S4-E it needs the per-device envelope MAC key, which also mints envelopes, so the filter gains forging power (blast radius under C1 + filter = the whole catalogue). Variants (a) `ns_metadata` and (b) `fport_action_binding` do not need a signature by themselves: the device checks every command, so a filter can never widen what is accepted. Without verification (*unverified*), however, whoever controls the PA-to-NS channel sets the bounds: wider bounds cancel the saving, narrower ones make the filter drop in-envelope commands. `blast_c1_plus_filter` = accepted / catalogue under C1 plus that filter's keys.
+**G1 - how the filter learns the envelope bounds** (US915 DR8, N = 50, tight policy, uniform_type flood; ranges over devices). *In frame*: the bounds travel in the envelope install downlink, whose FRMPayload is AppSKey-encrypted (TS001-1.0.4 Table 11), so a standard network server cannot read them; only the AppSKey upper bound can. *Out of band*: the PA publishes each envelope to the network server. With S6 the NS verifies it with pk_PA and cannot forge; with S4-E it needs the per-device envelope MAC key, which also mints envelopes, so the filter gains forging power (blast radius under C1 + filter = the whole catalogue). Variants (a) `ns_metadata` and (b) `fport_action_binding` do not need a signature by themselves: the device checks every command, so a filter can never widen what is accepted. Without verification (*unverified*), however, whoever controls the PA-to-NS channel sets the bounds: wider bounds cancel the saving, narrower ones make the filter drop in-envelope commands. *TLS* (H1 baseline): S4-E with the bounds published to the NS over a mutually authenticated PA-to-NS channel; the NS holds no envelope key, so it cannot forge, and it saves exactly the same airtime as S6 at every filter point. **S6 therefore has no filtering advantage over this baseline.** What S6 adds is (i) `ns_checks_installed`: the NS holds the signed object the device installs, so it can check that its bounds are the installed envelope (one envelope per handle, `install_once`; a PA that signs two envelopes for one handle leaves two signatures), whereas with TLS it has only the PA's statement; and (ii) `aud_verifiable`: a third party can verify the bounds after the fact without trusting PA or NS, because a signature is transferable and a MAC or a TLS session is not. `blast_c1_plus_filter` = accepted / catalogue under C1 plus that filter's keys.
 
-| filter_point | scheme | bounds_source | possible | filter_keys | forging_power | blast_c1_plus_filter | bounds_set_by_channel_attacker | saved_s_per_h | saved_share_of_budget |
-|---|---|---|---|---|---|---|---|---|---|
-| appskey_upper_bound | S6 | in_frame | yes | NwkSKey; AppSKey; pk_PA | no | 0-3.64e-08 | no | 173-185 | 0.048-0.051 |
-| appskey_upper_bound | S4-E | in_frame | yes | NwkSKey; AppSKey; S4-E envelope MAC key | yes | 1 | no | 173-185 | 0.048-0.051 |
-| appskey_upper_bound | S6 | out_of_band_verified | yes | NwkSKey; AppSKey; pk_PA | no | 0-3.64e-08 | no | 173-185 | 0.048-0.051 |
-| appskey_upper_bound | S4-E | out_of_band_verified | yes | NwkSKey; AppSKey; S4-E envelope MAC key | yes | 1 | no | 173-185 | 0.048-0.051 |
-| appskey_upper_bound | S6 | out_of_band_unverified | yes | NwkSKey; AppSKey | no | 0-3.64e-08 | yes | 173-185 | 0.048-0.051 |
-| appskey_upper_bound | S4-E | out_of_band_unverified | yes | NwkSKey; AppSKey | no | 0-3.64e-08 | yes | 173-185 | 0.048-0.051 |
-| ns_metadata | S6 | in_frame | no | - | - | - | - | - | - |
-| ns_metadata | S4-E | in_frame | no | - | - | - | - | - | - |
-| ns_metadata | S6 | out_of_band_verified | yes | NwkSKey; pk_PA | no | 0-3.64e-08 | no | 106-142 | 0.029-0.040 |
-| ns_metadata | S4-E | out_of_band_verified | yes | NwkSKey; S4-E envelope MAC key | yes | 1 | no | 106-142 | 0.029-0.040 |
-| ns_metadata | S6 | out_of_band_unverified | yes | NwkSKey | no | 0-3.64e-08 | yes | 106-142 | 0.029-0.040 |
-| ns_metadata | S4-E | out_of_band_unverified | yes | NwkSKey | no | 0-3.64e-08 | yes | 106-142 | 0.029-0.040 |
-| fport_action_binding | S6 | in_frame | no | - | - | - | - | - | - |
-| fport_action_binding | S4-E | in_frame | no | - | - | - | - | - | - |
-| fport_action_binding | S6 | out_of_band_verified | yes | NwkSKey; pk_PA | no | 0-3.64e-08 | no | 114-142 | 0.032-0.040 |
-| fport_action_binding | S4-E | out_of_band_verified | yes | NwkSKey; S4-E envelope MAC key | yes | 1 | no | 114-142 | 0.032-0.040 |
-| fport_action_binding | S6 | out_of_band_unverified | yes | NwkSKey | no | 0-3.64e-08 | yes | 114-142 | 0.032-0.040 |
-| fport_action_binding | S4-E | out_of_band_unverified | yes | NwkSKey | no | 0-3.64e-08 | yes | 114-142 | 0.032-0.040 |
+| filter_point | scheme | bounds_source | possible | filter_keys | forging_power | ns_checks_installed | aud_verifiable | blast_c1_plus_filter | bounds_set_by_channel_attacker | saved_s_per_h | saved_share_of_budget |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| appskey_upper_bound | S6 | in_frame | yes | NwkSKey; AppSKey; pk_PA | no | yes | yes | 0-3.64e-08 | no | 173-185 | 0.048-0.051 |
+| appskey_upper_bound | S4-E | in_frame | yes | NwkSKey; AppSKey; S4-E envelope MAC key | yes | yes | no | 1 | no | 173-185 | 0.048-0.051 |
+| appskey_upper_bound | S6 | out_of_band_verified | yes | NwkSKey; AppSKey; pk_PA | no | yes | yes | 0-3.64e-08 | no | 173-185 | 0.048-0.051 |
+| appskey_upper_bound | S4-E | out_of_band_verified | yes | NwkSKey; AppSKey; S4-E envelope MAC key | yes | yes | no | 1 | no | 173-185 | 0.048-0.051 |
+| appskey_upper_bound | S6 | out_of_band_tls | yes | NwkSKey; AppSKey; TLS credentials (PA-to-NS) | no | no | no | 0-3.64e-08 | no | 173-185 | 0.048-0.051 |
+| appskey_upper_bound | S4-E | out_of_band_tls | yes | NwkSKey; AppSKey; TLS credentials (PA-to-NS) | no | no | no | 0-3.64e-08 | no | 173-185 | 0.048-0.051 |
+| appskey_upper_bound | S6 | out_of_band_unverified | yes | NwkSKey; AppSKey | no | no | no | 0-3.64e-08 | yes | 173-185 | 0.048-0.051 |
+| appskey_upper_bound | S4-E | out_of_band_unverified | yes | NwkSKey; AppSKey | no | no | no | 0-3.64e-08 | yes | 173-185 | 0.048-0.051 |
+| ns_metadata | S6 | in_frame | no | - | - | - | - | - | - | - | - |
+| ns_metadata | S4-E | in_frame | no | - | - | - | - | - | - | - | - |
+| ns_metadata | S6 | out_of_band_verified | yes | NwkSKey; pk_PA | no | yes | yes | 0-3.64e-08 | no | 106-142 | 0.029-0.040 |
+| ns_metadata | S4-E | out_of_band_verified | yes | NwkSKey; S4-E envelope MAC key | yes | yes | no | 1 | no | 106-142 | 0.029-0.040 |
+| ns_metadata | S6 | out_of_band_tls | yes | NwkSKey; TLS credentials (PA-to-NS) | no | no | no | 0-3.64e-08 | no | 106-142 | 0.029-0.040 |
+| ns_metadata | S4-E | out_of_band_tls | yes | NwkSKey; TLS credentials (PA-to-NS) | no | no | no | 0-3.64e-08 | no | 106-142 | 0.029-0.040 |
+| ns_metadata | S6 | out_of_band_unverified | yes | NwkSKey | no | no | no | 0-3.64e-08 | yes | 106-142 | 0.029-0.040 |
+| ns_metadata | S4-E | out_of_band_unverified | yes | NwkSKey | no | no | no | 0-3.64e-08 | yes | 106-142 | 0.029-0.040 |
+| fport_action_binding | S6 | in_frame | no | - | - | - | - | - | - | - | - |
+| fport_action_binding | S4-E | in_frame | no | - | - | - | - | - | - | - | - |
+| fport_action_binding | S6 | out_of_band_verified | yes | NwkSKey; pk_PA | no | yes | yes | 0-3.64e-08 | no | 114-142 | 0.032-0.040 |
+| fport_action_binding | S4-E | out_of_band_verified | yes | NwkSKey; S4-E envelope MAC key | yes | yes | no | 1 | no | 114-142 | 0.032-0.040 |
+| fport_action_binding | S6 | out_of_band_tls | yes | NwkSKey; TLS credentials (PA-to-NS) | no | no | no | 0-3.64e-08 | no | 114-142 | 0.032-0.040 |
+| fport_action_binding | S4-E | out_of_band_tls | yes | NwkSKey; TLS credentials (PA-to-NS) | no | no | no | 0-3.64e-08 | no | 114-142 | 0.032-0.040 |
+| fport_action_binding | S6 | out_of_band_unverified | yes | NwkSKey | no | no | no | 0-3.64e-08 | yes | 114-142 | 0.032-0.040 |
+| fport_action_binding | S4-E | out_of_band_unverified | yes | NwkSKey | no | no | no | 0-3.64e-08 | yes | 114-142 | 0.032-0.040 |
 
 **Forging power of a filtering gateway** (blast radius as a fraction of the catalogue, ranges over devices x policies). To verify S4-E envelopes the gateway must hold the per-device policy MAC key, which also mints envelopes, so C1 plus that gateway reaches the whole catalogue; an S6 gateway holds only pk_PA and the blast radius stays at the policy bound:
 
@@ -1706,6 +1712,22 @@ One-off commissioning message (commitment + OP signature), frames, US915:
 | LWL01/poor | S6+F | C1 | on | 0.022 | 0.059 | 0.037 | 0.000 | 0.076 |
 | LWL01/poor | S6+F | C1+C3 | on | 0.022 | 0.059 | 0.037 | 0.000 | 0.077 |
 | LWL01/poor | S6+F | C1+C3+OP | on | 0.022 | 0.059 | 0.037 | 0.000 | 0.077 |
+
+**H2 - budget sweep (POLICY parameter).** The per-24 h budget is swept instead of derived: S6+F under C1 drain, battery profile LWL01/poor, all events, 23 storm clusters (cluster-bootstrap 95 % CIs). Legitimate columns: naive legitimate policy with that budget. `attack_excess` = attack late-or-missed share minus the legitimate share, crossings paired. Values swept are a CHOICE (`config/harm.yaml: energy_budget.sweep`); `results/g3_budget_sweep.csv`, `figures/fig_g3_budget_sweep.png`.
+
+| budget_per_epoch | legit_p90_delay_min | legit_late_or_missed | attack_late_or_missed | attack_excess |
+|---|---|---|---|---|
+| 10 | 16 [15, 18] | 0.02 [0.00, 0.05] | 0.02 | 0.000 [0.000, 0.000] |
+| 20 | 16 [15, 18] | 0.02 [0.00, 0.05] | 0.02 | 0.000 [0.000, 0.000] |
+| 30 | 15 [13, 18] | 0.02 [0.00, 0.05] | 0.03 | 0.007 [0.000, 0.028] |
+| 50 | 14 [9, 17] | 0.02 [0.00, 0.05] | 0.06 | 0.037 [0.000, 0.077] |
+| 75 | 12 [9, 15] | 0.02 [0.00, 0.05] | 0.07 | 0.052 [0.019, 0.099] |
+| 100 | 11 [9, 15] | 0.02 [0.00, 0.05] | 0.48 | 0.459 [0.395, 0.532] |
+| 150 | 9 [8, 15] | 0.02 [0.00, 0.05] | 0.52 | 0.496 [0.402, 0.571] |
+| 200 | 9 [8, 15] | 0.02 [0.00, 0.05] | 0.52 | 0.496 [0.398, 0.572] |
+| no budget | 9 [8, 15] | 0.02 [0.00, 0.05] | 0.53 | 0.511 [0.421, 0.582] |
+
+![G3 budget sweep](figures/fig_g3_budget_sweep.png)
 
 ## 8. Kill criteria
 
@@ -1974,3 +1996,4 @@ Tamarin models `formal/crisis.spthy`, `formal/freshness.spthy` (P4; a trace-incl
 - [fig3_commands_in_window_US915_DR13.png](figures/fig3_commands_in_window_US915_DR13.png) ([pdf](figures/fig3_commands_in_window_US915_DR13.pdf))
 - [fig3_commands_in_window_US915_DR8.png](figures/fig3_commands_in_window_US915_DR8.png) ([pdf](figures/fig3_commands_in_window_US915_DR8.pdf))
 - [fig4_delegation_depth.png](figures/fig4_delegation_depth.png) ([pdf](figures/fig4_delegation_depth.pdf))
+- [fig_g3_budget_sweep.png](figures/fig_g3_budget_sweep.png) ([pdf](figures/fig_g3_budget_sweep.pdf))

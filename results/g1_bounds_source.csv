@@ -1,19 +1,25 @@
-filter_point,scheme,bounds_source,possible,filter_keys,forging_power,blast_fraction_c1_plus_filter_min,blast_fraction_c1_plus_filter_max,bounds_set_by_channel_attacker,saved_s_per_h_min,saved_s_per_h_max,saved_share_of_budget_min,saved_share_of_budget_max
-appskey_upper_bound,S6,in_frame,True,NwkSKey; AppSKey; pk_PA,False,0.0,3.6379650972798526e-08,False,172.9142766650391,185.11525325836797,0.04803174351806642,0.05142090368287999
-appskey_upper_bound,S4-E,in_frame,True,NwkSKey; AppSKey; S4-E envelope MAC key,True,1.0,1.0,False,172.9142766650391,185.11525325836797,0.04803174351806642,0.05142090368287999
-appskey_upper_bound,S6,out_of_band_verified,True,NwkSKey; AppSKey; pk_PA,False,0.0,3.6379650972798526e-08,False,172.9142766650391,185.11525325836797,0.04803174351806642,0.05142090368287999
-appskey_upper_bound,S4-E,out_of_band_verified,True,NwkSKey; AppSKey; S4-E envelope MAC key,True,1.0,1.0,False,172.9142766650391,185.11525325836797,0.04803174351806642,0.05142090368287999
-appskey_upper_bound,S6,out_of_band_unverified,True,NwkSKey; AppSKey,False,0.0,3.6379650972798526e-08,True,172.9142766650391,185.11525325836797,0.04803174351806642,0.05142090368287999
-appskey_upper_bound,S4-E,out_of_band_unverified,True,NwkSKey; AppSKey,False,0.0,3.6379650972798526e-08,True,172.9142766650391,185.11525325836797,0.04803174351806642,0.05142090368287999
-ns_metadata,S6,in_frame,False,,,,,,,,,
-ns_metadata,S4-E,in_frame,False,,,,,,,,,
-ns_metadata,S6,out_of_band_verified,True,NwkSKey; pk_PA,False,0.0,3.6379650972798526e-08,False,106.0278857142857,142.2336,0.029452190476190472,0.039509333333333334
-ns_metadata,S4-E,out_of_band_verified,True,NwkSKey; S4-E envelope MAC key,True,1.0,1.0,False,106.0278857142857,142.2336,0.029452190476190472,0.039509333333333334
-ns_metadata,S6,out_of_band_unverified,True,NwkSKey,False,0.0,3.6379650972798526e-08,True,106.0278857142857,142.2336,0.029452190476190472,0.039509333333333334
-ns_metadata,S4-E,out_of_band_unverified,True,NwkSKey,False,0.0,3.6379650972798526e-08,True,106.0278857142857,142.2336,0.029452190476190472,0.039509333333333334
-fport_action_binding,S6,in_frame,False,,,,,,,,,
-fport_action_binding,S4-E,in_frame,False,,,,,,,,,
-fport_action_binding,S6,out_of_band_verified,True,NwkSKey; pk_PA,False,0.0,3.6379650972798526e-08,False,113.78688000000001,142.2336,0.03160746666666667,0.039509333333333334
-fport_action_binding,S4-E,out_of_band_verified,True,NwkSKey; S4-E envelope MAC key,True,1.0,1.0,False,113.78688000000001,142.2336,0.03160746666666667,0.039509333333333334
-fport_action_binding,S6,out_of_band_unverified,True,NwkSKey,False,0.0,3.6379650972798526e-08,True,113.78688000000001,142.2336,0.03160746666666667,0.039509333333333334
-fport_action_binding,S4-E,out_of_band_unverified,True,NwkSKey,False,0.0,3.6379650972798526e-08,True,113.78688000000001,142.2336,0.03160746666666667,0.039509333333333334
+filter_point,scheme,bounds_source,possible,filter_keys,forging_power,ns_checks_installed,aud_verifiable,blast_fraction_c1_plus_filter_min,blast_fraction_c1_plus_filter_max,bounds_set_by_channel_attacker,saved_s_per_h_min,saved_s_per_h_max,saved_share_of_budget_min,saved_share_of_budget_max
+appskey_upper_bound,S6,in_frame,True,NwkSKey; AppSKey; pk_PA,False,True,True,0.0,3.6379650972798526e-08,False,172.9142766650391,185.11525325836797,0.04803174351806642,0.05142090368287999
+appskey_upper_bound,S4-E,in_frame,True,NwkSKey; AppSKey; S4-E envelope MAC key,True,True,False,1.0,1.0,False,172.9142766650391,185.11525325836797,0.04803174351806642,0.05142090368287999
+appskey_upper_bound,S6,out_of_band_verified,True,NwkSKey; AppSKey; pk_PA,False,True,True,0.0,3.6379650972798526e-08,False,172.9142766650391,185.11525325836797,0.04803174351806642,0.05142090368287999
+appskey_upper_bound,S4-E,out_of_band_verified,True,NwkSKey; AppSKey; S4-E envelope MAC key,True,True,False,1.0,1.0,False,172.9142766650391,185.11525325836797,0.04803174351806642,0.05142090368287999
+appskey_upper_bound,S6,out_of_band_tls,True,NwkSKey; AppSKey; TLS credentials (PA-to-NS),False,False,False,0.0,3.6379650972798526e-08,False,172.9142766650391,185.11525325836797,0.04803174351806642,0.05142090368287999
+appskey_upper_bound,S4-E,out_of_band_tls,True,NwkSKey; AppSKey; TLS credentials (PA-to-NS),False,False,False,0.0,3.6379650972798526e-08,False,172.9142766650391,185.11525325836797,0.04803174351806642,0.05142090368287999
+appskey_upper_bound,S6,out_of_band_unverified,True,NwkSKey; AppSKey,False,False,False,0.0,3.6379650972798526e-08,True,172.9142766650391,185.11525325836797,0.04803174351806642,0.05142090368287999
+appskey_upper_bound,S4-E,out_of_band_unverified,True,NwkSKey; AppSKey,False,False,False,0.0,3.6379650972798526e-08,True,172.9142766650391,185.11525325836797,0.04803174351806642,0.05142090368287999
+ns_metadata,S6,in_frame,False,,,,,,,,,,,
+ns_metadata,S4-E,in_frame,False,,,,,,,,,,,
+ns_metadata,S6,out_of_band_verified,True,NwkSKey; pk_PA,False,True,True,0.0,3.6379650972798526e-08,False,106.0278857142857,142.2336,0.029452190476190472,0.039509333333333334
+ns_metadata,S4-E,out_of_band_verified,True,NwkSKey; S4-E envelope MAC key,True,True,False,1.0,1.0,False,106.0278857142857,142.2336,0.029452190476190472,0.039509333333333334
+ns_metadata,S6,out_of_band_tls,True,NwkSKey; TLS credentials (PA-to-NS),False,False,False,0.0,3.6379650972798526e-08,False,106.0278857142857,142.2336,0.029452190476190472,0.039509333333333334
+ns_metadata,S4-E,out_of_band_tls,True,NwkSKey; TLS credentials (PA-to-NS),False,False,False,0.0,3.6379650972798526e-08,False,106.0278857142857,142.2336,0.029452190476190472,0.039509333333333334
+ns_metadata,S6,out_of_band_unverified,True,NwkSKey,False,False,False,0.0,3.6379650972798526e-08,True,106.0278857142857,142.2336,0.029452190476190472,0.039509333333333334
+ns_metadata,S4-E,out_of_band_unverified,True,NwkSKey,False,False,False,0.0,3.6379650972798526e-08,True,106.0278857142857,142.2336,0.029452190476190472,0.039509333333333334
+fport_action_binding,S6,in_frame,False,,,,,,,,,,,
+fport_action_binding,S4-E,in_frame,False,,,,,,,,,,,
+fport_action_binding,S6,out_of_band_verified,True,NwkSKey; pk_PA,False,True,True,0.0,3.6379650972798526e-08,False,113.78688000000001,142.2336,0.03160746666666667,0.039509333333333334
+fport_action_binding,S4-E,out_of_band_verified,True,NwkSKey; S4-E envelope MAC key,True,True,False,1.0,1.0,False,113.78688000000001,142.2336,0.03160746666666667,0.039509333333333334
+fport_action_binding,S6,out_of_band_tls,True,NwkSKey; TLS credentials (PA-to-NS),False,False,False,0.0,3.6379650972798526e-08,False,113.78688000000001,142.2336,0.03160746666666667,0.039509333333333334
+fport_action_binding,S4-E,out_of_band_tls,True,NwkSKey; TLS credentials (PA-to-NS),False,False,False,0.0,3.6379650972798526e-08,False,113.78688000000001,142.2336,0.03160746666666667,0.039509333333333334
+fport_action_binding,S6,out_of_band_unverified,True,NwkSKey,False,False,False,0.0,3.6379650972798526e-08,True,113.78688000000001,142.2336,0.03160746666666667,0.039509333333333334
+fport_action_binding,S4-E,out_of_band_unverified,True,NwkSKey,False,False,False,0.0,3.6379650972798526e-08,True,113.78688000000001,142.2336,0.03160746666666667,0.039509333333333334

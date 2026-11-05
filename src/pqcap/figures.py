@@ -147,6 +147,34 @@ def fig_depth(d, model, out):
     _save(fig, out, "fig4_delegation_depth")
 
 
+def fig_budget_sweep(sw: pd.DataFrame, out: Path) -> None:
+    """H2: legitimate p90 detection delay vs attack excess late-or-missed share, one point per per-epoch budget."""
+    sw = sw.sort_values("budget_per_epoch", na_position="last")
+    fig, ax = plt.subplots(figsize=(5.2, 3.6), constrained_layout=True)
+    x, y = sw.legit_p90_delay_min, sw.excess
+    xerr = [x - sw.legit_p90_delay_min_ci_lo, sw.legit_p90_delay_min_ci_hi - x]
+    yerr = [y - sw.excess_ci_lo, sw.excess_ci_hi - y]
+    b = sw.budget_per_epoch.notna()
+    ax.plot(x[b], y[b], color=CAT[0], linewidth=2, zorder=2)
+    ax.errorbar(x, y, xerr=xerr, yerr=yerr, fmt="none", ecolor=INK2, elinewidth=0.8, capsize=2, zorder=1)
+    ax.scatter(x[b], y[b], s=40, color=CAT[0], edgecolor="white", linewidth=2, zorder=3)
+    ax.scatter(x[~b], y[~b], s=40, facecolor="white", edgecolor=CAT[0], linewidth=2, zorder=3)
+    labels: dict = {}                                   # coincident points share one label
+    for xi, yi, v in zip(x, y, sw.budget_per_epoch):
+        labels.setdefault((round(xi, 6), round(yi, 3)), []).append("no budget" if pd.isna(v) else f"{int(v)}")
+    for (xi, yi), names in labels.items():
+        ax.annotate(", ".join(names) + ("/day" if names[-1] != "no budget" else ""), (xi, yi),
+                    xytext=(6, 9) if "no budget" in names else (6, -10 if yi > 0.45 else 5),
+                    textcoords="offset points", fontsize=7, color=INK2)
+    r = sw.iloc[0]
+    ax.set_xlabel("legitimate operation: p90 detection delay (min)")
+    ax.set_ylabel("drain attack: excess late-or-missed share")
+    ax.set_title(f"{r.scheme} under {r.compromise} {r.strategy}, {r.battery_profile}: budget per "
+                 f"{int(r.epoch_h)} h epoch (POLICY)", loc="left")
+    ax.axhline(0, color=INK2, linewidth=0.8)
+    _save(fig, out, "fig_g3_budget_sweep")
+
+
 def run(results: Path, out: Path, config: Path = CONFIG) -> None:
     out.mkdir(parents=True, exist_ok=True)
     model = load_yaml(config / "model.yaml")
@@ -157,3 +185,5 @@ def run(results: Path, out: Path, config: Path = CONFIG) -> None:
     fig_ttd(d, ch, out)
     fig_capacity(c, ch, model, out)
     fig_depth(d, model, out)
+    if (results / "g3_budget_sweep.csv").exists():
+        fig_budget_sweep(pd.read_csv(results / "g3_budget_sweep.csv"), out)

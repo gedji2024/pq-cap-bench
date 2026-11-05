@@ -231,6 +231,9 @@ def run(config: Path, results: Path) -> dict[str, pd.DataFrame]:
                     results / "model_harm_delays.csv", index=False)
                 harm.excess_over_baseline(he, tol, st["bootstrap"], st["seed"], clusters=cl).to_csv(
                     results / "model_harm_excess.csv", index=False)
+                if (hcfg.get("energy_budget") or {}).get("sweep"):    # H2
+                    harm.budget_sweep(hcfg, load_yaml(actions_p), REPO_ROOT, cl).to_csv(
+                        results / "g3_budget_sweep.csv", index=False)
             for em in hm["events"]:
                 srcs = []
                 for f in em["files"]:

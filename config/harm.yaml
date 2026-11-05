@@ -90,6 +90,14 @@ energy_budget:
   in_floor: [S6+F]
   epoch_h: 24
   horizon_d: 7
+  # H2: sweep of the per-epoch budget (POLICY parameter, not derived): legitimate p90 delay vs attack excess
+  # late-or-missed share, storm-cluster bootstrap CIs. null = no budget (reference point). Values are a CHOICE.
+  sweep:
+    values_per_epoch: [null, 10, 20, 30, 50, 75, 100, 150, 200]
+    battery_profile: LWL01/poor
+    scheme: S6+F
+    compromise: C1
+    strategy: drain
 
 # Scoring. Gauges differ in stage scale, so thresholds are FRACTIONS of each event's own stage range (ASSUMED).
 harm:

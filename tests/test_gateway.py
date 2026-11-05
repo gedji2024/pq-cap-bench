@@ -94,4 +94,13 @@ def test_bounds_source_g1():
         un = k.loc[(p, "out_of_band_unverified", "S4-E")]
         assert not un.forging_power and un.bounds_set_by_channel_attacker
         assert s6.saved_s_per_h_max == s4e.saved_s_per_h_max == un.saved_s_per_h_max   # same bounds, same saving
+        # H1 baseline: S4-E + authenticated PA-to-NS publication (TLS) filters as well as S6, without forging power,
+        # but the NS cannot check the installed envelope and AUD gets no transferable evidence
+        tls = k.loc[(p, "out_of_band_tls", "S4-E")]
+        assert not tls.forging_power and not tls.bounds_set_by_channel_attacker
+        assert not tls.ns_checks_installed and not tls.aud_verifiable and "TLS" in tls.filter_keys
+        assert tls.saved_s_per_h_max == s6.saved_s_per_h_max and tls.saved_s_per_h_min == s6.saved_s_per_h_min
+        assert s6.ns_checks_installed and s6.aud_verifiable
+        assert s4e.ns_checks_installed and not s4e.aud_verifiable
+        assert not un.ns_checks_installed and not un.aud_verifiable
     assert "AppSKey" in k.loc[("appskey_upper_bound", "in_frame", "S6"), "filter_keys"]

@@ -653,6 +653,27 @@ def section_g3(results: Path, config: Path) -> str:
                             "attack_share", "excess", "excess_ci_lo", "excess_ci_hi"]],
                          {c: (lambda v: f"{v:.3f}") for c in ("baseline_share", "attack_share", "excess",
                                                               "excess_ci_lo", "excess_ci_hi")})]
+    sp = results / "g3_budget_sweep.csv"
+    if sp.exists():
+        w = pd.read_csv(sp).sort_values("budget_per_epoch", na_position="last")
+        r0 = w.iloc[0]
+        ci = lambda a, lo, hi, f: [f"{f(x)} [{f(y)}, {f(z)}]" for x, y, z in zip(a, lo, hi)]  # noqa: E731
+        t = pd.DataFrame({
+            "budget_per_epoch": ["no budget" if pd.isna(v) else f"{int(v)}" for v in w.budget_per_epoch],
+            "legit_p90_delay_min": ci(w.legit_p90_delay_min, w.legit_p90_delay_min_ci_lo,
+                                      w.legit_p90_delay_min_ci_hi, fm),
+            "legit_late_or_missed": ci(w.legit_late_or_missed_share, w.legit_late_or_missed_share_ci_lo,
+                                       w.legit_late_or_missed_share_ci_hi, lambda v: f"{v:.2f}"),
+            "attack_late_or_missed": [f"{v:.2f}" for v in w.attack_share],
+            "attack_excess": ci(w.excess, w.excess_ci_lo, w.excess_ci_hi, lambda v: f"{v:.3f}")})
+        out += [f"**H2 - budget sweep (POLICY parameter).** The per-{int(r0.epoch_h)} h budget is swept instead of "
+                f"derived: {r0.scheme} under {r0.compromise} {r0.strategy}, battery profile {r0.battery_profile}, all "
+                f"events, {int(w.legit_resampling_units.iloc[0])} storm clusters (cluster-bootstrap 95 % CIs). "
+                "Legitimate columns: naive legitimate policy with that budget. `attack_excess` = attack late-or-missed "
+                "share minus the legitimate share, crossings paired. Values swept are a CHOICE "
+                "(`config/harm.yaml: energy_budget.sweep`); `results/g3_budget_sweep.csv`, "
+                "`figures/fig_g3_budget_sweep.png`.", md_table(t),
+                "![G3 budget sweep](figures/fig_g3_budget_sweep.png)"]
     return "\n\n".join(out)
 
 
@@ -750,6 +771,7 @@ def section_d6(results: Path, model: dict) -> str:
         rng = lambda lo, hi, f: "-" if pd.isna(lo) else (f(lo) if f(lo) == f(hi) else f"{f(lo)}-{f(hi)}")  # noqa: E731
         t = b[["filter_point", "scheme", "bounds_source"]].assign(
             possible=b.possible.map(yn), filter_keys=b.filter_keys.fillna("-"), forging_power=b.forging_power.map(yn),
+            ns_checks_installed=b.ns_checks_installed.map(yn), aud_verifiable=b.aud_verifiable.map(yn),
             blast_c1_plus_filter=[rng(lo, hi, lambda v: f"{v:.3g}") for lo, hi in
                                   zip(b.blast_fraction_c1_plus_filter_min, b.blast_fraction_c1_plus_filter_max)],
             bounds_set_by_channel_attacker=b.bounds_set_by_channel_attacker.map(yn),
@@ -767,8 +789,16 @@ def section_d6(results: Path, model: dict) -> str:
                    "`fport_action_binding` do not need a signature by themselves: the device checks every command, "
                    "so a filter can never widen what is accepted. Without verification (*unverified*), however, "
                    "whoever controls the PA-to-NS channel sets the bounds: wider bounds cancel the saving, narrower "
-                   "ones make the filter drop in-envelope commands. `blast_c1_plus_filter` = accepted / catalogue "
-                   "under C1 plus that filter's keys.\n\n" + md_table(t))
+                   "ones make the filter drop in-envelope commands. *TLS* (H1 baseline): S4-E with the bounds "
+                   "published to the NS over a mutually authenticated PA-to-NS channel; the NS holds no envelope key, "
+                   "so it cannot forge, and it saves exactly the same airtime as S6 at every filter point. "
+                   "**S6 therefore has no filtering advantage over this baseline.** What S6 adds is (i) "
+                   "`ns_checks_installed`: the NS holds the signed object the device installs, so it can check that "
+                   "its bounds are the installed envelope (one envelope per handle, `install_once`; a PA that signs "
+                   "two envelopes for one handle leaves two signatures), whereas with TLS it has only the PA's "
+                   "statement; and (ii) `aud_verifiable`: a third party can verify the bounds after the fact without "
+                   "trusting PA or NS, because a signature is transferable and a MAC or a TLS session is not. "
+                   "`blast_c1_plus_filter` = accepted / catalogue under C1 plus that filter's keys.\n\n" + md_table(t))
     fp = fp.assign(fraction=fp.accepted / fp.catalogue)
     t = (fp.groupby(["scheme", "compromise", "gateway_keys"], sort=False)
          .agg(fraction_min=("fraction", "min"), fraction_max=("fraction", "max"), cases=("fraction", "size")).reset_index())

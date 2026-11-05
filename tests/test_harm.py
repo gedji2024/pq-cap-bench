@@ -412,3 +412,35 @@ def test_delay_distribution_clusters_and_excess_g4():
     assert x.resampling_units == 2
     # no baseline rows -> no excess row
     assert harm.excess_over_baseline(ev_[ev_.compromise != "none"], 30, 50, 1).empty
+
+
+def test_simulate_init_config():
+    stage = _hydrograph(1000)
+    lv = [x * 30.48 for x in LEVELS_FT]
+    off = harm.simulate(stage, "S4", "C1", None, _cfg(), CAT, ENV, FW, init={"enabled": False})
+    sc = harm.score(stage, off["delivered"], lv, 30)
+    assert sc["missed"] == sc["crossings"] > 0
+    slow = harm.simulate(stage, "S4", "C1", None, _cfg(), CAT, ENV, FW, init={"interval": 1440, "threshold": 1500,
+                                                                             "soc_pct": 50})
+    base = harm.simulate(stage, "S4", "C1", None, _cfg(), CAT, ENV, FW)
+    assert slow["stats"]["uplinks"] < base["stats"]["uplinks"]
+
+
+def test_budget_sweep_h2():
+    evs = [{"name": "w", "file": HCFG["series"]["file"], "start": "2017-08-27", "end": "2017-08-29"},
+           {"name": "v", "file": HCFG["series"]["file"], "start": "2017-08-30", "end": "2017-09-01"}]
+    sw = {"values_per_epoch": [None, 0, 50], "battery_profile": "LWL01/poor", "scheme": "S6+F", "compromise": "C1",
+          "strategy": "drain"}
+    cfg = {**HCFG, "events": evs, "events_rule": None, "events_prereg": None, "workers": 1,
+           "statistics": {**HCFG["statistics"], "bootstrap": 50},
+           "energy_budget": {**HCFG["energy_budget"], "sweep": sw}}
+    t = harm.budget_sweep(cfg, ACFG, REPO_ROOT, {"w": 0, "v": 1})
+    assert len(t) == 3
+    assert (t.legit_resampling_units == 2).all() and (t.scheme == "S6+F").all() and (t.epoch_h == 24).all()
+    off = t[t.budget_per_epoch.isna()].iloc[0]
+    zero = t[t.budget_per_epoch == 0].iloc[0]
+    assert zero.excess <= off.excess                                     # no command-caused uplinks: no drain
+    for c in ("legit_p90_delay_min", "excess"):
+        assert (t[f"{c}_ci_lo"] <= t[c] + 1e-9).all() and (t[c] <= t[f"{c}_ci_hi"] + 1e-9).all()
+    a = harm.budget_sweep({**cfg, "workers": 2}, ACFG, REPO_ROOT, {"w": 0, "v": 1})
+    pd.testing.assert_frame_equal(a, t)
