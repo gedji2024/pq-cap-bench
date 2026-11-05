@@ -672,8 +672,53 @@ def section_g3(results: Path, config: Path) -> str:
                 "Legitimate columns: naive legitimate policy with that budget. `attack_excess` = attack late-or-missed "
                 "share minus the legitimate share, crossings paired. Values swept are a CHOICE "
                 "(`config/harm.yaml: energy_budget.sweep`); `results/g3_budget_sweep.csv`, "
-                "`figures/fig_g3_budget_sweep.png`.", md_table(t),
+                "`figures/fig_g3_budget_sweep.png`. *Change note (H3/H4 round):* 85, 90, 300 and 400/day were added "
+                "(CHOICE). The bootstrap shares one random stream across budget values, so adding rows moved the CI "
+                "bounds of the existing 100, 150 and 200/day rows by at most 0.002 relative to commit `7bddc42`; "
+                "no point estimate changed.", md_table(t),
                 "![G3 budget sweep](figures/fig_g3_budget_sweep.png)"]
+    ftp = results / "g3_floor_timing.csv"
+    if ftp.exists():
+        f = pd.read_csv(ftp)
+        hb = load_yaml(config / "harm.yaml")
+        q = lambda v, fmt="{:.1f}": "-" if pd.isna(v) else fmt.format(v)  # noqa: E731
+        sent = "; ".join(
+            f"at {int(r.budget_per_epoch)}/day {int(r.events_reaching_floor)} of {int(r.events)} events reach the floor "
+            f"(median day {q(r.median_floor_day)} of the window, {q(r.median_floor_day_rel_peak, '{:+.1f}')} d from "
+            f"the peak; earliest: {r.earliest_event if isinstance(r.earliest_event, str) else '-'}, day "
+            f"{q(r.earliest_floor_day, '{:.0f}')}; {int(r.floor_before_first_crossing)} before their first scored "
+            "crossing)" for r in f.itertuples())
+        out += ["**H3 - mechanism of the cliff.** The budget only limits *command-caused* uplinks; the attacker spends "
+                "all of it every day. Whether that matters depends on when the battery falls below its floor "
+                f"({hb['battery']['profiles'][-1]['name']}, floor from the action profile): below the floor the "
+                "low-battery invariant slows reporting, so a crossing that comes after the floor is reported late. "
+                "Under the drain attack (window = 5 d before to 2 d after the peak, day 1 = first day): " + sent + ". "
+                "The excess jumps where the floor moves from after the crossings to before them: the cliff is the "
+                "budget at which the attacker's daily spend exhausts the charge above the floor within the window "
+                "before the flood rises. 85 and 90/day were added to the sweep to locate it (CHOICE). "
+                "`results/g3_floor_timing.csv`, per-run rows in `results/g3_floor_runs.csv`.",
+                md_table(f, {"budget_per_epoch": lambda v: f"{int(v)}", "events": lambda v: f"{int(v)}",
+                             "events_reaching_floor": lambda v: f"{int(v)}",
+                             "median_floor_day": q, "median_floor_day_rel_peak": lambda v: q(v, "{:+.1f}"),
+                             "earliest_floor_day": lambda v: q(v, "{:.0f}"),
+                             "floor_before_first_crossing": lambda v: f"{int(v)}"})]
+    ssp = results / "g3_soc_sensitivity.csv"
+    if ssp.exists():
+        z = pd.read_csv(ssp)
+        nb = lambda v: "none in sweep" if pd.isna(v) else f"{int(v)}"  # noqa: E731
+        cx = lambda a, lo, hi: "-" if pd.isna(a) else f"{a:.3f} [{lo:.3f}, {hi:.3f}]"  # noqa: E731
+        t = pd.DataFrame({"initial_soc_pct": z.initial_soc_pct.map(lambda v: f"{v:g}"),
+                          "derived_budget_per_day": z.derived_budget.map(lambda v: f"{int(v)}"),
+                          "largest_budget_excess<=thr": z.largest_budget_at_or_below.map(nb),
+                          "its_excess": [cx(*r) for r in zip(z.its_excess_below, z.its_excess_below_ci_lo,
+                                                             z.its_excess_below_ci_hi)],
+                          "smallest_budget_excess>thr": z.smallest_budget_excess_over.map(nb),
+                          "its_excess ": [cx(*r) for r in zip(z.its_excess, z.its_excess_ci_lo, z.its_excess_ci_hi)]})
+        out += [f"**H4 - sensitivity to the ASSUMED initial state of charge** ({', '.join(f'{v:g}' for v in z.initial_soc_pct)} %, "
+                "CHOICE; 60 % is the headline value). For each SOC: the derived budget (`pqcap.harm.epoch_budget`) "
+                f"and, on the swept grid, the budgets on either side of an attack excess of {z.threshold.iloc[0]:.2f} "
+                "(CHOICE), with storm-cluster bootstrap 95 % CIs. The cliff is located only to the grid resolution. "
+                "`results/g3_soc_sensitivity.csv`, full sweeps in `results/g3_soc_sweep.csv`.", md_table(t)]
     return "\n\n".join(out)
 
 
@@ -696,14 +741,35 @@ def section_d2(results: Path) -> str:
             dd = dd[dd.scheme.isin(["S4-F", "S6", "S6+F"]) & (dd.compromise != "none") & (dd.strategy == "suppress")
                     & (dd.battery_profile == bp)]
             fm = lambda v: "inf (missed)" if v == float("inf") else f"{v:,.0f}"  # noqa: E731
+            tb = dd[["scheme", "compromise", "events", "crossings", "missed"]].copy()
+            for c in ("median_delay_min", "p90_delay_min"):
+                tb[c] = [f"{fm(a)} [{fm(b)}, {fm(d)}]" for a, b, d in zip(dd[c], dd[f"{c}_ci_lo"], dd[f"{c}_ci_hi"])]
+            tb["max_delay_min"] = dd.max_delay_min.map(fm)
+            tb["late_or_missed_share"] = [f"{a:.2f} [{b:.2f}, {d:.2f}]" for a, b, d in zip(
+                dd.late_or_missed_share, dd.late_or_missed_share_ci_lo, dd.late_or_missed_share_ci_hi)]
+            units = int(dd.resampling_units.max()) if "resampling_units" in dd else None
             harm_t = (f"\n\n**S4-F suppress attack re-run against S6+F, with the F3 commissioning bound** (all "
                       f"{int(dd.events.max())} events of Sec. 7e, battery profile {bp}; suppress does not depend on the "
                       "battery; delays in minutes, missed = inf; the earlier C1+C3 rows without the bound are "
-                      "**SUPERSEDED**):\n\n"
-                      + md_table(dd[["scheme", "compromise", "events", "crossings", "missed", "median_delay_min",
-                                     "p90_delay_min", "max_delay_min", "late_or_missed_share"]],
-                                 {"events": ints, "crossings": ints, "missed": ints, "median_delay_min": fm,
-                                  "p90_delay_min": fm, "max_delay_min": fm, "late_or_missed_share": lambda v: f"{v:.2f}"}))
+                      "**SUPERSEDED**). F3-CI: 95 % CIs from the percentile bootstrap over "
+                      f"{units} storm clusters (G4); point estimates unchanged, the CIs are new:\n\n"
+                      + md_table(tb, {"events": ints, "crossings": ints, "missed": ints}))
+        ap = results / "f3_ablation_clusters.csv"
+        if ap.exists():
+            f = pd.read_csv(ap)
+            fm2 = lambda v: "inf (missed)" if v == float("inf") else f"{v:,.0f}"  # noqa: E731
+            cx = lambda a, lo, hi, g: "-" if pd.isna(a) else f"{g(a)} [{g(lo)}, {g(hi)}]"  # noqa: E731
+            t2 = f[["commissioning_bound", "compromise", "crossings", "missed"]].assign(
+                p90_delay_min=[cx(*r, fm2) for r in zip(f.p90_delay_min, f.p90_delay_min_ci_lo, f.p90_delay_min_ci_hi)],
+                late_or_missed=[cx(*r, lambda v: f"{v:.2f}") for r in zip(
+                    f.late_or_missed_share, f.late_or_missed_share_ci_lo, f.late_or_missed_share_ci_hi)],
+                excess_over_legit=[cx(*r, lambda v: f"{v:.3f}") for r in zip(f.excess, f.excess_ci_lo, f.excess_ci_hi)])
+            harm_t += (f"\n\n**F3 with and without the commissioning bound** (S6+F, suppress attack and the legitimate "
+                       f"naive policy, all {int(f.events.max())} events, battery profile {f.battery_profile.iloc[0]}; "
+                       f"95 % CIs from the bootstrap over {int(f.resampling_units.max())} storm clusters, superseding "
+                       "the event-level CIs; `excess_over_legit` = late-or-missed share minus that of legitimate "
+                       "operation, crossings paired; `results/f3_ablation_clusters.csv`):\n\n"
+                       + md_table(t2, {"crossings": ints, "missed": ints}))
 
     tk = t.pivot_table(index=["op_token_alg", "token_bytes"], columns=["region", "dr"], values="frames", sort=False)
     tk.columns = [f"{r} DR{d}" for r, d in tk.columns]

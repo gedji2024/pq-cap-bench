@@ -285,7 +285,7 @@ def simulate(stage: np.ndarray, scheme: str, compromise: str, strategy: str | No
     cur_epoch, tokens = -1, 0
     last_rejected = last_sent = None
     stats = {"budget_used": 0, "budget_denied_requests": 0, "legit_intents": 0, "legit_intents_rejected": 0, "floor_violating_uplinks": 0, "uplinks": 0, "legit_sent": 0, "legit_rejected": 0, "attacker_sent": 0, "attacker_accepted": 0,
-             "minutes_below_floor": 0, "died_min": None, "min_soc_pct": 100.0}
+             "minutes_below_floor": 0, "died_min": None, "min_soc_pct": 100.0, "floor_reached_min": None}
     delivered: list[tuple[int, float, int]] = []                     # (sample minute, value, uplink minute)
     reject_reasons: dict[str, int] = {}
     for t in range(len(stage)):
@@ -296,6 +296,8 @@ def simulate(stage: np.ndarray, scheme: str, compromise: str, strategy: str | No
         soc_pct = 100 * d.soc_mAh / cap
         stats["min_soc_pct"] = min(stats["min_soc_pct"], soc_pct)
         stats["minutes_below_floor"] += d.soc_mAh < cfg_floor
+        if d.soc_mAh < cfg_floor and stats["floor_reached_min"] is None:
+            stats["floor_reached_min"] = t
         if t % dv["sample_period_min"] == 0:
             if d.enabled:
                 v = float(stage[t])
@@ -603,11 +605,17 @@ def _event(args) -> tuple[list, list, dict]:
     return rows, events, metas[0]
 
 
-def _sweep_event(args) -> list:
-    """H2: legitimate baseline and the attack of `sweep`, for every per-epoch budget value (POLICY), one event."""
+def _sweep_event(args) -> tuple[list, list]:
+    """H2: legitimate baseline and the attack of `sweep`, for every per-epoch budget value (POLICY), one event.
+    Returns the crossing rows and, per run, when the battery first falls below its floor (cliff mechanism)."""
     ev_, cfg, actions_cfg, root, bat, sw = args
     cat, env, fw, stage, _, ecfg, _, levels, _ = _setup(ev_, cfg, actions_cfg, root)
-    out = []
+    out, floors = [], []
+    peak, first_cross = int(np.argmax(stage)), None
+    for lv in levels:
+        c = crossings(stage, lv)
+        if c:
+            first_cross = c[0][0] if first_cross is None else min(first_cross, c[0][0])
     for v in sw["values_per_epoch"]:
         b = None if v is None else int(v)
         for comp, strat in (("none", None), (sw["compromise"], sw["strategy"])):
@@ -616,7 +624,31 @@ def _sweep_event(args) -> list:
             key = {"event": ev_["name"], "battery_profile": bat["name"], "scheme": sw["scheme"], "compromise": comp,
                    "strategy": strat or "-", "legit_policy": "naive", "energy_budget": "off" if b is None else str(b)}
             out += [{**key, **e} for e in sc["events"]]
-    return out
+            floors.append({**key, "floor_reached_min": r["stats"]["floor_reached_min"], "peak_min": peak,
+                           "first_crossing_min": first_cross, "minutes": int(stage.size),
+                           "budget_used": r["stats"]["budget_used"], "late_or_missed": sc["missed"] + sc["delayed"],
+                           "crossings": sc["crossings"]})
+    return out, floors
+
+
+def floor_timing(floors: pd.DataFrame, budgets: list) -> pd.DataFrame:
+    """H3 (cliff mechanism): per budget, for the attack runs, how many events reach the battery floor, the median
+    day (of the event window, day 1 = first) and day relative to the peak, the earliest event and day, and how
+    many events reach the floor before their first scored crossing."""
+    rows = []
+    a = floors[(floors.compromise != "none")]
+    for b in budgets:
+        g = a[a.energy_budget == ("off" if b is None else str(int(b)))]
+        hit = g[g.floor_reached_min.notna()]
+        e = hit.sort_values(["floor_reached_min", "event"]).head(1)
+        rows.append({"budget_per_epoch": b, "events": len(g), "events_reaching_floor": len(hit),
+                     "median_floor_day": float((hit.floor_reached_min // 1440 + 1).median()) if len(hit) else None,
+                     "median_floor_day_rel_peak": float(((hit.floor_reached_min - hit.peak_min) / 1440).median())
+                     if len(hit) else None,
+                     "earliest_event": e.event.iloc[0] if len(e) else None,
+                     "earliest_floor_day": int(e.floor_reached_min.iloc[0] // 1440 + 1) if len(e) else None,
+                     "floor_before_first_crossing": int((hit.floor_reached_min < hit.first_crossing_min).sum())})
+    return pd.DataFrame(rows)
 
 
 def _jobs_map(fn, jobs: list, workers: int) -> list:
@@ -634,15 +666,21 @@ def _prepare(cfg: dict, actions_cfg: dict, root: Path) -> tuple[dict, list]:
     return {**cfg, "_profile_inv": ev.invariants_from_config(actions_cfg)}, bats
 
 
-def budget_sweep(cfg: dict, actions_cfg: dict, root: Path, clusters: dict | None = None) -> pd.DataFrame:
+def budget_sweep(cfg: dict, actions_cfg: dict, root: Path, clusters: dict | None = None,
+                 soc_pct: float | None = None) -> tuple[pd.DataFrame, pd.DataFrame]:
     """H2: per-epoch command-uplink budget (POLICY parameter) against (i) the legitimate p90 detection delay and
     late-or-missed share, and (ii) the attack's excess late-or-missed share over that baseline, both with
-    storm-cluster bootstrap CIs. Configured by cfg["energy_budget"]["sweep"]; value None = no budget."""
+    storm-cluster bootstrap CIs. Configured by cfg["energy_budget"]["sweep"]; value None = no budget.
+    `soc_pct` overrides the ASSUMED initial state of charge (H4 sensitivity). Returns (table, floor rows)."""
     sw = cfg["energy_budget"]["sweep"]
+    if soc_pct is not None:
+        cfg = {**cfg, "battery": {**cfg["battery"], "initial_soc_pct": soc_pct}}
     cfg, bats = _prepare(cfg, actions_cfg, root)
     bat = next(b for b in bats if b["name"] == sw["battery_profile"])
     jobs = [(e, cfg, actions_cfg, root, bat, sw) for e in event_list(cfg, root)]
-    evdf = pd.DataFrame([r for o in _jobs_map(_sweep_event, jobs, int(cfg.get("workers", 1))) for r in o])
+    res = _jobs_map(_sweep_event, jobs, int(cfg.get("workers", 1)))
+    evdf = pd.DataFrame([r for o in res for r in o[0]])
+    floors = pd.DataFrame([r for o in res for r in o[1]])
     st, tol = cfg["statistics"], cfg["harm"]["delay_tolerance_min"]
     dd = delay_distribution(evdf[evdf.compromise == "none"], tol, st["bootstrap"], st["seed"], clusters=clusters)
     xx = excess_over_baseline(evdf, tol, st["bootstrap"], st["seed"], clusters=clusters)
@@ -651,8 +689,55 @@ def budget_sweep(cfg: dict, actions_cfg: dict, root: Path, clusters: dict | None
     out = dd[keep].rename(columns=lambda c: c if c == "energy_budget" else f"legit_{c}").merge(
         xx[["energy_budget", "attack_share", "excess", "excess_ci_lo", "excess_ci_hi"]], on="energy_budget")
     out.insert(0, "budget_per_epoch", [None if v == "off" else int(v) for v in out.energy_budget])
-    return out.assign(epoch_h=cfg["energy_budget"]["epoch_h"], battery_profile=bat["name"], scheme=sw["scheme"],
-                      compromise=sw["compromise"], strategy=sw["strategy"]).drop(columns="energy_budget")
+    derived = epoch_budget(bat, cfg, cfg["_profile_inv"].battery_floor_pct, cfg["energy_budget"])
+    out = out.assign(epoch_h=cfg["energy_budget"]["epoch_h"], battery_profile=bat["name"], scheme=sw["scheme"],
+                     compromise=sw["compromise"], strategy=sw["strategy"],
+                     initial_soc_pct=cfg["battery"]["initial_soc_pct"], derived_budget=derived)
+    return out.drop(columns="energy_budget"), floors.assign(initial_soc_pct=cfg["battery"]["initial_soc_pct"])
+
+
+def soc_sensitivity(sweeps: pd.DataFrame, threshold: float = 0.10) -> pd.DataFrame:
+    """H4: per initial SOC, the derived budget and the smallest swept budget whose attack excess exceeds
+    `threshold` (point estimate), with its CI, and the largest swept budget at or below it."""
+    rows = []
+    for soc, g in sweeps.groupby("initial_soc_pct", sort=True):
+        g = g[g.budget_per_epoch.notna()].sort_values("budget_per_epoch")
+        over = g[g.excess > threshold]
+        under = g[g.excess <= threshold]
+        f, u = (over.iloc[0] if len(over) else None), (under.iloc[-1] if len(under) else None)
+        rows.append({"initial_soc_pct": soc, "derived_budget": int(g.derived_budget.iloc[0]),
+                     "smallest_budget_excess_over": None if f is None else int(f.budget_per_epoch),
+                     "its_excess": None if f is None else f.excess,
+                     "its_excess_ci_lo": None if f is None else f.excess_ci_lo,
+                     "its_excess_ci_hi": None if f is None else f.excess_ci_hi,
+                     "largest_budget_at_or_below": None if u is None else int(u.budget_per_epoch),
+                     "its_excess_below": None if u is None else u.excess,
+                     "its_excess_below_ci_lo": None if u is None else u.excess_ci_lo,
+                     "its_excess_below_ci_hi": None if u is None else u.excess_ci_hi,
+                     "threshold": threshold})
+    return pd.DataFrame(rows)
+
+
+def f3_ablation(cfg: dict, actions_cfg: dict, root: Path, clusters: dict | None = None) -> pd.DataFrame:
+    """F3-CI: S6+F under the suppress attack (every compromise) and legitimate operation, with and without the
+    write-once commissioning bound, first battery profile; late-or-missed share and p90 with storm-cluster
+    bootstrap CIs, and the excess over the legitimate baseline (paired crossings, cluster bootstrap)."""
+    st, tol = cfg["statistics"], cfg["harm"]["delay_tolerance_min"]
+    base = {**cfg, "schemes": ["S6+F"], "attacker": {**cfg["attacker"], "strategies": ["suppress"]},
+            "energy_budget": None, "battery": {**cfg["battery"], "profiles": cfg["battery"]["profiles"][:1]}}
+    out = []
+    for label, comm in (("with bound", cfg.get("commissioning")), ("without bound", None)):
+        _, he, _ = run({**base, "commissioning": comm}, actions_cfg, root)
+        he = he[(he.compromise != "none") | (he.legit_policy == "naive")]
+        dd = delay_distribution(he, tol, st["bootstrap"], st["seed"], clusters=clusters)
+        xx = excess_over_baseline(he, tol, st["bootstrap"], st["seed"], clusters=clusters)
+        m = dd.merge(xx[["compromise", "excess", "excess_ci_lo", "excess_ci_hi"]], on="compromise", how="left")
+        out.append(m.assign(commissioning_bound=label))
+    cols = ["commissioning_bound", "scheme", "compromise", "strategy", "battery_profile", "events", "resampling_units",
+            "crossings", "missed", "p90_delay_min", "p90_delay_min_ci_lo", "p90_delay_min_ci_hi",
+            "late_or_missed_share", "late_or_missed_share_ci_lo", "late_or_missed_share_ci_hi", "excess",
+            "excess_ci_lo", "excess_ci_hi"]
+    return pd.concat(out)[cols].reset_index(drop=True)
 
 
 def run(cfg: dict, actions_cfg: dict, root: Path) -> tuple[pd.DataFrame, pd.DataFrame, dict]:

@@ -1,0 +1,5 @@
+budget_per_epoch,events,events_reaching_floor,median_floor_day,median_floor_day_rel_peak,earliest_event,earliest_floor_day,floor_before_first_crossing
+75,41,41,6.0,0.03125,USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29),4,0
+85,41,41,5.0,-0.42430555555555555,USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29),4,25
+90,41,41,5.0,-0.89375,USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29),3,29
+100,41,41,5.0,-0.9451388888888889,USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29),3,32

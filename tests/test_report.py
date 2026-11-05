@@ -118,6 +118,27 @@ def _fake_results(tmp_path, cfgs):  # noqa: F811
                    "excess_ci_hi": 0.6, "epoch_h": 24, "battery_profile": "LWL01/poor", "scheme": "S6+F",
                    "compromise": "C1", "strategy": "drain"} for b in (None, 10)]).to_csv(
         r / "g3_budget_sweep.csv", index=False)
+    pd.DataFrame([{"commissioning_bound": b, "scheme": "S6+F", "compromise": c, "strategy": "suppress",
+                   "battery_profile": "PS-LB/good", "events": 1, "resampling_units": 1, "crossings": 3, "missed": 0,
+                   "p90_delay_min": float("inf") if b == "without bound" else 9.0, "p90_delay_min_ci_lo": 5.0,
+                   "p90_delay_min_ci_hi": float("inf"), "late_or_missed_share": 0.1, "late_or_missed_share_ci_lo": 0.0,
+                   "late_or_missed_share_ci_hi": 0.2, "excess": None if c == "none" else 0.1, "excess_ci_lo": 0.0,
+                   "excess_ci_hi": 0.2} for b in ("with bound", "without bound") for c in ("none", "C1+C3")]).to_csv(
+        r / "f3_ablation_clusters.csv", index=False)
+    pd.DataFrame([{"budget_per_epoch": 75, "events": 2, "events_reaching_floor": 1, "median_floor_day": 4.0,
+                   "median_floor_day_rel_peak": -1.5, "earliest_event": "e1", "earliest_floor_day": 4,
+                   "floor_before_first_crossing": 1},
+                  {"budget_per_epoch": 85, "events": 2, "events_reaching_floor": 0, "median_floor_day": None,
+                   "median_floor_day_rel_peak": None, "earliest_event": None, "earliest_floor_day": None,
+                   "floor_before_first_crossing": 0}]).to_csv(r / "g3_floor_timing.csv", index=False)
+    pd.DataFrame([{"initial_soc_pct": 40, "derived_budget": 30, "smallest_budget_excess_over": 50, "its_excess": 0.4,
+                   "its_excess_ci_lo": 0.3, "its_excess_ci_hi": 0.5, "largest_budget_at_or_below": 30,
+                   "its_excess_below": 0.0, "its_excess_below_ci_lo": 0.0, "its_excess_below_ci_hi": 0.0,
+                   "threshold": 0.1},
+                  {"initial_soc_pct": 80, "derived_budget": 70, "smallest_budget_excess_over": None,
+                   "its_excess": None, "its_excess_ci_lo": None, "its_excess_ci_hi": None,
+                   "largest_budget_at_or_below": 400, "its_excess_below": 0.05, "its_excess_below_ci_lo": 0.0,
+                   "its_excess_below_ci_hi": 0.1, "threshold": 0.1}]).to_csv(r / "g3_soc_sensitivity.csv", index=False)
     return r, cfg
 
 
@@ -128,7 +149,7 @@ def test_report_renders(tmp_path, cfgs):  # noqa: F811
     (figs / "fig1_x.png").write_bytes(b"")
     report.run(cfg, r, figs)
     md = (tmp_path / "REPORT.md").read_text()
-    for h in ("## 1. Environment", "## 4. Host timings", "## 8. Kill criteria", "**K1", "**K2", "**K3", "**K4", "**K5 - Blast radius", "**K5 - blast radius per compromise", "## 7d. Revocation", "**D2 - S6+F", "**D6 - an untrusted gateway", "**Forging power of a filtering gateway**", "**OP token cost**", "**D1 - active revocation time", "## 8b. Traceability", "## 8a. K5/K6 on the manufacturer", "**SUPERSEDED**", "## 7f. Device-side", "Energy is **not reported**", "## 0. Repository state", "kept `7df90f4`", "T10", "## 7e. Harm-weighted replay", "Gaps > 60 min", "**Battery profiles (D5)**", "**K6 - blast(S4-E)", "**F1 - C4 fairness", "**F6 - pre-committed operator approvals.**", "**F2 - realistic filtering points**", "**Gateway given AppSKey (upper bound)**", "**G1 - how the filter learns", "**G2 - what C4 assumes", "not meaningful", "**G3 - energy budget per epoch", "**H2 - budget sweep", "no budget", "S6 therefore has no filtering advantage", "**Drain effect relative to the legitimate baseline**", "**Attack effect relative to the legitimate baseline**", "storm clusters", "1 clusters for 1 events",
+    for h in ("## 1. Environment", "## 4. Host timings", "## 8. Kill criteria", "**K1", "**K2", "**K3", "**K4", "**K5 - Blast radius", "**K5 - blast radius per compromise", "## 7d. Revocation", "**D2 - S6+F", "**D6 - an untrusted gateway", "**Forging power of a filtering gateway**", "**OP token cost**", "**D1 - active revocation time", "## 8b. Traceability", "## 8a. K5/K6 on the manufacturer", "**SUPERSEDED**", "## 7f. Device-side", "Energy is **not reported**", "## 0. Repository state", "kept `7df90f4`", "T10", "## 7e. Harm-weighted replay", "Gaps > 60 min", "**Battery profiles (D5)**", "**K6 - blast(S4-E)", "**F1 - C4 fairness", "**F6 - pre-committed operator approvals.**", "**F2 - realistic filtering points**", "**Gateway given AppSKey (upper bound)**", "**G1 - how the filter learns", "**G2 - what C4 assumes", "not meaningful", "**G3 - energy budget per epoch", "**H2 - budget sweep", "**F3 with and without the commissioning bound**", "F3-CI: 95 % CIs", "**H3 - mechanism of the cliff", "**H4 - sensitivity to the ASSUMED", "none in sweep", "no budget", "S6 therefore has no filtering advantage", "**Drain effect relative to the legitimate baseline**", "**Attack effect relative to the legitimate baseline**", "storm clusters", "1 clusters for 1 events",
               "## 7c. S6", "Crisis commands per gateway", "**Why the crisis capacities differ", "its capacity equals S6", "fig1_x.png"):
         assert h in md
     assert "env.json missing" in md
@@ -232,3 +253,4 @@ def test_section_g3_absent(tmp_path):
     assert "resamples events" in report._clusters_note(tmp_path)
     df = pd.DataFrame({"a": [1]})
     assert report._budget_off(df) is df
+

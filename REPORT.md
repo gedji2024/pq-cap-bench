@@ -1240,19 +1240,32 @@ Reference levels: NWS flood categories where the gauge has them (Sec. 7i, F4); o
 | alert=False,battery=below_floor | C1+C3 | 2,944 | 1,954 | 2,944 | 2,944 | 1,841 |
 | alert=False,battery=below_floor | C1+C3+OP | 2,944 | 1,954 | 2,944 | 2,944 | 1,842 |
 
-**S4-F suppress attack re-run against S6+F, with the F3 commissioning bound** (all 41 events of Sec. 7e, battery profile PS-LB/good; suppress does not depend on the battery; delays in minutes, missed = inf; the earlier C1+C3 rows without the bound are **SUPERSEDED**):
+**S4-F suppress attack re-run against S6+F, with the F3 commissioning bound** (all 41 events of Sec. 7e, battery profile PS-LB/good; suppress does not depend on the battery; delays in minutes, missed = inf; the earlier C1+C3 rows without the bound are **SUPERSEDED**). F3-CI: 95 % CIs from the percentile bootstrap over 23 storm clusters (G4); point estimates unchanged, the CIs are new:
 
 | scheme | compromise | events | crossings | missed | median_delay_min | p90_delay_min | max_delay_min | late_or_missed_share |
 |---|---|---|---|---|---|---|---|---|
-| S4-F | C1 | 41 | 135 | 134 | inf (missed) | inf (missed) | inf (missed) | 0.99 |
-| S4-F | C1+C3 | 41 | 135 | 134 | inf (missed) | inf (missed) | inf (missed) | 0.99 |
-| S4-F | C1+C3+OP | 41 | 135 | 134 | inf (missed) | inf (missed) | inf (missed) | 0.99 |
-| S6 | C1 | 41 | 135 | 3 | 7 | 30 | inf (missed) | 0.10 |
-| S6 | C1+C3 | 41 | 135 | 134 | inf (missed) | inf (missed) | inf (missed) | 0.99 |
-| S6 | C1+C3+OP | 41 | 135 | 134 | inf (missed) | inf (missed) | inf (missed) | 0.99 |
-| S6+F | C1 | 41 | 135 | 3 | 6 | 16 | inf (missed) | 0.02 |
-| S6+F | C1+C3 | 41 | 135 | 3 | 6 | 16 | inf (missed) | 0.02 |
-| S6+F | C1+C3+OP | 41 | 135 | 133 | inf (missed) | inf (missed) | inf (missed) | 0.99 |
+| S4-F | C1 | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) | 0.99 [0.97, 1.00] |
+| S4-F | C1+C3 | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) | 0.99 [0.97, 1.00] |
+| S4-F | C1+C3+OP | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) | 0.99 [0.97, 1.00] |
+| S6 | C1 | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 35] | inf (missed) | 0.10 [0.05, 0.14] |
+| S6 | C1+C3 | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) | 0.99 [0.97, 1.00] |
+| S6 | C1+C3+OP | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) | 0.99 [0.97, 1.00] |
+| S6+F | C1 | 41 | 135 | 3 | 6 [6, 7] | 16 [15, 18] | inf (missed) | 0.02 [0.00, 0.05] |
+| S6+F | C1+C3 | 41 | 135 | 3 | 6 [6, 8] | 16 [15, 18] | inf (missed) | 0.02 [0.00, 0.05] |
+| S6+F | C1+C3+OP | 41 | 135 | 133 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) | 0.99 [0.94, 1.00] |
+
+**F3 with and without the commissioning bound** (S6+F, suppress attack and the legitimate naive policy, all 41 events, battery profile PS-LB/good; 95 % CIs from the bootstrap over 23 storm clusters, superseding the event-level CIs; `excess_over_legit` = late-or-missed share minus that of legitimate operation, crossings paired; `results/f3_ablation_clusters.csv`):
+
+| commissioning_bound | compromise | crossings | missed | p90_delay_min | late_or_missed | excess_over_legit |
+|---|---|---|---|---|---|---|
+| with bound | none | 135 | 3 | 9 [8, 15] | 0.02 [0.00, 0.05] | - |
+| with bound | C1 | 135 | 3 | 16 [15, 18] | 0.02 [0.00, 0.05] | 0.000 [0.000, 0.000] |
+| with bound | C1+C3 | 135 | 3 | 16 [15, 18] | 0.02 [0.00, 0.05] | 0.000 [0.000, 0.000] |
+| with bound | C1+C3+OP | 135 | 133 | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.94, 1.00] | 0.963 [0.915, 0.993] |
+| without bound | none | 135 | 3 | 9 [8, 15] | 0.02 [0.00, 0.05] | - |
+| without bound | C1 | 135 | 3 | 30 [19, 35] | 0.10 [0.05, 0.14] | 0.074 [0.034, 0.116] |
+| without bound | C1+C3 | 135 | 9 | 1,171 [377, inf (missed)] | 0.53 [0.38, 0.64] | 0.511 [0.360, 0.610] |
+| without bound | C1+C3+OP | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] | 0.970 [0.938, 0.993] |
 
 **OP token cost** - one signature over the command, frames per DR for each measured algorithm (`results/sizes.csv`):
 
@@ -1713,7 +1726,7 @@ One-off commissioning message (commitment + OP signature), frames, US915:
 | LWL01/poor | S6+F | C1+C3 | on | 0.022 | 0.059 | 0.037 | 0.000 | 0.077 |
 | LWL01/poor | S6+F | C1+C3+OP | on | 0.022 | 0.059 | 0.037 | 0.000 | 0.077 |
 
-**H2 - budget sweep (POLICY parameter).** The per-24 h budget is swept instead of derived: S6+F under C1 drain, battery profile LWL01/poor, all events, 23 storm clusters (cluster-bootstrap 95 % CIs). Legitimate columns: naive legitimate policy with that budget. `attack_excess` = attack late-or-missed share minus the legitimate share, crossings paired. Values swept are a CHOICE (`config/harm.yaml: energy_budget.sweep`); `results/g3_budget_sweep.csv`, `figures/fig_g3_budget_sweep.png`.
+**H2 - budget sweep (POLICY parameter).** The per-24 h budget is swept instead of derived: S6+F under C1 drain, battery profile LWL01/poor, all events, 23 storm clusters (cluster-bootstrap 95 % CIs). Legitimate columns: naive legitimate policy with that budget. `attack_excess` = attack late-or-missed share minus the legitimate share, crossings paired. Values swept are a CHOICE (`config/harm.yaml: energy_budget.sweep`); `results/g3_budget_sweep.csv`, `figures/fig_g3_budget_sweep.png`. *Change note (H3/H4 round):* 85, 90, 300 and 400/day were added (CHOICE). The bootstrap shares one random stream across budget values, so adding rows moved the CI bounds of the existing 100, 150 and 200/day rows by at most 0.002 relative to commit `7bddc42`; no point estimate changed.
 
 | budget_per_epoch | legit_p90_delay_min | legit_late_or_missed | attack_late_or_missed | attack_excess |
 |---|---|---|---|---|
@@ -1722,12 +1735,33 @@ One-off commissioning message (commitment + OP signature), frames, US915:
 | 30 | 15 [13, 18] | 0.02 [0.00, 0.05] | 0.03 | 0.007 [0.000, 0.028] |
 | 50 | 14 [9, 17] | 0.02 [0.00, 0.05] | 0.06 | 0.037 [0.000, 0.077] |
 | 75 | 12 [9, 15] | 0.02 [0.00, 0.05] | 0.07 | 0.052 [0.019, 0.099] |
-| 100 | 11 [9, 15] | 0.02 [0.00, 0.05] | 0.48 | 0.459 [0.395, 0.532] |
-| 150 | 9 [8, 15] | 0.02 [0.00, 0.05] | 0.52 | 0.496 [0.402, 0.571] |
-| 200 | 9 [8, 15] | 0.02 [0.00, 0.05] | 0.52 | 0.496 [0.398, 0.572] |
+| 85 | 12 [9, 15] | 0.02 [0.00, 0.05] | 0.41 | 0.385 [0.291, 0.495] |
+| 90 | 10 [9, 15] | 0.02 [0.00, 0.05] | 0.48 | 0.459 [0.402, 0.530] |
+| 100 | 11 [9, 15] | 0.02 [0.00, 0.05] | 0.48 | 0.459 [0.394, 0.530] |
+| 150 | 9 [8, 15] | 0.02 [0.00, 0.05] | 0.52 | 0.496 [0.402, 0.570] |
+| 200 | 9 [8, 15] | 0.02 [0.00, 0.05] | 0.52 | 0.496 [0.396, 0.572] |
+| 300 | 9 [8, 15] | 0.02 [0.00, 0.05] | 0.53 | 0.504 [0.412, 0.578] |
+| 400 | 9 [8, 15] | 0.02 [0.00, 0.05] | 0.52 | 0.496 [0.400, 0.571] |
 | no budget | 9 [8, 15] | 0.02 [0.00, 0.05] | 0.53 | 0.511 [0.421, 0.582] |
 
 ![G3 budget sweep](figures/fig_g3_budget_sweep.png)
+
+**H3 - mechanism of the cliff.** The budget only limits *command-caused* uplinks; the attacker spends all of it every day. Whether that matters depends on when the battery falls below its floor (LWL01/poor, floor from the action profile): below the floor the low-battery invariant slows reporting, so a crossing that comes after the floor is reported late. Under the drain attack (window = 5 d before to 2 d after the peak, day 1 = first day): at 75/day 41 of 41 events reach the floor (median day 6.0 of the window, +0.0 d from the peak; earliest: USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29), day 4; 0 before their first scored crossing); at 85/day 41 of 41 events reach the floor (median day 5.0 of the window, -0.4 d from the peak; earliest: USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29), day 4; 25 before their first scored crossing); at 90/day 41 of 41 events reach the floor (median day 5.0 of the window, -0.9 d from the peak; earliest: USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29), day 3; 29 before their first scored crossing); at 100/day 41 of 41 events reach the floor (median day 5.0 of the window, -0.9 d from the peak; earliest: USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29), day 3; 32 before their first scored crossing). The excess jumps where the floor moves from after the crossings to before them: the cliff is the budget at which the attacker's daily spend exhausts the charge above the floor within the window before the flood rises. 85 and 90/day were added to the sweep to locate it (CHOICE). `results/g3_floor_timing.csv`, per-run rows in `results/g3_floor_runs.csv`.
+
+| budget_per_epoch | events | events_reaching_floor | median_floor_day | median_floor_day_rel_peak | earliest_event | earliest_floor_day | floor_before_first_crossing |
+|---|---|---|---|---|---|---|---|
+| 75 | 41 | 41 | 6.0 | +0.0 | USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29) | 4 | 0 |
+| 85 | 41 | 41 | 5.0 | -0.4 | USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29) | 4 | 25 |
+| 90 | 41 | 41 | 5.0 | -0.9 | USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29) | 3 | 29 |
+| 100 | 41 | 41 | 5.0 | -0.9 | USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29) | 3 | 32 |
+
+**H4 - sensitivity to the ASSUMED initial state of charge** (40, 60, 80 %, CHOICE; 60 % is the headline value). For each SOC: the derived budget (`pqcap.harm.epoch_budget`) and, on the swept grid, the budgets on either side of an attack excess of 0.10 (CHOICE), with storm-cluster bootstrap 95 % CIs. The cliff is located only to the grid resolution. `results/g3_soc_sensitivity.csv`, full sweeps in `results/g3_soc_sweep.csv`.
+
+| initial_soc_pct | derived_budget_per_day | largest_budget_excess<=thr | its_excess | smallest_budget_excess>thr | its_excess  |
+|---|---|---|---|---|---|
+| 40 | 13 | 20 | 0.015 [-0.013, 0.054] | 30 | 0.356 [0.255, 0.452] |
+| 60 | 50 | 75 | 0.052 [0.019, 0.099] | 85 | 0.385 [0.291, 0.495] |
+| 80 | 87 | 100 | 0.037 [0.000, 0.076] | 150 | 0.437 [0.370, 0.513] |
 
 ## 8. Kill criteria
 
