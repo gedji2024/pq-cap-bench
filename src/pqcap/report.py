@@ -498,7 +498,19 @@ def section_mcu(results: Path, config: Path) -> str:
             "renewal of validity V. " + energy + " Provenance: `data/pqm4/SOURCE.json`.\n\n"
             + md_table(d[cols], {c: ints for c in ("executions", "verify_cycles_avg", "verify_cycles_min",
                                                    "verify_cycles_max", "verify_stack_bytes", "clock_mhz")}
-                       | {c: ms for c in cols if c.startswith("verify_ms")}))
+                       | {c: ms for c in cols if c.startswith("verify_ms")}) + _falcon_note(config))
+
+
+def _falcon_note(config: Path) -> str:
+    from . import pqm4  # noqa: PLC0415
+    f = pqm4.falcon_removal(config.parent) if (config.parent / "data/pqm4/SOURCE.json").exists() else None
+    if not f:
+        return ""
+    msg = " / ".join(x.strip() for x in f["message"].splitlines() if x.strip())
+    return (f"\n\n**F8 - why Falcon was removed from pqm4.** Commit [`{f['commit_sha'][:8]}`]({f['commit_url']}) by "
+            f"{f['author']}, {f['date']}, message (verbatim): \"{msg}\". The cited pull request is "
+            f"[{f['pr_url']}]({f['pr_url']}), title (verbatim): \"{f['pr_title']}\", merged {f['pr_merged_at']}. "
+            f"Retrieved {f['retrieved_utc']} via the GitHub API (responses cached in `data/pqm4/`). {f['note']}")
 
 
 def section_repo_state(config: Path) -> str:

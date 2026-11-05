@@ -62,3 +62,26 @@ def test_missing_selection(tmp_path):
         {"label": "n", "scheme": "nope", "impl": "m4f", "pin": "head"}]}))
     with pytest.raises(KeyError):
         pqm4.verification_cost(tmp_path, REPO_ROOT)
+
+
+def test_falcon_removal_f8(tmp_path):
+    import hashlib
+    import json
+    from pqcap.config import REPO_ROOT
+    f = pqm4.falcon_removal(REPO_ROOT)
+    assert f["commit_sha"].startswith("dfc3a754") and "Remove outdated Falcon implementations" in f["message"]
+    assert "pull/377" in f["pr_url"] and f["pr_title"] and "NIST" in f["note"]
+    src = json.loads((REPO_ROOT / "data/pqm4/SOURCE.json").read_text())["falcon_removal"]
+    for k in ("commit", "pull_request"):
+        assert hashlib.sha256((REPO_ROOT / src[k]["path"]).read_bytes()).hexdigest() == src[k]["sha256"]
+    d = tmp_path / "data/pqm4"
+    d.mkdir(parents=True)
+    (d / "SOURCE.json").write_text("{}")
+    assert pqm4.falcon_removal(tmp_path) is None
+
+
+def test_falcon_note_in_report():
+    from pqcap.config import CONFIG
+    from pqcap.report import _falcon_note
+    n = _falcon_note(CONFIG)
+    assert "**F8 - why Falcon was removed from pqm4.**" in n and "dfc3a754" in n and "not stated" in n.lower()

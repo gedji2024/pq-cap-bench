@@ -88,3 +88,16 @@ def verification_cost(config: Path, repo: Path) -> pd.DataFrame:
                      "clock_mhz": cfg["measurement_clock_mhz"], "verify_ms_avg": r.verify_avg / f * 1e3,
                      "verify_ms_max": r.verify_max / f * 1e3, "source_label": cfg["label"]})
     return pd.DataFrame(rows)
+
+
+def falcon_removal(repo: Path) -> dict | None:
+    """F8: why Falcon left pqm4, quoted verbatim from the cached GitHub API responses (data/pqm4/SOURCE.json)."""
+    src = json.loads((Path(repo) / "data/pqm4/SOURCE.json").read_text()).get("falcon_removal")
+    if not src:
+        return None
+    c = json.loads((Path(repo) / src["commit"]["path"]).read_text())
+    pr = json.loads((Path(repo) / src["pull_request"]["path"]).read_text())
+    return {"commit_sha": c["sha"], "commit_url": src["commit"]["html_url"], "author": c["commit"]["author"]["name"],
+            "date": c["commit"]["author"]["date"], "message": c["commit"]["message"],
+            "pr_url": src["pull_request"]["html_url"], "pr_title": pr["title"], "pr_merged_at": pr["merged_at"],
+            "retrieved_utc": src["commit"]["retrieved_utc"], "note": src["note"]}

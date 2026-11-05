@@ -1094,6 +1094,8 @@ Reference levels: NWS flood categories where the gauge has them (Sec. 7i, F4); o
 | Falcon-512 | m4-ct | 94435189596a | 10 | 482,280 | 472,137 | 485,160 | 376 | 24 | 20.09 | 20.21 | 80.38 | 20.09 | 6.70 |
 | FN-DSA-512 (provisional) | m4f | 6ff2be970f6f | 10 | 396,949 | 390,368 | 406,553 | 2,976 | 24 | 16.54 | 16.94 | 66.16 | 16.54 | 5.51 |
 
+**F8 - why Falcon was removed from pqm4.** Commit [`dfc3a754`](https://github.com/mupq/pqm4/commit/dfc3a754a53cec0b2bc358f7b9e48b4469dc5990) by Matthias J. Kannwischer, 2025-02-03T03:45:23Z, message (verbatim): "Remove outdated Falcon implementations / Superseded by provisional FN-DSA https://github.com/mupq/pqm4/pull/377". The cited pull request is [https://github.com/mupq/pqm4/pull/377](https://github.com/mupq/pqm4/pull/377), title (verbatim): "Added provisional FN-DSA implementation (2025-02-01, with ARM Cortex-…", merged 2025-02-03T04:30:55Z. Retrieved 2026-11-05T05:49:06+00:00 via the GitHub API (responses cached in `data/pqm4/`). The FN-DSA standard status is NOT stated here: no NIST source is cited in this repository.
+
 ## 7g. D2: two-tier defence S6+F
 
 **D2 - S6+F: non-updatable firmware floor (battery floor, minimum alert reporting rate; F3: write-once commissioning bound on the alert threshold = NWS action stage, `config/actions.yaml` commissioning) + updatable S6 envelopes; 'disable sensor' only with an OP approval token (sk_OP distinct from sk_PA).** Blast radius (accepted commands, ASSUMED profile of `config/actions.yaml`) under C1, C1+C3 (OP key safe) and C1+C3+OP, in every device state; catalogue ranges for S6+F are in Sec. 8a:

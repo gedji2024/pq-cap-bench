@@ -38,5 +38,23 @@
     }
   },
   "clock_statement": "README.md (both pins): 'All cycle counts were obtained at 24MHz to avoid wait cycles due to the speed of the memory controller.'",
-  "board_statement": "README.md: '`nucleo-l4r5zi` (default): The NUCLEO-L4R5ZI board'"
+  "board_statement": "README.md: '`nucleo-l4r5zi` (default): The NUCLEO-L4R5ZI board'",
+  "falcon_removal": {
+    "why": "F8: reason Falcon was removed from pqm4, quoted verbatim from the removing commit and the PR it cites",
+    "commit": {
+      "api_url": "https://api.github.com/repos/mupq/pqm4/commits/dfc3a754a53cec0b2bc358f7b9e48b4469dc5990",
+      "html_url": "https://github.com/mupq/pqm4/commit/dfc3a754a53cec0b2bc358f7b9e48b4469dc5990",
+      "path": "data/pqm4/falcon_removal_commit.json",
+      "sha256": "554dc2fb21ee53d3b41280ae59dd5c45f5d61a85165063098c83aa719d869740",
+      "retrieved_utc": "2026-11-05T05:49:06+00:00"
+    },
+    "pull_request": {
+      "api_url": "https://api.github.com/repos/mupq/pqm4/pulls/377",
+      "html_url": "https://github.com/mupq/pqm4/pull/377",
+      "path": "data/pqm4/falcon_removal_pr377.json",
+      "sha256": "15d06f2aee1bb8d179d5108e829c3786623a61e53ea89f6eefa97abddd89c166",
+      "retrieved_utc": "2026-11-05T05:49:06+00:00"
+    },
+    "note": "The FN-DSA standard status is NOT stated here: no NIST source is cited in this repository."
+  }
 }
