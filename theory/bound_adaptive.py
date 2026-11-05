@@ -30,7 +30,8 @@ for soc0 in (40, 60, 80):
         for B in (10, 20, 30, 50, 75, 85, 90, 100):
             Ut = U_rob(stage, th['band_cm'][0], B)
             for L, s0, tau in cr:
-                st = 'sampling_missed' if tau is None else ('certified' if Ut[min(tau + I_a, len(stage)-1)] <= K else 'not_certified')
+                held = tau is not None and all(stage[u] >= ecfg['device']['alert_threshold_cm'] for u in range(tau, min(tau + I_a, len(stage)), p))
+                st = 'sampling_missed' if tau is None else ('certified' if held and Ut[min(tau + I_a, len(stage)-1)] <= K - 1 else 'not_certified')
                 rows.append({'soc0': soc0, 'B': B, 'status': st})
 df = pd.DataFrame(rows)
 g = df.groupby(['soc0', 'B']).status.value_counts().unstack(fill_value=0)

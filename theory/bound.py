@@ -48,6 +48,7 @@ def evaluate(B_list, soc0, theta_mode='actual', budget_none_unbounded=True):
         cat, env, fw, stage, s, ecfg, th, levels, _ = harm._setup(e, cfg, acfg, root)
         theta = ecfg['device']['alert_threshold_cm'] if theta_mode == 'actual' else (th['band_cm'][0] if theta_mode == 'band_lo' else 0)
         alert, on = alert_series(stage, theta)
+        th_hi = ecfg['device']['alert_threshold_cm']
         cr = []
         for L in levels:
             for s0, e0 in harm.crossings(stage, L):
@@ -63,7 +64,10 @@ def evaluate(B_list, soc0, theta_mode='actual', budget_none_unbounded=True):
                 if tau is None: status = 'sampling_missed'
                 else:
                     tchk = min(tau + I_a, len(stage) - 1)
-                    status = 'certified' if Ut[tchk] <= K else 'not_certified'
+                    # alert must hold on every sample instant in [tau, tau+I_a) for ANY threshold <= theta_hi
+                    # (theta_hi = commissioning cap = NWS action stage); K-1 absorbs floating-point rounding
+                    held = all(stage[u] >= th_hi for u in range(tau, min(tau + I_a, len(stage)), p))
+                    status = 'certified' if (held and Ut[tchk] <= K - 1) else 'not_certified'
                 rows.append({'event': e['name'], 'B': B, 'level': L, 'cross': s0, 'status': status})
     return rows
 

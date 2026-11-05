@@ -1,5 +1,7 @@
 # Theorem-3 predictions (written BEFORE reading any H3/H4 result)
 
+v2 (same day, still before H3/H4): certification now also requires the alert to hold, for any threshold <= action stage, on every sample instant in [tau, tau+I_a), and N <= K-1 (floating-point margin). Numbers changed by at most 2 crossings per row.
+
 Generated from the stage series, NWS levels and config constants only (theory/bound.py, bound_adaptive.py, floor_time.py); harm.simulate is never called.
 
 K = (SOC0 - 20)/100 * 1300 uplinks above the floor (LWL01 poor coverage). Window peak at day 5 for all 41 events.
@@ -18,7 +20,7 @@ status  certified  not_certified  sampling_missed   P_upper
 B                                                          
 10.0          122             10                3  0.074074
 20.0          116             16                3  0.118519
-30.0           25            107                3  0.792593
+30.0           24            108                3  0.800000
 50.0            5            127                3  0.940741
 75.0            3            129                3  0.955556
 85.0            3            129                3  0.955556
@@ -34,7 +36,7 @@ NaN             1            131                3  0.970370
 status  certified  not_certified  sampling_missed   P_upper
 B                                                          
 10.0          109             23                3  0.170370
-20.0           97             35                3  0.259259
+20.0           96             36                3  0.266667
 30.0           15            117                3  0.866667
 50.0            3            129                3  0.955556
 75.0            3            129                3  0.955556
@@ -71,7 +73,7 @@ B
 20.0          129              3                3  0.022222
 30.0          126              6                3  0.044444
 50.0          125              7                3  0.051852
-75.0          114             18                3  0.133333
+75.0          113             19                3  0.140741
 85.0           15            117                3  0.866667
 90.0           15            117                3  0.866667
 100.0          13            119                3  0.881481
@@ -86,7 +88,7 @@ status  certified  not_certified  sampling_missed   P_upper
 B                                                          
 10.0          125              7                3  0.051852
 20.0          125              7                3  0.051852
-30.0          123              9                3  0.066667
+30.0          122             10                3  0.074074
 50.0          120             12                3  0.088889
 75.0           92             40                3  0.296296
 85.0           11            121                3  0.896296
@@ -155,7 +157,7 @@ B
 10.0          130              2                3  0.014815
 20.0          130              2                3  0.014815
 30.0          128              4                3  0.029630
-50.0           32            100                3  0.740741
+50.0           31            101                3  0.748148
 75.0           15            117                3  0.866667
 85.0           11            121                3  0.896296
 90.0           10            122                3  0.903704
@@ -170,7 +172,7 @@ NaN             3            129                3  0.955556
  soc0   B  certified  not_certified  sampling_missed  P_upper
    40  10        102             30                3 0.222222
    40  20         87             45                3 0.333333
-   40  30          9            123                3 0.911111
+   40  30          8            124                3 0.918519
    40  50          3            129                3 0.955556
    40  75          3            129                3 0.955556
    40  85          3            129                3 0.955556
@@ -180,7 +182,7 @@ NaN             3            129                3  0.955556
    60  20        119             13                3 0.096296
    60  30        118             14                3 0.103704
    60  50        108             24                3 0.177778
-   60  75         79             53                3 0.392593
+   60  75         77             55                3 0.407407
    60  85          9            123                3 0.911111
    60  90          8            124                3 0.918519
    60 100          6            126                3 0.933333
