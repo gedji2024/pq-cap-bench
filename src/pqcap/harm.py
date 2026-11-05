@@ -718,6 +718,28 @@ def soc_sensitivity(sweeps: pd.DataFrame, threshold: float = 0.10) -> pd.DataFra
     return pd.DataFrame(rows)
 
 
+def f3_ablation(cfg: dict, actions_cfg: dict, root: Path, clusters: dict | None = None) -> pd.DataFrame:
+    """F3-CI: S6+F under the suppress attack (every compromise) and legitimate operation, with and without the
+    write-once commissioning bound, first battery profile; late-or-missed share and p90 with storm-cluster
+    bootstrap CIs, and the excess over the legitimate baseline (paired crossings, cluster bootstrap)."""
+    st, tol = cfg["statistics"], cfg["harm"]["delay_tolerance_min"]
+    base = {**cfg, "schemes": ["S6+F"], "attacker": {**cfg["attacker"], "strategies": ["suppress"]},
+            "energy_budget": None, "battery": {**cfg["battery"], "profiles": cfg["battery"]["profiles"][:1]}}
+    out = []
+    for label, comm in (("with bound", cfg.get("commissioning")), ("without bound", None)):
+        _, he, _ = run({**base, "commissioning": comm}, actions_cfg, root)
+        he = he[(he.compromise != "none") | (he.legit_policy == "naive")]
+        dd = delay_distribution(he, tol, st["bootstrap"], st["seed"], clusters=clusters)
+        xx = excess_over_baseline(he, tol, st["bootstrap"], st["seed"], clusters=clusters)
+        m = dd.merge(xx[["compromise", "excess", "excess_ci_lo", "excess_ci_hi"]], on="compromise", how="left")
+        out.append(m.assign(commissioning_bound=label))
+    cols = ["commissioning_bound", "scheme", "compromise", "strategy", "battery_profile", "events", "resampling_units",
+            "crossings", "missed", "p90_delay_min", "p90_delay_min_ci_lo", "p90_delay_min_ci_hi",
+            "late_or_missed_share", "late_or_missed_share_ci_lo", "late_or_missed_share_ci_hi", "excess",
+            "excess_ci_lo", "excess_ci_hi"]
+    return pd.concat(out)[cols].reset_index(drop=True)
+
+
 def run(cfg: dict, actions_cfg: dict, root: Path) -> tuple[pd.DataFrame, pd.DataFrame, dict]:
     cfg, bats = _prepare(cfg, actions_cfg, root)
     jobs = [(e, cfg, actions_cfg, root, bats) for e in event_list(cfg, root)]

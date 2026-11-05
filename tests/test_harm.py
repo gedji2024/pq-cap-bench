@@ -458,3 +458,14 @@ def test_budget_sweep_h2():
     a, _ = harm.budget_sweep({**cfg, "workers": 2}, ACFG, REPO_ROOT, {"w": 0, "v": 1})
     pd.testing.assert_frame_equal(a, t)
 
+
+def test_f3_ablation_clusters():
+    evs = [{"name": "w", "file": HCFG["series"]["file"], "start": "2017-08-27", "end": "2017-08-29", "usgs": "08074000"}]
+    cfg = {**HCFG, "events": evs, "events_rule": None, "events_prereg": None, "workers": 1,
+           "compromises": ["none", "C1+C3"], "statistics": {**HCFG["statistics"], "bootstrap": 50}}
+    t = harm.f3_ablation(cfg, ACFG, REPO_ROOT, {"w": 0})
+    assert set(t.commissioning_bound) == {"with bound", "without bound"} and (t.scheme == "S6+F").all()
+    k = t.set_index(["commissioning_bound", "compromise"])
+    assert k.loc[("with bound", "C1+C3"), "late_or_missed_share"] <= k.loc[("without bound", "C1+C3"),
+                                                                           "late_or_missed_share"]
+    assert pd.isna(k.loc[("with bound", "none"), "excess"]) and (t.resampling_units == 1).all()

@@ -741,14 +741,35 @@ def section_d2(results: Path) -> str:
             dd = dd[dd.scheme.isin(["S4-F", "S6", "S6+F"]) & (dd.compromise != "none") & (dd.strategy == "suppress")
                     & (dd.battery_profile == bp)]
             fm = lambda v: "inf (missed)" if v == float("inf") else f"{v:,.0f}"  # noqa: E731
+            tb = dd[["scheme", "compromise", "events", "crossings", "missed"]].copy()
+            for c in ("median_delay_min", "p90_delay_min"):
+                tb[c] = [f"{fm(a)} [{fm(b)}, {fm(d)}]" for a, b, d in zip(dd[c], dd[f"{c}_ci_lo"], dd[f"{c}_ci_hi"])]
+            tb["max_delay_min"] = dd.max_delay_min.map(fm)
+            tb["late_or_missed_share"] = [f"{a:.2f} [{b:.2f}, {d:.2f}]" for a, b, d in zip(
+                dd.late_or_missed_share, dd.late_or_missed_share_ci_lo, dd.late_or_missed_share_ci_hi)]
+            units = int(dd.resampling_units.max()) if "resampling_units" in dd else None
             harm_t = (f"\n\n**S4-F suppress attack re-run against S6+F, with the F3 commissioning bound** (all "
                       f"{int(dd.events.max())} events of Sec. 7e, battery profile {bp}; suppress does not depend on the "
                       "battery; delays in minutes, missed = inf; the earlier C1+C3 rows without the bound are "
-                      "**SUPERSEDED**):\n\n"
-                      + md_table(dd[["scheme", "compromise", "events", "crossings", "missed", "median_delay_min",
-                                     "p90_delay_min", "max_delay_min", "late_or_missed_share"]],
-                                 {"events": ints, "crossings": ints, "missed": ints, "median_delay_min": fm,
-                                  "p90_delay_min": fm, "max_delay_min": fm, "late_or_missed_share": lambda v: f"{v:.2f}"}))
+                      "**SUPERSEDED**). F3-CI: 95 % CIs from the percentile bootstrap over "
+                      f"{units} storm clusters (G4); point estimates unchanged, the CIs are new:\n\n"
+                      + md_table(tb, {"events": ints, "crossings": ints, "missed": ints}))
+        ap = results / "f3_ablation_clusters.csv"
+        if ap.exists():
+            f = pd.read_csv(ap)
+            fm2 = lambda v: "inf (missed)" if v == float("inf") else f"{v:,.0f}"  # noqa: E731
+            cx = lambda a, lo, hi, g: "-" if pd.isna(a) else f"{g(a)} [{g(lo)}, {g(hi)}]"  # noqa: E731
+            t2 = f[["commissioning_bound", "compromise", "crossings", "missed"]].assign(
+                p90_delay_min=[cx(*r, fm2) for r in zip(f.p90_delay_min, f.p90_delay_min_ci_lo, f.p90_delay_min_ci_hi)],
+                late_or_missed=[cx(*r, lambda v: f"{v:.2f}") for r in zip(
+                    f.late_or_missed_share, f.late_or_missed_share_ci_lo, f.late_or_missed_share_ci_hi)],
+                excess_over_legit=[cx(*r, lambda v: f"{v:.3f}") for r in zip(f.excess, f.excess_ci_lo, f.excess_ci_hi)])
+            harm_t += (f"\n\n**F3 with and without the commissioning bound** (S6+F, suppress attack and the legitimate "
+                       f"naive policy, all {int(f.events.max())} events, battery profile {f.battery_profile.iloc[0]}; "
+                       f"95 % CIs from the bootstrap over {int(f.resampling_units.max())} storm clusters, superseding "
+                       "the event-level CIs; `excess_over_legit` = late-or-missed share minus that of legitimate "
+                       "operation, crossings paired; `results/f3_ablation_clusters.csv`):\n\n"
+                       + md_table(t2, {"crossings": ints, "missed": ints}))
 
     tk = t.pivot_table(index=["op_token_alg", "token_bytes"], columns=["region", "dr"], values="frames", sort=False)
     tk.columns = [f"{r} DR{d}" for r, d in tk.columns]

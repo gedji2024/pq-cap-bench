@@ -1240,19 +1240,32 @@ Reference levels: NWS flood categories where the gauge has them (Sec. 7i, F4); o
 | alert=False,battery=below_floor | C1+C3 | 2,944 | 1,954 | 2,944 | 2,944 | 1,841 |
 | alert=False,battery=below_floor | C1+C3+OP | 2,944 | 1,954 | 2,944 | 2,944 | 1,842 |
 
-**S4-F suppress attack re-run against S6+F, with the F3 commissioning bound** (all 41 events of Sec. 7e, battery profile PS-LB/good; suppress does not depend on the battery; delays in minutes, missed = inf; the earlier C1+C3 rows without the bound are **SUPERSEDED**):
+**S4-F suppress attack re-run against S6+F, with the F3 commissioning bound** (all 41 events of Sec. 7e, battery profile PS-LB/good; suppress does not depend on the battery; delays in minutes, missed = inf; the earlier C1+C3 rows without the bound are **SUPERSEDED**). F3-CI: 95 % CIs from the percentile bootstrap over 23 storm clusters (G4); point estimates unchanged, the CIs are new:
 
 | scheme | compromise | events | crossings | missed | median_delay_min | p90_delay_min | max_delay_min | late_or_missed_share |
 |---|---|---|---|---|---|---|---|---|
-| S4-F | C1 | 41 | 135 | 134 | inf (missed) | inf (missed) | inf (missed) | 0.99 |
-| S4-F | C1+C3 | 41 | 135 | 134 | inf (missed) | inf (missed) | inf (missed) | 0.99 |
-| S4-F | C1+C3+OP | 41 | 135 | 134 | inf (missed) | inf (missed) | inf (missed) | 0.99 |
-| S6 | C1 | 41 | 135 | 3 | 7 | 30 | inf (missed) | 0.10 |
-| S6 | C1+C3 | 41 | 135 | 134 | inf (missed) | inf (missed) | inf (missed) | 0.99 |
-| S6 | C1+C3+OP | 41 | 135 | 134 | inf (missed) | inf (missed) | inf (missed) | 0.99 |
-| S6+F | C1 | 41 | 135 | 3 | 6 | 16 | inf (missed) | 0.02 |
-| S6+F | C1+C3 | 41 | 135 | 3 | 6 | 16 | inf (missed) | 0.02 |
-| S6+F | C1+C3+OP | 41 | 135 | 133 | inf (missed) | inf (missed) | inf (missed) | 0.99 |
+| S4-F | C1 | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) | 0.99 [0.97, 1.00] |
+| S4-F | C1+C3 | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) | 0.99 [0.97, 1.00] |
+| S4-F | C1+C3+OP | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) | 0.99 [0.97, 1.00] |
+| S6 | C1 | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 35] | inf (missed) | 0.10 [0.05, 0.14] |
+| S6 | C1+C3 | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) | 0.99 [0.97, 1.00] |
+| S6 | C1+C3+OP | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) | 0.99 [0.97, 1.00] |
+| S6+F | C1 | 41 | 135 | 3 | 6 [6, 7] | 16 [15, 18] | inf (missed) | 0.02 [0.00, 0.05] |
+| S6+F | C1+C3 | 41 | 135 | 3 | 6 [6, 8] | 16 [15, 18] | inf (missed) | 0.02 [0.00, 0.05] |
+| S6+F | C1+C3+OP | 41 | 135 | 133 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) | 0.99 [0.94, 1.00] |
+
+**F3 with and without the commissioning bound** (S6+F, suppress attack and the legitimate naive policy, all 41 events, battery profile PS-LB/good; 95 % CIs from the bootstrap over 23 storm clusters, superseding the event-level CIs; `excess_over_legit` = late-or-missed share minus that of legitimate operation, crossings paired; `results/f3_ablation_clusters.csv`):
+
+| commissioning_bound | compromise | crossings | missed | p90_delay_min | late_or_missed | excess_over_legit |
+|---|---|---|---|---|---|---|
+| with bound | none | 135 | 3 | 9 [8, 15] | 0.02 [0.00, 0.05] | - |
+| with bound | C1 | 135 | 3 | 16 [15, 18] | 0.02 [0.00, 0.05] | 0.000 [0.000, 0.000] |
+| with bound | C1+C3 | 135 | 3 | 16 [15, 18] | 0.02 [0.00, 0.05] | 0.000 [0.000, 0.000] |
+| with bound | C1+C3+OP | 135 | 133 | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.94, 1.00] | 0.963 [0.915, 0.993] |
+| without bound | none | 135 | 3 | 9 [8, 15] | 0.02 [0.00, 0.05] | - |
+| without bound | C1 | 135 | 3 | 30 [19, 35] | 0.10 [0.05, 0.14] | 0.074 [0.034, 0.116] |
+| without bound | C1+C3 | 135 | 9 | 1,171 [377, inf (missed)] | 0.53 [0.38, 0.64] | 0.511 [0.360, 0.610] |
+| without bound | C1+C3+OP | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] | 0.970 [0.938, 0.993] |
 
 **OP token cost** - one signature over the command, frames per DR for each measured algorithm (`results/sizes.csv`):
 

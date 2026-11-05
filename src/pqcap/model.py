@@ -231,6 +231,9 @@ def run(config: Path, results: Path) -> dict[str, pd.DataFrame]:
                     results / "model_harm_delays.csv", index=False)
                 harm.excess_over_baseline(he, tol, st["bootstrap"], st["seed"], clusters=cl).to_csv(
                     results / "model_harm_excess.csv", index=False)
+                if hcfg.get("commissioning"):                          # F3-CI: with/without the bound
+                    harm.f3_ablation(hcfg, load_yaml(actions_p), REPO_ROOT, cl).to_csv(
+                        results / "f3_ablation_clusters.csv", index=False)
                 sw = (hcfg.get("energy_budget") or {}).get("sweep")
                 if sw:                                                # H2 sweep, H3 floor timing, H4 SOC
                     base_soc = hcfg["battery"]["initial_soc_pct"]
