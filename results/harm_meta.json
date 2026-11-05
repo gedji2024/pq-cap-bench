@@ -1949,7 +1949,8 @@
       "tx_mA": 82,
       "uplink_toa_s": 0.056575999999999994,
       "phy_payload_bytes": 22,
-      "lower_bound": true
+      "lower_bound": true,
+      "epoch_budget_uplinks": 376792
     },
     {
       "name": "PS-LB/poor",
@@ -1960,7 +1961,8 @@
       "tx_mA": 125,
       "uplink_toa_s": 0.37068799999999996,
       "phy_payload_bytes": 22,
-      "lower_bound": true
+      "lower_bound": true,
+      "epoch_budget_uplinks": 37703
     },
     {
       "name": "LWL01/good",
@@ -1969,7 +1971,8 @@
       "q": 8.333333333333333e-05,
       "unit": "battery fraction",
       "uplinks_per_battery": 12000,
-      "lower_bound": false
+      "lower_bound": false,
+      "epoch_budget_uplinks": 661
     },
     {
       "name": "LWL01/poor",
@@ -1978,7 +1981,8 @@
       "q": 0.0007692307692307692,
       "unit": "battery fraction",
       "uplinks_per_battery": 1300,
-      "lower_bound": false
+      "lower_bound": false,
+      "epoch_budget_uplinks": 50
     }
   ]
 }

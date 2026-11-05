@@ -108,3 +108,47 @@ def forging_power(devices, policies: dict, threat: dict, inv: dict, state: dict)
                                  "gateway_keys": ";".join(sorted(gw_keys)), "accepted": acc,
                                  "catalogue": sum(domain_size(a) for a in dev.actions)})
     return pd.DataFrame(rows)
+
+
+# ---------------------------------------------------------------- G1: how the filter learns the envelope bounds
+BOUNDS_SOURCES = ("in_frame", "out_of_band_verified", "out_of_band_unverified")
+
+
+def bounds_source_table(filt: pd.DataFrame, forge: pd.DataFrame, region: str, dr: int, devices: int, policy: str,
+                        mix: str) -> pd.DataFrame:
+    """filter point x scheme x bounds source -> keys the filter must hold, forging power, blast radius under C1 +
+    that filter, and airtime saved (ranges over the catalogue devices).
+
+    in_frame: the filter reads the envelope from the install downlink. Its FRMPayload is AppSKey-encrypted
+      (TS001-1.0.4 Table 11), so only a filter given AppSKey can read it; a standard NS cannot.
+    out_of_band_verified: the PA publishes each envelope to the NS, which verifies it -- with pk_PA for S6 (verifies,
+      cannot forge), with the S4-E per-device envelope MAC key for S4-E (the same key mints envelopes).
+    out_of_band_unverified: the NS takes the bounds from the PA over a channel it trusts, without verifying the
+      envelope. No key, so no forging power, but whoever controls that channel sets the bounds: wider bounds cancel
+      the saving, narrower ones make the filter drop in-envelope commands. The device still checks every command,
+      so the filter never widens what is accepted: filtering is an airtime optimisation and needs no signature by
+      itself; the signature only decides whether the NS can authenticate the bounds without gaining forging power.
+    """
+    f = filt[(filt.region == region) & (filt.dr == dr) & (filt.devices == devices) & (filt.policy == policy)
+             & (filt.mix == mix)]
+    fp = forge[forge.policy == policy].assign(fraction=forge.accepted / forge.catalogue)
+    rows = []
+    for point, src, scheme in itertools.product(dict.fromkeys(f.filter_point), BOUNDS_SOURCES, ("S6", "S4-E")):
+        possible = not (src == "in_frame" and point != "appskey_upper_bound")
+        verified = src != "out_of_band_unverified"
+        forging = possible and verified and scheme == "S4-E"
+        keys = ["NwkSKey"] + (["AppSKey"] if point == "appskey_upper_bound" else [])
+        if verified:
+            keys.append("pk_PA" if scheme == "S6" else "S4-E envelope MAC key")
+        g = fp[(fp.scheme == scheme) & (fp.compromise == ("C1 + filtering gateway" if forging else "C1"))]
+        sv = f[f.filter_point == point]
+        rows.append({"filter_point": point, "scheme": scheme, "bounds_source": src, "possible": possible,
+                     "filter_keys": "; ".join(keys) if possible else None, "forging_power": forging if possible else None,
+                     "blast_fraction_c1_plus_filter_min": g.fraction.min() if possible else None,
+                     "blast_fraction_c1_plus_filter_max": g.fraction.max() if possible else None,
+                     "bounds_set_by_channel_attacker": (not verified) if possible else None,
+                     "saved_s_per_h_min": sv.saved_s_per_h.min() if possible else None,
+                     "saved_s_per_h_max": sv.saved_s_per_h.max() if possible else None,
+                     "saved_share_of_budget_min": sv.saved_share_of_budget.min() if possible else None,
+                     "saved_share_of_budget_max": sv.saved_share_of_budget.max() if possible else None})
+    return pd.DataFrame(rows)

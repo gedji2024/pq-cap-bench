@@ -271,35 +271,44 @@ def c4_key_scope(devices: list[Device], policies: dict, threat: dict, inv: dict,
     """
     rows = []
     fw_level = policies["levels"][policies["firmware_level"]]
+    firmwares = list(threat.get("c4_firmware", {"variants": {"secure_boot": ""}})["variants"])
     for dev in devices:
         full, fw = full_policy(dev), policy_for(dev, fw_level)
         cat = sum(domain_size(a) for a in dev.actions)
         for lvl_name, lvl in policies["levels"].items():
             pol = policy_for(dev, lvl)
-            for variant in threat["s4e_key_scope"]["variants"]:
-                for comp in ("C4", "C1+C4"):
-                    for target in ("extracted", "other"):
-                        keys = set()
-                        if target == "extracted" or comp == "C1+C4":
-                            keys.add("session")
-                        if target == "extracted" or variant == "group":
-                            keys.add("policy_mac")
-                        for scheme in ("S4-E", "S6"):
-                            ctx = scheme_context(scheme, {"scope": "one_device"}, keys, pol, fw, full, inv, threat)
-                            acc = sum(count_accepted(ctx, a, state) for a in dev.actions)
-                            rows.append({"device": dev.model, "policy": lvl_name, "key_scope": variant,
-                                         "compromise": comp, "target": target, "scheme": scheme, "accepted": acc,
-                                         "catalogue": cat})
+            for variant, firmware, comp, target in itertools.product(
+                    threat["s4e_key_scope"]["variants"], firmwares, ("C4", "C1+C4"), ("extracted", "other")):
+                keys = set()
+                if target == "extracted" or comp == "C1+C4":
+                    keys.add("session")
+                if target == "extracted" or variant == "group":
+                    keys.add("policy_mac")
+                for scheme in ("S4-E", "S6"):
+                    if firmware == "reflash" and target == "extracted":
+                        ctx = Context(True, None, None)        # attacker firmware: no check at all
+                    else:
+                        ctx = scheme_context(scheme, {"scope": "one_device"}, keys, pol, fw, full, inv, threat)
+                    acc = sum(count_accepted(ctx, a, state) for a in dev.actions)
+                    rows.append({"device": dev.model, "policy": lvl_name, "key_scope": variant, "firmware": firmware,
+                                 "compromise": comp, "target": target, "scheme": scheme, "accepted": acc,
+                                 "catalogue": cat})
     return pd.DataFrame(rows)
 
 
 def c4_k6(df: pd.DataFrame) -> pd.DataFrame:
-    """K6 = blast(S4-E) / blast(S6) per key scope, compromise and target; ranges over devices x policies."""
-    p = df.pivot_table(index=["device", "policy", "key_scope", "compromise", "target"], columns="scheme",
-                       values="accepted", sort=False).reset_index()
+    """K6 = blast(S4-E) / blast(S6) per key scope, firmware assumption (G2), compromise and target; ranges over
+    devices x policies. `meaningful` is False where a reflashed extracted device accepts everything under every
+    scheme (the ratio is then 1 by construction and says nothing about the schemes)."""
+    if "firmware" not in df:
+        df = df.assign(firmware="secure_boot")
+    keys = ["key_scope", "firmware", "compromise", "target"]
+    p = df.pivot_table(index=["device", "policy", *keys], columns="scheme", values="accepted", sort=False).reset_index()
     p["ratio"] = [(e / s) if s else math.nan for e, s in zip(p["S4-E"], p["S6"])]
     p["both_zero"] = (p["S4-E"] == 0) & (p["S6"] == 0)
-    return (p.groupby(["key_scope", "compromise", "target"], sort=False)
-            .agg(ratio_min=("ratio", "min"), ratio_max=("ratio", "max"), both_zero_cases=("both_zero", "sum"),
-                 s4e_accepted_max=("S4-E", "max"), s6_accepted_max=("S6", "max"), cases=("ratio", "size"))
-            .reset_index())
+    out = (p.groupby(keys, sort=False)
+           .agg(ratio_min=("ratio", "min"), ratio_max=("ratio", "max"), both_zero_cases=("both_zero", "sum"),
+                s4e_accepted_max=("S4-E", "max"), s6_accepted_max=("S6", "max"), cases=("ratio", "size"))
+           .reset_index())
+    out["meaningful"] = ~((out.firmware == "reflash") & (out.target == "extracted"))
+    return out

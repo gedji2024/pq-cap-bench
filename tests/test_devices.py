@@ -143,7 +143,8 @@ def test_c4_key_scope_f1():
     assert thr["s4e_key_scope"]["headline"] == "per_device"
     df = D.c4_key_scope(devs, load_yaml(CONFIG / "policies.yaml"), thr, a["invariants"],
                         {"alert_active": True, "battery_below_floor": False})
-    k = D.c4_k6(df).set_index(["key_scope", "compromise", "target"])
+    assert set(df.firmware) == {"secure_boot", "reflash"}
+    k = D.c4_k6(df[df.firmware == "secure_boot"]).set_index(["key_scope", "compromise", "target"])
     # C4 alone: no session key for other devices -> nothing accepted there, whatever the key scope
     for v in ("per_device", "group"):
         assert k.loc[(v, "C4", "other"), "both_zero_cases"] == k.loc[(v, "C4", "other"), "cases"]
@@ -155,3 +156,29 @@ def test_c4_key_scope_f1():
     # the extracted device: S4-E minted envelopes reach the catalogue under both scopes
     ex = df[(df.target == "extracted") & (df.scheme == "S4-E")]
     assert (ex.accepted == ex.catalogue).all()
+
+
+def test_c4_firmware_g2():
+    from pqcap.config import CONFIG, load_yaml
+    devs = D.load_catalogue(CONFIG / "devices")
+    a = load_yaml(CONFIG / "actions.yaml")
+    thr = load_yaml(CONFIG / "threat.yaml")
+    assert thr["c4_firmware"]["headline"] == "secure_boot"
+    df = D.c4_key_scope(devs, load_yaml(CONFIG / "policies.yaml"), thr, a["invariants"],
+                        {"alert_active": True, "battery_below_floor": False})
+    # reflash: the extracted device accepts the whole catalogue under BOTH schemes -> ratio 1, not meaningful
+    rx = df[(df.firmware == "reflash") & (df.target == "extracted")]
+    assert (rx.accepted == rx.catalogue).all()
+    k = D.c4_k6(df).set_index(["key_scope", "firmware", "compromise", "target"])
+    assert not k.loc[("per_device", "reflash", "C4", "extracted"), "meaningful"]
+    assert k.loc[("per_device", "reflash", "C4", "extracted"), "ratio_max"] == 1
+    assert k.loc[("per_device", "secure_boot", "C4", "extracted"), "meaningful"]
+    assert k.loc[("per_device", "secure_boot", "C4", "extracted"), "ratio_max"] > 1
+    # other devices do not depend on the reflash of the extracted one
+    for v in ("per_device", "group"):
+        for c in ("C4", "C1+C4"):
+            a_, b_ = k.loc[(v, "reflash", c, "other")], k.loc[(v, "secure_boot", c, "other")]
+            assert a_.both_zero_cases == b_.both_zero_cases and a_.s4e_accepted_max == b_.s4e_accepted_max
+    # an old CSV without the firmware column is read as secure_boot
+    old = D.c4_k6(df[df.firmware == "secure_boot"].drop(columns="firmware"))
+    assert set(old.firmware) == {"secure_boot"}

@@ -221,8 +221,16 @@ def run(config: Path, results: Path) -> dict[str, pd.DataFrame]:
             harm.summarize_events(hd, st["bootstrap"], st["seed"]).to_csv(results / "model_harm_summary.csv", index=False)
             he.to_csv(results / "model_harm_events.csv", index=False)
             if not he.empty:
-                harm.delay_distribution(he, hcfg["harm"]["delay_tolerance_min"], st["bootstrap"], st["seed"]).to_csv(
+                cl = None
+                if st.get("cluster_window_h"):   # G4: storm clusters across gauges = bootstrap resampling unit
+                    cl = harm.storm_clusters({e["event"]: e["peak_time"] for e in hm["events"]}, st["cluster_window_h"])
+                    pd.DataFrame([{"event": e["event"], "peak_time": e["peak_time"], "cluster": cl[e["event"]]}
+                                  for e in hm["events"]]).to_csv(results / "model_harm_clusters.csv", index=False)
+                tol = hcfg["harm"]["delay_tolerance_min"]
+                harm.delay_distribution(he, tol, st["bootstrap"], st["seed"], clusters=cl).to_csv(
                     results / "model_harm_delays.csv", index=False)
+                harm.excess_over_baseline(he, tol, st["bootstrap"], st["seed"], clusters=cl).to_csv(
+                    results / "model_harm_excess.csv", index=False)
             for em in hm["events"]:
                 srcs = []
                 for f in em["files"]:
@@ -250,15 +258,20 @@ def run(config: Path, results: Path) -> dict[str, pd.DataFrame]:
             devs_ = devm.load_catalogue(config / "devices")
             pols = load_yaml(config / "policies.yaml")
             lc6 = lambda n, ch: link_cost(n, ch, model["fragment_header_bytes"])  # noqa: E731
-            gw.filter_savings(devs_, pols, channels(load_yaml(config / "radio.yaml"), model), model["uplink_interval_s"],
-                              model["d6"]["devices_per_gateway"], lc6, model["d6"]["flood_mixes"],
-                              tuple(model["d6"].get("filter_points", ["appskey_upper_bound"]))).to_csv(
-                results / "d6_gateway_filter.csv", index=False)
+            filt = gw.filter_savings(devs_, pols, channels(load_yaml(config / "radio.yaml"), model),
+                                     model["uplink_interval_s"], model["d6"]["devices_per_gateway"], lc6,
+                                     model["d6"]["flood_mixes"],
+                                     tuple(model["d6"].get("filter_points", ["appskey_upper_bound"])))
+            filt.to_csv(results / "d6_gateway_filter.csv", index=False)
             acfg_ = load_yaml(config / "actions.yaml")
             c_ = acfg_.get("count_state", {"alert_active": True, "battery_above_floor": True})
-            gw.forging_power(devs_, pols, load_yaml(config / "threat.yaml"), acfg_["invariants"],
-                             {"alert_active": c_["alert_active"], "battery_below_floor": not c_["battery_above_floor"]}
-                             ).to_csv(results / "d6_forging_power.csv", index=False)
+            forge = gw.forging_power(devs_, pols, load_yaml(config / "threat.yaml"), acfg_["invariants"],
+                                     {"alert_active": c_["alert_active"],
+                                      "battery_below_floor": not c_["battery_above_floor"]})
+            forge.to_csv(results / "d6_forging_power.csv", index=False)
+            if "bounds_source" in model["d6"]:
+                gw.bounds_source_table(filt, forge, **model["d6"]["bounds_source"]).to_csv(
+                    results / "g1_bounds_source.csv", index=False)
     if "s6" in model:   # F7: truncated-tag forgery bounds (computational note to the symbolic model)
         from . import truncation  # noqa: PLC0415
         truncation.table(model["s6"]["tag_bytes"], model["s6"]["crisis_fields"]["counter"], model["uplink_interval_s"],

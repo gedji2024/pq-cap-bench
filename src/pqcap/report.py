@@ -421,6 +421,38 @@ def section_harm(results: Path, config: Path) -> str:
     return "\n\n".join(head + body)
 
 
+def _delay_tables(results: Path) -> list[str]:
+    delays = []
+    dp = results / "model_harm_delays.csv"
+    if dp.exists():
+        dd = _budget_off(pd.read_csv(dp))
+        fm = lambda v: "inf (missed)" if v == float("inf") else f"{v:,.0f}"  # noqa: E731
+        t = dd[["battery_profile", "scheme", "compromise", "strategy", "legit_policy", "events", "crossings", "missed"]].copy()
+        for m in ("median_delay_min", "p90_delay_min", "max_delay_min"):
+            t[m.replace("_delay_min", "")] = [f"{fm(a)} [{fm(b)}, {fm(c)}]" for a, b, c in
+                                              zip(dd[m], dd[m + "_ci_lo"], dd[m + "_ci_hi"])]
+        t["late_or_missed"] = [f"{a:.2f} [{b:.2f}, {c:.2f}]" for a, b, c in
+                               zip(dd.late_or_missed_share, dd.late_or_missed_share_ci_lo, dd.late_or_missed_share_ci_hi)]
+        delays = [f"**F5 - detection-delay distribution over all crossings** (minutes; missed crossing = inf; "
+                  f"[95 % CI] from {_clusters_note(results)}; events pre-registered in "
+                  "`config/events_prereg.yaml`; `late_or_missed` = share of crossings reported more than the "
+                  "tolerance after they occur, or never; no G3 energy budget, see Sec. 7k):",
+                  md_table(t, {"events": lambda v: f"{int(v)}", "crossings": lambda v: f"{int(v)}",
+                               "missed": lambda v: f"{int(v)}"})]
+        xp = results / "model_harm_excess.csv"
+        if xp.exists():
+            x = _budget_off(pd.read_csv(xp))
+            delays += ["**Attack effect relative to the legitimate baseline** (late-or-missed share under attack "
+                       "minus that of legitimate operation, naive policy, same scheme and battery profile; crossings "
+                       "paired, so the crossings legitimate operation already misses count as baseline; 95 % CI "
+                       "from a paired bootstrap over the same resampling units):",
+                       md_table(x[["battery_profile", "scheme", "compromise", "strategy", "baseline_share",
+                                   "attack_share", "excess", "excess_ci_lo", "excess_ci_hi"]],
+                                {c: (lambda v: f"{v:.3f}") for c in ("baseline_share", "attack_share", "excess",
+                                                                     "excess_ci_lo", "excess_ci_hi")})]
+    return delays
+
+
 def harm_summary_tables(d: pd.DataFrame, results: Path, num) -> list[str]:
     ev = d.drop_duplicates("event")
     sp = results / "model_harm_summary.csv"
@@ -428,9 +460,9 @@ def harm_summary_tables(d: pd.DataFrame, results: Path, num) -> list[str]:
         att = d[d.compromise != "none"]
         cols = ["event", "battery_profile", "scheme", "compromise", "strategy", "crossings", "missed", "delayed",
                 "max_delay_min", "floor_violating_uplinks", "died", "died_h", "min_soc_pct"]
-        return ["**Under attack** (single event):", md_table(att[cols], {"max_delay_min": num, "died_h": num,
+        return _delay_tables(results) + ["**Under attack** (single event):", md_table(att[cols], {"max_delay_min": num, "died_h": num,
                                                                           "min_soc_pct": num})]
-    sm = pd.read_csv(sp)
+    sm = _budget_off(pd.read_csv(sp))
     ci = lambda m: (lambda r: f"{r[m + '_median']:.2f} [{r[m + '_ci_lo']:.2f}, {r[m + '_ci_hi']:.2f}]"  # noqa: E731
                     if r[m + "_median"] == r[m + "_median"] else "-")
     def tab(rows, metrics):
@@ -440,23 +472,8 @@ def harm_summary_tables(d: pd.DataFrame, results: Path, num) -> list[str]:
         return md_table(t, {"events": lambda v: f"{int(v)}"})
     att = sm[sm.compromise != "none"]
     leg = sm[sm.compromise == "none"]
-    delays = []
+    delays = _delay_tables(results)
     dp = results / "model_harm_delays.csv"
-    if dp.exists():
-        dd = pd.read_csv(dp)
-        fm = lambda v: "inf (missed)" if v == float("inf") else f"{v:,.0f}"  # noqa: E731
-        t = dd[["battery_profile", "scheme", "compromise", "strategy", "legit_policy", "events", "crossings", "missed"]].copy()
-        for m in ("median_delay_min", "p90_delay_min", "max_delay_min"):
-            t[m.replace("_delay_min", "")] = [f"{fm(a)} [{fm(b)}, {fm(c)}]" for a, b, c in
-                                              zip(dd[m], dd[m + "_ci_lo"], dd[m + "_ci_hi"])]
-        t["late_or_missed"] = [f"{a:.2f} [{b:.2f}, {c:.2f}]" for a, b, c in
-                               zip(dd.late_or_missed_share, dd.late_or_missed_share_ci_lo, dd.late_or_missed_share_ci_hi)]
-        delays = [f"**F5 - detection-delay distribution over all crossings** (minutes; missed crossing = inf; "
-                  "[95 % CI] from a percentile bootstrap that resamples events, pre-registered in "
-                  "`config/events_prereg.yaml`; `late_or_missed` = share of crossings reported more than the "
-                  "tolerance after they occur, or never):",
-                  md_table(t, {"events": lambda v: f"{int(v)}", "crossings": lambda v: f"{int(v)}",
-                               "missed": lambda v: f"{int(v)}"})]
     sup = (" Events come from the F5 pre-registered rule; the 2017 top-k event set of D4 is **SUPERSEDED**."
            if dp.exists() else "")
     return delays + [f"**D4 - statistics over {ev.shape[0]} events**{sup} (median [95 % percentile-bootstrap CI of the median], "
@@ -550,14 +567,92 @@ def section_catalogue(results: Path, config: Path) -> str:
     f1 = results / "f1_c4_k6.csv"
     if f1.exists():
         k = pd.read_csv(f1)
-        thr = load_yaml(config / "threat.yaml")["s4e_key_scope"]
+        tall = load_yaml(config / "threat.yaml")
+        thr = tall["s4e_key_scope"]
+        fwv = tall.get("c4_firmware")
+        fw_txt = ""
+        if fwv and "meaningful" in k:
+            fw_txt = (f" **G2 - what C4 assumes about firmware** (headline **{fwv['headline']}**): "
+                      + "; ".join(f"`{n}` = {d}" for n, d in fwv["variants"].items())
+                      + ". With a reflash the extracted device runs attacker firmware and accepts the whole catalogue "
+                        "under every scheme, so its ratio is **not meaningful** (marked below); other devices are "
+                        "unaffected by the reflash of one device.")
+            nm = ~k.meaningful.astype(bool)
+            k = k.assign(ratio_min=k.ratio_min.astype(object), ratio_max=k.ratio_max.astype(object))
+            k.loc[nm, ["ratio_min", "ratio_max"]] = "not meaningful"
+            k = k.drop(columns="meaningful")
+        ef = lambda v: v if isinstance(v, str) else e(v)  # noqa: E731
         out += [f"**F1 - C4 fairness: scope of the S4-E envelope MAC key.** The C4 row above counts the *extracted* "
                 f"device with a per-device key. Headline: **{thr['headline']}**. Variants: "
                 + "; ".join(f"`{n}` = {d}" for n, d in thr["variants"].items())
                 + ". `target` = the extracted device, or another device of the same group (its session key is known "
-                  "only with C1; its S4-E key only if the key is shared). S6 envelopes need sk_PA, which C4 never yields.",
-                md_table(k, {"ratio_min": e, "ratio_max": e, "both_zero_cases": ints, "s4e_accepted_max": ints,
+                  "only with C1; its S4-E key only if the key is shared). S6 envelopes need sk_PA, which C4 never yields."
+                + fw_txt,
+                md_table(k, {"ratio_min": ef, "ratio_max": ef, "both_zero_cases": ints, "s4e_accepted_max": ints,
                              "s6_accepted_max": ints, "cases": ints})]
+    return "\n\n".join(out)
+
+
+def _budget_off(df: pd.DataFrame) -> pd.DataFrame:
+    """Rows without the G3 energy budget (the F5 configuration); the budget-on rows are reported in Sec. 7k."""
+    return df[df.energy_budget == "off"].drop(columns="energy_budget") if "energy_budget" in df else df
+
+
+def _clusters_note(results: Path) -> str:
+    cp = results / "model_harm_clusters.csv"
+    if not cp.exists():
+        return "a percentile bootstrap that resamples events"
+    c = pd.read_csv(cp)
+    return (f"a percentile bootstrap that resamples **storm clusters** (G4: events whose peaks lie within 72 h of "
+            f"each other on any gauge, single linkage; **{c.cluster.nunique()} clusters for {len(c)} events**, "
+            "`results/model_harm_clusters.csv`). The earlier event-level CIs are **SUPERSEDED** because events of one "
+            "storm on several gauges are correlated")
+
+
+def section_g3(results: Path, config: Path) -> str:
+    dp = results / "model_harm_delays.csv"
+    if not dp.exists():
+        return "_G3 not run_"
+    dd = pd.read_csv(dp)
+    if "energy_budget" not in dd or not (dd.energy_budget == "on").any():
+        return "_G3 not run_"
+    eb = load_yaml(config / "harm.yaml")["energy_budget"]
+    m = json.loads((results / "harm_meta.json").read_text())
+    bud = pd.DataFrame([{"battery_profile": b["name"], "epoch_budget_uplinks": b.get("epoch_budget_uplinks")}
+                        for b in m["battery_profiles"]])
+    sch = list(eb["schemes"])
+    d = dd[dd.scheme.isin(sch) & ((dd.strategy == "drain") | (dd.compromise == "none"))
+           & ((dd.compromise == "none") <= (dd.legit_policy == "naive"))]
+    fm = lambda v: "inf (missed)" if v == float("inf") else f"{v:,.0f}"  # noqa: E731
+    t = d[["battery_profile", "scheme", "compromise", "strategy", "energy_budget", "crossings", "missed"]].copy()
+    t["median"] = [f"{fm(a)} [{fm(b)}, {fm(c)}]" for a, b, c in zip(d.median_delay_min, d.median_delay_min_ci_lo,
+                                                                   d.median_delay_min_ci_hi)]
+    t["p90"] = [f"{fm(a)} [{fm(b)}, {fm(c)}]" for a, b, c in zip(d.p90_delay_min, d.p90_delay_min_ci_lo,
+                                                                d.p90_delay_min_ci_hi)]
+    t["late_or_missed"] = [f"{a:.2f} [{b:.2f}, {c:.2f}]" for a, b, c in
+                           zip(d.late_or_missed_share, d.late_or_missed_share_ci_lo, d.late_or_missed_share_ci_hi)]
+    out = [f"**G3 - energy budget per epoch in the envelope (POLICY).** Per {eb['epoch_h']} h epoch the device "
+           "allows at most `epoch_budget_uplinks` command-caused uplinks (immediate-uplink requests, or uplinks "
+           "sooner than the default interval with the invariants applied); firmware alert uplinks and the alert-mode "
+           "minimum rate are never charged. The budget is derived so that a device spending all of it in every "
+           f"epoch of the {eb['horizon_d']}-day planning horizon (= the pre-registered event window, CHOICE) still "
+           "ends above the battery floor, from ASSUMED inputs (initial SOC, floor) and the manufacturer battery "
+           f"data (`pqcap.harm.epoch_budget`). It sits in the {', '.join(sch)} envelope, so C1+C3 removes it, and "
+           f"for {', '.join(eb['in_floor'])} also in the write-once commissioning floor, which survives C1+C3. "
+           "Rows: drain attack and the legitimate baseline (naive policy), budget off and on, all events; CIs as in "
+           "Sec. 7e (storm clusters).", md_table(bud, {"epoch_budget_uplinks": lambda v: f"{int(v):,}"}),
+           md_table(t, {"crossings": lambda v: f"{int(v)}", "missed": lambda v: f"{int(v)}"})]
+    xp = results / "model_harm_excess.csv"
+    if xp.exists():
+        x = pd.read_csv(xp)
+        x = x[x.scheme.isin(sch) & (x.strategy == "drain")]
+        out += ["**Drain effect relative to the legitimate baseline** (late-or-missed share of the attack minus that "
+                "of legitimate operation with the same scheme, battery profile and budget; crossings paired, so the "
+                "crossings the baseline already misses count as baseline; paired cluster-bootstrap 95 % CI):",
+                md_table(x[["battery_profile", "scheme", "compromise", "energy_budget", "baseline_share",
+                            "attack_share", "excess", "excess_ci_lo", "excess_ci_hi"]],
+                         {c: (lambda v: f"{v:.3f}") for c in ("baseline_share", "attack_share", "excess",
+                                                              "excess_ci_lo", "excess_ci_hi")})]
     return "\n\n".join(out)
 
 
@@ -576,7 +671,7 @@ def section_d2(results: Path) -> str:
               & (h.battery_profile == bp)]
         dp = results / "model_harm_delays.csv"
         if dp.exists():   # F5: many events -> aggregate delay distribution instead of one row per event
-            dd = pd.read_csv(dp)
+            dd = _budget_off(pd.read_csv(dp))
             dd = dd[dd.scheme.isin(["S4-F", "S6", "S6+F"]) & (dd.compromise != "none") & (dd.strategy == "suppress")
                     & (dd.battery_profile == bp)]
             fm = lambda v: "inf (missed)" if v == float("inf") else f"{v:,.0f}"  # noqa: E731
@@ -647,6 +742,33 @@ def section_d6(results: Path, model: dict) -> str:
                                                            if c.startswith(("out_", "saved_budget"))}
                                                         | {c: (lambda v: f"{v:,.1f}") for c in t.columns
                                                            if c.startswith("saved_s")}))
+    g1 = results / "g1_bounds_source.csv"
+    if g1.exists():
+        b = pd.read_csv(g1)
+        bs = model["d6"]["bounds_source"]
+        yn = lambda v: "-" if pd.isna(v) else ("yes" if v else "no")  # noqa: E731
+        rng = lambda lo, hi, f: "-" if pd.isna(lo) else (f(lo) if f(lo) == f(hi) else f"{f(lo)}-{f(hi)}")  # noqa: E731
+        t = b[["filter_point", "scheme", "bounds_source"]].assign(
+            possible=b.possible.map(yn), filter_keys=b.filter_keys.fillna("-"), forging_power=b.forging_power.map(yn),
+            blast_c1_plus_filter=[rng(lo, hi, lambda v: f"{v:.3g}") for lo, hi in
+                                  zip(b.blast_fraction_c1_plus_filter_min, b.blast_fraction_c1_plus_filter_max)],
+            bounds_set_by_channel_attacker=b.bounds_set_by_channel_attacker.map(yn),
+            saved_s_per_h=[rng(lo, hi, lambda v: f"{v:,.0f}") for lo, hi in zip(b.saved_s_per_h_min, b.saved_s_per_h_max)],
+            saved_share_of_budget=[rng(lo, hi, lambda v: f"{v:.3f}") for lo, hi in
+                                   zip(b.saved_share_of_budget_min, b.saved_share_of_budget_max)])
+        out.append(f"**G1 - how the filter learns the envelope bounds** ({bs['region']} DR{bs['dr']}, "
+                   f"N = {bs['devices']}, {bs['policy']} policy, {bs['mix']} flood; ranges over devices). "
+                   "*In frame*: the bounds travel in the envelope install downlink, whose FRMPayload is "
+                   "AppSKey-encrypted (TS001-1.0.4 Table 11), so a standard network server cannot read them; only "
+                   "the AppSKey upper bound can. *Out of band*: the PA publishes each envelope to the network server. "
+                   "With S6 the NS verifies it with pk_PA and cannot forge; with S4-E it needs the per-device "
+                   "envelope MAC key, which also mints envelopes, so the filter gains forging power (blast radius "
+                   "under C1 + filter = the whole catalogue). Variants (a) `ns_metadata` and (b) "
+                   "`fport_action_binding` do not need a signature by themselves: the device checks every command, "
+                   "so a filter can never widen what is accepted. Without verification (*unverified*), however, "
+                   "whoever controls the PA-to-NS channel sets the bounds: wider bounds cancel the saving, narrower "
+                   "ones make the filter drop in-envelope commands. `blast_c1_plus_filter` = accepted / catalogue "
+                   "under C1 plus that filter's keys.\n\n" + md_table(t))
     fp = fp.assign(fraction=fp.accepted / fp.catalogue)
     t = (fp.groupby(["scheme", "compromise", "gateway_keys"], sort=False)
          .agg(fraction_min=("fraction", "min"), fraction_max=("fraction", "max"), cases=("fraction", "size")).reset_index())
@@ -760,6 +882,7 @@ def run(config: Path, results: Path, figures: Path) -> None:
         "## 7h. D6: gateway-side filtering of a C1 flood", section_d6(results, model),
         "## 7i. F4: NWS flood categories", section_f4(config),
         "## 7j. F6: pre-committed operator approvals", section_f6(results),
+        "## 7k. G3: energy budget per epoch against drain", section_g3(results, config),
         "## 8. Kill criteria", section_kill(results),
         "## 8a. K5/K6 on the manufacturer device catalogue (supersedes the K5/K6 of Sec. 8)",
         section_catalogue(results, config),

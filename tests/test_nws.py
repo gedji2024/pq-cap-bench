@@ -60,7 +60,7 @@ def test_run_uses_nws_thresholds():
     cats = nws.load(D, "08074000", 0.5)
     assert e["threshold_source"] == "NWS BBST2" and e["level_names"] == ["action", "minor", "moderate", "major"]
     assert e["alert_threshold_cm"] == round(cats["action"] * 30.48)
-    assert e["levels_cm"][1] == pytest.approx(cats["minor"] * 30.48) and len(df) == 1
+    assert e["levels_cm"][1] == pytest.approx(cats["minor"] * 30.48) and len(df) == 2   # G3 budget off + on
 
 
 def test_section_f4(tmp_path):

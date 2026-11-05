@@ -152,9 +152,10 @@ def test_run_end_to_end():
     one = {**HCFG, "schemes": ["S4", "S6"], "compromises": ["none", "C1"], "attacker": {"strategies": ["drain"]},
            "battery": {**HCFG["battery"], "profiles": HCFG["battery"]["profiles"][-1:]}, "events": None,
            "events_rule": None, "events_prereg": None, "harm": {**HCFG["harm"], "reference_levels_ft": LEVELS_FT, "relative": None},
-           "device": {**HCFG["device"], "alert_threshold_cm": 610}}
+           "device": {**HCFG["device"], "alert_threshold_cm": 610}, "energy_budget": None}
     df, evs, meta = harm.run(one, ACFG, REPO_ROOT)
     assert len(df) == 2 * (len(HCFG["legit_policy"]["variants"]) + 1) and set(df.strategy) == {"-", "drain"}
+    assert set(df.energy_budget) == {"off"} and df.epoch_budget_uplinks.isna().all()
     assert set(df[df.compromise == "none"].legit_policy) == set(HCFG["legit_policy"]["variants"])
     e = meta["events"][0]
     assert e["n_readings"] == 460 and len(e["gaps_over_60_min"]) >= 1 and e["peak_bracketed_by_gap"] is True                 # Harvey peak bracketed by 600- and 405-min gaps
@@ -207,7 +208,8 @@ def test_event_window_and_fraction_levels():
            "harm": {**HCFG["harm"], "reference_levels_ft": None, "reference_level_fractions": [0.5]}}
     df, ev_, meta = harm.run(cfg, ACFG, REPO_ROOT)
     lv = meta["events"][0]["levels_cm"][0]
-    assert lv == pytest.approx(stage.min() + 0.5 * (stage.max() - stage.min())) and len(df) == 1
+    assert lv == pytest.approx(stage.min() + 0.5 * (stage.max() - stage.min()))
+    assert list(df.energy_budget) == ["off", "on"]                     # S6 is run with and without the G3 budget
 
 
 # ---------------------------------------------------------------- D4
@@ -345,3 +347,68 @@ def test_f3_commissioning_closes_c1c3_threshold_weakness():
     sch = harm.Scheme("S6", harm.ev.catalogue_from_config(ACFG), harm.ev.envelope_from_config(ACFG),
                       harm.ev.firmware_policy_from_config(ACFG), False, max_alert_threshold=10)
     assert sch.floor == harm.ev.NO_INVARIANTS                     # only S6+F has the floor
+
+
+def test_epoch_budget_g3():
+    eb = HCFG["energy_budget"]
+    b = BATS["LWL01/poor"]                 # 1,300 uplinks per battery (manual), SOC 60 -> floor 20 (ASSUMED)
+    want = math.floor((60 - INV.battery_floor_pct) / 100 * 1300 / eb["horizon_d"] - 24 * 60 / 60)
+    assert harm.epoch_budget(b, HCFG, INV.battery_floor_pct, eb) == want == 50
+    assert harm.epoch_budget({**b, "capacity": 1e-6}, HCFG, INV.battery_floor_pct, eb) == 0
+
+
+def test_energy_budget_curbs_drain_g3():
+    stage = _hydrograph(1000, minutes=4 * 1440)
+    lv = [x * 30.48 for x in LEVELS_FT]
+    off = harm.simulate(stage, "S6", "C1", "drain", _cfg(), CAT, ENV, FW)
+    on = harm.simulate(stage, "S6", "C1", "drain", _cfg(), CAT, ENV, FW, budget=20)
+    assert on["stats"]["uplinks"] < off["stats"]["uplinks"] and on["stats"]["min_soc_pct"] > off["stats"]["min_soc_pct"]
+    assert on["stats"]["budget_used"] <= 20 * 4 and on["stats"]["budget_denied_requests"] > 0
+    so, sn = harm.score(stage, off["delivered"], lv, 30), harm.score(stage, on["delivered"], lv, 30)
+    assert sn["missed"] + sn["delayed"] <= so["missed"] + so["delayed"]
+    # budget 0: only the default schedule and firmware alert uplinks -> every crossing is still reported
+    z = harm.simulate(stage, "S6", "C1", "drain", _cfg(), CAT, ENV, FW, budget=0)
+    assert z["stats"]["budget_used"] == 0 and harm.score(stage, z["delivered"], lv, 30)["missed"] == 0
+
+
+def test_energy_budget_rows_g3():
+    evs = [{"name": "w", "file": HCFG["series"]["file"], "start": "2017-08-27", "end": "2017-08-29"}]
+    cfg = {**HCFG, "events": evs, "events_rule": None, "events_prereg": None, "schemes": ["S4", "S6", "S6+F"],
+           "compromises": ["C1", "C1+C3"], "attacker": {"strategies": ["drain"]},
+           "battery": {**HCFG["battery"], "profiles": HCFG["battery"]["profiles"][-1:]}}
+    df, _, meta = harm.run(cfg, ACFG, REPO_ROOT)
+    assert set(df[df.scheme == "S4"].energy_budget) == {"off"}
+    on = df[df.energy_budget == "on"].set_index(["scheme", "compromise"])
+    assert on.loc[("S6", "C1"), "epoch_budget_uplinks"] == 50
+    assert pd.isna(on.loc[("S6", "C1+C3"), "epoch_budget_uplinks"])      # envelope replaced: budget lost
+    assert on.loc[("S6+F", "C1+C3"), "epoch_budget_uplinks"] == 50       # commissioning floor keeps it
+    assert meta["battery_profiles"][0]["epoch_budget_uplinks"] == 50
+
+
+def test_storm_clusters_g4():
+    peaks = {"a": "2017-08-27T00:00Z", "b": "2017-08-29T12:00Z", "c": "2017-09-01T00:00Z", "d": "2018-01-01T00:00Z"}
+    cl = harm.storm_clusters(peaks, 72)
+    assert cl["a"] == cl["b"] == cl["c"] != cl["d"]                      # chained within 72 h -> one cluster
+    assert len(set(harm.storm_clusters(peaks, 24).values())) == 4
+
+
+def test_delay_distribution_clusters_and_excess_g4():
+    base = {"battery_profile": "p", "scheme": "S", "strategy": "-", "level_cm": 1.0}
+    rows = []
+    for e, cm in (("a", 0), ("b", 0), ("c", 0)):
+        rows.append({**base, "event": e, "compromise": "none", "legit_policy": "naive", "cross_min": cm,
+                     "delay_min": 5 if e != "c" else None})
+        rows.append({**base, "event": e, "compromise": "C1", "strategy": "drain", "legit_policy": "-",
+                     "cross_min": cm, "delay_min": 100 if e == "a" else (5 if e == "b" else None)})
+    ev_ = pd.DataFrame(rows)
+    cl = {"a": 0, "b": 0, "c": 1}
+    d = harm.delay_distribution(ev_, 30, 500, 1, clusters=cl).set_index("compromise")
+    assert d.loc["C1", "resampling_units"] == 2 and d.loc["C1", "events"] == 3
+    assert harm.delay_distribution(ev_, 30, 50, 1).iloc[0].resampling_units == 3
+    x = harm.excess_over_baseline(ev_, 30, 500, 1, clusters=cl).iloc[0]
+    # baseline misses c (counted as baseline); the attack adds only a
+    assert x.baseline_share == pytest.approx(1 / 3) and x.attack_share == pytest.approx(2 / 3)
+    assert x.excess == pytest.approx(1 / 3) and x.excess_ci_lo <= x.excess <= x.excess_ci_hi
+    assert x.resampling_units == 2
+    # no baseline rows -> no excess row
+    assert harm.excess_over_baseline(ev_[ev_.compromise != "none"], 30, 50, 1).empty

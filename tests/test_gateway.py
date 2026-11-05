@@ -69,3 +69,29 @@ def test_filter_points_savings_order():
     assert (p.appskey_upper_bound >= p.fport_action_binding - 1e-9).all()
     assert (p.fport_action_binding >= p.ns_metadata - 1e-9).all()
     assert set(f.filter_point) == set(gw.FILTER_POINTS)
+
+
+def test_bounds_source_g1():
+    pts = tuple(gw.FILTER_POINTS)
+    f = gw.filter_savings(DEVS, POL, CH, MODEL["uplink_interval_s"], [50], LC, ["uniform_type"], pts)
+    a = load_yaml(CONFIG / "actions.yaml")
+    fp = gw.forging_power(DEVS, POL, load_yaml(CONFIG / "threat.yaml"), a["invariants"],
+                          {"alert_active": True, "battery_below_floor": False})
+    t = gw.bounds_source_table(f, fp, "US915", 8, 50, "tight", "uniform_type")
+    assert len(t) == len(pts) * len(gw.BOUNDS_SOURCES) * 2
+    k = t.set_index(["filter_point", "bounds_source", "scheme"])
+    # a standard NS cannot read the envelope from the AppSKey-encrypted install frame
+    for p in ("ns_metadata", "fport_action_binding"):
+        assert not k.loc[(p, "in_frame", "S6"), "possible"]
+        assert k.loc[(p, "in_frame", "S6")].isna()[["forging_power", "filter_keys", "saved_s_per_h_max"]].all()
+    # out-of-band verified: S6 verifies with pk_PA and cannot forge; S4-E needs the MAC key and can
+    for p in pts:
+        s6, s4e = k.loc[(p, "out_of_band_verified", "S6")], k.loc[(p, "out_of_band_verified", "S4-E")]
+        assert not s6.forging_power and s4e.forging_power
+        assert "pk_PA" in s6.filter_keys and "MAC" in s4e.filter_keys
+        assert s4e.blast_fraction_c1_plus_filter_max == 1.0 and s6.blast_fraction_c1_plus_filter_max < 1.0
+        assert not s6.bounds_set_by_channel_attacker
+        un = k.loc[(p, "out_of_band_unverified", "S4-E")]
+        assert not un.forging_power and un.bounds_set_by_channel_attacker
+        assert s6.saved_s_per_h_max == s4e.saved_s_per_h_max == un.saved_s_per_h_max   # same bounds, same saving
+    assert "AppSKey" in k.loc[("appskey_upper_bound", "in_frame", "S6"), "filter_keys"]

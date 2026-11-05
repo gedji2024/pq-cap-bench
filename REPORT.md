@@ -746,170 +746,295 @@ Message size in frames per DR:
 
 Reference levels: NWS flood categories where the gauge has them (Sec. 7i, F4); otherwise [0.25, 0.5, 0.75, 0.9] (fractions of each event range, ASSUMED); a crossing is *delayed* if first reported more than 30 min after it occurs. A *floor violation* is an uplink below the battery floor at a rate the battery invariant forbids (firmware alert uplinks exempt), scored identically for every scheme. Device, policy, threshold and invariant values are ASSUMED (config/actions.yaml, config/harm.yaml).
 
-**F5 - detection-delay distribution over all crossings** (minutes; missed crossing = inf; [95 % CI] from a percentile bootstrap that resamples events, pre-registered in `config/events_prereg.yaml`; `late_or_missed` = share of crossings reported more than the tolerance after they occur, or never):
+**F5 - detection-delay distribution over all crossings** (minutes; missed crossing = inf; [95 % CI] from a percentile bootstrap that resamples **storm clusters** (G4: events whose peaks lie within 72 h of each other on any gauge, single linkage; **23 clusters for 41 events**, `results/model_harm_clusters.csv`). The earlier event-level CIs are **SUPERSEDED** because events of one storm on several gauges are correlated; events pre-registered in `config/events_prereg.yaml`; `late_or_missed` = share of crossings reported more than the tolerance after they occur, or never; no G3 energy budget, see Sec. 7k):
 
 | battery_profile | scheme | compromise | strategy | legit_policy | events | crossings | missed | median | p90 | max | late_or_missed |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| PS-LB/good | S4 | none | - | naive | 41 | 135 | 3 | 5 [4, 6] | 21 [9, 45] | inf (missed) [58, inf (missed)] | 0.09 [0.04, 0.15] |
-| PS-LB/good | S4 | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 21 [9, 45] | inf (missed) [58, inf (missed)] | 0.09 [0.03, 0.15] |
-| PS-LB/good | S4 | C1 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/good | S4 | none | - | naive | 41 | 135 | 3 | 5 [4, 6] | 21 [9, 45] | inf (missed) [58, inf (missed)] | 0.09 [0.04, 0.16] |
+| PS-LB/good | S4 | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 21 [9, 45] | inf (missed) [58, inf (missed)] | 0.09 [0.04, 0.16] |
+| PS-LB/good | S4 | C1 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | PS-LB/good | S4 | C1 | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/good | S4 | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/good | S4 | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | PS-LB/good | S4 | C1+C3 | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/good | S4 | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/good | S4 | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | PS-LB/good | S4 | C1+C3+OP | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/good | S4-F | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/good | S4-F | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/good | S4-F | C1 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/good | S4-F | none | - | naive | 41 | 135 | 3 | 4 [3, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S4-F | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S4-F | C1 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | PS-LB/good | S4-F | C1 | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/good | S4-F | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/good | S4-F | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | PS-LB/good | S4-F | C1+C3 | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/good | S4-F | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/good | S4-F | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | PS-LB/good | S4-F | C1+C3+OP | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/good | S4-E | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/good | S4-E | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/good | S4-E | C1 | suppress | - | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 36] | inf (missed) [54, inf (missed)] | 0.10 [0.05, 0.14] |
+| PS-LB/good | S4-E | none | - | naive | 41 | 135 | 3 | 4 [3, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S4-E | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S4-E | C1 | suppress | - | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 35] | inf (missed) [54, inf (missed)] | 0.10 [0.05, 0.14] |
 | PS-LB/good | S4-E | C1 | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/good | S4-E | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/good | S4-E | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | PS-LB/good | S4-E | C1+C3 | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/good | S4-E | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/good | S4-E | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | PS-LB/good | S4-E | C1+C3+OP | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/good | S6 | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.04] |
-| PS-LB/good | S6 | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/good | S6 | C1 | suppress | - | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 36] | inf (missed) [54, inf (missed)] | 0.10 [0.05, 0.14] |
+| PS-LB/good | S6 | none | - | naive | 41 | 135 | 3 | 4 [3, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S6 | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S6 | C1 | suppress | - | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 35] | inf (missed) [54, inf (missed)] | 0.10 [0.05, 0.14] |
 | PS-LB/good | S6 | C1 | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/good | S6 | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/good | S6 | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | PS-LB/good | S6 | C1+C3 | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/good | S6 | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/good | S6 | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | PS-LB/good | S6 | C1+C3+OP | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/good | S6+F | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/good | S6+F | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/good | S6+F | C1 | suppress | - | 41 | 135 | 3 | 6 [5, 8] | 16 [15, 18] | inf (missed) [19, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S6+F | none | - | naive | 41 | 135 | 3 | 4 [3, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S6+F | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S6+F | C1 | suppress | - | 41 | 135 | 3 | 6 [6, 7] | 16 [15, 18] | inf (missed) [19, inf (missed)] | 0.02 [0.00, 0.05] |
 | PS-LB/good | S6+F | C1 | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/good | S6+F | C1+C3 | suppress | - | 41 | 135 | 3 | 6 [5, 8] | 16 [15, 18] | inf (missed) [19, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S6+F | C1+C3 | suppress | - | 41 | 135 | 3 | 6 [6, 8] | 16 [15, 18] | inf (missed) [19, inf (missed)] | 0.02 [0.00, 0.05] |
 | PS-LB/good | S6+F | C1+C3 | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/good | S6+F | C1+C3+OP | suppress | - | 41 | 135 | 133 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.95, 1.00] |
+| PS-LB/good | S6+F | C1+C3+OP | suppress | - | 41 | 135 | 133 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.94, 1.00] |
 | PS-LB/good | S6+F | C1+C3+OP | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/poor | S4 | none | - | naive | 41 | 135 | 3 | 5 [4, 6] | 21 [9, 45] | inf (missed) [58, inf (missed)] | 0.09 [0.03, 0.15] |
-| PS-LB/poor | S4 | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 21 [9, 45] | inf (missed) [58, inf (missed)] | 0.09 [0.04, 0.15] |
-| PS-LB/poor | S4 | C1 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/poor | S4 | none | - | naive | 41 | 135 | 3 | 5 [4, 6] | 21 [9, 45] | inf (missed) [58, inf (missed)] | 0.09 [0.04, 0.16] |
+| PS-LB/poor | S4 | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 21 [9, 45] | inf (missed) [58, inf (missed)] | 0.09 [0.04, 0.16] |
+| PS-LB/poor | S4 | C1 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | PS-LB/poor | S4 | C1 | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/poor | S4 | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/poor | S4 | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | PS-LB/poor | S4 | C1+C3 | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/poor | S4 | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/poor | S4 | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | PS-LB/poor | S4 | C1+C3+OP | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/poor | S4-F | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/poor | S4-F | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/poor | S4-F | C1 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/poor | S4-F | none | - | naive | 41 | 135 | 3 | 4 [3, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S4-F | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S4-F | C1 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | PS-LB/poor | S4-F | C1 | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/poor | S4-F | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/poor | S4-F | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | PS-LB/poor | S4-F | C1+C3 | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/poor | S4-F | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/poor | S4-F | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | PS-LB/poor | S4-F | C1+C3+OP | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/poor | S4-E | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/poor | S4-E | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/poor | S4-E | C1 | suppress | - | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 36] | inf (missed) [54, inf (missed)] | 0.10 [0.05, 0.14] |
+| PS-LB/poor | S4-E | none | - | naive | 41 | 135 | 3 | 4 [3, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S4-E | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S4-E | C1 | suppress | - | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 35] | inf (missed) [54, inf (missed)] | 0.10 [0.05, 0.14] |
 | PS-LB/poor | S4-E | C1 | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/poor | S4-E | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/poor | S4-E | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | PS-LB/poor | S4-E | C1+C3 | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/poor | S4-E | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/poor | S4-E | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | PS-LB/poor | S4-E | C1+C3+OP | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/poor | S6 | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/poor | S6 | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/poor | S6 | C1 | suppress | - | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 36] | inf (missed) [54, inf (missed)] | 0.10 [0.05, 0.14] |
+| PS-LB/poor | S6 | none | - | naive | 41 | 135 | 3 | 4 [3, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S6 | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S6 | C1 | suppress | - | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 35] | inf (missed) [54, inf (missed)] | 0.10 [0.05, 0.14] |
 | PS-LB/poor | S6 | C1 | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/poor | S6 | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/poor | S6 | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | PS-LB/poor | S6 | C1+C3 | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/poor | S6 | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/poor | S6 | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | PS-LB/poor | S6 | C1+C3+OP | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/poor | S6+F | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/poor | S6+F | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/poor | S6+F | C1 | suppress | - | 41 | 135 | 3 | 6 [5, 8] | 16 [15, 18] | inf (missed) [19, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S6+F | none | - | naive | 41 | 135 | 3 | 4 [3, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S6+F | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S6+F | C1 | suppress | - | 41 | 135 | 3 | 6 [6, 8] | 16 [15, 18] | inf (missed) [19, inf (missed)] | 0.02 [0.00, 0.05] |
 | PS-LB/poor | S6+F | C1 | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/poor | S6+F | C1+C3 | suppress | - | 41 | 135 | 3 | 6 [5, 8] | 16 [15, 18] | inf (missed) [19, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S6+F | C1+C3 | suppress | - | 41 | 135 | 3 | 6 [6, 8] | 16 [15, 18] | inf (missed) [19, inf (missed)] | 0.02 [0.00, 0.05] |
 | PS-LB/poor | S6+F | C1+C3 | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/poor | S6+F | C1+C3+OP | suppress | - | 41 | 135 | 133 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.95, 1.00] |
+| PS-LB/poor | S6+F | C1+C3+OP | suppress | - | 41 | 135 | 133 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.94, 1.00] |
 | PS-LB/poor | S6+F | C1+C3+OP | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/good | S4 | none | - | naive | 41 | 135 | 3 | 5 [4, 6] | 21 [9, 45] | inf (missed) [58, inf (missed)] | 0.09 [0.03, 0.15] |
-| LWL01/good | S4 | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 21 [9, 45] | inf (missed) [58, inf (missed)] | 0.09 [0.03, 0.15] |
-| LWL01/good | S4 | C1 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/good | S4 | none | - | naive | 41 | 135 | 3 | 5 [4, 6] | 21 [9, 45] | inf (missed) [58, inf (missed)] | 0.09 [0.04, 0.16] |
+| LWL01/good | S4 | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 21 [9, 45] | inf (missed) [58, inf (missed)] | 0.09 [0.04, 0.16] |
+| LWL01/good | S4 | C1 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | LWL01/good | S4 | C1 | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/good | S4 | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/good | S4 | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | LWL01/good | S4 | C1+C3 | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/good | S4 | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/good | S4 | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | LWL01/good | S4 | C1+C3+OP | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/good | S4-F | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/good | S4-F | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/good | S4-F | C1 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/good | S4-F | none | - | naive | 41 | 135 | 3 | 4 [3, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/good | S4-F | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/good | S4-F | C1 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | LWL01/good | S4-F | C1 | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/good | S4-F | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/good | S4-F | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | LWL01/good | S4-F | C1+C3 | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/good | S4-F | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/good | S4-F | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | LWL01/good | S4-F | C1+C3+OP | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/good | S4-E | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/good | S4-E | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/good | S4-E | C1 | suppress | - | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 36] | inf (missed) [54, inf (missed)] | 0.10 [0.05, 0.14] |
+| LWL01/good | S4-E | none | - | naive | 41 | 135 | 3 | 4 [3, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/good | S4-E | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/good | S4-E | C1 | suppress | - | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 35] | inf (missed) [54, inf (missed)] | 0.10 [0.05, 0.14] |
 | LWL01/good | S4-E | C1 | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
 | LWL01/good | S4-E | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | LWL01/good | S4-E | C1+C3 | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/good | S4-E | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/good | S4-E | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | LWL01/good | S4-E | C1+C3+OP | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/good | S6 | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/good | S6 | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/good | S6 | C1 | suppress | - | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 36] | inf (missed) [54, inf (missed)] | 0.10 [0.05, 0.14] |
+| LWL01/good | S6 | none | - | naive | 41 | 135 | 3 | 4 [3, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/good | S6 | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/good | S6 | C1 | suppress | - | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 35] | inf (missed) [54, inf (missed)] | 0.10 [0.05, 0.14] |
 | LWL01/good | S6 | C1 | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/good | S6 | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/good | S6 | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | LWL01/good | S6 | C1+C3 | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/good | S6 | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/good | S6 | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | LWL01/good | S6 | C1+C3+OP | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/good | S6+F | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/good | S6+F | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/good | S6+F | C1 | suppress | - | 41 | 135 | 3 | 6 [5, 8] | 16 [15, 18] | inf (missed) [19, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/good | S6+F | none | - | naive | 41 | 135 | 3 | 4 [3, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/good | S6+F | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/good | S6+F | C1 | suppress | - | 41 | 135 | 3 | 6 [6, 8] | 16 [15, 18] | inf (missed) [19, inf (missed)] | 0.02 [0.00, 0.05] |
 | LWL01/good | S6+F | C1 | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/good | S6+F | C1+C3 | suppress | - | 41 | 135 | 3 | 6 [5, 8] | 16 [15, 18] | inf (missed) [19, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/good | S6+F | C1+C3 | suppress | - | 41 | 135 | 3 | 6 [6, 8] | 16 [15, 18] | inf (missed) [19, inf (missed)] | 0.02 [0.00, 0.05] |
 | LWL01/good | S6+F | C1+C3 | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/good | S6+F | C1+C3+OP | suppress | - | 41 | 135 | 133 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.95, 1.00] |
+| LWL01/good | S6+F | C1+C3+OP | suppress | - | 41 | 135 | 133 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.94, 1.00] |
 | LWL01/good | S6+F | C1+C3+OP | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/poor | S4 | none | - | naive | 41 | 135 | 3 | 5 [4, 6] | 21 [9, 45] | inf (missed) [58, inf (missed)] | 0.09 [0.03, 0.15] |
-| LWL01/poor | S4 | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 21 [9, 45] | inf (missed) [58, inf (missed)] | 0.09 [0.03, 0.15] |
-| LWL01/poor | S4 | C1 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/poor | S4 | none | - | naive | 41 | 135 | 3 | 5 [4, 6] | 21 [9, 45] | inf (missed) [58, inf (missed)] | 0.09 [0.04, 0.16] |
+| LWL01/poor | S4 | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 21 [9, 45] | inf (missed) [58, inf (missed)] | 0.09 [0.04, 0.16] |
+| LWL01/poor | S4 | C1 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | LWL01/poor | S4 | C1 | drain | - | 41 | 135 | 132 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.98 [0.94, 1.00] |
-| LWL01/poor | S4 | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/poor | S4 | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | LWL01/poor | S4 | C1+C3 | drain | - | 41 | 135 | 132 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.98 [0.94, 1.00] |
-| LWL01/poor | S4 | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/poor | S4 | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | LWL01/poor | S4 | C1+C3+OP | drain | - | 41 | 135 | 132 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.98 [0.94, 1.00] |
-| LWL01/poor | S4-F | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/poor | S4-F | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/poor | S4-F | C1 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
-| LWL01/poor | S4-F | C1 | drain | - | 41 | 135 | 3 | 34 [20, 48] | 105 [90, 109] | inf (missed) [118, inf (missed)] | 0.53 [0.46, 0.60] |
-| LWL01/poor | S4-F | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
-| LWL01/poor | S4-F | C1+C3 | drain | - | 41 | 135 | 3 | 34 [20, 48] | 105 [90, 109] | inf (missed) [118, inf (missed)] | 0.53 [0.46, 0.60] |
-| LWL01/poor | S4-F | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
-| LWL01/poor | S4-F | C1+C3+OP | drain | - | 41 | 135 | 3 | 34 [20, 48] | 105 [90, 109] | inf (missed) [118, inf (missed)] | 0.53 [0.46, 0.60] |
-| LWL01/poor | S4-E | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/poor | S4-E | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/poor | S4-E | C1 | suppress | - | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 36] | inf (missed) [54, inf (missed)] | 0.10 [0.05, 0.14] |
-| LWL01/poor | S4-E | C1 | drain | - | 41 | 135 | 3 | 34 [17, 48] | 105 [90, 109] | inf (missed) [118, inf (missed)] | 0.53 [0.46, 0.60] |
-| LWL01/poor | S4-E | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/poor | S4-F | none | - | naive | 41 | 135 | 3 | 4 [3, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/poor | S4-F | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/poor | S4-F | C1 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
+| LWL01/poor | S4-F | C1 | drain | - | 41 | 135 | 3 | 34 [16, 48] | 105 [90, 109] | inf (missed) [118, inf (missed)] | 0.53 [0.43, 0.61] |
+| LWL01/poor | S4-F | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
+| LWL01/poor | S4-F | C1+C3 | drain | - | 41 | 135 | 3 | 34 [16, 48] | 105 [90, 109] | inf (missed) [118, inf (missed)] | 0.53 [0.43, 0.61] |
+| LWL01/poor | S4-F | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
+| LWL01/poor | S4-F | C1+C3+OP | drain | - | 41 | 135 | 3 | 34 [16, 48] | 105 [90, 109] | inf (missed) [118, inf (missed)] | 0.53 [0.43, 0.62] |
+| LWL01/poor | S4-E | none | - | naive | 41 | 135 | 3 | 4 [3, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/poor | S4-E | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/poor | S4-E | C1 | suppress | - | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 35] | inf (missed) [54, inf (missed)] | 0.10 [0.05, 0.14] |
+| LWL01/poor | S4-E | C1 | drain | - | 41 | 135 | 3 | 34 [16, 48] | 105 [90, 109] | inf (missed) [118, inf (missed)] | 0.53 [0.43, 0.61] |
+| LWL01/poor | S4-E | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | LWL01/poor | S4-E | C1+C3 | drain | - | 41 | 135 | 132 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.98 [0.94, 1.00] |
-| LWL01/poor | S4-E | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/poor | S4-E | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | LWL01/poor | S4-E | C1+C3+OP | drain | - | 41 | 135 | 132 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.98 [0.94, 1.00] |
-| LWL01/poor | S6 | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/poor | S6 | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/poor | S6 | C1 | suppress | - | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 36] | inf (missed) [54, inf (missed)] | 0.10 [0.05, 0.14] |
-| LWL01/poor | S6 | C1 | drain | - | 41 | 135 | 3 | 34 [20, 48] | 105 [91, 109] | inf (missed) [118, inf (missed)] | 0.53 [0.46, 0.60] |
-| LWL01/poor | S6 | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/poor | S6 | none | - | naive | 41 | 135 | 3 | 4 [3, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/poor | S6 | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/poor | S6 | C1 | suppress | - | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 35] | inf (missed) [54, inf (missed)] | 0.10 [0.05, 0.14] |
+| LWL01/poor | S6 | C1 | drain | - | 41 | 135 | 3 | 34 [16, 48] | 105 [90, 109] | inf (missed) [118, inf (missed)] | 0.53 [0.43, 0.61] |
+| LWL01/poor | S6 | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | LWL01/poor | S6 | C1+C3 | drain | - | 41 | 135 | 132 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.98 [0.94, 1.00] |
-| LWL01/poor | S6 | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/poor | S6 | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
 | LWL01/poor | S6 | C1+C3+OP | drain | - | 41 | 135 | 132 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.98 [0.94, 1.00] |
-| LWL01/poor | S6+F | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/poor | S6+F | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/poor | S6+F | C1 | suppress | - | 41 | 135 | 3 | 6 [5, 8] | 16 [15, 18] | inf (missed) [19, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/poor | S6+F | C1 | drain | - | 41 | 135 | 3 | 34 [17, 48] | 105 [90, 109] | inf (missed) [118, inf (missed)] | 0.53 [0.46, 0.60] |
-| LWL01/poor | S6+F | C1+C3 | suppress | - | 41 | 135 | 3 | 6 [5, 8] | 16 [15, 18] | inf (missed) [19, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/poor | S6+F | C1+C3 | drain | - | 41 | 135 | 3 | 34 [17, 48] | 105 [90, 109] | inf (missed) [118, inf (missed)] | 0.53 [0.46, 0.60] |
-| LWL01/poor | S6+F | C1+C3+OP | suppress | - | 41 | 135 | 133 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.95, 1.00] |
-| LWL01/poor | S6+F | C1+C3+OP | drain | - | 41 | 135 | 3 | 34 [20, 48] | 105 [90, 109] | inf (missed) [118, inf (missed)] | 0.53 [0.46, 0.60] |
+| LWL01/poor | S6+F | none | - | naive | 41 | 135 | 3 | 4 [3, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/poor | S6+F | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/poor | S6+F | C1 | suppress | - | 41 | 135 | 3 | 6 [6, 8] | 16 [15, 18] | inf (missed) [19, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/poor | S6+F | C1 | drain | - | 41 | 135 | 3 | 34 [16, 48] | 105 [90, 109] | inf (missed) [118, inf (missed)] | 0.53 [0.43, 0.61] |
+| LWL01/poor | S6+F | C1+C3 | suppress | - | 41 | 135 | 3 | 6 [6, 8] | 16 [15, 18] | inf (missed) [19, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/poor | S6+F | C1+C3 | drain | - | 41 | 135 | 3 | 34 [16, 48] | 105 [90, 109] | inf (missed) [118, inf (missed)] | 0.53 [0.43, 0.61] |
+| LWL01/poor | S6+F | C1+C3+OP | suppress | - | 41 | 135 | 133 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.94, 1.00] |
+| LWL01/poor | S6+F | C1+C3+OP | drain | - | 41 | 135 | 3 | 34 [16, 48] | 105 [90, 109] | inf (missed) [118, inf (missed)] | 0.53 [0.43, 0.61] |
+
+**Attack effect relative to the legitimate baseline** (late-or-missed share under attack minus that of legitimate operation, naive policy, same scheme and battery profile; crossings paired, so the crossings legitimate operation already misses count as baseline; 95 % CI from a paired bootstrap over the same resampling units):
+
+| battery_profile | scheme | compromise | strategy | baseline_share | attack_share | excess | excess_ci_lo | excess_ci_hi |
+|---|---|---|---|---|---|---|---|---|
+| PS-LB/good | S4 | C1 | suppress | 0.089 | 0.993 | 0.904 | 0.822 | 0.958 |
+| PS-LB/good | S4 | C1 | drain | 0.089 | 0.022 | -0.067 | -0.120 | -0.030 |
+| PS-LB/good | S4 | C1+C3 | suppress | 0.089 | 0.993 | 0.904 | 0.827 | 0.958 |
+| PS-LB/good | S4 | C1+C3 | drain | 0.089 | 0.022 | -0.067 | -0.121 | -0.030 |
+| PS-LB/good | S4 | C1+C3+OP | suppress | 0.089 | 0.993 | 0.904 | 0.825 | 0.958 |
+| PS-LB/good | S4 | C1+C3+OP | drain | 0.089 | 0.022 | -0.067 | -0.120 | -0.031 |
+| PS-LB/good | S4-F | C1 | suppress | 0.022 | 0.993 | 0.970 | 0.939 | 0.993 |
+| PS-LB/good | S4-F | C1 | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/good | S4-F | C1+C3 | suppress | 0.022 | 0.993 | 0.970 | 0.938 | 0.993 |
+| PS-LB/good | S4-F | C1+C3 | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/good | S4-F | C1+C3+OP | suppress | 0.022 | 0.993 | 0.970 | 0.939 | 0.993 |
+| PS-LB/good | S4-F | C1+C3+OP | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/good | S4-E | C1 | suppress | 0.022 | 0.096 | 0.074 | 0.033 | 0.115 |
+| PS-LB/good | S4-E | C1 | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/good | S4-E | C1+C3 | suppress | 0.022 | 0.993 | 0.970 | 0.938 | 0.993 |
+| PS-LB/good | S4-E | C1+C3 | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/good | S4-E | C1+C3+OP | suppress | 0.022 | 0.993 | 0.970 | 0.938 | 0.993 |
+| PS-LB/good | S4-E | C1+C3+OP | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/good | S6 | C1 | suppress | 0.022 | 0.096 | 0.074 | 0.035 | 0.114 |
+| PS-LB/good | S6 | C1 | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/good | S6 | C1+C3 | suppress | 0.022 | 0.993 | 0.970 | 0.940 | 0.993 |
+| PS-LB/good | S6 | C1+C3 | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/good | S6 | C1+C3+OP | suppress | 0.022 | 0.993 | 0.970 | 0.938 | 0.993 |
+| PS-LB/good | S6 | C1+C3+OP | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/good | S6+F | C1 | suppress | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/good | S6+F | C1 | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/good | S6+F | C1+C3 | suppress | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/good | S6+F | C1+C3 | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/good | S6+F | C1+C3+OP | suppress | 0.022 | 0.985 | 0.963 | 0.915 | 0.993 |
+| PS-LB/good | S6+F | C1+C3+OP | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/poor | S4 | C1 | suppress | 0.089 | 0.993 | 0.904 | 0.825 | 0.957 |
+| PS-LB/poor | S4 | C1 | drain | 0.089 | 0.022 | -0.067 | -0.121 | -0.031 |
+| PS-LB/poor | S4 | C1+C3 | suppress | 0.089 | 0.993 | 0.904 | 0.825 | 0.958 |
+| PS-LB/poor | S4 | C1+C3 | drain | 0.089 | 0.022 | -0.067 | -0.120 | -0.030 |
+| PS-LB/poor | S4 | C1+C3+OP | suppress | 0.089 | 0.993 | 0.904 | 0.821 | 0.958 |
+| PS-LB/poor | S4 | C1+C3+OP | drain | 0.089 | 0.022 | -0.067 | -0.120 | -0.031 |
+| PS-LB/poor | S4-F | C1 | suppress | 0.022 | 0.993 | 0.970 | 0.939 | 0.993 |
+| PS-LB/poor | S4-F | C1 | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/poor | S4-F | C1+C3 | suppress | 0.022 | 0.993 | 0.970 | 0.939 | 0.993 |
+| PS-LB/poor | S4-F | C1+C3 | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/poor | S4-F | C1+C3+OP | suppress | 0.022 | 0.993 | 0.970 | 0.939 | 0.993 |
+| PS-LB/poor | S4-F | C1+C3+OP | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/poor | S4-E | C1 | suppress | 0.022 | 0.096 | 0.074 | 0.034 | 0.115 |
+| PS-LB/poor | S4-E | C1 | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/poor | S4-E | C1+C3 | suppress | 0.022 | 0.993 | 0.970 | 0.939 | 0.993 |
+| PS-LB/poor | S4-E | C1+C3 | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/poor | S4-E | C1+C3+OP | suppress | 0.022 | 0.993 | 0.970 | 0.939 | 0.993 |
+| PS-LB/poor | S4-E | C1+C3+OP | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/poor | S6 | C1 | suppress | 0.022 | 0.096 | 0.074 | 0.035 | 0.114 |
+| PS-LB/poor | S6 | C1 | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/poor | S6 | C1+C3 | suppress | 0.022 | 0.993 | 0.970 | 0.939 | 0.993 |
+| PS-LB/poor | S6 | C1+C3 | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/poor | S6 | C1+C3+OP | suppress | 0.022 | 0.993 | 0.970 | 0.938 | 0.993 |
+| PS-LB/poor | S6 | C1+C3+OP | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/poor | S6+F | C1 | suppress | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/poor | S6+F | C1 | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/poor | S6+F | C1+C3 | suppress | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/poor | S6+F | C1+C3 | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/poor | S6+F | C1+C3+OP | suppress | 0.022 | 0.985 | 0.963 | 0.914 | 0.992 |
+| PS-LB/poor | S6+F | C1+C3+OP | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/good | S4 | C1 | suppress | 0.089 | 0.993 | 0.904 | 0.823 | 0.958 |
+| LWL01/good | S4 | C1 | drain | 0.089 | 0.022 | -0.067 | -0.122 | -0.031 |
+| LWL01/good | S4 | C1+C3 | suppress | 0.089 | 0.993 | 0.904 | 0.823 | 0.959 |
+| LWL01/good | S4 | C1+C3 | drain | 0.089 | 0.022 | -0.067 | -0.123 | -0.030 |
+| LWL01/good | S4 | C1+C3+OP | suppress | 0.089 | 0.993 | 0.904 | 0.825 | 0.957 |
+| LWL01/good | S4 | C1+C3+OP | drain | 0.089 | 0.022 | -0.067 | -0.121 | -0.031 |
+| LWL01/good | S4-F | C1 | suppress | 0.022 | 0.993 | 0.970 | 0.939 | 0.993 |
+| LWL01/good | S4-F | C1 | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/good | S4-F | C1+C3 | suppress | 0.022 | 0.993 | 0.970 | 0.939 | 0.993 |
+| LWL01/good | S4-F | C1+C3 | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/good | S4-F | C1+C3+OP | suppress | 0.022 | 0.993 | 0.970 | 0.938 | 0.993 |
+| LWL01/good | S4-F | C1+C3+OP | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/good | S4-E | C1 | suppress | 0.022 | 0.096 | 0.074 | 0.034 | 0.114 |
+| LWL01/good | S4-E | C1 | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/good | S4-E | C1+C3 | suppress | 0.022 | 0.993 | 0.970 | 0.939 | 0.993 |
+| LWL01/good | S4-E | C1+C3 | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/good | S4-E | C1+C3+OP | suppress | 0.022 | 0.993 | 0.970 | 0.939 | 0.993 |
+| LWL01/good | S4-E | C1+C3+OP | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/good | S6 | C1 | suppress | 0.022 | 0.096 | 0.074 | 0.035 | 0.115 |
+| LWL01/good | S6 | C1 | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/good | S6 | C1+C3 | suppress | 0.022 | 0.993 | 0.970 | 0.939 | 0.993 |
+| LWL01/good | S6 | C1+C3 | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/good | S6 | C1+C3+OP | suppress | 0.022 | 0.993 | 0.970 | 0.938 | 0.993 |
+| LWL01/good | S6 | C1+C3+OP | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/good | S6+F | C1 | suppress | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/good | S6+F | C1 | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/good | S6+F | C1+C3 | suppress | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/good | S6+F | C1+C3 | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/good | S6+F | C1+C3+OP | suppress | 0.022 | 0.985 | 0.963 | 0.915 | 0.993 |
+| LWL01/good | S6+F | C1+C3+OP | drain | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/poor | S4 | C1 | suppress | 0.089 | 0.993 | 0.904 | 0.825 | 0.957 |
+| LWL01/poor | S4 | C1 | drain | 0.089 | 0.978 | 0.889 | 0.784 | 0.957 |
+| LWL01/poor | S4 | C1+C3 | suppress | 0.089 | 0.993 | 0.904 | 0.821 | 0.958 |
+| LWL01/poor | S4 | C1+C3 | drain | 0.089 | 0.978 | 0.889 | 0.781 | 0.957 |
+| LWL01/poor | S4 | C1+C3+OP | suppress | 0.089 | 0.993 | 0.904 | 0.823 | 0.956 |
+| LWL01/poor | S4 | C1+C3+OP | drain | 0.089 | 0.978 | 0.889 | 0.780 | 0.957 |
+| LWL01/poor | S4-F | C1 | suppress | 0.022 | 0.993 | 0.970 | 0.938 | 0.993 |
+| LWL01/poor | S4-F | C1 | drain | 0.022 | 0.533 | 0.511 | 0.420 | 0.581 |
+| LWL01/poor | S4-F | C1+C3 | suppress | 0.022 | 0.993 | 0.970 | 0.939 | 0.993 |
+| LWL01/poor | S4-F | C1+C3 | drain | 0.022 | 0.533 | 0.511 | 0.420 | 0.583 |
+| LWL01/poor | S4-F | C1+C3+OP | suppress | 0.022 | 0.993 | 0.970 | 0.938 | 0.993 |
+| LWL01/poor | S4-F | C1+C3+OP | drain | 0.022 | 0.533 | 0.511 | 0.421 | 0.583 |
+| LWL01/poor | S4-E | C1 | suppress | 0.022 | 0.096 | 0.074 | 0.034 | 0.116 |
+| LWL01/poor | S4-E | C1 | drain | 0.022 | 0.533 | 0.511 | 0.419 | 0.581 |
+| LWL01/poor | S4-E | C1+C3 | suppress | 0.022 | 0.993 | 0.970 | 0.939 | 0.993 |
+| LWL01/poor | S4-E | C1+C3 | drain | 0.022 | 0.978 | 0.956 | 0.899 | 0.992 |
+| LWL01/poor | S4-E | C1+C3+OP | suppress | 0.022 | 0.993 | 0.970 | 0.939 | 0.993 |
+| LWL01/poor | S4-E | C1+C3+OP | drain | 0.022 | 0.978 | 0.956 | 0.897 | 0.993 |
+| LWL01/poor | S6 | C1 | suppress | 0.022 | 0.096 | 0.074 | 0.036 | 0.114 |
+| LWL01/poor | S6 | C1 | drain | 0.022 | 0.533 | 0.511 | 0.421 | 0.582 |
+| LWL01/poor | S6 | C1+C3 | suppress | 0.022 | 0.993 | 0.970 | 0.939 | 0.993 |
+| LWL01/poor | S6 | C1+C3 | drain | 0.022 | 0.978 | 0.956 | 0.894 | 0.992 |
+| LWL01/poor | S6 | C1+C3+OP | suppress | 0.022 | 0.993 | 0.970 | 0.938 | 0.993 |
+| LWL01/poor | S6 | C1+C3+OP | drain | 0.022 | 0.978 | 0.956 | 0.897 | 0.993 |
+| LWL01/poor | S6+F | C1 | suppress | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/poor | S6+F | C1 | drain | 0.022 | 0.533 | 0.511 | 0.422 | 0.583 |
+| LWL01/poor | S6+F | C1+C3 | suppress | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/poor | S6+F | C1+C3 | drain | 0.022 | 0.533 | 0.511 | 0.422 | 0.582 |
+| LWL01/poor | S6+F | C1+C3+OP | suppress | 0.022 | 0.985 | 0.963 | 0.916 | 0.993 |
+| LWL01/poor | S6+F | C1+C3+OP | drain | 0.022 | 0.533 | 0.511 | 0.420 | 0.582 |
 
 **D4 - statistics over 41 events** Events come from the F5 pre-registered rule; the 2017 top-k event set of D4 is **SUPERSEDED**. (median [95 % percentile-bootstrap CI of the median], `statistics` in config/harm.yaml; per-event rows in `results/model_harm.csv`). Fractions are per crossing.
 
@@ -1312,6 +1437,29 @@ Reference levels: NWS flood categories where the gauge has them (Sec. 7i, F4); o
 | uniform_type | loose | 50 | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
 | uniform_type | loose | 200 | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
 
+**G1 - how the filter learns the envelope bounds** (US915 DR8, N = 50, tight policy, uniform_type flood; ranges over devices). *In frame*: the bounds travel in the envelope install downlink, whose FRMPayload is AppSKey-encrypted (TS001-1.0.4 Table 11), so a standard network server cannot read them; only the AppSKey upper bound can. *Out of band*: the PA publishes each envelope to the network server. With S6 the NS verifies it with pk_PA and cannot forge; with S4-E it needs the per-device envelope MAC key, which also mints envelopes, so the filter gains forging power (blast radius under C1 + filter = the whole catalogue). Variants (a) `ns_metadata` and (b) `fport_action_binding` do not need a signature by themselves: the device checks every command, so a filter can never widen what is accepted. Without verification (*unverified*), however, whoever controls the PA-to-NS channel sets the bounds: wider bounds cancel the saving, narrower ones make the filter drop in-envelope commands. `blast_c1_plus_filter` = accepted / catalogue under C1 plus that filter's keys.
+
+| filter_point | scheme | bounds_source | possible | filter_keys | forging_power | blast_c1_plus_filter | bounds_set_by_channel_attacker | saved_s_per_h | saved_share_of_budget |
+|---|---|---|---|---|---|---|---|---|---|
+| appskey_upper_bound | S6 | in_frame | yes | NwkSKey; AppSKey; pk_PA | no | 0-3.64e-08 | no | 173-185 | 0.048-0.051 |
+| appskey_upper_bound | S4-E | in_frame | yes | NwkSKey; AppSKey; S4-E envelope MAC key | yes | 1 | no | 173-185 | 0.048-0.051 |
+| appskey_upper_bound | S6 | out_of_band_verified | yes | NwkSKey; AppSKey; pk_PA | no | 0-3.64e-08 | no | 173-185 | 0.048-0.051 |
+| appskey_upper_bound | S4-E | out_of_band_verified | yes | NwkSKey; AppSKey; S4-E envelope MAC key | yes | 1 | no | 173-185 | 0.048-0.051 |
+| appskey_upper_bound | S6 | out_of_band_unverified | yes | NwkSKey; AppSKey | no | 0-3.64e-08 | yes | 173-185 | 0.048-0.051 |
+| appskey_upper_bound | S4-E | out_of_band_unverified | yes | NwkSKey; AppSKey | no | 0-3.64e-08 | yes | 173-185 | 0.048-0.051 |
+| ns_metadata | S6 | in_frame | no | - | - | - | - | - | - |
+| ns_metadata | S4-E | in_frame | no | - | - | - | - | - | - |
+| ns_metadata | S6 | out_of_band_verified | yes | NwkSKey; pk_PA | no | 0-3.64e-08 | no | 106-142 | 0.029-0.040 |
+| ns_metadata | S4-E | out_of_band_verified | yes | NwkSKey; S4-E envelope MAC key | yes | 1 | no | 106-142 | 0.029-0.040 |
+| ns_metadata | S6 | out_of_band_unverified | yes | NwkSKey | no | 0-3.64e-08 | yes | 106-142 | 0.029-0.040 |
+| ns_metadata | S4-E | out_of_band_unverified | yes | NwkSKey | no | 0-3.64e-08 | yes | 106-142 | 0.029-0.040 |
+| fport_action_binding | S6 | in_frame | no | - | - | - | - | - | - |
+| fport_action_binding | S4-E | in_frame | no | - | - | - | - | - | - |
+| fport_action_binding | S6 | out_of_band_verified | yes | NwkSKey; pk_PA | no | 0-3.64e-08 | no | 114-142 | 0.032-0.040 |
+| fport_action_binding | S4-E | out_of_band_verified | yes | NwkSKey; S4-E envelope MAC key | yes | 1 | no | 114-142 | 0.032-0.040 |
+| fport_action_binding | S6 | out_of_band_unverified | yes | NwkSKey | no | 0-3.64e-08 | yes | 114-142 | 0.032-0.040 |
+| fport_action_binding | S4-E | out_of_band_unverified | yes | NwkSKey | no | 0-3.64e-08 | yes | 114-142 | 0.032-0.040 |
+
 **Forging power of a filtering gateway** (blast radius as a fraction of the catalogue, ranges over devices x policies). To verify S4-E envelopes the gateway must hold the per-device policy MAC key, which also mints envelopes, so C1 plus that gateway reaches the whole catalogue; an S6 gateway holds only pk_PA and the blast radius stays at the policy bound:
 
 | scheme | compromise | gateway_keys | fraction_min | fraction_max | cases |
@@ -1371,6 +1519,193 @@ One-off commissioning message (commitment + OP signature), frames, US915:
 | Ed25519 | 103 | 3 | 1 | 1 | 1 | 1 | 1 |
 | Falcon-512 | 703 | 14 | 6 | 3 | 3 | 3 | 3 |
 | ML-DSA-44 | 2459 | 49 | 20 | 11 | 11 | 11 | 11 |
+
+## 7k. G3: energy budget per epoch against drain
+
+**G3 - energy budget per epoch in the envelope (POLICY).** Per 24 h epoch the device allows at most `epoch_budget_uplinks` command-caused uplinks (immediate-uplink requests, or uplinks sooner than the default interval with the invariants applied); firmware alert uplinks and the alert-mode minimum rate are never charged. The budget is derived so that a device spending all of it in every epoch of the 7-day planning horizon (= the pre-registered event window, CHOICE) still ends above the battery floor, from ASSUMED inputs (initial SOC, floor) and the manufacturer battery data (`pqcap.harm.epoch_budget`). It sits in the S4-E, S6, S6+F envelope, so C1+C3 removes it, and for S6+F also in the write-once commissioning floor, which survives C1+C3. Rows: drain attack and the legitimate baseline (naive policy), budget off and on, all events; CIs as in Sec. 7e (storm clusters).
+
+| battery_profile | epoch_budget_uplinks |
+|---|---|
+| PS-LB/good | 376,792 |
+| PS-LB/poor | 37,703 |
+| LWL01/good | 661 |
+| LWL01/poor | 50 |
+
+| battery_profile | scheme | compromise | strategy | energy_budget | crossings | missed | median | p90 | late_or_missed |
+|---|---|---|---|---|---|---|---|---|---|
+| PS-LB/good | S4-E | none | - | off | 135 | 3 | 4 [3, 6] | 9 [8, 15] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S4-E | none | - | on | 135 | 3 | 4 [3, 6] | 9 [8, 15] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S4-E | C1 | drain | off | 135 | 3 | 5 [4, 6] | 9 [9, 10] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S4-E | C1 | drain | on | 135 | 3 | 5 [4, 6] | 9 [9, 10] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S4-E | C1+C3 | drain | off | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S4-E | C1+C3 | drain | on | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S4-E | C1+C3+OP | drain | off | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S4-E | C1+C3+OP | drain | on | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S6 | none | - | off | 135 | 3 | 4 [3, 6] | 9 [8, 15] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S6 | none | - | on | 135 | 3 | 4 [3, 6] | 9 [8, 15] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S6 | C1 | drain | off | 135 | 3 | 5 [4, 6] | 9 [9, 10] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S6 | C1 | drain | on | 135 | 3 | 5 [4, 6] | 9 [9, 10] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S6 | C1+C3 | drain | off | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S6 | C1+C3 | drain | on | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S6 | C1+C3+OP | drain | off | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S6 | C1+C3+OP | drain | on | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S6+F | none | - | off | 135 | 3 | 4 [3, 6] | 9 [8, 15] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S6+F | none | - | on | 135 | 3 | 4 [3, 6] | 9 [8, 15] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S6+F | C1 | drain | off | 135 | 3 | 5 [4, 6] | 9 [9, 10] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S6+F | C1 | drain | on | 135 | 3 | 5 [4, 6] | 9 [9, 10] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S6+F | C1+C3 | drain | off | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S6+F | C1+C3 | drain | on | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S6+F | C1+C3+OP | drain | off | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S6+F | C1+C3+OP | drain | on | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S4-E | none | - | off | 135 | 3 | 4 [3, 6] | 9 [8, 15] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S4-E | none | - | on | 135 | 3 | 4 [3, 6] | 9 [8, 15] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S4-E | C1 | drain | off | 135 | 3 | 5 [4, 6] | 9 [9, 10] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S4-E | C1 | drain | on | 135 | 3 | 5 [4, 6] | 9 [9, 10] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S4-E | C1+C3 | drain | off | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S4-E | C1+C3 | drain | on | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S4-E | C1+C3+OP | drain | off | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S4-E | C1+C3+OP | drain | on | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S6 | none | - | off | 135 | 3 | 4 [3, 6] | 9 [8, 15] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S6 | none | - | on | 135 | 3 | 4 [3, 6] | 9 [8, 15] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S6 | C1 | drain | off | 135 | 3 | 5 [4, 6] | 9 [9, 10] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S6 | C1 | drain | on | 135 | 3 | 5 [4, 6] | 9 [9, 10] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S6 | C1+C3 | drain | off | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S6 | C1+C3 | drain | on | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S6 | C1+C3+OP | drain | off | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S6 | C1+C3+OP | drain | on | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S6+F | none | - | off | 135 | 3 | 4 [3, 6] | 9 [8, 15] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S6+F | none | - | on | 135 | 3 | 4 [3, 6] | 9 [8, 15] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S6+F | C1 | drain | off | 135 | 3 | 5 [4, 6] | 9 [9, 10] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S6+F | C1 | drain | on | 135 | 3 | 5 [4, 6] | 9 [9, 10] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S6+F | C1+C3 | drain | off | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S6+F | C1+C3 | drain | on | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S6+F | C1+C3+OP | drain | off | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S6+F | C1+C3+OP | drain | on | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| LWL01/good | S4-E | none | - | off | 135 | 3 | 4 [3, 6] | 9 [8, 15] | 0.02 [0.00, 0.05] |
+| LWL01/good | S4-E | none | - | on | 135 | 3 | 4 [3, 6] | 9 [8, 15] | 0.02 [0.00, 0.05] |
+| LWL01/good | S4-E | C1 | drain | off | 135 | 3 | 5 [4, 6] | 9 [9, 10] | 0.02 [0.00, 0.05] |
+| LWL01/good | S4-E | C1 | drain | on | 135 | 3 | 5 [4, 6] | 12 [9, 18] | 0.02 [0.00, 0.05] |
+| LWL01/good | S4-E | C1+C3 | drain | off | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| LWL01/good | S4-E | C1+C3 | drain | on | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| LWL01/good | S4-E | C1+C3+OP | drain | off | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| LWL01/good | S4-E | C1+C3+OP | drain | on | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| LWL01/good | S6 | none | - | off | 135 | 3 | 4 [3, 6] | 9 [8, 15] | 0.02 [0.00, 0.05] |
+| LWL01/good | S6 | none | - | on | 135 | 3 | 4 [3, 6] | 9 [8, 15] | 0.02 [0.00, 0.05] |
+| LWL01/good | S6 | C1 | drain | off | 135 | 3 | 5 [4, 6] | 9 [9, 10] | 0.02 [0.00, 0.05] |
+| LWL01/good | S6 | C1 | drain | on | 135 | 3 | 5 [4, 6] | 12 [9, 18] | 0.02 [0.00, 0.05] |
+| LWL01/good | S6 | C1+C3 | drain | off | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| LWL01/good | S6 | C1+C3 | drain | on | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| LWL01/good | S6 | C1+C3+OP | drain | off | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| LWL01/good | S6 | C1+C3+OP | drain | on | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| LWL01/good | S6+F | none | - | off | 135 | 3 | 4 [3, 6] | 9 [8, 15] | 0.02 [0.00, 0.05] |
+| LWL01/good | S6+F | none | - | on | 135 | 3 | 4 [3, 6] | 9 [8, 15] | 0.02 [0.00, 0.05] |
+| LWL01/good | S6+F | C1 | drain | off | 135 | 3 | 5 [4, 6] | 9 [9, 10] | 0.02 [0.00, 0.05] |
+| LWL01/good | S6+F | C1 | drain | on | 135 | 3 | 5 [4, 6] | 12 [9, 18] | 0.02 [0.00, 0.05] |
+| LWL01/good | S6+F | C1+C3 | drain | off | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| LWL01/good | S6+F | C1+C3 | drain | on | 135 | 3 | 5 [4, 6] | 12 [9, 18] | 0.02 [0.00, 0.05] |
+| LWL01/good | S6+F | C1+C3+OP | drain | off | 135 | 3 | 4 [3, 5] | 8 [8, 9] | 0.02 [0.00, 0.05] |
+| LWL01/good | S6+F | C1+C3+OP | drain | on | 135 | 3 | 5 [4, 6] | 12 [9, 18] | 0.02 [0.00, 0.05] |
+| LWL01/poor | S4-E | none | - | off | 135 | 3 | 4 [3, 6] | 9 [8, 15] | 0.02 [0.00, 0.05] |
+| LWL01/poor | S4-E | none | - | on | 135 | 3 | 6 [5, 6] | 14 [9, 17] | 0.02 [0.00, 0.05] |
+| LWL01/poor | S4-E | C1 | drain | off | 135 | 3 | 34 [16, 48] | 105 [90, 109] | 0.53 [0.43, 0.61] |
+| LWL01/poor | S4-E | C1 | drain | on | 135 | 3 | 7 [6, 8] | 18 [16, 34] | 0.06 [0.01, 0.12] |
+| LWL01/poor | S4-E | C1+C3 | drain | off | 135 | 132 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.98 [0.94, 1.00] |
+| LWL01/poor | S4-E | C1+C3 | drain | on | 135 | 132 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.98 [0.94, 1.00] |
+| LWL01/poor | S4-E | C1+C3+OP | drain | off | 135 | 132 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.98 [0.94, 1.00] |
+| LWL01/poor | S4-E | C1+C3+OP | drain | on | 135 | 132 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.98 [0.94, 1.00] |
+| LWL01/poor | S6 | none | - | off | 135 | 3 | 4 [3, 6] | 9 [8, 15] | 0.02 [0.00, 0.05] |
+| LWL01/poor | S6 | none | - | on | 135 | 3 | 6 [5, 6] | 14 [9, 17] | 0.02 [0.00, 0.05] |
+| LWL01/poor | S6 | C1 | drain | off | 135 | 3 | 34 [16, 48] | 105 [90, 109] | 0.53 [0.43, 0.61] |
+| LWL01/poor | S6 | C1 | drain | on | 135 | 3 | 7 [6, 8] | 18 [16, 34] | 0.06 [0.01, 0.12] |
+| LWL01/poor | S6 | C1+C3 | drain | off | 135 | 132 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.98 [0.94, 1.00] |
+| LWL01/poor | S6 | C1+C3 | drain | on | 135 | 132 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.98 [0.94, 1.00] |
+| LWL01/poor | S6 | C1+C3+OP | drain | off | 135 | 132 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.98 [0.94, 1.00] |
+| LWL01/poor | S6 | C1+C3+OP | drain | on | 135 | 132 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.98 [0.93, 1.00] |
+| LWL01/poor | S6+F | none | - | off | 135 | 3 | 4 [3, 6] | 9 [8, 15] | 0.02 [0.00, 0.05] |
+| LWL01/poor | S6+F | none | - | on | 135 | 3 | 6 [5, 6] | 14 [9, 17] | 0.02 [0.00, 0.05] |
+| LWL01/poor | S6+F | C1 | drain | off | 135 | 3 | 34 [16, 48] | 105 [90, 109] | 0.53 [0.43, 0.61] |
+| LWL01/poor | S6+F | C1 | drain | on | 135 | 3 | 7 [6, 8] | 18 [16, 34] | 0.06 [0.01, 0.12] |
+| LWL01/poor | S6+F | C1+C3 | drain | off | 135 | 3 | 34 [16, 48] | 105 [90, 109] | 0.53 [0.43, 0.61] |
+| LWL01/poor | S6+F | C1+C3 | drain | on | 135 | 3 | 7 [6, 8] | 18 [16, 34] | 0.06 [0.01, 0.12] |
+| LWL01/poor | S6+F | C1+C3+OP | drain | off | 135 | 3 | 34 [16, 48] | 105 [90, 109] | 0.53 [0.43, 0.61] |
+| LWL01/poor | S6+F | C1+C3+OP | drain | on | 135 | 3 | 7 [6, 8] | 18 [16, 34] | 0.06 [0.01, 0.12] |
+
+**Drain effect relative to the legitimate baseline** (late-or-missed share of the attack minus that of legitimate operation with the same scheme, battery profile and budget; crossings paired, so the crossings the baseline already misses count as baseline; paired cluster-bootstrap 95 % CI):
+
+| battery_profile | scheme | compromise | energy_budget | baseline_share | attack_share | excess | excess_ci_lo | excess_ci_hi |
+|---|---|---|---|---|---|---|---|---|
+| PS-LB/good | S4-E | C1 | off | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/good | S4-E | C1+C3 | off | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/good | S4-E | C1+C3+OP | off | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/good | S4-E | C1 | on | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/good | S4-E | C1+C3 | on | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/good | S4-E | C1+C3+OP | on | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/good | S6 | C1 | off | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/good | S6 | C1+C3 | off | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/good | S6 | C1+C3+OP | off | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/good | S6 | C1 | on | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/good | S6 | C1+C3 | on | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/good | S6 | C1+C3+OP | on | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/good | S6+F | C1 | off | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/good | S6+F | C1+C3 | off | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/good | S6+F | C1+C3+OP | off | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/good | S6+F | C1 | on | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/good | S6+F | C1+C3 | on | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/good | S6+F | C1+C3+OP | on | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/poor | S4-E | C1 | off | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/poor | S4-E | C1+C3 | off | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/poor | S4-E | C1+C3+OP | off | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/poor | S4-E | C1 | on | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/poor | S4-E | C1+C3 | on | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/poor | S4-E | C1+C3+OP | on | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/poor | S6 | C1 | off | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/poor | S6 | C1+C3 | off | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/poor | S6 | C1+C3+OP | off | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/poor | S6 | C1 | on | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/poor | S6 | C1+C3 | on | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/poor | S6 | C1+C3+OP | on | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/poor | S6+F | C1 | off | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/poor | S6+F | C1+C3 | off | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/poor | S6+F | C1+C3+OP | off | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/poor | S6+F | C1 | on | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/poor | S6+F | C1+C3 | on | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| PS-LB/poor | S6+F | C1+C3+OP | on | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/good | S4-E | C1 | off | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/good | S4-E | C1+C3 | off | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/good | S4-E | C1+C3+OP | off | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/good | S4-E | C1 | on | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/good | S4-E | C1+C3 | on | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/good | S4-E | C1+C3+OP | on | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/good | S6 | C1 | off | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/good | S6 | C1+C3 | off | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/good | S6 | C1+C3+OP | off | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/good | S6 | C1 | on | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/good | S6 | C1+C3 | on | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/good | S6 | C1+C3+OP | on | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/good | S6+F | C1 | off | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/good | S6+F | C1+C3 | off | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/good | S6+F | C1+C3+OP | off | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/good | S6+F | C1 | on | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/good | S6+F | C1+C3 | on | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/good | S6+F | C1+C3+OP | on | 0.022 | 0.022 | 0.000 | 0.000 | 0.000 |
+| LWL01/poor | S4-E | C1 | off | 0.022 | 0.533 | 0.511 | 0.419 | 0.581 |
+| LWL01/poor | S4-E | C1+C3 | off | 0.022 | 0.978 | 0.956 | 0.899 | 0.992 |
+| LWL01/poor | S4-E | C1+C3+OP | off | 0.022 | 0.978 | 0.956 | 0.897 | 0.993 |
+| LWL01/poor | S4-E | C1 | on | 0.022 | 0.059 | 0.037 | 0.000 | 0.076 |
+| LWL01/poor | S4-E | C1+C3 | on | 0.022 | 0.978 | 0.956 | 0.897 | 0.993 |
+| LWL01/poor | S4-E | C1+C3+OP | on | 0.022 | 0.978 | 0.956 | 0.896 | 0.992 |
+| LWL01/poor | S6 | C1 | off | 0.022 | 0.533 | 0.511 | 0.421 | 0.582 |
+| LWL01/poor | S6 | C1+C3 | off | 0.022 | 0.978 | 0.956 | 0.894 | 0.992 |
+| LWL01/poor | S6 | C1+C3+OP | off | 0.022 | 0.978 | 0.956 | 0.897 | 0.993 |
+| LWL01/poor | S6 | C1 | on | 0.022 | 0.059 | 0.037 | 0.000 | 0.076 |
+| LWL01/poor | S6 | C1+C3 | on | 0.022 | 0.978 | 0.956 | 0.893 | 0.993 |
+| LWL01/poor | S6 | C1+C3+OP | on | 0.022 | 0.978 | 0.956 | 0.896 | 0.993 |
+| LWL01/poor | S6+F | C1 | off | 0.022 | 0.533 | 0.511 | 0.422 | 0.583 |
+| LWL01/poor | S6+F | C1+C3 | off | 0.022 | 0.533 | 0.511 | 0.422 | 0.582 |
+| LWL01/poor | S6+F | C1+C3+OP | off | 0.022 | 0.533 | 0.511 | 0.420 | 0.582 |
+| LWL01/poor | S6+F | C1 | on | 0.022 | 0.059 | 0.037 | 0.000 | 0.076 |
+| LWL01/poor | S6+F | C1+C3 | on | 0.022 | 0.059 | 0.037 | 0.000 | 0.077 |
+| LWL01/poor | S6+F | C1+C3+OP | on | 0.022 | 0.059 | 0.037 | 0.000 | 0.077 |
 
 ## 8. Kill criteria
 
@@ -1544,18 +1879,26 @@ Devices (4): EM400-UDL, EM410-RDL, LWL01, PS-LB - downlink commands, payload len
 | C1+C3 | 1 | 1 | 0 | 12 |
 | C1+C3+OP | 1 | 1 | 0 | 12 |
 
-**F1 - C4 fairness: scope of the S4-E envelope MAC key.** The C4 row above counts the *extracted* device with a per-device key. Headline: **per_device**. Variants: `per_device` = one envelope MAC key per device (headline); `group` = one envelope MAC key shared by every device of a group or fleet (deployment choice). `target` = the extracted device, or another device of the same group (its session key is known only with C1; its S4-E key only if the key is shared). S6 envelopes need sk_PA, which C4 never yields.
+**F1 - C4 fairness: scope of the S4-E envelope MAC key.** The C4 row above counts the *extracted* device with a per-device key. Headline: **per_device**. Variants: `per_device` = one envelope MAC key per device (headline); `group` = one envelope MAC key shared by every device of a group or fleet (deployment choice). `target` = the extracted device, or another device of the same group (its session key is known only with C1; its S4-E key only if the key is shared). S6 envelopes need sk_PA, which C4 never yields. **G2 - what C4 assumes about firmware** (headline **secure_boot**): `secure_boot` = keys extracted; secure boot prevents a reflash (the honest check still runs); `reflash` = keys extracted and the firmware can be replaced on the extracted device. With a reflash the extracted device runs attacker firmware and accepts the whole catalogue under every scheme, so its ratio is **not meaningful** (marked below); other devices are unaffected by the reflash of one device.
 
-| key_scope | compromise | target | ratio_min | ratio_max | both_zero_cases | s4e_accepted_max | s6_accepted_max | cases |
-|---|---|---|---|---|---|---|---|---|
-| per_device | C4 | extracted | 1 | 2.54e+11 | 0 | 562,949,978,062,740 | 562,949,961,286,424 | 12 |
-| per_device | C4 | other | - | - | 12 | 0 | 0 | 12 |
-| per_device | C1+C4 | extracted | 1 | 2.54e+11 | 0 | 562,949,978,062,740 | 562,949,961,286,424 | 12 |
-| per_device | C1+C4 | other | 1 | 1 | 1 | 562,949,961,286,424 | 562,949,961,286,424 | 12 |
-| group | C4 | extracted | 1 | 2.54e+11 | 0 | 562,949,978,062,740 | 562,949,961,286,424 | 12 |
-| group | C4 | other | - | - | 12 | 0 | 0 | 12 |
-| group | C1+C4 | extracted | 1 | 2.54e+11 | 0 | 562,949,978,062,740 | 562,949,961,286,424 | 12 |
-| group | C1+C4 | other | 1 | 2.54e+11 | 0 | 562,949,978,062,740 | 562,949,961,286,424 | 12 |
+| key_scope | firmware | compromise | target | ratio_min | ratio_max | both_zero_cases | s4e_accepted_max | s6_accepted_max | cases |
+|---|---|---|---|---|---|---|---|---|---|
+| per_device | secure_boot | C4 | extracted | 1 | 2.54e+11 | 0 | 562,949,978,062,740 | 562,949,961,286,424 | 12 |
+| per_device | secure_boot | C4 | other | - | - | 12 | 0 | 0 | 12 |
+| per_device | secure_boot | C1+C4 | extracted | 1 | 2.54e+11 | 0 | 562,949,978,062,740 | 562,949,961,286,424 | 12 |
+| per_device | secure_boot | C1+C4 | other | 1 | 1 | 1 | 562,949,961,286,424 | 562,949,961,286,424 | 12 |
+| per_device | reflash | C4 | extracted | not meaningful | not meaningful | 0 | 562,949,978,062,740 | 562,949,978,062,740 | 12 |
+| per_device | reflash | C4 | other | - | - | 12 | 0 | 0 | 12 |
+| per_device | reflash | C1+C4 | extracted | not meaningful | not meaningful | 0 | 562,949,978,062,740 | 562,949,978,062,740 | 12 |
+| per_device | reflash | C1+C4 | other | 1 | 1 | 1 | 562,949,961,286,424 | 562,949,961,286,424 | 12 |
+| group | secure_boot | C4 | extracted | 1 | 2.54e+11 | 0 | 562,949,978,062,740 | 562,949,961,286,424 | 12 |
+| group | secure_boot | C4 | other | - | - | 12 | 0 | 0 | 12 |
+| group | secure_boot | C1+C4 | extracted | 1 | 2.54e+11 | 0 | 562,949,978,062,740 | 562,949,961,286,424 | 12 |
+| group | secure_boot | C1+C4 | other | 1 | 2.54e+11 | 0 | 562,949,978,062,740 | 562,949,961,286,424 | 12 |
+| group | reflash | C4 | extracted | not meaningful | not meaningful | 0 | 562,949,978,062,740 | 562,949,978,062,740 | 12 |
+| group | reflash | C4 | other | - | - | 12 | 0 | 0 | 12 |
+| group | reflash | C1+C4 | extracted | not meaningful | not meaningful | 0 | 562,949,978,062,740 | 562,949,978,062,740 | 12 |
+| group | reflash | C1+C4 | other | 1 | 2.54e+11 | 0 | 562,949,978,062,740 | 562,949,961,286,424 | 12 |
 
 ## 8b. Traceability to the Étape 2 threat model
 

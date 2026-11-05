@@ -17,6 +17,7 @@ import dataclasses
 import datetime as dt
 import functools
 import gzip
+import itertools
 import json
 import math
 from dataclasses import dataclass, field
@@ -245,8 +246,26 @@ class LegitPolicy:
 
 
 # ---------------------------------------------------------------- simulation
+def epoch_budget(bat: dict, cfg: dict, floor_pct: float, eb: dict) -> int:
+    """G3 (POLICY, derived from ASSUMED values): command-caused uplinks allowed per epoch. Chosen so that a device
+    that spends its whole budget in every epoch of the planning horizon, on top of its default schedule, still ends
+    the horizon above the battery floor: (charge above the floor - sleep drain over the horizon) / charge per uplink,
+    spread over the epochs, minus the default-schedule uplinks of one epoch. Firmware alert uplinks and the
+    alert-mode minimum rate are never charged to the budget (they are the purpose of the device)."""
+    hours = eb["horizon_d"] * 24
+    above = bat["capacity"] * (cfg["battery"]["initial_soc_pct"] - floor_pct) / 100 - bat["sleep_per_h"] * hours
+    per_epoch = above / bat["q"] / (hours / eb["epoch_h"])
+    default = eb["epoch_h"] * 60 / cfg["device"]["default_reporting_interval_min"]
+    return max(0, math.floor(per_epoch - default))
+
+
 def simulate(stage: np.ndarray, scheme: str, compromise: str, strategy: str | None, cfg: dict, cat,
-             env: ev.Policy, fw: ev.Policy, legit_variant: str = "naive", bat: dict | None = None) -> dict:
+             env: ev.Policy, fw: ev.Policy, legit_variant: str = "naive", bat: dict | None = None,
+             budget: int | None = None) -> dict:
+    """`budget` (G3): command-caused uplinks allowed per epoch of cfg["energy_budget"]["epoch_h"] (None = no budget).
+    An uplink is command-caused if it is requested by `request_immediate_uplink` or comes sooner than the default
+    reporting interval would (with the alert-mode and low-battery invariants applied). With no budget left in the
+    epoch the device keeps the default schedule and drops immediate-uplink requests; firmware alerts always go."""
     dv = cfg["device"]
     bat = bat or cfg["_battery"]
     sch = Scheme(scheme, cat, env, fw, replaced=compromise.startswith("C1+C3"), op_key=compromise.endswith("+OP"),
@@ -259,9 +278,11 @@ def simulate(stage: np.ndarray, scheme: str, compromise: str, strategy: str | No
     legit = LegitPolicy(cfg["legit_policy"], legit_variant, ia.min, ia.max) if compromise == "none" else None
     prof = cfg["_profile_inv"]                                       # scored against the PROFILE invariants, all schemes
     cfg_floor = cap * prof.battery_floor_pct / 100
-    cmd_pending = False
+    cmd_pending = alert_pending = False
+    epoch_min = int(cfg["energy_budget"]["epoch_h"] * 60) if budget is not None else 0
+    cur_epoch, tokens = -1, 0
     last_rejected = last_sent = None
-    stats = {"legit_intents": 0, "legit_intents_rejected": 0, "floor_violating_uplinks": 0, "uplinks": 0, "legit_sent": 0, "legit_rejected": 0, "attacker_sent": 0, "attacker_accepted": 0,
+    stats = {"budget_used": 0, "budget_denied_requests": 0, "legit_intents": 0, "legit_intents_rejected": 0, "floor_violating_uplinks": 0, "uplinks": 0, "legit_sent": 0, "legit_rejected": 0, "attacker_sent": 0, "attacker_accepted": 0,
              "minutes_below_floor": 0, "died_min": None, "min_soc_pct": 100.0}
     delivered: list[tuple[int, float, int]] = []                     # (sample minute, value, uplink minute)
     reject_reasons: dict[str, int] = {}
@@ -279,7 +300,7 @@ def simulate(stage: np.ndarray, scheme: str, compromise: str, strategy: str | No
                 d.buffer.append((t, v))
                 now_alert = v >= d.threshold
                 if now_alert and not d.alert:
-                    d.pending = True                                # firmware alert -> immediate uplink
+                    d.pending = alert_pending = True                # firmware alert -> immediate uplink
                 d.alert = now_alert
             else:
                 d.alert = False
@@ -287,6 +308,19 @@ def simulate(stage: np.ndarray, scheme: str, compromise: str, strategy: str | No
         since = t - d.last_uplink
         if since < dv["min_uplink_spacing_min"] or not (d.pending or since >= eff):
             continue
+        if budget is not None:                                      # G3: energy budget per epoch
+            if t // epoch_min != cur_epoch:
+                cur_epoch, tokens = t // epoch_min, budget
+            base = effective_interval(effective_interval(dv["default_reporting_interval_min"], d.alert, soc_pct, inv),
+                                      d.alert, soc_pct, floor)
+            if not (alert_pending or since >= base):
+                if tokens <= 0:
+                    if cmd_pending:
+                        stats["budget_denied_requests"] += 1
+                        d.pending = cmd_pending = False
+                    continue
+                tokens -= 1
+                stats["budget_used"] += 1
         # ---- uplink (a floor violation = uplink below the floor at a rate the battery invariant forbids,
         #      i.e. command-requested immediate uplink or effective interval faster than the low-battery minimum;
         #      firmware alert uplinks are exempt -- they are the purpose of the device)
@@ -298,7 +332,7 @@ def simulate(stage: np.ndarray, scheme: str, compromise: str, strategy: str | No
         delivered += [(ts, v, t) for ts, v in d.buffer]
         if legit:
             legit.observe(d.buffer)
-        d.buffer, d.last_uplink, d.pending = [], t, False
+        d.buffer, d.last_uplink, d.pending, alert_pending = [], t, False, False
         # ---- one downlink opportunity
         st = _dstate(d, 100 * d.soc_mAh / cap, t)
         if legit:
@@ -521,18 +555,26 @@ def _event(args) -> tuple[list, list, dict]:
                   "minutes": int(stage.size), "levels_cm": levels, "threshold_source": level_src,
                   "commissioning_max_alert_threshold_cm": ecfg.get("_max_alert_threshold", 0),
                   "level_names": th["level_names"] if th else None})
+    eb = cfg.get("energy_budget")
+    prof_floor = cfg["_profile_inv"].battery_floor_pct
     for bat in bats:
+        bud = epoch_budget(bat, cfg, prof_floor, eb) if eb else None
         for scheme in cfg["schemes"]:
-            for comp in cfg["compromises"]:
+            budgets = ["off"] + (["on"] if eb and "on" in eb["variants"] and scheme in eb["schemes"] else [])
+            for comp, ebv in itertools.product(cfg["compromises"], budgets):
                 runs = ([(None, v) for v in cfg["legit_policy"].get("variants", ["naive"])] if comp == "none"
                         else [(x, "-") for x in cfg["attacker"]["strategies"]])
+                # the budget lives in the envelope (lost when C3 lets the attacker replace it) and, for the schemes
+                # in `in_floor`, also in the write-once commissioning floor (survives C1+C3)
+                b = bud if ebv == "on" and (not comp.startswith("C1+C3") or scheme in eb["in_floor"]) else None
                 for strat, variant in runs:
                     r = simulate(stage, scheme, comp, strat, ecfg, cat, env, fw,
-                                 variant if strat is None else "naive", bat)
+                                 variant if strat is None else "naive", bat, b)
                     sc = score(stage, r["delivered"], levels, cfg["harm"]["delay_tolerance_min"])
                     st = r["stats"]
                     key = {"event": ev_["name"], "battery_profile": bat["name"], "scheme": scheme,
-                           "compromise": comp, "strategy": strat or "-", "legit_policy": variant}
+                           "compromise": comp, "strategy": strat or "-", "legit_policy": variant,
+                           "energy_budget": ebv}
                     rows.append({**key, **{k: sc[k] for k in ("crossings", "missed", "delayed", "on_time",
                                                               "mean_delay_min", "max_delay_min")},
                                  "floor_violating_uplinks": st["floor_violating_uplinks"],
@@ -546,7 +588,9 @@ def _event(args) -> tuple[list, list, dict]:
                                  "legit_unique_rejection_rate": (st["legit_intents_rejected"] / st["legit_intents"])
                                  if st["legit_intents"] else 0.0,
                                  "legit_reject_reasons": ";".join(f"{k}={v}" for k, v in sorted(st["reject_reasons"].items())),
-                                 "attacker_sent": st["attacker_sent"], "attacker_accepted": st["attacker_accepted"]})
+                                 "attacker_sent": st["attacker_sent"], "attacker_accepted": st["attacker_accepted"],
+                                 "epoch_budget_uplinks": b, "budget_used": st["budget_used"],
+                                 "budget_denied_requests": st["budget_denied_requests"]})
                     events += [{**key, **e} for e in sc["events"]]
     return rows, events, metas[0]
 
@@ -567,11 +611,19 @@ def run(cfg: dict, actions_cfg: dict, root: Path) -> tuple[pd.DataFrame, pd.Data
     rows = [r for o in out for r in o[0]]
     events = [e for o in out for e in o[1]]
     metas = [o[2] for o in out]
+    eb = cfg.get("energy_budget")
+    if eb:
+        bats = [{**b, "epoch_budget_uplinks": epoch_budget(b, cfg, cfg["_profile_inv"].battery_floor_pct, eb)}
+                for b in bats]
     meta = {"events": metas, "battery_profiles": bats}
     return pd.DataFrame(rows), pd.DataFrame(events), meta
 
 
 # ---------------------------------------------------------------- D4 statistics
+def _keys(df: pd.DataFrame) -> list[str]:
+    return ["battery_profile", "scheme", "compromise", "strategy", "legit_policy"] + \
+        (["energy_budget"] if "energy_budget" in df else [])
+
 METRICS = ("missed_frac", "delayed_frac", "max_delay_min", "floor_violating_uplinks", "died",
            "legit_unique_rejection_rate")
 
@@ -590,7 +642,7 @@ def bootstrap_ci(x: np.ndarray, n_boot: int, seed: int, alpha: float = 0.05) -> 
 def summarize_events(df: pd.DataFrame, n_boot: int, seed: int) -> pd.DataFrame:
     d = df.assign(missed_frac=df.missed / df.crossings.where(df.crossings > 0),
                   delayed_frac=df.delayed / df.crossings.where(df.crossings > 0), died=df.died.astype(float))
-    keys = ["battery_profile", "scheme", "compromise", "strategy", "legit_policy"]
+    keys = _keys(d)
     rows = []
     for k, g in d.groupby(keys, sort=False):
         r = dict(zip(keys, k))
@@ -611,19 +663,41 @@ def _weighted_quantile_rows(v_sorted: np.ndarray, w: np.ndarray, q: float) -> np
     return v_sorted[idx]
 
 
-def delay_distribution(evdf: pd.DataFrame, tol_min: float, n_boot: int, seed: int, alpha: float = 0.05) -> pd.DataFrame:
-    """F5 (pre-registered): per scheme x compromise x strategy x battery profile x legit policy, the median, p90 and max
-    detection delay over ALL crossings (missed = +inf) and the share of crossings delayed beyond `tol_min` or
-    missed, each with a percentile-bootstrap CI that resamples EVENTS (cluster bootstrap)."""
-    keys = ["battery_profile", "scheme", "compromise", "strategy", "legit_policy"]
+def storm_clusters(peaks: dict, window_h: float) -> dict:
+    """G4: events whose peaks lie within `window_h` of each other, on any gauge, share a storm cluster. Single
+    linkage: sorted by peak time, a new cluster starts after a gap longer than the window (so chains of events
+    each within the window of the next form one cluster). Returns event -> cluster index."""
+    out, cid, last = {}, -1, None
+    for name in sorted(peaks, key=lambda n: (pd.Timestamp(peaks[n]), n)):
+        t = pd.Timestamp(peaks[name])
+        if last is None or (t - last).total_seconds() > window_h * 3600:
+            cid += 1
+        out[name], last = cid, t
+    return out
+
+
+def _units(g: pd.DataFrame, clusters: dict | None) -> tuple[np.ndarray, int]:
+    """Resampling unit of each row: its storm cluster (G4) when given, else its event."""
+    lab = g.event.map(clusters).to_numpy() if clusters else g.event.to_numpy()
+    codes, idx = np.unique(lab, return_inverse=True)
+    return idx, len(codes)
+
+
+def delay_distribution(evdf: pd.DataFrame, tol_min: float, n_boot: int, seed: int, alpha: float = 0.05,
+                       clusters: dict | None = None) -> pd.DataFrame:
+    """F5 (pre-registered): per scheme x compromise x strategy x battery profile x legit policy (x energy budget),
+    the median, p90 and max detection delay over ALL crossings (missed = +inf) and the share of crossings delayed
+    beyond `tol_min` or missed, each with a percentile-bootstrap CI. The bootstrap resamples whole storm clusters
+    (G4, `clusters`: event -> cluster) or, without them, events."""
+    keys = _keys(evdf)
     rng = np.random.default_rng(seed)
     rows = []
     for k, g in evdf.groupby(keys, sort=False):
         d = g.delay_min.astype(float).fillna(np.inf).to_numpy()
-        ev_codes, ev_idx = np.unique(g.event.to_numpy(), return_inverse=True)
+        ev_idx, n_units = _units(g, clusters)
         order = np.argsort(d, kind="stable")
         v, e = d[order], ev_idx[order]
-        counts = rng.multinomial(len(ev_codes), np.full(len(ev_codes), 1 / len(ev_codes)), size=n_boot)
+        counts = rng.multinomial(n_units, np.full(n_units, 1 / n_units), size=n_boot)
         w = counts[:, e].astype(float)
         bad = (v > tol_min).astype(float)
         boot = {"median": _weighted_quantile_rows(v, w, 0.5), "p90": _weighted_quantile_rows(v, w, 0.9),
@@ -632,11 +706,41 @@ def delay_distribution(evdf: pd.DataFrame, tol_min: float, n_boot: int, seed: in
         one = np.ones((1, len(v)))
         point = {"median": float(_weighted_quantile_rows(v, one, 0.5)[0]), "p90": float(_weighted_quantile_rows(v, one, 0.9)[0]),
                  "max": float(v[-1]), "late_or_missed_share": float(bad.mean())}
-        r = {**dict(zip(keys, k)), "events": len(ev_codes), "crossings": len(d), "missed": int(np.isinf(d).sum())}
+        r = {**dict(zip(keys, k)), "events": int(g.event.nunique()), "resampling_units": n_units,
+             "crossings": len(d), "missed": int(np.isinf(d).sum())}
         for m, x in boot.items():
             r[f"{m}_delay_min" if m != "late_or_missed_share" else m] = point[m]
             lo, hi = np.quantile(x, [alpha / 2, 1 - alpha / 2], method="lower")
             base = f"{m}_delay_min" if m != "late_or_missed_share" else m
             r[f"{base}_ci_lo"], r[f"{base}_ci_hi"] = float(lo), float(hi)
         rows.append(r)
+    return pd.DataFrame(rows)
+
+
+def excess_over_baseline(evdf: pd.DataFrame, tol_min: float, n_boot: int, seed: int, alpha: float = 0.05,
+                         clusters: dict | None = None, baseline_policy: str = "naive") -> pd.DataFrame:
+    """Attack effect relative to legitimate operation: for every attacked condition, late-or-missed share minus the
+    share of the legitimate baseline (compromise "none", `baseline_policy`) of the same battery profile, scheme and
+    energy budget. Crossings are paired (same event, level, crossing minute), so crossings the baseline already
+    misses count as baseline. CI: paired percentile bootstrap over storm clusters (or events)."""
+    keys = _keys(evdf)
+    grp = [k for k in keys if k not in ("compromise", "strategy", "legit_policy")]
+    pair = ["event", "level_cm", "cross_min"]
+    bad = evdf.assign(bad=(evdf.delay_min.astype(float).fillna(np.inf) > tol_min).astype(float))
+    rng = np.random.default_rng(seed)
+    rows = []
+    for gk, g in bad.groupby(grp, sort=False):
+        base = g[(g.compromise == "none") & (g.legit_policy == baseline_policy)][pair + ["bad"]]
+        for k, a in g[g.compromise != "none"].groupby(keys, sort=False):
+            m = a[pair + ["bad"]].merge(base, on=pair, suffixes=("", "_base"))
+            if m.empty:
+                continue
+            idx, n_units = _units(m, clusters)
+            diff = (m.bad - m.bad_base).to_numpy()
+            w = rng.multinomial(n_units, np.full(n_units, 1 / n_units), size=n_boot)[:, idx].astype(float)
+            boot = (w * diff).sum(axis=1) / w.sum(axis=1)
+            lo, hi = np.quantile(boot, [alpha / 2, 1 - alpha / 2])
+            rows.append({**dict(zip(keys, k)), "crossings": len(m), "resampling_units": n_units,
+                         "baseline_share": float(m.bad_base.mean()), "attack_share": float(m.bad.mean()),
+                         "excess": float(diff.mean()), "excess_ci_lo": float(lo), "excess_ci_hi": float(hi)})
     return pd.DataFrame(rows)

@@ -78,10 +78,13 @@ def _fake_results(tmp_path, cfgs):  # noqa: F811
     import pqcap.model as _m
     _devs = _d.load_catalogue(CONFIG / "devices")
     _pol = load_yaml(CONFIG / "policies.yaml")
-    _g.filter_savings(_devs, _pol, _m.channels(radio, mdl), 300, [50], lambda n, c: _m.link_cost(n, c, 2),
-                      ["uniform_type"], _g.FILTER_POINTS).to_csv(r / "d6_gateway_filter.csv", index=False)
-    _g.forging_power(_devs, _pol, load_yaml(CONFIG / "threat.yaml"), acfg["invariants"],
-                     {"alert_active": True, "battery_below_floor": False}).to_csv(r / "d6_forging_power.csv", index=False)
+    _flt = _g.filter_savings(_devs, _pol, _m.channels(radio, mdl), 300, [50], lambda n, c: _m.link_cost(n, c, 2),
+                             ["uniform_type"], _g.FILTER_POINTS)
+    _flt.to_csv(r / "d6_gateway_filter.csv", index=False)
+    _fpw = _g.forging_power(_devs, _pol, load_yaml(CONFIG / "threat.yaml"), acfg["invariants"],
+                            {"alert_active": True, "battery_below_floor": False})
+    _fpw.to_csv(r / "d6_forging_power.csv", index=False)
+    _g.bounds_source_table(_flt, _fpw, **mdl["d6"]["bounds_source"]).to_csv(r / "g1_bounds_source.csv", index=False)
     ck5.to_csv(r / "catalogue_k5_ranges.csv", index=False)
     ck6.to_csv(r / "catalogue_k6_ranges.csv", index=False)
     _ks = _d.c4_key_scope(_devs, _pol, load_yaml(CONFIG / "threat.yaml"), acfg["invariants"],
@@ -101,8 +104,12 @@ def _fake_results(tmp_path, cfgs):  # noqa: F811
     (cfg / "harm.yaml").write_text(json.dumps(h))
     hd, he, hm = harm.run(h, acfg, REPO_ROOT)
     hd.to_csv(r / "model_harm.csv", index=False)
-    harm.delay_distribution(he.assign(scheme="S6+F", strategy="suppress"), 30, 50, 1).to_csv(
-        r / "model_harm_delays.csv", index=False)
+    he2 = pd.concat([he, he.assign(scheme="S6+F", strategy="suppress")])
+    cl = harm.storm_clusters({e["event"]: e["peak_time"] for e in hm["events"]}, 72)
+    pd.DataFrame([{"event": k, "peak_time": "t", "cluster": v} for k, v in cl.items()]).to_csv(
+        r / "model_harm_clusters.csv", index=False)
+    harm.delay_distribution(he2, 30, 50, 1, clusters=cl).to_csv(r / "model_harm_delays.csv", index=False)
+    harm.excess_over_baseline(he2, 30, 50, 1, clusters=cl).to_csv(r / "model_harm_excess.csv", index=False)
     (r / "harm_meta.json").write_text(json.dumps({**hm, "source": {"query_url": "q"}}, default=str))
     return r, cfg
 
@@ -114,7 +121,7 @@ def test_report_renders(tmp_path, cfgs):  # noqa: F811
     (figs / "fig1_x.png").write_bytes(b"")
     report.run(cfg, r, figs)
     md = (tmp_path / "REPORT.md").read_text()
-    for h in ("## 1. Environment", "## 4. Host timings", "## 8. Kill criteria", "**K1", "**K2", "**K3", "**K4", "**K5 - Blast radius", "**K5 - blast radius per compromise", "## 7d. Revocation", "**D2 - S6+F", "**D6 - an untrusted gateway", "**Forging power of a filtering gateway**", "**OP token cost**", "**D1 - active revocation time", "## 8b. Traceability", "## 8a. K5/K6 on the manufacturer", "**SUPERSEDED**", "## 7f. Device-side", "Energy is **not reported**", "## 0. Repository state", "kept `7df90f4`", "T10", "## 7e. Harm-weighted replay", "Gaps > 60 min", "**Battery profiles (D5)**", "**K6 - blast(S4-E)", "**F1 - C4 fairness", "**F6 - pre-committed operator approvals.**", "**F2 - realistic filtering points**", "**Gateway given AppSKey (upper bound)**",
+    for h in ("## 1. Environment", "## 4. Host timings", "## 8. Kill criteria", "**K1", "**K2", "**K3", "**K4", "**K5 - Blast radius", "**K5 - blast radius per compromise", "## 7d. Revocation", "**D2 - S6+F", "**D6 - an untrusted gateway", "**Forging power of a filtering gateway**", "**OP token cost**", "**D1 - active revocation time", "## 8b. Traceability", "## 8a. K5/K6 on the manufacturer", "**SUPERSEDED**", "## 7f. Device-side", "Energy is **not reported**", "## 0. Repository state", "kept `7df90f4`", "T10", "## 7e. Harm-weighted replay", "Gaps > 60 min", "**Battery profiles (D5)**", "**K6 - blast(S4-E)", "**F1 - C4 fairness", "**F6 - pre-committed operator approvals.**", "**F2 - realistic filtering points**", "**Gateway given AppSKey (upper bound)**", "**G1 - how the filter learns", "**G2 - what C4 assumes", "not meaningful", "**G3 - energy budget per epoch", "**Drain effect relative to the legitimate baseline**", "**Attack effect relative to the legitimate baseline**", "storm clusters", "1 clusters for 1 events",
               "## 7c. S6", "Crisis commands per gateway", "**Why the crisis capacities differ", "its capacity equals S6", "fig1_x.png"):
         assert h in md
     assert "env.json missing" in md
@@ -209,3 +216,12 @@ def test_harm_delay_table(tmp_path):
     harm.delay_distribution(ev, 30, 200, 1).to_csv(tmp_path / "model_harm_delays.csv", index=False)
     out = report.harm_summary_tables(d, tmp_path, lambda v: f"{v:.1f}")
     assert "F5 - detection-delay distribution" in out[0] and "inf (missed)" in out[1] and "statistics over 2" in out[2]
+
+
+def test_section_g3_absent(tmp_path):
+    assert report.section_g3(tmp_path, CONFIG) == "_G3 not run_"
+    pd.DataFrame([{"energy_budget": "off"}]).to_csv(tmp_path / "model_harm_delays.csv", index=False)
+    assert report.section_g3(tmp_path, CONFIG) == "_G3 not run_"
+    assert "resamples events" in report._clusters_note(tmp_path)
+    df = pd.DataFrame({"a": [1]})
+    assert report._budget_off(df) is df

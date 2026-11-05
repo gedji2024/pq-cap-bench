@@ -44,3 +44,13 @@ s4e_key_scope:
   variants:
     per_device: "one envelope MAC key per device (headline)"
     group: "one envelope MAC key shared by every device of a group or fleet (deployment choice)"
+# G2: what C4 (one device extracted physically) assumes about its firmware. Étape 2 does not fix it, so both are
+# reported. secure_boot: keys are extracted but secure boot prevents a reflash, so the device still runs the honest
+# check with the extracted keys. reflash: the attacker can run its own firmware on the extracted device, which then
+# executes any command -- every scheme reaches the whole catalogue on THAT device, so the extracted-device K6 ratio
+# is not meaningful. Other devices are unaffected by the reflash of one device.
+c4_firmware:
+  headline: secure_boot
+  variants:
+    secure_boot: "keys extracted; secure boot prevents a reflash (the honest check still runs)"
+    reflash: "keys extracted and the firmware can be replaced on the extracted device"

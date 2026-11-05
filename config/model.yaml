@@ -94,3 +94,5 @@ d6:
   filter_points: [appskey_upper_bound, ns_metadata, fport_action_binding]
   flood_mixes: [uniform_payload, uniform_type]   # attacker draws commands uniformly over payloads / over types
   devices_per_gateway: [10, 50, 200]
+  # G1: bounds-source table (filter point x scheme x how the NS learns the bounds) at one operating point
+  bounds_source: {region: US915, dr: 8, devices: 50, policy: tight, mix: uniform_type}

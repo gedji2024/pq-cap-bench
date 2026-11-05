@@ -71,7 +71,25 @@ commissioning: {max_alert_threshold: nws_action}
 # fetched) from 10 years of USGS IV data per gauge, cached gzipped in data/usgs10/ with per-file meta.
 events_prereg: {file: config/events_prereg.yaml, data_dir: data/usgs10}
 workers: 8                 # parallel replay processes (results do not depend on it)
-statistics: {bootstrap: 10000, seed: 20261104, ci: 0.95}
+statistics: {bootstrap: 10000, seed: 20261104, ci: 0.95,
+             # G4: events whose peaks lie within this many hours of each other on any gauge form one storm cluster
+             # (single linkage, CHOICE = the 72 h event separation of the pre-registered rule); the F5 CIs resample
+             # whole clusters, superseding the event-level bootstrap. The same unit is used in Task E.
+             cluster_window_h: 72}
+# G3: energy budget per epoch in the envelope (POLICY). Per epoch, at most `epoch_budget_uplinks` command-caused
+# uplinks (immediate-uplink requests, or uplinks sooner than the default interval with the invariants applied);
+# firmware alert uplinks and the alert-mode minimum rate are never charged. Budget per battery profile =
+# ((initial SOC - battery floor) x capacity - sleep over horizon) / charge per uplink / epochs in horizon
+# - default-schedule uplinks per epoch (pqcap.harm.epoch_budget; inputs ASSUMED). horizon_d = 7 = the
+# pre-registered event window (5 d before + 2 d after the peak), i.e. the envelope's planning horizon (CHOICE).
+# The budget sits in the S6/S4-E/S6+F envelope (lost when C1+C3 replaces it) and, for S6+F, also in the
+# write-once commissioning floor (`in_floor`), so it survives C1+C3.
+energy_budget:
+  variants: ["off", "on"]        # quoted: YAML 1.1 reads bare off/on as booleans
+  schemes: [S4-E, S6, S6+F]
+  in_floor: [S6+F]
+  epoch_h: 24
+  horizon_d: 7
 
 # Scoring. Gauges differ in stage scale, so thresholds are FRACTIONS of each event's own stage range (ASSUMED).
 harm:
