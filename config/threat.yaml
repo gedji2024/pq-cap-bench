@@ -35,3 +35,12 @@ compromises:
 envelope_key: {S6: policy_pq, S6+F: policy_pq, S4-E: policy_mac}
 # Under C0 the honest PDP emits only proposals inside its software policy; modelled as the event envelope
 # bounds + invariants for every scheme (S4 included). Provenance labels (P8) are not modelled.
+
+# F1: scope of the S4-E per-device envelope MAC key (policy_mac). Étape 2 Sec. 1.1 gives D per-device keys;
+# the headline result uses a per-device key. A key shared by a group of devices is a separate DEPLOYMENT
+# CHOICE (e.g. one key per fleet to simplify provisioning), reported apart.
+s4e_key_scope:
+  headline: per_device
+  variants:
+    per_device: "one envelope MAC key per device (headline)"
+    group: "one envelope MAC key shared by every device of a group or fleet (deployment choice)"

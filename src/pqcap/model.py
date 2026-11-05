@@ -218,6 +218,15 @@ def run(config: Path, results: Path) -> dict[str, pd.DataFrame]:
         cdf.to_csv(results / "catalogue_blast.csv", index=False)
         ck5.to_csv(results / "catalogue_k5_ranges.csv", index=False)
         ck6.to_csv(results / "catalogue_k6_ranges.csv", index=False)
+        thr_ = load_yaml(config / "threat.yaml")
+        if "s4e_key_scope" in thr_:
+            acf = load_yaml(config / "actions.yaml")
+            cs = acf.get("count_state", {"alert_active": True, "battery_above_floor": True})
+            ks = devm.c4_key_scope(devm.load_catalogue(config / "devices"), load_yaml(config / "policies.yaml"), thr_,
+                                   acf["invariants"], {"alert_active": cs["alert_active"],
+                                                       "battery_below_floor": not cs["battery_above_floor"]})
+            ks.to_csv(results / "f1_c4_key_scope.csv", index=False)
+            devm.c4_k6(ks).to_csv(results / "f1_c4_k6.csv", index=False)
         if "d6" in model:
             from . import gateway as gw  # noqa: PLC0415
             devs_ = devm.load_catalogue(config / "devices")

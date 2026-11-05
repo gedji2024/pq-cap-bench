@@ -84,6 +84,9 @@ def _fake_results(tmp_path, cfgs):  # noqa: F811
                      {"alert_active": True, "battery_below_floor": False}).to_csv(r / "d6_forging_power.csv", index=False)
     ck5.to_csv(r / "catalogue_k5_ranges.csv", index=False)
     ck6.to_csv(r / "catalogue_k6_ranges.csv", index=False)
+    _ks = _d.c4_key_scope(_devs, _pol, load_yaml(CONFIG / "threat.yaml"), acfg["invariants"],
+                          {"alert_active": True, "battery_below_floor": False})
+    _d.c4_k6(_ks).to_csv(r / "f1_c4_k6.csv", index=False)
     from pqcap import pqm4 as _p
     _p.verification_cost(CONFIG, REPO_ROOT).to_csv(r / "mcu_verify_cost.csv", index=False)
     from pqcap import harm
@@ -104,7 +107,7 @@ def test_report_renders(tmp_path, cfgs):  # noqa: F811
     (figs / "fig1_x.png").write_bytes(b"")
     report.run(cfg, r, figs)
     md = (tmp_path / "REPORT.md").read_text()
-    for h in ("## 1. Environment", "## 4. Host timings", "## 8. Kill criteria", "**K1", "**K2", "**K3", "**K4", "**K5 - Blast radius", "**K5 - blast radius per compromise", "## 7d. Revocation", "**D2 - S6+F", "**D6 - an untrusted gateway", "**Forging power of a filtering gateway**", "**OP token cost**", "**D1 - active revocation time", "## 8b. Traceability", "## 8a. K5/K6 on the manufacturer", "**SUPERSEDED**", "## 7f. Device-side", "Energy is **not reported**", "## 0. Repository state", "kept `7df90f4`", "T10", "## 7e. Harm-weighted replay", "Gaps > 60 min", "**Battery profiles (D5)**", "**K6 - blast(S4-E)",
+    for h in ("## 1. Environment", "## 4. Host timings", "## 8. Kill criteria", "**K1", "**K2", "**K3", "**K4", "**K5 - Blast radius", "**K5 - blast radius per compromise", "## 7d. Revocation", "**D2 - S6+F", "**D6 - an untrusted gateway", "**Forging power of a filtering gateway**", "**OP token cost**", "**D1 - active revocation time", "## 8b. Traceability", "## 8a. K5/K6 on the manufacturer", "**SUPERSEDED**", "## 7f. Device-side", "Energy is **not reported**", "## 0. Repository state", "kept `7df90f4`", "T10", "## 7e. Harm-weighted replay", "Gaps > 60 min", "**Battery profiles (D5)**", "**K6 - blast(S4-E)", "**F1 - C4 fairness",
               "## 7c. S6", "Crisis commands per gateway", "**Why the crisis capacities differ", "its capacity equals S6", "fig1_x.png"):
         assert h in md
     assert "env.json missing" in md

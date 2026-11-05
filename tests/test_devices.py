@@ -133,3 +133,25 @@ def test_accepts_domain_and_low_battery():
     assert not D.accepts(ctx, r, (0,), low) and not D.accepts(ctx, r, (1441,), low)   # outside documented range
     assert not D.accepts(ctx, r, (119,), low) and D.accepts(ctx, r, (120,), low)
     assert D.count_accepted(ctx, r, low) == 1440 - 120 + 1
+
+
+def test_c4_key_scope_f1():
+    from pqcap.config import CONFIG, load_yaml
+    devs = D.load_catalogue(CONFIG / "devices")
+    a = load_yaml(CONFIG / "actions.yaml")
+    thr = load_yaml(CONFIG / "threat.yaml")
+    assert thr["s4e_key_scope"]["headline"] == "per_device"
+    df = D.c4_key_scope(devs, load_yaml(CONFIG / "policies.yaml"), thr, a["invariants"],
+                        {"alert_active": True, "battery_below_floor": False})
+    k = D.c4_k6(df).set_index(["key_scope", "compromise", "target"])
+    # C4 alone: no session key for other devices -> nothing accepted there, whatever the key scope
+    for v in ("per_device", "group"):
+        assert k.loc[(v, "C4", "other"), "both_zero_cases"] == k.loc[(v, "C4", "other"), "cases"]
+    # with C1 a per-device key adds nothing on other devices; a shared group key reaches their catalogue
+    assert k.loc[("per_device", "C1+C4", "other"), "ratio_max"] == 1
+    assert k.loc[("group", "C1+C4", "other"), "ratio_max"] > 1
+    oth = df[(df.key_scope == "group") & (df.compromise == "C1+C4") & (df.target == "other") & (df.scheme == "S4-E")]
+    assert (oth.accepted == oth.catalogue).all()
+    # the extracted device: S4-E minted envelopes reach the catalogue under both scopes
+    ex = df[(df.target == "extracted") & (df.scheme == "S4-E")]
+    assert (ex.accepted == ex.catalogue).all()

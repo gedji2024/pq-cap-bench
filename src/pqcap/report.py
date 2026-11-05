@@ -461,8 +461,20 @@ def section_catalogue(results: Path, config: Path) -> str:
                        "type_coverage_max": lambda v: f"{v:.2f}", "accepted_min": ints, "accepted_max": ints,
                        "cases": ints})
     t6 = md_table(k6, {"ratio_min": e, "ratio_max": e, "both_zero_cases": ints, "cases": ints})
-    return "\n\n".join([head, "**K5 ranges (manufacturer catalogue)**", t5,
-                         "**K6 = blast(S4-E)/blast(S6), ranges (cases where both are 0 are counted, not divided)**", t6])
+    out = [head, "**K5 ranges (manufacturer catalogue)**", t5,
+           "**K6 = blast(S4-E)/blast(S6), ranges (cases where both are 0 are counted, not divided)**", t6]
+    f1 = results / "f1_c4_k6.csv"
+    if f1.exists():
+        k = pd.read_csv(f1)
+        thr = load_yaml(config / "threat.yaml")["s4e_key_scope"]
+        out += [f"**F1 - C4 fairness: scope of the S4-E envelope MAC key.** The C4 row above counts the *extracted* "
+                f"device with a per-device key. Headline: **{thr['headline']}**. Variants: "
+                + "; ".join(f"`{n}` = {d}" for n, d in thr["variants"].items())
+                + ". `target` = the extracted device, or another device of the same group (its session key is known "
+                  "only with C1; its S4-E key only if the key is shared). S6 envelopes need sk_PA, which C4 never yields.",
+                md_table(k, {"ratio_min": e, "ratio_max": e, "both_zero_cases": ints, "s4e_accepted_max": ints,
+                             "s6_accepted_max": ints, "cases": ints})]
+    return "\n\n".join(out)
 
 
 def section_d2(results: Path) -> str:

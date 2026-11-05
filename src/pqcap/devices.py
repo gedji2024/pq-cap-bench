@@ -258,3 +258,48 @@ def run(config: Path) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     df = blast_catalogue(devs, pol, thr, acfg["invariants"], state)
     k5, k6 = k5_k6_ranges(df)
     return df, k5, k6
+
+
+# ---------------------------------------------------------------- F1: scope of the S4-E envelope MAC key under C4
+def c4_key_scope(devices: list[Device], policies: dict, threat: dict, inv: dict, state: dict) -> pd.DataFrame:
+    """Blast radius when one device is extracted (C4), alone or with C1, for both scopes of the S4-E
+    envelope MAC key (`threat.yaml` s4e_key_scope): per-device, or one key shared by a group/fleet.
+
+    target = "extracted": the extracted device itself (its session key and its envelope MAC key are known);
+    target = "other": another device of the same group. Its session key is known only with C1; its S4-E
+    envelope key only if the key is shared by the group. S6 envelopes need sk_PA, which C4 never yields.
+    """
+    rows = []
+    fw_level = policies["levels"][policies["firmware_level"]]
+    for dev in devices:
+        full, fw = full_policy(dev), policy_for(dev, fw_level)
+        cat = sum(domain_size(a) for a in dev.actions)
+        for lvl_name, lvl in policies["levels"].items():
+            pol = policy_for(dev, lvl)
+            for variant in threat["s4e_key_scope"]["variants"]:
+                for comp in ("C4", "C1+C4"):
+                    for target in ("extracted", "other"):
+                        keys = set()
+                        if target == "extracted" or comp == "C1+C4":
+                            keys.add("session")
+                        if target == "extracted" or variant == "group":
+                            keys.add("policy_mac")
+                        for scheme in ("S4-E", "S6"):
+                            ctx = scheme_context(scheme, {"scope": "one_device"}, keys, pol, fw, full, inv, threat)
+                            acc = sum(count_accepted(ctx, a, state) for a in dev.actions)
+                            rows.append({"device": dev.model, "policy": lvl_name, "key_scope": variant,
+                                         "compromise": comp, "target": target, "scheme": scheme, "accepted": acc,
+                                         "catalogue": cat})
+    return pd.DataFrame(rows)
+
+
+def c4_k6(df: pd.DataFrame) -> pd.DataFrame:
+    """K6 = blast(S4-E) / blast(S6) per key scope, compromise and target; ranges over devices x policies."""
+    p = df.pivot_table(index=["device", "policy", "key_scope", "compromise", "target"], columns="scheme",
+                       values="accepted", sort=False).reset_index()
+    p["ratio"] = [(e / s) if s else math.nan for e, s in zip(p["S4-E"], p["S6"])]
+    p["both_zero"] = (p["S4-E"] == 0) & (p["S6"] == 0)
+    return (p.groupby(["key_scope", "compromise", "target"], sort=False)
+            .agg(ratio_min=("ratio", "min"), ratio_max=("ratio", "max"), both_zero_cases=("both_zero", "sum"),
+                 s4e_accepted_max=("S4-E", "max"), s6_accepted_max=("S6", "max"), cases=("ratio", "size"))
+            .reset_index())

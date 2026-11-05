@@ -1257,6 +1257,19 @@ Devices (4): EM400-UDL, EM410-RDL, LWL01, PS-LB - downlink commands, payload len
 | C1+C3 | 1 | 1 | 0 | 12 |
 | C1+C3+OP | 1 | 1 | 0 | 12 |
 
+**F1 - C4 fairness: scope of the S4-E envelope MAC key.** The C4 row above counts the *extracted* device with a per-device key. Headline: **per_device**. Variants: `per_device` = one envelope MAC key per device (headline); `group` = one envelope MAC key shared by every device of a group or fleet (deployment choice). `target` = the extracted device, or another device of the same group (its session key is known only with C1; its S4-E key only if the key is shared). S6 envelopes need sk_PA, which C4 never yields.
+
+| key_scope | compromise | target | ratio_min | ratio_max | both_zero_cases | s4e_accepted_max | s6_accepted_max | cases |
+|---|---|---|---|---|---|---|---|---|
+| per_device | C4 | extracted | 1 | 2.54e+11 | 0 | 562,949,978,062,740 | 562,949,961,286,424 | 12 |
+| per_device | C4 | other | - | - | 12 | 0 | 0 | 12 |
+| per_device | C1+C4 | extracted | 1 | 2.54e+11 | 0 | 562,949,978,062,740 | 562,949,961,286,424 | 12 |
+| per_device | C1+C4 | other | 1 | 1 | 1 | 562,949,961,286,424 | 562,949,961,286,424 | 12 |
+| group | C4 | extracted | 1 | 2.54e+11 | 0 | 562,949,978,062,740 | 562,949,961,286,424 | 12 |
+| group | C4 | other | - | - | 12 | 0 | 0 | 12 |
+| group | C1+C4 | extracted | 1 | 2.54e+11 | 0 | 562,949,978,062,740 | 562,949,961,286,424 | 12 |
+| group | C1+C4 | other | 1 | 2.54e+11 | 0 | 562,949,978,062,740 | 562,949,961,286,424 | 12 |
+
 ## 8b. Traceability to the Étape 2 threat model
 
 Naming follows *Étape 2 — Modèle de menace et propriétés de sécurité* v0.1 (adversaries A1-A5, compromise levels C0-C4, properties P1-P8, attacks T1-T10). Status per `config/traceability.yaml`.
