@@ -331,6 +331,27 @@ def section_revocation(results: Path, model: dict) -> str:
     return "\n\n".join(out)
 
 
+def section_f4(config: Path) -> str:
+    """F4: NWS flood categories of every cached gauge, with source and datum check."""
+    from . import nws  # noqa: PLC0415
+    cfg = load_yaml(config / "harm.yaml") if (config / "harm.yaml").exists() else {}
+    n = cfg.get("nws")
+    root = config.parent
+    if not n or not (root / n["dir"]).is_dir():
+        return "_no NWS flood categories_"
+    sites = sorted(p.name.split(".")[0] for p in (root / n["dir"]).glob("*.meta.json"))
+    rows = [nws.load(root / n["dir"], s, n["datum_tol_ft"]) for s in sites]
+    t = pd.DataFrame(rows)[["usgs_site", "lid", "name", "action", "minor", "moderate", "major", "gauge_page",
+                            "retrieved_utc", "sha256", "usgs_gage_height_ft", "nws_stage_ft", "datum_ok"]]
+    t["sha256"] = t.sha256.str[:16] + "..."
+    return ("**F4 - NWS flood categories** (ft; NWS National Water Prediction Service, API "
+            "`https://api.water.noaa.gov/nwps/v1/gauges/<USGS id>`, raw responses in `" + n["dir"] + "/`). These are the "
+            "categories NWS publishes **now** (retrieval date); they are applied to past events, assuming they and "
+            "the gauge datum did not change. Datum check: NWS observed stage vs USGS gage height at the same reading, "
+            f"tolerance {n['datum_tol_ft']} ft. Replaces the ASSUMED fraction thresholds of D4 wherever NWS defines "
+            "action and minor stages.\n\n" + md_table(t.fillna("-"), {}))
+
+
 def section_harm(results: Path, config: Path) -> str:
     p = results / "model_harm.csv"
     if not p.exists():
@@ -346,7 +367,8 @@ def section_harm(results: Path, config: Path) -> str:
                     f"{src.get('retrieved_utc', '?')}, SHA-256 `{src.get('sha256', '?')[:16]}...`; {e['n_readings']} readings "
                     f"{e['first']} to {e['last']}; peak {e['peak_cm'] / cfg['series']['ft_to_cm']:.2f} ft at {e['peak_time']}"
                     + (" - **peak reading lies at the edge of a >60-min gap: its timing and the levels near it are interpolation-dependent**" if e["peak_bracketed_by_gap"] else "")
-                    + f". Gaps > 60 min ({cfg['series']['interpolation']} interpolation): {gaps}.")
+                    + f". Gaps > 60 min ({cfg['series']['interpolation']} interpolation): {gaps}. "
+                    + f"Thresholds: {e.get('threshold_source', 'fractions of event range (ASSUMED)')}.")
     bat = pd.DataFrame(m["battery_profiles"])
     bcols = [c for c in ("name", "unit", "capacity", "sleep_per_h", "q", "tx_mA", "uplink_toa_s", "uplinks_per_battery",
                          "lower_bound") if c in bat]
@@ -359,7 +381,8 @@ def section_harm(results: Path, config: Path) -> str:
             "an uplink-budget profile); `lower_bound` = RX windows, MCU and probe power not documented. ASSUMED: "
             + "; ".join(cfg["battery"]["assumed"]) + f". Not derivable from the manuals: "
             + ", ".join(cfg["battery"]["not_derivable"]) + ".", tb,
-            f"Reference levels: {lv} ({'ft' if cfg['harm'].get('reference_levels_ft') else 'fractions of each event range'}); "
+            f"Reference levels: NWS flood categories where the gauge has them (Sec. 7i, F4); otherwise {lv} "
+            f"({'ft' if cfg['harm'].get('reference_levels_ft') else 'fractions of each event range, ASSUMED'}); "
             f"a crossing is *delayed* if first reported more than {cfg['harm']['delay_tolerance_min']} min after it occurs. "
             "A *floor violation* is an uplink below the battery floor at a rate the battery invariant forbids (firmware "
             "alert uplinks exempt), scored identically for every scheme. Device, policy, threshold and invariant values "
@@ -650,6 +673,7 @@ def run(config: Path, results: Path, figures: Path) -> None:
         "## 7f. Device-side envelope verification (pqm4, published)", section_mcu(results, config),
         "## 7g. D2: two-tier defence S6+F", section_d2(results),
         "## 7h. D6: gateway-side filtering of a C1 flood", section_d6(results, model),
+        "## 7i. F4: NWS flood categories", section_f4(config),
         "## 8. Kill criteria", section_kill(results),
         "## 8a. K5/K6 on the manufacturer device catalogue (supersedes the K5/K6 of Sec. 8)",
         section_catalogue(results, config),

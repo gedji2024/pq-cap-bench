@@ -1,0 +1,11 @@
+{
+  "query_url": "https://api.water.noaa.gov/nwps/v1/gauges/05420500",
+  "final_url": "https://api.water.noaa.gov/nwps/v1/gauges/05420500",
+  "http_status": 200,
+  "retrieved_utc": "2026-11-05T04:59:38+00:00",
+  "sha256": "1986ab1162409158b4d41de5e29c4097f9ef7724f8d6aa4c7463be862123e2ab",
+  "bytes": 65636,
+  "usgs_site": "05420500",
+  "lid": "CMMI4",
+  "gauge_page": "https://water.noaa.gov/gauges/CMMI4"
+}

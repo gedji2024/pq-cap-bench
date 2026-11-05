@@ -1,0 +1,11 @@
+{
+  "query_url": "https://api.water.noaa.gov/nwps/v1/gauges/07010000",
+  "final_url": "https://api.water.noaa.gov/nwps/v1/gauges/07010000",
+  "http_status": 200,
+  "retrieved_utc": "2026-11-05T04:59:37+00:00",
+  "sha256": "aecbdc54915fddaba3ef0e896f181b4a567eb419abe970a99a260dcab32d0d99",
+  "bytes": 98890,
+  "usgs_site": "07010000",
+  "lid": "EADM7",
+  "gauge_page": "https://water.noaa.gov/gauges/EADM7"
+}

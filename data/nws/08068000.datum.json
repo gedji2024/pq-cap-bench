@@ -1,0 +1,1489 @@
+{
+ "nws_valid_time": "2026-11-05T04:15:00Z",
+ "nws_observed_stage": 93.73,
+ "nws_unit": "ft",
+ "usgs_query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08068000&period=P2D&parameterCd=00065&siteStatus=all",
+ "usgs_http_status": 200,
+ "usgs_sha256": "39eb93bfc1044d111e226898dab7b4f458906125df1a1e44cb6f506c0d5ca37f",
+ "retrieved_utc": "2026-11-05T04:59:36+00:00",
+ "usgs_response": {
+  "name": "ns1:timeSeriesResponseType",
+  "declaredType": "org.cuahsi.waterml.TimeSeriesResponseType",
+  "scope": "javax.xml.bind.JAXBElement$GlobalScope",
+  "value": {
+   "queryInfo": {
+    "queryURL": "http://waterservices.usgs.gov/nwis/iv/format=json&sites=08068000&period=P2D&parameterCd=00065&siteStatus=all",
+    "criteria": {
+     "locationParam": "[ALL:08068000]",
+     "variableParam": "[00065]",
+     "parameter": []
+    },
+    "note": [
+     {
+      "value": "[ALL:08068000]",
+      "title": "filter:sites"
+     },
+     {
+      "value": "[mode=PERIOD, period=P2D, modifiedSince=null]",
+      "title": "filter:timeRange"
+     },
+     {
+      "value": "methodIds=[ALL]",
+      "title": "filter:methodId"
+     },
+     {
+      "value": "2026-11-05T04:59:36.619Z",
+      "title": "requestDT"
+     },
+     {
+      "value": "b2e51fb0-d8d5-11f1-ab83-2cea7f58f5ca",
+      "title": "requestId"
+     },
+     {
+      "value": "Provisional data are subject to revision. Go to http://waterdata.usgs.gov/nwis/help/?provisional for more information.",
+      "title": "disclaimer"
+     },
+     {
+      "value": "vaas01",
+      "title": "server"
+     }
+    ]
+   },
+   "timeSeries": [
+    {
+     "sourceInfo": {
+      "siteName": "W Fk San Jacinto Rv nr Conroe, TX",
+      "siteCode": [
+       {
+        "value": "08068000",
+        "network": "NWIS",
+        "agencyCode": "USGS"
+       }
+      ],
+      "timeZoneInfo": {
+       "defaultTimeZone": {
+        "zoneOffset": "-06:00",
+        "zoneAbbreviation": "CST"
+       },
+       "daylightSavingsTimeZone": {
+        "zoneOffset": "-05:00",
+        "zoneAbbreviation": "CDT"
+       },
+       "siteUsesDaylightSavingsTime": true
+      },
+      "geoLocation": {
+       "geogLocation": {
+        "srs": "EPSG:4326",
+        "latitude": 30.24465738,
+        "longitude": -95.4571616
+       },
+       "localSiteXY": []
+      },
+      "note": [],
+      "siteType": [],
+      "siteProperty": [
+       {
+        "value": "ST",
+        "name": "siteTypeCd"
+       },
+       {
+        "value": "12040101",
+        "name": "hucCd"
+       },
+       {
+        "value": "48",
+        "name": "stateCd"
+       },
+       {
+        "value": "48339",
+        "name": "countyCd"
+       }
+      ]
+     },
+     "variable": {
+      "variableCode": [
+       {
+        "value": "00065",
+        "network": "NWIS",
+        "vocabulary": "NWIS:UnitValues",
+        "variableID": 45807202,
+        "default": true
+       }
+      ],
+      "variableName": "Gage height, ft",
+      "variableDescription": "Gage height, feet",
+      "valueType": "Derived Value",
+      "unit": {
+       "unitCode": "ft"
+      },
+      "options": {
+       "option": [
+        {
+         "name": "Statistic",
+         "optionCode": "00000"
+        }
+       ]
+      },
+      "note": [],
+      "noDataValue": -999999.0,
+      "variableProperty": [],
+      "oid": "45807202"
+     },
+     "values": [
+      {
+       "value": [
+        {
+         "value": "93.67",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-02T23:15:00.000-06:00"
+        },
+        {
+         "value": "93.68",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-02T23:30:00.000-06:00"
+        },
+        {
+         "value": "93.68",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-02T23:45:00.000-06:00"
+        },
+        {
+         "value": "93.68",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T00:00:00.000-06:00"
+        },
+        {
+         "value": "93.68",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T00:15:00.000-06:00"
+        },
+        {
+         "value": "93.68",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T00:30:00.000-06:00"
+        },
+        {
+         "value": "93.68",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T00:45:00.000-06:00"
+        },
+        {
+         "value": "93.68",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T01:00:00.000-06:00"
+        },
+        {
+         "value": "93.68",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T01:15:00.000-06:00"
+        },
+        {
+         "value": "93.68",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T01:30:00.000-06:00"
+        },
+        {
+         "value": "93.69",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T01:45:00.000-06:00"
+        },
+        {
+         "value": "93.69",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T02:00:00.000-06:00"
+        },
+        {
+         "value": "93.69",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T02:15:00.000-06:00"
+        },
+        {
+         "value": "93.69",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T02:30:00.000-06:00"
+        },
+        {
+         "value": "93.69",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T02:45:00.000-06:00"
+        },
+        {
+         "value": "93.68",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T03:00:00.000-06:00"
+        },
+        {
+         "value": "93.69",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T03:15:00.000-06:00"
+        },
+        {
+         "value": "93.68",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T03:30:00.000-06:00"
+        },
+        {
+         "value": "93.68",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T03:45:00.000-06:00"
+        },
+        {
+         "value": "93.68",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T04:00:00.000-06:00"
+        },
+        {
+         "value": "93.68",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T04:15:00.000-06:00"
+        },
+        {
+         "value": "93.68",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T04:30:00.000-06:00"
+        },
+        {
+         "value": "93.68",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T04:45:00.000-06:00"
+        },
+        {
+         "value": "93.68",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T05:00:00.000-06:00"
+        },
+        {
+         "value": "93.67",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T05:15:00.000-06:00"
+        },
+        {
+         "value": "93.67",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T05:30:00.000-06:00"
+        },
+        {
+         "value": "93.67",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T05:45:00.000-06:00"
+        },
+        {
+         "value": "93.66",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T06:00:00.000-06:00"
+        },
+        {
+         "value": "93.66",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T06:15:00.000-06:00"
+        },
+        {
+         "value": "93.66",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T06:30:00.000-06:00"
+        },
+        {
+         "value": "93.66",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T06:45:00.000-06:00"
+        },
+        {
+         "value": "93.66",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T07:00:00.000-06:00"
+        },
+        {
+         "value": "93.65",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T07:15:00.000-06:00"
+        },
+        {
+         "value": "93.65",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T07:30:00.000-06:00"
+        },
+        {
+         "value": "93.65",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T07:45:00.000-06:00"
+        },
+        {
+         "value": "93.64",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T08:00:00.000-06:00"
+        },
+        {
+         "value": "93.64",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T08:15:00.000-06:00"
+        },
+        {
+         "value": "93.64",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T08:30:00.000-06:00"
+        },
+        {
+         "value": "93.64",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T08:45:00.000-06:00"
+        },
+        {
+         "value": "93.63",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T09:00:00.000-06:00"
+        },
+        {
+         "value": "93.63",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T09:15:00.000-06:00"
+        },
+        {
+         "value": "93.63",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T09:30:00.000-06:00"
+        },
+        {
+         "value": "93.62",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T09:45:00.000-06:00"
+        },
+        {
+         "value": "93.62",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T10:00:00.000-06:00"
+        },
+        {
+         "value": "93.62",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T10:15:00.000-06:00"
+        },
+        {
+         "value": "93.62",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T10:30:00.000-06:00"
+        },
+        {
+         "value": "93.62",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T10:45:00.000-06:00"
+        },
+        {
+         "value": "93.62",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T11:00:00.000-06:00"
+        },
+        {
+         "value": "93.62",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T11:15:00.000-06:00"
+        },
+        {
+         "value": "93.62",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T11:30:00.000-06:00"
+        },
+        {
+         "value": "93.63",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T11:45:00.000-06:00"
+        },
+        {
+         "value": "93.59",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T12:00:00.000-06:00"
+        },
+        {
+         "value": "93.63",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T12:15:00.000-06:00"
+        },
+        {
+         "value": "93.62",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T12:30:00.000-06:00"
+        },
+        {
+         "value": "93.66",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T12:45:00.000-06:00"
+        },
+        {
+         "value": "93.67",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T13:00:00.000-06:00"
+        },
+        {
+         "value": "93.67",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T13:15:00.000-06:00"
+        },
+        {
+         "value": "93.68",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T13:30:00.000-06:00"
+        },
+        {
+         "value": "93.69",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T13:45:00.000-06:00"
+        },
+        {
+         "value": "93.71",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T14:00:00.000-06:00"
+        },
+        {
+         "value": "93.74",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T14:15:00.000-06:00"
+        },
+        {
+         "value": "93.74",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T14:30:00.000-06:00"
+        },
+        {
+         "value": "93.76",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T14:45:00.000-06:00"
+        },
+        {
+         "value": "93.76",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T15:00:00.000-06:00"
+        },
+        {
+         "value": "93.76",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T15:15:00.000-06:00"
+        },
+        {
+         "value": "93.77",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T15:30:00.000-06:00"
+        },
+        {
+         "value": "93.76",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T15:45:00.000-06:00"
+        },
+        {
+         "value": "93.76",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T16:00:00.000-06:00"
+        },
+        {
+         "value": "93.76",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T16:15:00.000-06:00"
+        },
+        {
+         "value": "93.76",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T16:30:00.000-06:00"
+        },
+        {
+         "value": "93.76",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T16:45:00.000-06:00"
+        },
+        {
+         "value": "93.77",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T17:00:00.000-06:00"
+        },
+        {
+         "value": "93.77",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T17:15:00.000-06:00"
+        },
+        {
+         "value": "93.78",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T17:30:00.000-06:00"
+        },
+        {
+         "value": "93.80",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T17:45:00.000-06:00"
+        },
+        {
+         "value": "93.83",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T18:00:00.000-06:00"
+        },
+        {
+         "value": "93.85",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T18:15:00.000-06:00"
+        },
+        {
+         "value": "93.89",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T18:30:00.000-06:00"
+        },
+        {
+         "value": "93.93",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T18:45:00.000-06:00"
+        },
+        {
+         "value": "93.96",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T19:00:00.000-06:00"
+        },
+        {
+         "value": "94.00",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T19:15:00.000-06:00"
+        },
+        {
+         "value": "94.03",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T19:30:00.000-06:00"
+        },
+        {
+         "value": "94.05",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T19:45:00.000-06:00"
+        },
+        {
+         "value": "94.07",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T20:00:00.000-06:00"
+        },
+        {
+         "value": "94.07",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T20:15:00.000-06:00"
+        },
+        {
+         "value": "94.08",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T20:30:00.000-06:00"
+        },
+        {
+         "value": "94.08",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T20:45:00.000-06:00"
+        },
+        {
+         "value": "94.07",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T21:00:00.000-06:00"
+        },
+        {
+         "value": "94.07",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T21:15:00.000-06:00"
+        },
+        {
+         "value": "94.06",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T21:30:00.000-06:00"
+        },
+        {
+         "value": "94.04",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T21:45:00.000-06:00"
+        },
+        {
+         "value": "94.03",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T22:00:00.000-06:00"
+        },
+        {
+         "value": "94.02",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T22:15:00.000-06:00"
+        },
+        {
+         "value": "94.01",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T22:30:00.000-06:00"
+        },
+        {
+         "value": "93.99",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T22:45:00.000-06:00"
+        },
+        {
+         "value": "93.98",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T23:00:00.000-06:00"
+        },
+        {
+         "value": "93.97",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T23:15:00.000-06:00"
+        },
+        {
+         "value": "93.96",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T23:30:00.000-06:00"
+        },
+        {
+         "value": "93.95",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-03T23:45:00.000-06:00"
+        },
+        {
+         "value": "93.95",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T00:00:00.000-06:00"
+        },
+        {
+         "value": "93.94",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T00:15:00.000-06:00"
+        },
+        {
+         "value": "93.94",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T00:30:00.000-06:00"
+        },
+        {
+         "value": "93.93",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T00:45:00.000-06:00"
+        },
+        {
+         "value": "93.93",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T01:00:00.000-06:00"
+        },
+        {
+         "value": "93.93",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T01:15:00.000-06:00"
+        },
+        {
+         "value": "93.93",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T01:30:00.000-06:00"
+        },
+        {
+         "value": "93.93",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T01:45:00.000-06:00"
+        },
+        {
+         "value": "93.93",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T02:00:00.000-06:00"
+        },
+        {
+         "value": "93.92",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T02:15:00.000-06:00"
+        },
+        {
+         "value": "93.92",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T02:30:00.000-06:00"
+        },
+        {
+         "value": "93.92",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T02:45:00.000-06:00"
+        },
+        {
+         "value": "93.91",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T03:00:00.000-06:00"
+        },
+        {
+         "value": "93.91",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T03:15:00.000-06:00"
+        },
+        {
+         "value": "93.91",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T03:30:00.000-06:00"
+        },
+        {
+         "value": "93.90",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T03:45:00.000-06:00"
+        },
+        {
+         "value": "93.89",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T04:00:00.000-06:00"
+        },
+        {
+         "value": "93.89",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T04:15:00.000-06:00"
+        },
+        {
+         "value": "93.88",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T04:30:00.000-06:00"
+        },
+        {
+         "value": "93.87",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T04:45:00.000-06:00"
+        },
+        {
+         "value": "93.87",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T05:00:00.000-06:00"
+        },
+        {
+         "value": "93.86",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T05:15:00.000-06:00"
+        },
+        {
+         "value": "93.85",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T05:30:00.000-06:00"
+        },
+        {
+         "value": "93.84",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T05:45:00.000-06:00"
+        },
+        {
+         "value": "93.84",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T06:00:00.000-06:00"
+        },
+        {
+         "value": "93.83",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T06:15:00.000-06:00"
+        },
+        {
+         "value": "93.82",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T06:30:00.000-06:00"
+        },
+        {
+         "value": "93.81",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T06:45:00.000-06:00"
+        },
+        {
+         "value": "93.81",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T07:00:00.000-06:00"
+        },
+        {
+         "value": "93.80",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T07:15:00.000-06:00"
+        },
+        {
+         "value": "93.80",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T07:30:00.000-06:00"
+        },
+        {
+         "value": "93.79",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T07:45:00.000-06:00"
+        },
+        {
+         "value": "93.79",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T08:00:00.000-06:00"
+        },
+        {
+         "value": "93.78",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T08:15:00.000-06:00"
+        },
+        {
+         "value": "93.78",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T08:30:00.000-06:00"
+        },
+        {
+         "value": "93.77",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T08:45:00.000-06:00"
+        },
+        {
+         "value": "93.77",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T09:00:00.000-06:00"
+        },
+        {
+         "value": "93.76",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T09:15:00.000-06:00"
+        },
+        {
+         "value": "93.76",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T09:30:00.000-06:00"
+        },
+        {
+         "value": "93.75",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T09:45:00.000-06:00"
+        },
+        {
+         "value": "93.75",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T10:00:00.000-06:00"
+        },
+        {
+         "value": "93.74",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T10:15:00.000-06:00"
+        },
+        {
+         "value": "93.74",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T10:30:00.000-06:00"
+        },
+        {
+         "value": "93.74",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T10:45:00.000-06:00"
+        },
+        {
+         "value": "93.74",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T11:00:00.000-06:00"
+        },
+        {
+         "value": "93.73",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T11:15:00.000-06:00"
+        },
+        {
+         "value": "93.73",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T11:30:00.000-06:00"
+        },
+        {
+         "value": "93.73",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T11:45:00.000-06:00"
+        },
+        {
+         "value": "93.73",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T12:00:00.000-06:00"
+        },
+        {
+         "value": "93.73",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T12:15:00.000-06:00"
+        },
+        {
+         "value": "93.74",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T12:30:00.000-06:00"
+        },
+        {
+         "value": "93.74",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T12:45:00.000-06:00"
+        },
+        {
+         "value": "93.74",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T13:00:00.000-06:00"
+        },
+        {
+         "value": "93.74",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T13:15:00.000-06:00"
+        },
+        {
+         "value": "93.74",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T13:30:00.000-06:00"
+        },
+        {
+         "value": "93.74",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T13:45:00.000-06:00"
+        },
+        {
+         "value": "93.74",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T14:00:00.000-06:00"
+        },
+        {
+         "value": "93.74",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T14:15:00.000-06:00"
+        },
+        {
+         "value": "93.74",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T14:30:00.000-06:00"
+        },
+        {
+         "value": "93.75",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T14:45:00.000-06:00"
+        },
+        {
+         "value": "93.75",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T15:00:00.000-06:00"
+        },
+        {
+         "value": "93.74",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T15:15:00.000-06:00"
+        },
+        {
+         "value": "93.74",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T15:30:00.000-06:00"
+        },
+        {
+         "value": "93.74",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T15:45:00.000-06:00"
+        },
+        {
+         "value": "93.74",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T16:00:00.000-06:00"
+        },
+        {
+         "value": "93.74",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T16:15:00.000-06:00"
+        },
+        {
+         "value": "93.74",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T16:30:00.000-06:00"
+        },
+        {
+         "value": "93.74",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T16:45:00.000-06:00"
+        },
+        {
+         "value": "93.74",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T17:00:00.000-06:00"
+        },
+        {
+         "value": "93.74",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T17:15:00.000-06:00"
+        },
+        {
+         "value": "93.74",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T17:30:00.000-06:00"
+        },
+        {
+         "value": "93.73",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T17:45:00.000-06:00"
+        },
+        {
+         "value": "93.73",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T18:00:00.000-06:00"
+        },
+        {
+         "value": "93.73",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T18:15:00.000-06:00"
+        },
+        {
+         "value": "93.73",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T18:30:00.000-06:00"
+        },
+        {
+         "value": "93.73",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T18:45:00.000-06:00"
+        },
+        {
+         "value": "93.72",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T19:00:00.000-06:00"
+        },
+        {
+         "value": "93.72",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T19:15:00.000-06:00"
+        },
+        {
+         "value": "93.72",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T19:30:00.000-06:00"
+        },
+        {
+         "value": "93.72",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T19:45:00.000-06:00"
+        },
+        {
+         "value": "93.72",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T20:00:00.000-06:00"
+        },
+        {
+         "value": "93.72",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T20:15:00.000-06:00"
+        },
+        {
+         "value": "93.72",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T20:30:00.000-06:00"
+        },
+        {
+         "value": "93.72",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T20:45:00.000-06:00"
+        },
+        {
+         "value": "93.72",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T21:00:00.000-06:00"
+        },
+        {
+         "value": "93.72",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T21:15:00.000-06:00"
+        },
+        {
+         "value": "93.72",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T21:30:00.000-06:00"
+        },
+        {
+         "value": "93.72",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T21:45:00.000-06:00"
+        },
+        {
+         "value": "93.72",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T22:00:00.000-06:00"
+        },
+        {
+         "value": "93.72",
+         "qualifiers": [
+          "P"
+         ],
+         "dateTime": "2026-11-04T22:15:00.000-06:00"
+        }
+       ],
+       "qualifier": [
+        {
+         "qualifierCode": "P",
+         "qualifierDescription": "Incomplete or partial aggregated record.",
+         "qualifierID": 0,
+         "network": "NWIS",
+         "vocabulary": "uv_rmk_cd"
+        }
+       ],
+       "qualityControlLevel": [],
+       "method": [
+        {
+         "methodDescription": "",
+         "methodID": 140279
+        }
+       ],
+       "source": [],
+       "offset": [],
+       "sample": [],
+       "censorCode": []
+      }
+     ],
+     "name": "USGS:08068000:00065:00000"
+    }
+   ]
+  },
+  "nil": false,
+  "globalScope": true,
+  "typeSubstituted": false
+ }
+}

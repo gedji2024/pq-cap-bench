@@ -1,0 +1,11 @@
+{
+  "query_url": "https://api.water.noaa.gov/nwps/v1/gauges/08076000",
+  "final_url": "https://api.water.noaa.gov/nwps/v1/gauges/08076000",
+  "http_status": 200,
+  "retrieved_utc": "2026-11-05T04:59:36+00:00",
+  "sha256": "ada925a531f28787aa51d490b2dcf63ff8c6e0aabf54306c9fd5112e4ac68f85",
+  "bytes": 29875,
+  "usgs_site": "08076000",
+  "lid": "GBHT2",
+  "gauge_page": "https://water.noaa.gov/gauges/GBHT2"
+}

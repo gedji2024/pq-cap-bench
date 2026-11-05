@@ -23,6 +23,7 @@ import numpy as np
 import pandas as pd
 
 from . import envelope as ev
+from . import nws
 
 KEY = bytes(range(64, 96))
 TAG = 8
@@ -357,7 +358,7 @@ def event_list(cfg: dict, root: Path | None = None) -> list[dict]:
             s = load_series(root / g["file"], cfg["series"]["ft_to_cm"])
             for i, e in enumerate(select_events(s, rule["top_k"], rule["separation_days"], rule["half_window_days"]), 1):
                 out.append({"name": f"{g['site']} peak {i} ({e['peak_time']:%Y-%m-%d})", "file": g["file"],
-                            "start": str(e["start"]), "end": str(e["end"])})
+                            "start": str(e["start"]), "end": str(e["end"]), "usgs": g.get("usgs")})
         return out
     if cfg.get("events"):
         return cfg["events"]
@@ -365,19 +366,38 @@ def event_list(cfg: dict, root: Path | None = None) -> list[dict]:
 
 
 def relative_profile(actions_cfg: dict, stage: np.ndarray, rel: dict) -> tuple[dict, int]:
-    """D4: gauges differ in stage scale, so the legitimate alert threshold and the envelope threshold band are
-    fractions of the event's own stage range (ASSUMED fractions); S4-F firmware threshold bounds become the
-    full catalogue range (static firmware cannot know the river)."""
+    """D4 fallback: the legitimate alert threshold and the envelope threshold band are fractions of the event's
+    own stage range (ASSUMED fractions)."""
     lo, hi = float(stage.min()), float(stage.max())
     at = lambda f: int(round(lo + f * (hi - lo)))  # noqa: E731
+    return threshold_profile(actions_cfg, (at(rel["envelope_band"][0]), at(rel["envelope_band"][1]))), \
+        at(rel["alert_fraction"])
+
+
+def threshold_profile(actions_cfg: dict, band_cm: tuple[int, int]) -> dict:
+    """Actions profile with the envelope band for set_alert_threshold replaced by `band_cm`; S4-F firmware threshold
+    bounds become the full catalogue range (static firmware cannot know the river)."""
     a = {**actions_cfg, "envelope": {**actions_cfg["envelope"], "rules": dict(actions_cfg["envelope"]["rules"])},
          "firmware_bounds": {**actions_cfg["firmware_bounds"], "rules": dict(actions_cfg["firmware_bounds"]["rules"])}}
     r = a["envelope"]["rules"]["set_alert_threshold"]
-    a["envelope"]["rules"]["set_alert_threshold"] = {**r, "lo": at(rel["envelope_band"][0]), "hi": at(rel["envelope_band"][1])}
+    a["envelope"]["rules"]["set_alert_threshold"] = {**r, "lo": int(band_cm[0]), "hi": int(band_cm[1])}
     c = actions_cfg["catalogue"]["set_alert_threshold"]
     a["firmware_bounds"]["rules"]["set_alert_threshold"] = {**a["firmware_bounds"]["rules"]["set_alert_threshold"],
                                                             "lo": c["min"], "hi": c["max"]}
-    return a, at(rel["alert_fraction"])
+    return a
+
+
+def nws_thresholds(cats: dict, ft_to_cm: float) -> dict | None:
+    """F4: scoring levels, legitimate alert threshold and envelope band from the NWS flood categories.
+    levels = every category NWS defines; alert = action stage (choice); envelope band (POLICY) =
+    [action - (minor - action), minor]. None if NWS gives no action or minor stage, or the datum check failed."""
+    if not cats.get("datum_ok") or cats.get("action") is None or cats.get("minor") is None:
+        return None
+    cm = lambda ft: int(round(ft * ft_to_cm))  # noqa: E731
+    a, m = cats["action"], cats["minor"]
+    return {"levels_cm": [ft * ft_to_cm for ft in (cats[k] for k in nws.CATEGORIES) if ft is not None],
+            "level_names": [k for k in nws.CATEGORIES if cats[k] is not None],
+            "alert_cm": cm(a), "band_cm": (cm(a - (m - a)), cm(m)), "source": f"NWS {cats['lid']}"}
 
 
 def event_stage(ev_: dict, cfg: dict, root: Path) -> tuple[np.ndarray, pd.Series]:
@@ -397,25 +417,39 @@ def run(cfg: dict, actions_cfg: dict, root: Path) -> tuple[pd.DataFrame, pd.Data
     cfg = {**cfg, "_profile_inv": ev.invariants_from_config(actions_cfg)}
     rows, events, metas = [], [], []
     rel = cfg["harm"].get("relative")
+    nws_cfg = cfg.get("nws")
     for ev_ in event_list(cfg, root):
         stage, s = event_stage(ev_, cfg, root)
         ecfg = cfg
-        if rel:
-            acfg_e, alert = relative_profile(actions_cfg, stage, rel)
+        th = None
+        if nws_cfg and ev_.get("usgs") and (root / nws_cfg["dir"] / f"{ev_['usgs']}.json").exists():
+            th = nws_thresholds(nws.load(root / nws_cfg["dir"], ev_["usgs"], nws_cfg["datum_tol_ft"]),
+                                cfg["series"]["ft_to_cm"])
+        if th:
+            acfg_e = threshold_profile(actions_cfg, th["band_cm"])
             env, fw = ev.envelope_from_config(acfg_e), ev.firmware_policy_from_config(acfg_e)
-            ecfg = {**cfg, "device": {**cfg["device"], "alert_threshold_cm": alert}}
-        # reference levels: absolute (ft) when given, else fractions of the event's own stage range (D4)
-        if cfg["harm"].get("reference_levels_ft"):
-            levels = [x * cfg["series"]["ft_to_cm"] for x in cfg["harm"]["reference_levels_ft"]]
+            ecfg = {**cfg, "device": {**cfg["device"], "alert_threshold_cm": th["alert_cm"]}}
+            levels, level_src = th["levels_cm"], th["source"]
         else:
-            lo, hi = float(stage.min()), float(stage.max())
-            levels = [lo + f * (hi - lo) for f in cfg["harm"]["reference_level_fractions"]]
+            if rel:
+                acfg_e, alert = relative_profile(actions_cfg, stage, rel)
+                env, fw = ev.envelope_from_config(acfg_e), ev.firmware_policy_from_config(acfg_e)
+                ecfg = {**cfg, "device": {**cfg["device"], "alert_threshold_cm": alert}}
+            # reference levels: absolute (ft) when given, else fractions of the event's own stage range (ASSUMED)
+            if cfg["harm"].get("reference_levels_ft"):
+                levels = [x * cfg["series"]["ft_to_cm"] for x in cfg["harm"]["reference_levels_ft"]]
+                level_src = "reference_levels_ft (ASSUMED)"
+            else:
+                lo, hi = float(stage.min()), float(stage.max())
+                levels = [lo + f * (hi - lo) for f in cfg["harm"]["reference_level_fractions"]]
+                level_src = "fractions of event range (ASSUMED)"
         metas.append({"event": ev_["name"], "file": ev_["file"], "n_readings": int(s.size), "first": str(s.index[0]),
                       "last": str(s.index[-1]), "max_gap_min": max_gap_min(s), "gaps_over_60_min": gaps(s, 60),
                       "peak_cm": float(s.max()), "peak_time": str(s.idxmax()),
                       "alert_threshold_cm": ecfg["device"]["alert_threshold_cm"],
                       "peak_bracketed_by_gap": any(g["after"] <= str(s.idxmax()) <= g["before"] for g in gaps(s, 60)),
-                      "minutes": int(stage.size), "levels_cm": levels})
+                      "minutes": int(stage.size), "levels_cm": levels, "threshold_source": level_src,
+                      "level_names": th["level_names"] if th else None})
         for bat in bats:
             for scheme in cfg["schemes"]:
                 for comp in cfg["compromises"]:

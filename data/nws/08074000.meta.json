@@ -1,0 +1,11 @@
+{
+  "query_url": "https://api.water.noaa.gov/nwps/v1/gauges/08074000",
+  "final_url": "https://api.water.noaa.gov/nwps/v1/gauges/08074000",
+  "http_status": 200,
+  "retrieved_utc": "2026-11-05T04:59:33+00:00",
+  "sha256": "738cc344427647360126aaf635540c8b7141e9418fbe896e2bae4bb200757e9c",
+  "bytes": 16415,
+  "usgs_site": "08074000",
+  "lid": "BBST2",
+  "gauge_page": "https://water.noaa.gov/gauges/BBST2"
+}

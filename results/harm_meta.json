@@ -26,14 +26,21 @@
       ],
       "peak_cm": 1277.112,
       "peak_time": "2017-08-28 06:00:00+00:00",
-      "alert_threshold_cm": 667,
+      "alert_threshold_cm": 518,
       "peak_bracketed_by_gap": true,
       "minutes": 8641,
       "levels_cm": [
-        362.0262,
-        667.0548000000001,
-        972.0834000000001,
-        1155.10056
+        518.16,
+        853.44,
+        899.16,
+        975.36
+      ],
+      "threshold_source": "NWS BBST2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
       ],
       "source": {
         "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
@@ -58,14 +65,21 @@
       "gaps_over_60_min": [],
       "peak_cm": 709.2696,
       "peak_time": "2017-01-18 15:00:00+00:00",
-      "alert_threshold_cm": 376,
+      "alert_threshold_cm": 518,
       "peak_bracketed_by_gap": false,
       "minutes": 8641,
       "levels_cm": [
-        209.54999999999998,
-        376.1232,
-        542.6963999999999,
-        642.64032
+        518.16,
+        853.44,
+        899.16,
+        975.36
+      ],
+      "threshold_source": "NWS BBST2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
       ],
       "source": {
         "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
@@ -90,14 +104,21 @@
       "gaps_over_60_min": [],
       "peak_cm": 418.4904,
       "peak_time": "2017-11-18 19:30:00+00:00",
-      "alert_threshold_cm": 398,
+      "alert_threshold_cm": 427,
       "peak_bracketed_by_gap": false,
       "minutes": 8641,
       "levels_cm": [
-        387.4008,
-        397.764,
-        408.1272,
-        414.34512
+        426.72,
+        487.68,
+        518.16,
+        548.64
+      ],
+      "threshold_source": "NWS ANNM4",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
       ],
       "source": {
         "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=04174500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
@@ -122,14 +143,21 @@
       "gaps_over_60_min": [],
       "peak_cm": 411.48,
       "peak_time": "2017-10-16 22:00:00+00:00",
-      "alert_threshold_cm": 394,
+      "alert_threshold_cm": 427,
       "peak_bracketed_by_gap": false,
       "minutes": 8641,
       "levels_cm": [
-        384.7338,
-        393.6492,
-        402.56460000000004,
-        407.91384
+        426.72,
+        487.68,
+        518.16,
+        548.64
+      ],
+      "threshold_source": "NWS ANNM4",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
       ],
       "source": {
         "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=04174500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
@@ -154,14 +182,21 @@
       "gaps_over_60_min": [],
       "peak_cm": 252.98400000000004,
       "peak_time": "2017-05-07 12:45:00+00:00",
-      "alert_threshold_cm": 189,
+      "alert_threshold_cm": 152,
       "peak_bracketed_by_gap": false,
       "minutes": 8641,
       "levels_cm": [
-        157.6578,
-        189.43320000000003,
-        221.20860000000005,
-        240.27384000000004
+        152.4,
+        304.8,
+        365.76,
+        426.72
+      ],
+      "threshold_source": "NWS BRKM2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
       ],
       "source": {
         "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=01646500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
@@ -186,14 +221,21 @@
       "gaps_over_60_min": [],
       "peak_cm": 211.5312,
       "peak_time": "2017-01-26 06:15:00+00:00",
-      "alert_threshold_cm": 165,
+      "alert_threshold_cm": 152,
       "peak_bracketed_by_gap": false,
       "minutes": 8641,
       "levels_cm": [
-        141.351,
-        164.7444,
-        188.13780000000003,
-        202.17384
+        152.4,
+        304.8,
+        365.76,
+        426.72
+      ],
+      "threshold_source": "NWS BRKM2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
       ],
       "source": {
         "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=01646500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",

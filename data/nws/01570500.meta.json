@@ -1,0 +1,11 @@
+{
+  "query_url": "https://api.water.noaa.gov/nwps/v1/gauges/01570500",
+  "final_url": "https://api.water.noaa.gov/nwps/v1/gauges/01570500",
+  "http_status": 200,
+  "retrieved_utc": "2026-11-05T04:59:36+00:00",
+  "sha256": "f4b024ad289746876319909c5712441fb79d1e1ffe631b698510b243c5252376",
+  "bytes": 24154,
+  "usgs_site": "01570500",
+  "lid": "HARP1",
+  "gauge_page": "https://water.noaa.gov/gauges/HARP1"
+}

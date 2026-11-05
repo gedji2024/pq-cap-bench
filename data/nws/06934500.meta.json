@@ -1,0 +1,11 @@
+{
+  "query_url": "https://api.water.noaa.gov/nwps/v1/gauges/06934500",
+  "final_url": "https://api.water.noaa.gov/nwps/v1/gauges/06934500",
+  "http_status": 200,
+  "retrieved_utc": "2026-11-05T04:59:37+00:00",
+  "sha256": "069b860503565c392753fd57d2c6e2a4b3ff71cc43617a21b09d23e2efde1222",
+  "bytes": 80613,
+  "usgs_site": "06934500",
+  "lid": "HRNM7",
+  "gauge_page": "https://water.noaa.gov/gauges/HRNM7"
+}

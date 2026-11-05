@@ -1,0 +1,11 @@
+{
+  "query_url": "https://api.water.noaa.gov/nwps/v1/gauges/08068000",
+  "final_url": "https://api.water.noaa.gov/nwps/v1/gauges/08068000",
+  "http_status": 200,
+  "retrieved_utc": "2026-11-05T04:59:36+00:00",
+  "sha256": "09849ea864187307b05ba6c09f7516377b676911f848829f419106209f702b87",
+  "bytes": 23853,
+  "usgs_site": "08068000",
+  "lid": "CFKT2",
+  "gauge_page": "https://water.noaa.gov/gauges/CFKT2"
+}

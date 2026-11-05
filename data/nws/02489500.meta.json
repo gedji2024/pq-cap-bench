@@ -1,0 +1,11 @@
+{
+  "query_url": "https://api.water.noaa.gov/nwps/v1/gauges/02489500",
+  "final_url": "https://api.water.noaa.gov/nwps/v1/gauges/02489500",
+  "http_status": 200,
+  "retrieved_utc": "2026-11-05T04:59:37+00:00",
+  "sha256": "4b48980f974913588744462c518ebbbccd1f0fec97d30aa32266c4767945a272",
+  "bytes": 47635,
+  "usgs_site": "02489500",
+  "lid": "BXAL1",
+  "gauge_page": "https://water.noaa.gov/gauges/BXAL1"
+}

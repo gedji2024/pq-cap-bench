@@ -51,12 +51,19 @@ battery:
 # same calendar year. top_k / separation / window are selection parameters, not data.
 events_rule:
   gauges:
-    - {site: "USGS 08074000 Buffalo Bayou at Houston, TX", file: data/usgs_08074000_00065_2017-01-01_2017-12-31.json}
-    - {site: "USGS 04174500 Huron River at Ann Arbor, MI", file: data/usgs_04174500_00065_2017-01-01_2017-12-31.json}
-    - {site: "USGS 01646500 Potomac River near Wash, DC Little Falls", file: data/usgs_01646500_00065_2017-01-01_2017-12-31.json}
+    - {usgs: "08074000", site: "USGS 08074000 Buffalo Bayou at Houston, TX", file: data/usgs_08074000_00065_2017-01-01_2017-12-31.json}
+    - {usgs: "04174500", site: "USGS 04174500 Huron River at Ann Arbor, MI", file: data/usgs_04174500_00065_2017-01-01_2017-12-31.json}
+    - {usgs: "01646500", site: "USGS 01646500 Potomac River near Wash, DC Little Falls", file: data/usgs_01646500_00065_2017-01-01_2017-12-31.json}
   top_k: 2
   separation_days: 14
   half_window_days: 3
+# F4: NWS flood categories (action, minor, moderate, major) from the NWS National Water Prediction Service,
+# cached raw in data/nws/ by scripts/fetch_nws.py (query URL, gauge page, retrieval date, SHA-256 in the
+# .meta.json). Used for scoring levels, the legitimate alert threshold (= action stage, CHOICE) and the
+# envelope threshold band (POLICY: [action - (minor - action), minor]). A gauge is used only if NWS stage and
+# USGS gage height agree within datum_tol_ft at the latest common reading (datum check, CHOICE of tolerance).
+# Gauges without NWS categories keep the fraction rule below (ASSUMED).
+nws: {dir: data/nws, datum_tol_ft: 0.5}
 statistics: {bootstrap: 10000, seed: 20261104, ci: 0.95}
 
 # Scoring. Gauges differ in stage scale, so thresholds are FRACTIONS of each event's own stage range (ASSUMED).
