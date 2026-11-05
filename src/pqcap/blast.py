@@ -7,6 +7,8 @@ is state-dependent (physical invariants), so every count is made in an explicit 
 
 from __future__ import annotations
 
+import dataclasses
+
 import pandas as pd
 
 from . import envelope as ev
@@ -82,14 +84,16 @@ def attacker_keys(threat: dict, compromise: str) -> set[str]:
 
 
 def blast_compromise(catalogue, env: ev.Policy, firmware: ev.Policy, inv: ev.Invariants, threat: dict,
-                     tag_len: int = TAG_LEN_DEFAULT) -> pd.DataFrame:
+                     tag_len: int = TAG_LEN_DEFAULT, max_alert_threshold: int = 0) -> pd.DataFrame:
     """Accepted commands per (scheme, compromise, device state, action).
 
     The attacker MACs with the device's session key only if a compromised party holds `session` keys;
     otherwise with a key of its own (and the device's MAC check rejects it). For S6 / S4-E the policy in
     force is the legitimate envelope, unless the attacker holds that scheme's envelope key, in which case
     it installs a permissive envelope (whole catalogue, no invariants). Every count runs the device check.
+    `max_alert_threshold` (F3) is the write-once commissioning bound added to the S6+F firmware floor.
     """
+    floor = dataclasses.replace(inv, max_alert_threshold=max_alert_threshold)
     rows = []
     for comp, spec in threat["compromises"].items():
         keys = attacker_keys(threat, comp)
@@ -103,9 +107,9 @@ def blast_compromise(catalogue, env: ev.Policy, firmware: ev.Policy, inv: ev.Inv
                 chk, h = (lambda s, m: ev.check_s4(catalogue, s, m, DEVICE_KEY, tag_len)), 0
             elif scheme == "S4-F":
                 chk, h = (lambda s, m: ev.check_s4f(firmware, catalogue, s, m, DEVICE_KEY, tag_len)), 0
-            elif scheme == "S6+F":  # D2: firmware floor + OP token for "disable"
+            elif scheme == "S6+F":  # D2: firmware floor (+ F3 commissioning bounds) + OP token for "disable"
                 chk, h = (lambda s, m, p=pol, op="op_approval" in keys: ev.check_s6f(
-                    p, inv, catalogue, s, m, DEVICE_KEY, tag_len, op)), env.handle
+                    p, floor, catalogue, s, m, DEVICE_KEY, tag_len, op)), env.handle
             else:
                 chk, h = (lambda s, m, p=pol: ev.check_enveloped(p, catalogue, s, m, DEVICE_KEY, tag_len)), env.handle
             if pdp:  # the honest PDP only emits commands its policy (event envelope) allows in this state

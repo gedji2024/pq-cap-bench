@@ -784,11 +784,11 @@ Reference levels: NWS flood categories where the gauge has them (Sec. 7i, F4); o
 | PS-LB/good | S6 | C1+C3+OP | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
 | PS-LB/good | S6+F | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
 | PS-LB/good | S6+F | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/good | S6+F | C1 | suppress | - | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 36] | inf (missed) [54, inf (missed)] | 0.10 [0.05, 0.14] |
+| PS-LB/good | S6+F | C1 | suppress | - | 41 | 135 | 3 | 6 [5, 8] | 16 [15, 18] | inf (missed) [19, inf (missed)] | 0.02 [0.00, 0.05] |
 | PS-LB/good | S6+F | C1 | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/good | S6+F | C1+C3 | suppress | - | 41 | 135 | 9 | 128 [10, 237] | 1,171 [483, inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.53 [0.37, 0.69] |
+| PS-LB/good | S6+F | C1+C3 | suppress | - | 41 | 135 | 3 | 6 [5, 8] | 16 [15, 18] | inf (missed) [19, inf (missed)] | 0.02 [0.00, 0.05] |
 | PS-LB/good | S6+F | C1+C3 | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/good | S6+F | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/good | S6+F | C1+C3+OP | suppress | - | 41 | 135 | 133 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.95, 1.00] |
 | PS-LB/good | S6+F | C1+C3+OP | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
 | PS-LB/poor | S4 | none | - | naive | 41 | 135 | 3 | 5 [4, 6] | 21 [9, 45] | inf (missed) [58, inf (missed)] | 0.09 [0.03, 0.15] |
 | PS-LB/poor | S4 | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 21 [9, 45] | inf (missed) [58, inf (missed)] | 0.09 [0.04, 0.15] |
@@ -824,11 +824,11 @@ Reference levels: NWS flood categories where the gauge has them (Sec. 7i, F4); o
 | PS-LB/poor | S6 | C1+C3+OP | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
 | PS-LB/poor | S6+F | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
 | PS-LB/poor | S6+F | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/poor | S6+F | C1 | suppress | - | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 36] | inf (missed) [54, inf (missed)] | 0.10 [0.05, 0.14] |
+| PS-LB/poor | S6+F | C1 | suppress | - | 41 | 135 | 3 | 6 [5, 8] | 16 [15, 18] | inf (missed) [19, inf (missed)] | 0.02 [0.00, 0.05] |
 | PS-LB/poor | S6+F | C1 | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/poor | S6+F | C1+C3 | suppress | - | 41 | 135 | 9 | 128 [10, 237] | 1,171 [500, inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.53 [0.37, 0.69] |
+| PS-LB/poor | S6+F | C1+C3 | suppress | - | 41 | 135 | 3 | 6 [5, 8] | 16 [15, 18] | inf (missed) [19, inf (missed)] | 0.02 [0.00, 0.05] |
 | PS-LB/poor | S6+F | C1+C3 | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
-| PS-LB/poor | S6+F | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/poor | S6+F | C1+C3+OP | suppress | - | 41 | 135 | 133 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.95, 1.00] |
 | PS-LB/poor | S6+F | C1+C3+OP | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
 | LWL01/good | S4 | none | - | naive | 41 | 135 | 3 | 5 [4, 6] | 21 [9, 45] | inf (missed) [58, inf (missed)] | 0.09 [0.03, 0.15] |
 | LWL01/good | S4 | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 21 [9, 45] | inf (missed) [58, inf (missed)] | 0.09 [0.03, 0.15] |
@@ -864,11 +864,11 @@ Reference levels: NWS flood categories where the gauge has them (Sec. 7i, F4); o
 | LWL01/good | S6 | C1+C3+OP | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
 | LWL01/good | S6+F | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
 | LWL01/good | S6+F | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/good | S6+F | C1 | suppress | - | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 36] | inf (missed) [54, inf (missed)] | 0.10 [0.05, 0.14] |
+| LWL01/good | S6+F | C1 | suppress | - | 41 | 135 | 3 | 6 [5, 8] | 16 [15, 18] | inf (missed) [19, inf (missed)] | 0.02 [0.00, 0.05] |
 | LWL01/good | S6+F | C1 | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/good | S6+F | C1+C3 | suppress | - | 41 | 135 | 9 | 128 [10, 237] | 1,171 [483, inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.53 [0.37, 0.69] |
+| LWL01/good | S6+F | C1+C3 | suppress | - | 41 | 135 | 3 | 6 [5, 8] | 16 [15, 18] | inf (missed) [19, inf (missed)] | 0.02 [0.00, 0.05] |
 | LWL01/good | S6+F | C1+C3 | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/good | S6+F | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/good | S6+F | C1+C3+OP | suppress | - | 41 | 135 | 133 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.95, 1.00] |
 | LWL01/good | S6+F | C1+C3+OP | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
 | LWL01/poor | S4 | none | - | naive | 41 | 135 | 3 | 5 [4, 6] | 21 [9, 45] | inf (missed) [58, inf (missed)] | 0.09 [0.03, 0.15] |
 | LWL01/poor | S4 | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 21 [9, 45] | inf (missed) [58, inf (missed)] | 0.09 [0.03, 0.15] |
@@ -904,11 +904,11 @@ Reference levels: NWS flood categories where the gauge has them (Sec. 7i, F4); o
 | LWL01/poor | S6 | C1+C3+OP | drain | - | 41 | 135 | 132 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.98 [0.94, 1.00] |
 | LWL01/poor | S6+F | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
 | LWL01/poor | S6+F | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
-| LWL01/poor | S6+F | C1 | suppress | - | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 36] | inf (missed) [54, inf (missed)] | 0.10 [0.05, 0.14] |
+| LWL01/poor | S6+F | C1 | suppress | - | 41 | 135 | 3 | 6 [5, 8] | 16 [15, 18] | inf (missed) [19, inf (missed)] | 0.02 [0.00, 0.05] |
 | LWL01/poor | S6+F | C1 | drain | - | 41 | 135 | 3 | 34 [17, 48] | 105 [90, 109] | inf (missed) [118, inf (missed)] | 0.53 [0.46, 0.60] |
-| LWL01/poor | S6+F | C1+C3 | suppress | - | 41 | 135 | 9 | 128 [10, 237] | 1,171 [500, inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.53 [0.37, 0.69] |
+| LWL01/poor | S6+F | C1+C3 | suppress | - | 41 | 135 | 3 | 6 [5, 8] | 16 [15, 18] | inf (missed) [19, inf (missed)] | 0.02 [0.00, 0.05] |
 | LWL01/poor | S6+F | C1+C3 | drain | - | 41 | 135 | 3 | 34 [17, 48] | 105 [90, 109] | inf (missed) [118, inf (missed)] | 0.53 [0.46, 0.60] |
-| LWL01/poor | S6+F | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/poor | S6+F | C1+C3+OP | suppress | - | 41 | 135 | 133 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.95, 1.00] |
 | LWL01/poor | S6+F | C1+C3+OP | drain | - | 41 | 135 | 3 | 34 [20, 48] | 105 [90, 109] | inf (missed) [118, inf (missed)] | 0.53 [0.46, 0.60] |
 
 **D4 - statistics over 41 events** Events come from the F5 pre-registered rule; the 2017 top-k event set of D4 is **SUPERSEDED**. (median [95 % percentile-bootstrap CI of the median], `statistics` in config/harm.yaml; per-event rows in `results/model_harm.csv`). Fractions are per crossing.
@@ -941,11 +941,11 @@ Reference levels: NWS flood categories where the gauge has them (Sec. 7i, F4); o
 | PS-LB/good | S6 | C1+C3 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 | PS-LB/good | S6 | C1+C3+OP | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 | PS-LB/good | S6 | C1+C3+OP | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S6+F | C1 | suppress | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 17.00 [15.00, 22.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6+F | C1 | suppress | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 13.00 [11.00, 15.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 | PS-LB/good | S6+F | C1 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [6.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S6+F | C1+C3 | suppress | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 1.00] | 66.50 [16.00, 297.50] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6+F | C1+C3 | suppress | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 13.00 [11.00, 15.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 | PS-LB/good | S6+F | C1+C3 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S6+F | C1+C3+OP | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6+F | C1+C3+OP | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 15.00 [15.00, 15.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 | PS-LB/good | S6+F | C1+C3+OP | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 | PS-LB/poor | S4 | C1 | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 | PS-LB/poor | S4 | C1 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
@@ -971,11 +971,11 @@ Reference levels: NWS flood categories where the gauge has them (Sec. 7i, F4); o
 | PS-LB/poor | S6 | C1+C3 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 | PS-LB/poor | S6 | C1+C3+OP | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 | PS-LB/poor | S6 | C1+C3+OP | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S6+F | C1 | suppress | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 17.00 [15.00, 22.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6+F | C1 | suppress | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 13.00 [11.00, 15.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 | PS-LB/poor | S6+F | C1 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [6.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S6+F | C1+C3 | suppress | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 1.00] | 66.50 [16.00, 297.50] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6+F | C1+C3 | suppress | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 13.00 [11.00, 15.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 | PS-LB/poor | S6+F | C1+C3 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S6+F | C1+C3+OP | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6+F | C1+C3+OP | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 15.00 [15.00, 15.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 | PS-LB/poor | S6+F | C1+C3+OP | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 | LWL01/good | S4 | C1 | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 | LWL01/good | S4 | C1 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 240.00 [240.00, 240.00] | 0.00 [0.00, 0.00] |
@@ -1001,11 +1001,11 @@ Reference levels: NWS flood categories where the gauge has them (Sec. 7i, F4); o
 | LWL01/good | S6 | C1+C3 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 240.00 [240.00, 240.00] | 0.00 [0.00, 0.00] |
 | LWL01/good | S6 | C1+C3+OP | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 | LWL01/good | S6 | C1+C3+OP | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 240.00 [240.00, 240.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S6+F | C1 | suppress | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 17.00 [15.00, 22.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6+F | C1 | suppress | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 13.00 [11.00, 15.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 | LWL01/good | S6+F | C1 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [6.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S6+F | C1+C3 | suppress | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 1.00] | 66.50 [16.00, 297.50] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6+F | C1+C3 | suppress | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 13.00 [11.00, 15.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 | LWL01/good | S6+F | C1+C3 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S6+F | C1+C3+OP | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6+F | C1+C3+OP | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 15.00 [15.00, 15.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 | LWL01/good | S6+F | C1+C3+OP | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 | LWL01/poor | S4 | C1 | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 | LWL01/poor | S4 | C1 | drain | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 2.50 [0.00, 5.00] | 260.00 [260.00, 260.00] | 1.00 [1.00, 1.00] |
@@ -1031,11 +1031,11 @@ Reference levels: NWS flood categories where the gauge has them (Sec. 7i, F4); o
 | LWL01/poor | S6 | C1+C3 | drain | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 2.50 [0.00, 5.00] | 260.00 [260.00, 260.00] | 1.00 [1.00, 1.00] |
 | LWL01/poor | S6 | C1+C3+OP | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 | LWL01/poor | S6 | C1+C3+OP | drain | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 2.50 [0.00, 5.00] | 260.00 [260.00, 260.00] | 1.00 [1.00, 1.00] |
-| LWL01/poor | S6+F | C1 | suppress | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 17.00 [15.00, 22.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S6+F | C1 | suppress | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 13.00 [11.00, 15.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 | LWL01/poor | S6+F | C1 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.50 [0.50, 0.67] | 84.00 [68.00, 95.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S6+F | C1+C3 | suppress | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 1.00] | 66.50 [16.00, 297.50] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S6+F | C1+C3 | suppress | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 13.00 [11.00, 15.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 | LWL01/poor | S6+F | C1+C3 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.50 [0.50, 0.67] | 84.00 [68.00, 95.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S6+F | C1+C3+OP | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S6+F | C1+C3+OP | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 15.00 [15.00, 15.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 | LWL01/poor | S6+F | C1+C3+OP | drain | - | 41 | 0.00 [0.00, 0.00] | 0.50 [0.50, 0.67] | 84.00 [68.00, 95.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 
 **Legitimate operation (D3)** - unique-request rejection rate (raw-retry rate superseded):
@@ -1096,396 +1096,36 @@ Reference levels: NWS flood categories where the gauge has them (Sec. 7i, F4); o
 
 ## 7g. D2: two-tier defence S6+F
 
-**D2 - S6+F: non-updatable firmware floor (battery floor, minimum alert reporting rate) + updatable S6 envelopes; 'disable sensor' only with an OP approval token (sk_OP distinct from sk_PA).** Blast radius (accepted commands, ASSUMED profile of `config/actions.yaml`) under C1, C1+C3 (OP key safe) and C1+C3+OP, in every device state; catalogue ranges for S6+F are in Sec. 8a:
+**D2 - S6+F: non-updatable firmware floor (battery floor, minimum alert reporting rate; F3: write-once commissioning bound on the alert threshold = NWS action stage, `config/actions.yaml` commissioning) + updatable S6 envelopes; 'disable sensor' only with an OP approval token (sk_OP distinct from sk_PA).** Blast radius (accepted commands, ASSUMED profile of `config/actions.yaml`) under C1, C1+C3 (OP key safe) and C1+C3+OP, in every device state; catalogue ranges for S6+F are in Sec. 8a:
 
 | state | compromise | S4 | S4-F | S4-E | S6 | S6+F |
 |---|---|---|---|---|---|---|
-| alert=True,battery=above_floor | C1 | 2,944 | 1,364 | 314 | 314 | 314 |
-| alert=True,battery=above_floor | C1+C3 | 2,944 | 1,364 | 2,944 | 2,944 | 1,518 |
-| alert=True,battery=above_floor | C1+C3+OP | 2,944 | 1,364 | 2,944 | 2,944 | 1,518 |
-| alert=True,battery=below_floor | C1 | 2,944 | 1,352 | 302 | 302 | 302 |
-| alert=True,battery=below_floor | C1+C3 | 2,944 | 1,352 | 2,944 | 2,944 | 1,502 |
-| alert=True,battery=below_floor | C1+C3+OP | 2,944 | 1,352 | 2,944 | 2,944 | 1,502 |
-| alert=False,battery=above_floor | C1 | 2,944 | 2,070 | 359 | 359 | 359 |
-| alert=False,battery=above_floor | C1+C3 | 2,944 | 2,070 | 2,944 | 2,944 | 2,943 |
-| alert=False,battery=above_floor | C1+C3+OP | 2,944 | 2,070 | 2,944 | 2,944 | 2,944 |
-| alert=False,battery=below_floor | C1 | 2,944 | 1,954 | 302 | 302 | 302 |
-| alert=False,battery=below_floor | C1+C3 | 2,944 | 1,954 | 2,944 | 2,944 | 2,823 |
-| alert=False,battery=below_floor | C1+C3+OP | 2,944 | 1,954 | 2,944 | 2,944 | 2,824 |
+| alert=True,battery=above_floor | C1 | 2,944 | 1,364 | 314 | 314 | 72 |
+| alert=True,battery=above_floor | C1+C3 | 2,944 | 1,364 | 2,944 | 2,944 | 536 |
+| alert=True,battery=above_floor | C1+C3+OP | 2,944 | 1,364 | 2,944 | 2,944 | 536 |
+| alert=True,battery=below_floor | C1 | 2,944 | 1,352 | 302 | 302 | 60 |
+| alert=True,battery=below_floor | C1+C3 | 2,944 | 1,352 | 2,944 | 2,944 | 520 |
+| alert=True,battery=below_floor | C1+C3+OP | 2,944 | 1,352 | 2,944 | 2,944 | 520 |
+| alert=False,battery=above_floor | C1 | 2,944 | 2,070 | 359 | 359 | 117 |
+| alert=False,battery=above_floor | C1+C3 | 2,944 | 2,070 | 2,944 | 2,944 | 1,961 |
+| alert=False,battery=above_floor | C1+C3+OP | 2,944 | 2,070 | 2,944 | 2,944 | 1,962 |
+| alert=False,battery=below_floor | C1 | 2,944 | 1,954 | 302 | 302 | 60 |
+| alert=False,battery=below_floor | C1+C3 | 2,944 | 1,954 | 2,944 | 2,944 | 1,841 |
+| alert=False,battery=below_floor | C1+C3+OP | 2,944 | 1,954 | 2,944 | 2,944 | 1,842 |
 
-**S4-F suppress attack re-run against S6+F** (replay of Sec. 7e, battery profile PS-LB/good; suppress does not depend on the battery):
+**S4-F suppress attack re-run against S6+F, with the F3 commissioning bound** (all 41 events of Sec. 7e, battery profile PS-LB/good; suppress does not depend on the battery; delays in minutes, missed = inf; the earlier C1+C3 rows without the bound are **SUPERSEDED**):
 
-| event | scheme | compromise | strategy | crossings | missed | delayed | max_delay_min | floor_violating_uplinks | died |
-|---|---|---|---|---|---|---|---|---|---|
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2015-05-26) | S4-F | C1 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2015-05-26) | S4-F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2015-05-26) | S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2015-05-26) | S6 | C1 | suppress | 4 | 0 | 0 | 17 | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2015-05-26) | S6 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2015-05-26) | S6 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2015-05-26) | S6+F | C1 | suppress | 4 | 0 | 0 | 17 | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2015-05-26) | S6+F | C1+C3 | suppress | 4 | 0 | 4 | 377 | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2015-05-26) | S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2016-04-18) | S4-F | C1 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2016-04-18) | S4-F | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2016-04-18) | S4-F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2016-04-18) | S6 | C1 | suppress | 3 | 0 | 1 | 33 | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2016-04-18) | S6 | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2016-04-18) | S6 | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2016-04-18) | S6+F | C1 | suppress | 3 | 0 | 1 | 33 | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2016-04-18) | S6+F | C1+C3 | suppress | 3 | 0 | 3 | 513 | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2016-04-18) | S6+F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2017-08-28) | S4-F | C1 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2017-08-28) | S4-F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2017-08-28) | S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2017-08-28) | S6 | C1 | suppress | 4 | 0 | 0 | 23 | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2017-08-28) | S6 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2017-08-28) | S6 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2017-08-28) | S6+F | C1 | suppress | 4 | 0 | 0 | 23 | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2017-08-28) | S6+F | C1+C3 | suppress | 4 | 0 | 4 | 1,403 | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2017-08-28) | S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2019-09-19) | S4-F | C1 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2019-09-19) | S4-F | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2019-09-19) | S4-F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2019-09-19) | S6 | C1 | suppress | 3 | 0 | 1 | 36 | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2019-09-19) | S6 | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2019-09-19) | S6 | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2019-09-19) | S6+F | C1 | suppress | 3 | 0 | 1 | 36 | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2019-09-19) | S6+F | C1+C3 | suppress | 3 | 0 | 3 | 396 | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2019-09-19) | S6+F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2024-07-08) | S4-F | C1 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2024-07-08) | S4-F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2024-07-08) | S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2024-07-08) | S6 | C1 | suppress | 4 | 0 | 0 | 20 | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2024-07-08) | S6 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2024-07-08) | S6 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2024-07-08) | S6+F | C1 | suppress | 4 | 0 | 0 | 20 | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2024-07-08) | S6+F | C1+C3 | suppress | 4 | 0 | 4 | 500 | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2024-07-08) | S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-05-26) | S4-F | C1 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-05-26) | S4-F | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-05-26) | S4-F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-05-26) | S6 | C1 | suppress | 3 | 0 | 0 | 24 | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-05-26) | S6 | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-05-26) | S6 | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-05-26) | S6+F | C1 | suppress | 3 | 0 | 0 | 24 | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-05-26) | S6+F | C1+C3 | suppress | 3 | 0 | 3 | 114 | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-05-26) | S6+F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-10-25) | S4-F | C1 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-10-25) | S4-F | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-10-25) | S4-F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-10-25) | S6 | C1 | suppress | 3 | 0 | 0 | 29 | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-10-25) | S6 | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-10-25) | S6 | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-10-25) | S6+F | C1 | suppress | 3 | 0 | 0 | 29 | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-10-25) | S6+F | C1+C3 | suppress | 3 | 0 | 3 | 209 | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-10-25) | S6+F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-08) | S4-F | C1 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-08) | S4-F | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-08) | S4-F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-08) | S6 | C1 | suppress | 3 | 0 | 1 | 33 | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-08) | S6 | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-08) | S6 | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-08) | S6+F | C1 | suppress | 3 | 0 | 1 | 33 | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-08) | S6+F | C1+C3 | suppress | 3 | 0 | 3 | 213 | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-08) | S6+F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-27) | S4-F | C1 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-27) | S4-F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-27) | S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-27) | S6 | C1 | suppress | 4 | 0 | 1 | 50 | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-27) | S6 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-27) | S6 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-27) | S6+F | C1 | suppress | 4 | 0 | 1 | 50 | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-27) | S6+F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-27) | S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2019-09-19) | S4-F | C1 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2019-09-19) | S4-F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2019-09-19) | S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2019-09-19) | S6 | C1 | suppress | 4 | 0 | 1 | 35 | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2019-09-19) | S6 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2019-09-19) | S6 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2019-09-19) | S6+F | C1 | suppress | 4 | 0 | 1 | 35 | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2019-09-19) | S6+F | C1+C3 | suppress | 4 | 0 | 4 | 215 | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2019-09-19) | S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2024-07-08) | S4-F | C1 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2024-07-08) | S4-F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2024-07-08) | S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2024-07-08) | S6 | C1 | suppress | 4 | 0 | 1 | 33 | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2024-07-08) | S6 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2024-07-08) | S6 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2024-07-08) | S6+F | C1 | suppress | 4 | 0 | 1 | 33 | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2024-07-08) | S6+F | C1+C3 | suppress | 4 | 0 | 4 | 333 | 0 | False |
-| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2024-07-08) | S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2015-05-26) | S4-F | C1 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2015-05-26) | S4-F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2015-05-26) | S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2015-05-26) | S6 | C1 | suppress | 4 | 0 | 0 | 14 | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2015-05-26) | S6 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2015-05-26) | S6 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2015-05-26) | S6+F | C1 | suppress | 4 | 0 | 0 | 14 | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2015-05-26) | S6+F | C1+C3 | suppress | 4 | 0 | 4 | 1,290 | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2015-05-26) | S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2016-04-18) | S4-F | C1 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2016-04-18) | S4-F | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2016-04-18) | S4-F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2016-04-18) | S6 | C1 | suppress | 2 | 0 | 1 | 54 | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2016-04-18) | S6 | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2016-04-18) | S6 | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2016-04-18) | S6+F | C1 | suppress | 2 | 0 | 1 | 54 | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2016-04-18) | S6+F | C1+C3 | suppress | 2 | 0 | 2 | 234 | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2016-04-18) | S6+F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2017-08-27) | S4-F | C1 | suppress | 8 | 8 | 0 | - | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2017-08-27) | S4-F | C1+C3 | suppress | 8 | 8 | 0 | - | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2017-08-27) | S4-F | C1+C3+OP | suppress | 8 | 8 | 0 | - | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2017-08-27) | S6 | C1 | suppress | 8 | 1 | 1 | 38 | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2017-08-27) | S6 | C1+C3 | suppress | 8 | 8 | 0 | - | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2017-08-27) | S6 | C1+C3+OP | suppress | 8 | 8 | 0 | - | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2017-08-27) | S6+F | C1 | suppress | 8 | 1 | 1 | 38 | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2017-08-27) | S6+F | C1+C3 | suppress | 8 | 3 | 5 | 938 | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2017-08-27) | S6+F | C1+C3+OP | suppress | 8 | 8 | 0 | - | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2024-07-08) | S4-F | C1 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2024-07-08) | S4-F | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2024-07-08) | S4-F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2024-07-08) | S6 | C1 | suppress | 2 | 0 | 0 | 22 | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2024-07-08) | S6 | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2024-07-08) | S6 | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2024-07-08) | S6+F | C1 | suppress | 2 | 0 | 0 | 22 | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2024-07-08) | S6+F | C1+C3 | suppress | 2 | 0 | 2 | 262 | 0 | False |
-| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2024-07-08) | S6+F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-05-26) | S4-F | C1 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-05-26) | S4-F | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-05-26) | S4-F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-05-26) | S6 | C1 | suppress | 3 | 0 | 0 | 10 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-05-26) | S6 | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-05-26) | S6 | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-05-26) | S6+F | C1 | suppress | 3 | 0 | 0 | 10 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-05-26) | S6+F | C1+C3 | suppress | 3 | 0 | 0 | 10 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-05-26) | S6+F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-25) | S4-F | C1 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-25) | S4-F | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-25) | S4-F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-25) | S6 | C1 | suppress | 3 | 0 | 0 | 7 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-25) | S6 | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-25) | S6 | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-25) | S6+F | C1 | suppress | 3 | 0 | 0 | 7 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-25) | S6+F | C1+C3 | suppress | 3 | 0 | 0 | 7 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-25) | S6+F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-31) | S4-F | C1 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-31) | S4-F | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-31) | S4-F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-31) | S6 | C1 | suppress | 3 | 0 | 0 | 19 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-31) | S6 | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-31) | S6 | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-31) | S6+F | C1 | suppress | 3 | 0 | 0 | 19 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-31) | S6+F | C1+C3 | suppress | 3 | 0 | 0 | 19 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-31) | S6+F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-04-18) | S4-F | C1 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-04-18) | S4-F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-04-18) | S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-04-18) | S6 | C1 | suppress | 4 | 0 | 0 | 19 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-04-18) | S6 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-04-18) | S6 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-04-18) | S6+F | C1 | suppress | 4 | 0 | 0 | 19 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-04-18) | S6+F | C1+C3 | suppress | 4 | 0 | 0 | 19 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-04-18) | S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-05-28) | S4-F | C1 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-05-28) | S4-F | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-05-28) | S4-F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-05-28) | S6 | C1 | suppress | 2 | 0 | 0 | 19 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-05-28) | S6 | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-05-28) | S6 | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-05-28) | S6+F | C1 | suppress | 2 | 0 | 0 | 19 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-05-28) | S6+F | C1+C3 | suppress | 2 | 0 | 0 | 19 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-05-28) | S6+F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-06-03) | S4-F | C1 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-06-03) | S4-F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-06-03) | S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-06-03) | S6 | C1 | suppress | 4 | 0 | 0 | 7 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-06-03) | S6 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-06-03) | S6 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-06-03) | S6+F | C1 | suppress | 4 | 0 | 0 | 7 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-06-03) | S6+F | C1+C3 | suppress | 4 | 0 | 0 | 7 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-06-03) | S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-08) | S4-F | C1 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-08) | S4-F | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-08) | S4-F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-08) | S6 | C1 | suppress | 3 | 0 | 0 | 17 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-08) | S6 | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-08) | S6 | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-08) | S6+F | C1 | suppress | 3 | 0 | 0 | 17 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-08) | S6+F | C1+C3 | suppress | 3 | 0 | 0 | 17 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-08) | S6+F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-28) | S4-F | C1 | suppress | 6 | 6 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-28) | S4-F | C1+C3 | suppress | 6 | 6 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-28) | S4-F | C1+C3+OP | suppress | 6 | 6 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-28) | S6 | C1 | suppress | 6 | 0 | 0 | 13 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-28) | S6 | C1+C3 | suppress | 6 | 6 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-28) | S6 | C1+C3+OP | suppress | 6 | 6 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-28) | S6+F | C1 | suppress | 6 | 0 | 0 | 13 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-28) | S6+F | C1+C3 | suppress | 6 | 0 | 0 | 13 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-28) | S6+F | C1+C3+OP | suppress | 6 | 6 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-07-04) | S4-F | C1 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-07-04) | S4-F | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-07-04) | S4-F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-07-04) | S6 | C1 | suppress | 2 | 0 | 0 | 16 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-07-04) | S6 | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-07-04) | S6 | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-07-04) | S6+F | C1 | suppress | 2 | 0 | 0 | 16 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-07-04) | S6+F | C1+C3 | suppress | 2 | 0 | 0 | 16 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-07-04) | S6+F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-12-08) | S4-F | C1 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-12-08) | S4-F | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-12-08) | S4-F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-12-08) | S6 | C1 | suppress | 2 | 0 | 0 | 16 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-12-08) | S6 | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-12-08) | S6 | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-12-08) | S6+F | C1 | suppress | 2 | 0 | 0 | 16 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-12-08) | S6+F | C1+C3 | suppress | 2 | 0 | 0 | 16 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-12-08) | S6+F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2019-09-19) | S4-F | C1 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2019-09-19) | S4-F | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2019-09-19) | S4-F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2019-09-19) | S6 | C1 | suppress | 3 | 0 | 0 | 15 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2019-09-19) | S6 | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2019-09-19) | S6 | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2019-09-19) | S6+F | C1 | suppress | 3 | 0 | 0 | 15 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2019-09-19) | S6+F | C1+C3 | suppress | 3 | 0 | 0 | 15 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2019-09-19) | S6+F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2020-09-23) | S4-F | C1 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2020-09-23) | S4-F | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2020-09-23) | S4-F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2020-09-23) | S6 | C1 | suppress | 2 | 0 | 0 | 10 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2020-09-23) | S6 | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2020-09-23) | S6 | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2020-09-23) | S6+F | C1 | suppress | 2 | 0 | 0 | 10 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2020-09-23) | S6+F | C1+C3 | suppress | 2 | 0 | 0 | 10 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2020-09-23) | S6+F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2022-01-09) | S4-F | C1 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2022-01-09) | S4-F | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2022-01-09) | S4-F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2022-01-09) | S6 | C1 | suppress | 2 | 0 | 0 | 18 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2022-01-09) | S6 | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2022-01-09) | S6 | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2022-01-09) | S6+F | C1 | suppress | 2 | 0 | 0 | 18 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2022-01-09) | S6+F | C1+C3 | suppress | 2 | 0 | 0 | 18 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2022-01-09) | S6+F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2024-07-08) | S4-F | C1 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2024-07-08) | S4-F | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2024-07-08) | S4-F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2024-07-08) | S6 | C1 | suppress | 3 | 0 | 0 | 14 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2024-07-08) | S6 | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2024-07-08) | S6 | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2024-07-08) | S6+F | C1 | suppress | 3 | 0 | 0 | 14 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2024-07-08) | S6+F | C1+C3 | suppress | 3 | 0 | 0 | 14 | 0 | False |
-| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2024-07-08) | S6+F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-13) | S4-F | C1 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-13) | S4-F | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-13) | S4-F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-13) | S6 | C1 | suppress | 2 | 0 | 0 | 4 | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-13) | S6 | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-13) | S6 | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-13) | S6+F | C1 | suppress | 2 | 0 | 0 | 4 | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-13) | S6+F | C1+C3 | suppress | 2 | 0 | 0 | 4 | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-13) | S6+F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-28) | S4-F | C1 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-28) | S4-F | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-28) | S4-F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-28) | S6 | C1 | suppress | 2 | 0 | 0 | 5 | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-28) | S6 | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-28) | S6 | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-28) | S6+F | C1 | suppress | 2 | 0 | 0 | 5 | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-28) | S6+F | C1+C3 | suppress | 2 | 0 | 0 | 5 | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-28) | S6+F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2016-05-28) | S4-F | C1 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2016-05-28) | S4-F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2016-05-28) | S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2016-05-28) | S6 | C1 | suppress | 4 | 0 | 0 | 13 | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2016-05-28) | S6 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2016-05-28) | S6 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2016-05-28) | S6+F | C1 | suppress | 4 | 0 | 0 | 13 | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2016-05-28) | S6+F | C1+C3 | suppress | 4 | 0 | 0 | 13 | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2016-05-28) | S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2017-08-29) | S4-F | C1 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2017-08-29) | S4-F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2017-08-29) | S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2017-08-29) | S6 | C1 | suppress | 4 | 0 | 0 | 5 | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2017-08-29) | S6 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2017-08-29) | S6 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2017-08-29) | S6+F | C1 | suppress | 4 | 0 | 0 | 5 | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2017-08-29) | S6+F | C1+C3 | suppress | 4 | 0 | 0 | 5 | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2017-08-29) | S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-01-26) | S4-F | C1 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-01-26) | S4-F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-01-26) | S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-01-26) | S6 | C1 | suppress | 4 | 0 | 0 | 11 | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-01-26) | S6 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-01-26) | S6 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-01-26) | S6+F | C1 | suppress | 4 | 0 | 0 | 11 | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-01-26) | S6+F | C1+C3 | suppress | 4 | 0 | 0 | 11 | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-01-26) | S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-05-03) | S4-F | C1 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-05-03) | S4-F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-05-03) | S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-05-03) | S6 | C1 | suppress | 4 | 0 | 0 | 16 | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-05-03) | S6 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-05-03) | S6 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-05-03) | S6+F | C1 | suppress | 4 | 0 | 0 | 16 | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-05-03) | S6+F | C1+C3 | suppress | 4 | 0 | 0 | 16 | 0 | False |
-| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-05-03) | S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 01570500 Susquehanna River at Harrisburg, PA (NWS HARP1) (2018-07-26) | S4-F | C1 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 01570500 Susquehanna River at Harrisburg, PA (NWS HARP1) (2018-07-26) | S4-F | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 01570500 Susquehanna River at Harrisburg, PA (NWS HARP1) (2018-07-26) | S4-F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 01570500 Susquehanna River at Harrisburg, PA (NWS HARP1) (2018-07-26) | S6 | C1 | suppress | 2 | 0 | 0 | 11 | 0 | False |
-| USGS 01570500 Susquehanna River at Harrisburg, PA (NWS HARP1) (2018-07-26) | S6 | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 01570500 Susquehanna River at Harrisburg, PA (NWS HARP1) (2018-07-26) | S6 | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 01570500 Susquehanna River at Harrisburg, PA (NWS HARP1) (2018-07-26) | S6+F | C1 | suppress | 2 | 0 | 0 | 11 | 0 | False |
-| USGS 01570500 Susquehanna River at Harrisburg, PA (NWS HARP1) (2018-07-26) | S6+F | C1+C3 | suppress | 2 | 0 | 2 | 1,031 | 0 | False |
-| USGS 01570500 Susquehanna River at Harrisburg, PA (NWS HARP1) (2018-07-26) | S6+F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-06-05) | S4-F | C1 | suppress | 7 | 7 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-06-05) | S4-F | C1+C3 | suppress | 7 | 7 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-06-05) | S4-F | C1+C3+OP | suppress | 7 | 7 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-06-05) | S6 | C1 | suppress | 7 | 1 | 1 | 45 | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-06-05) | S6 | C1+C3 | suppress | 7 | 7 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-06-05) | S6 | C1+C3+OP | suppress | 7 | 7 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-06-05) | S6+F | C1 | suppress | 7 | 1 | 1 | 45 | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-06-05) | S6+F | C1+C3 | suppress | 7 | 1 | 6 | 1,171 | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-06-05) | S6+F | C1+C3+OP | suppress | 7 | 7 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-11) | S4-F | C1 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-11) | S4-F | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-11) | S4-F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-11) | S6 | C1 | suppress | 2 | 0 | 0 | 9 | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-11) | S6 | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-11) | S6 | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-11) | S6+F | C1 | suppress | 2 | 0 | 0 | 9 | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-11) | S6+F | C1+C3 | suppress | 2 | 0 | 2 | 1,263 | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-11) | S6+F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29) | S4-F | C1 | suppress | 2 | 1 | 0 | 0 | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29) | S4-F | C1+C3 | suppress | 2 | 1 | 0 | 0 | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29) | S4-F | C1+C3+OP | suppress | 2 | 1 | 0 | 0 | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29) | S6 | C1 | suppress | 2 | 0 | 0 | 25 | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29) | S6 | C1+C3 | suppress | 2 | 1 | 0 | 0 | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29) | S6 | C1+C3+OP | suppress | 2 | 1 | 0 | 0 | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29) | S6+F | C1 | suppress | 2 | 0 | 0 | 25 | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29) | S6+F | C1+C3 | suppress | 2 | 0 | 1 | 1,005 | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29) | S6+F | C1+C3+OP | suppress | 2 | 1 | 0 | 0 | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-12-17) | S4-F | C1 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-12-17) | S4-F | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-12-17) | S4-F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-12-17) | S6 | C1 | suppress | 2 | 0 | 1 | 32 | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-12-17) | S6 | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-12-17) | S6 | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-12-17) | S6+F | C1 | suppress | 2 | 0 | 1 | 32 | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-12-17) | S6+F | C1+C3 | suppress | 2 | 0 | 2 | 1,232 | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-12-17) | S6+F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2022-05-09) | S4-F | C1 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2022-05-09) | S4-F | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2022-05-09) | S4-F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2022-05-09) | S6 | C1 | suppress | 3 | 1 | 0 | 15 | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2022-05-09) | S6 | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2022-05-09) | S6 | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2022-05-09) | S6+F | C1 | suppress | 3 | 1 | 0 | 15 | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2022-05-09) | S6+F | C1+C3 | suppress | 3 | 1 | 2 | 615 | 0 | False |
-| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2022-05-09) | S6+F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| scheme | compromise | events | crossings | missed | median_delay_min | p90_delay_min | max_delay_min | late_or_missed_share |
+|---|---|---|---|---|---|---|---|---|
+| S4-F | C1 | 41 | 135 | 134 | inf (missed) | inf (missed) | inf (missed) | 0.99 |
+| S4-F | C1+C3 | 41 | 135 | 134 | inf (missed) | inf (missed) | inf (missed) | 0.99 |
+| S4-F | C1+C3+OP | 41 | 135 | 134 | inf (missed) | inf (missed) | inf (missed) | 0.99 |
+| S6 | C1 | 41 | 135 | 3 | 7 | 30 | inf (missed) | 0.10 |
+| S6 | C1+C3 | 41 | 135 | 134 | inf (missed) | inf (missed) | inf (missed) | 0.99 |
+| S6 | C1+C3+OP | 41 | 135 | 134 | inf (missed) | inf (missed) | inf (missed) | 0.99 |
+| S6+F | C1 | 41 | 135 | 3 | 6 | 16 | inf (missed) | 0.02 |
+| S6+F | C1+C3 | 41 | 135 | 3 | 6 | 16 | inf (missed) | 0.02 |
+| S6+F | C1+C3+OP | 41 | 135 | 133 | inf (missed) | inf (missed) | inf (missed) | 0.99 |
 
 **OP token cost** - one signature over the command, frames per DR for each measured algorithm (`results/sizes.csv`):
 
@@ -1776,25 +1416,25 @@ Counted by running every (action, target, value) in `config/actions.yaml` throug
 
 | compromise | level (Étape 2) | S4 | S4-F | S4-E | S6 | S6+F |
 |---|---|---|---|---|---|---|
-| C0 | nothing compromised; A1/A2/A3/A5 send proposals to an honest PDP [scope: all] | 314 | 314 | 314 | 314 | 314 |
-| C1 | cloud command platform (agent runtime and PDP) [scope: all] | 2,944 | 1,364 | 314 | 314 | 314 |
+| C0 | nothing compromised; A1/A2/A3/A5 send proposals to an honest PDP [scope: all] | 314 | 314 | 314 | 314 | 72 |
+| C1 | cloud command platform (agent runtime and PDP) [scope: all] | 2,944 | 1,364 | 314 | 314 | 72 |
 | C2 | network server or gateway [scope: all] | 0 | 0 | 0 | 0 | 0 |
 | C3 | PA HSM (sk_PA) -- outside the protection, Étape 2 Sec. 3 [scope: all] | 0 | 0 | 0 | 0 | 0 |
-| C4 | one device D extracted physically [scope: one_device] | 2,944 | 1,364 | 2,944 | 314 | 314 |
-| C1+C3 | C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level) [scope: all] | 2,944 | 1,364 | 2,944 | 2,944 | 1,518 |
-| C1+C3+OP | C1, C3 and the OP approval key (extra row, D2 worst case) [scope: all] | 2,944 | 1,364 | 2,944 | 2,944 | 1,518 |
+| C4 | one device D extracted physically [scope: one_device] | 2,944 | 1,364 | 2,944 | 314 | 72 |
+| C1+C3 | C1 and C3 together, OP key NOT compromised (extra row, not an Étape 2 level) [scope: all] | 2,944 | 1,364 | 2,944 | 2,944 | 536 |
+| C1+C3+OP | C1, C3 and the OP approval key (extra row, D2 worst case) [scope: all] | 2,944 | 1,364 | 2,944 | 2,944 | 536 |
 
 **K6 - blast(S4-E) / blast(S6) per compromise -> S4-E and S6 blast radii differ (see table).**
 
 | compromise | scope | S4 | S4-F | S4-E | S6 | S6+F | ratio_s4e_s6 | ratio_note |
 |---|---|---|---|---|---|---|---|---|
-| C0 | all | 314 | 314 | 314 | 314 | 314 | 1.000 | - |
-| C1 | all | 2,944 | 1,364 | 314 | 314 | 314 | 1.000 | - |
+| C0 | all | 314 | 314 | 314 | 314 | 72 | 1.000 | - |
+| C1 | all | 2,944 | 1,364 | 314 | 314 | 72 | 1.000 | - |
 | C2 | all | 0 | 0 | 0 | 0 | 0 | - | both 0 |
 | C3 | all | 0 | 0 | 0 | 0 | 0 | - | both 0 |
-| C4 | one_device | 2,944 | 1,364 | 2,944 | 314 | 314 | 9.376 | - |
-| C1+C3 | all | 2,944 | 1,364 | 2,944 | 2,944 | 1518 | 1.000 | - |
-| C1+C3+OP | all | 2,944 | 1,364 | 2,944 | 2,944 | 1518 | 1.000 | - |
+| C4 | one_device | 2,944 | 1,364 | 2,944 | 314 | 72 | 9.376 | - |
+| C1+C3 | all | 2,944 | 1,364 | 2,944 | 2,944 | 536 | 1.000 | - |
+| C1+C3+OP | all | 2,944 | 1,364 | 2,944 | 2,944 | 536 | 1.000 | - |
 
 Properties that differ (blast radius does not separate S4-E from S6; these do):
 
@@ -1804,7 +1444,7 @@ Properties that differ (blast radius does not separate S4-E from S6; these do):
 | Policy provisioning without shared secrets | n/a | yes (compiled in) | no: per-device secret in device and HSM | yes: device stores a public key | config/threat.yaml custody | - |
 | Policy updatable over the air | n/a (no bounds) | no | yes | yes | scheme definition | - |
 | One extracted device lets attacker forge envelopes | n/a | n/a | yes, for that device only | no | custody: S4-E device holds policy_mac | - |
-| Blast radius under C1+C3 bounded below S4's | no (2944) | yes (1364) | no (2944) | no (2944) | yes (1518) | results/model_blast_compromise.csv |
+| Blast radius under C1+C3 bounded below S4's | no (2944) | yes (1364) | no (2944) | no (2944) | yes (536) | results/model_blast_compromise.csv |
 | Envelope bytes on air (measured authenticator sizes) | - | - | 144 B | 2532 B | - | results/sizes.csv |
 
 ## 8a. K5/K6 on the manufacturer device catalogue (supersedes the K5/K6 of Sec. 8)

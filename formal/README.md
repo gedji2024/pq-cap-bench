@@ -34,11 +34,52 @@ All lemmas are proved with `--heuristic=s`. The default heuristic does not termi
 | `P4_no_replay` | each (device, counter) is accepted at most once | C1, C2, C3 |
 | `P4_injective_agreement` | an accepted command was sent by the PDP, once | C2, C3; breaks under C1 (stated disjunct) |
 
-`make_freshness.py` derives this theory from `crisis.spthy` by removing the envelope-state premises (`Hnd`, `!Env`) from `Device_Accept`, and nothing else. `tests/test_formal.py` checks that the committed file matches.
+`make_freshness.py` derives this theory from `crisis.spthy` by removing the envelope-state premises of `Device_Accept`: the linear premise `Hnd(D, <'hnd', h>)` with its identical conclusion, and the persistent premise `!Env(D, h, a, c)`. Nothing else changes. `tests/test_formal.py` checks that the committed file matches the generator's output.
 
-- **Why this is sound.** Removing premises only adds traces. Every trace of `crisis.spthy` is a trace of `freshness.spthy` with the same `Accept`, `Send` and `RevealSess` actions. A trace property over those actions that holds in `freshness.spthy` therefore holds in `crisis.spthy`. That covers `ctr_monotone` and both P4 lemmas.
-- **Why it is needed.** With `Hnd`/`!Env` in `Device_Accept`, the counter induction did not terminate within 900 s under heuristics s, S, C, P, I, c and p. A goal-ranking oracle didn't help either. In the projection it verifies in 47,794 steps.
-- **Reuse.** `crisis.spthy` still declares `ctr_monotone [reuse]`. That reuse is justified by the proof in `freshness.spthy` plus the trace-inclusion argument above. Tamarin does not check that step itself.
+**Why the projection is needed:** with `Hnd`/`!Env` in `Device_Accept`, the counter induction did not terminate within 900 s under heuristics s, S, C, P, I, c and p, nor with a goal-ranking oracle. In the projection it verifies in 47,794 steps.
+
+### Lemma (read-only premise dropping)
+
+**Setting.** Let T be a Tamarin theory: multiset-rewriting rules, restrictions, and trace semantics on action facts. Let r = [P, F, !G] --[A]-> [C, F] be a rule in which
+- F is a linear fact that r consumes and re-produces *identically* (same fact symbol, same terms);
+- !G is a persistent premise.
+
+Let T' be T with r replaced by r' = [P] --[A]-> [C]: F is dropped from both sides, !G from the premises. The other rules, the restrictions and the action labels A are unchanged.
+
+**Claim.** Every trace of T is a trace of T': traces(T) ⊆ traces(T').
+
+**Proof sketch** (induction on execution length).
+1. Take an execution S0 →(ρ1) S1 → … → Sn of T, where each Si is a multiset of facts.
+2. Map each step by the identity, except that an instance of r becomes the matching instance of r'. Use the same substitution, the same fresh values and the same message deductions.
+3. *Base:* both executions start from the empty multiset.
+4. *Applicability.* If S(i-1) is the same multiset in both executions, then ρ'i is applicable in T': its premises P are a sub-multiset of those of ρi.
+5. *Same successor state.* For ρi an instance of r, T gives Si = S(i-1) − {P, F} + {C, F}. Since F ∈ S(i-1), this equals S(i-1) − P + C, which is exactly the successor in T'. Persistent facts are never consumed, so !G changes nothing.
+6. *Other steps* are identical in both theories.
+7. *Freshness.* Both executions use the same fresh names, so `Fr` uniqueness is preserved.
+8. *Actions.* Every step carries the same action facts, so the two traces are equal. A restriction is a formula over the trace, so it holds for the T' trace exactly when it holds for the T trace. ∎
+
+**Which lemmas transfer** from T' to T:
+- **All-traces lemmas over any action facts** transfer: if every trace of T' satisfies φ, so does every trace of T. This covers `ctr_monotone`, `P4_no_replay` and `P4_injective_agreement`.
+- **Not exists-trace lemmas:** a witness in T' need not be a trace of T. That is why the executability lemmas are proved in `crisis.spthy` itself.
+- **Not observational-equivalence (diff) lemmas.**
+- **`[reuse]`:** using the T' proof of an all-traces lemma as a `[reuse]` assumption inside T is sound by the claim. This is the case for `ctr_monotone [reuse]` in `crisis.spthy`.
+
+**Side conditions** for `Device_Accept`, all checked syntactically by `make_freshness.py` and `tests/test_formal.py`:
+- the dropped linear fact appears identically as premise and conclusion;
+- the dropped `!Env` is persistent;
+- no other rule, restriction or lemma is changed.
+
+**Trust boundary.** The argument is on the multiset-rewriting semantics that Tamarin implements. It assumes Tamarin's own soundness (as every Tamarin proof does). It has not been mechanised.
+
+### Computational note: HMAC truncation (Étape 2 H4, T9)
+
+The symbolic model treats `mac/2` as an ideal MAC. The computational cost of truncating HMAC-SHA256 to t bits is quantified in `REPORT.md` Sec. 8c (`pqcap.truncation`, `results/f7_truncation.csv`):
+- **Per attempt:** a forger succeeds with probability 2^-t (ideal-PRF bound).
+- **Failed attempts do not advance the device counter** (the device accepts any ctr > ctr_D). Attempts are therefore limited by the radio, and q attempts succeed with probability at most q · 2^-t (union bound).
+- **Two attacker budgets are evaluated:**
+  - every Class A downlink slot for a year, for 1 to 200 devices;
+  - the whole 4-byte counter window of one device (2^32 attempts, the most a device processes before a counter wrap forces a new epoch key).
+- **Ignored:** the PRF distinguishing advantage of HMAC-SHA256.
 
 ## `delegation.spthy`: P2, delegation by attenuation only
 
@@ -46,6 +87,18 @@ All lemmas are proved with `--heuristic=s`. The default heuristic does not termi
 |---|---|---|
 | `exec_attenuated_child` | a strictly attenuated child envelope can be installed | honest run |
 | `P2_attenuation_only` | an installed child's bounds are a sub-multiset of a root the honest PA issued for that device | delegate key revealed or malicious; breaks only under C3 |
+
+## F3 commissioning bounds: why there is no Tamarin lemma
+
+The S6+F write-once commissioning bounds are:
+- the maximum alert threshold (NWS action stage);
+- the maximum reporting interval while in alert.
+
+**Outside the symbolic model.** Each bound is a numeric interval test on a command parameter, evaluated by firmware against constants written once at installation. No protocol message can create, replace or relax them. `crisis.spthy` abstracts bounds to the action name, so a lemma there would be vacuous: it could not express "threshold ≤ T". The property does not depend on the adversary's knowledge. It holds as soon as the firmware check is correct, whatever keys are compromised (C1, C3, or both).
+
+**Covered by property tests instead** (hypothesis, `tests/test_envelope.py::test_s6f_commissioning_threshold_cap`). For random envelopes, including attacker-minted permissive ones (C3), random device states, OP token present or absent, and random bounds, `check_s6f` never accepts a threshold above the bound.
+
+The behavioural consequence is measured in the replay (REPORT Sec. 7e/7g): S6+F under C1+C3. The symbolic guarantee that the attacker cannot get "disable" without OP stays `disable_needs_OP`.
 
 ## Assumptions abstracted away
 

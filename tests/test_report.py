@@ -94,8 +94,10 @@ def _fake_results(tmp_path, cfgs):  # noqa: F811
     h.update(schemes=["S4", "S6"], compromises=["none", "C1"], attacker={"strategies": ["drain"]}, events_rule=None, events_prereg=None,
              battery={**h["battery"], "profiles": h["battery"]["profiles"][-1:]})
     (cfg / "harm.yaml").write_text(json.dumps(h))
-    hd, _, hm = harm.run(h, acfg, REPO_ROOT)
+    hd, he, hm = harm.run(h, acfg, REPO_ROOT)
     hd.to_csv(r / "model_harm.csv", index=False)
+    harm.delay_distribution(he.assign(scheme="S6+F", strategy="suppress"), 30, 50, 1).to_csv(
+        r / "model_harm_delays.csv", index=False)
     (r / "harm_meta.json").write_text(json.dumps({**hm, "source": {"query_url": "q"}}, default=str))
     return r, cfg
 

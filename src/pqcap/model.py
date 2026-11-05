@@ -11,6 +11,7 @@ import pandas as pd
 
 from . import delivery as dl
 from . import s6 as s6m
+from .config import REPO_ROOT as _REPO_ROOT
 from .config import load_yaml
 from .radio import LoraPhy, MacOverhead, duty_cycle_off_time_s, fragment, frames_airtime_s, time_on_air_s
 from .token import SCHEME_DESC, TokenModel, epoch_message_bytes
@@ -26,6 +27,17 @@ class Channel:
     max_app: int
     duty: float | None
     mac: MacOverhead | None  # LoRaWAN framing around FRMPayload (None for NB-IoT)
+
+
+def commissioning_threshold_cm(actions_cfg: dict, root) -> int:
+    """F3: write-once maximum alert threshold (cm) = the configured NWS category of the configured gauge (F4 data);
+    0 (no bound) when the profile defines none."""
+    c = (actions_cfg.get("commissioning") or {}).get("max_alert_threshold_nws")
+    if not c:
+        return 0
+    from . import nws  # noqa: PLC0415
+    cats = nws.load(root / "data/nws", c["usgs"], 0.5)
+    return int(round(cats[c["category"]] * 30.48))
 
 
 def channels(radio: dict, model: dict) -> list[Channel]:
@@ -277,7 +289,8 @@ def run(config: Path, results: Path) -> dict[str, pd.DataFrame]:
         threat_p = config / "threat.yaml"
         if threat_p.exists():
             fw = ev.firmware_policy_from_config(acfg)
-            bc = blast.blast_compromise(cat, env, fw, inv, load_yaml(threat_p), tag_len)
+            bc = blast.blast_compromise(cat, env, fw, inv, load_yaml(threat_p), tag_len,
+                                        commissioning_threshold_cm(acfg, _REPO_ROOT))
             bc.to_csv(results / "model_blast_compromise.csv", index=False)
             k["K5"]["matrix_labels"] = {c: f"{v['label']} [scope: {v['scope']}]"
                                          for c, v in load_yaml(threat_p)["compromises"].items()}

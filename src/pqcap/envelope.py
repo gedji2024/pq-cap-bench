@@ -60,6 +60,7 @@ class Invariants:
     battery_floor_pct: int = 0           # 0 = no floor
     low_batt_min_interval: int = 0
     low_batt_block_immediate: bool = False
+    max_alert_threshold: int = 0         # F3 write-once commissioning bound (S6+F floor only); 0 = none
 
 
 NO_INVARIANTS = Invariants()
@@ -227,6 +228,8 @@ def invariant_violation(inv: Invariants, state: DeviceState, action_id: int, val
         return "invariant:battery_floor"
     if action_id == A_ENABLE and value == 0 and state.alert_active and inv.alert_forbid_disable:
         return "invariant:alert_min_rate"
+    if action_id == A_THRESHOLD and inv.max_alert_threshold and value > inv.max_alert_threshold:
+        return "commissioning:max_alert_threshold"
     return None
 
 

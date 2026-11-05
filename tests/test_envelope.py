@@ -234,3 +234,33 @@ def test_s6f_reasons():
     slow = ev.make_command(KEY, 7, 1, ev.A_INTERVAL, 0, 600, 8)
     assert ev.check_s6f(perm, INV, CAT, ev.DeviceState(0, alert_active=True), slow, KEY, 8, True)[0].reason.startswith("floor:")
     assert ev.check_s6f(perm, INV, CAT, s, slow[:-1], KEY, 8, True)[0].reason == "length"
+
+
+# ---------------------------------------------------------------- F3: write-once commissioning bound
+@SETTINGS
+@given(env=policies(), value=st.integers(min_value=0, max_value=1500), s=states(), op=st.booleans(),
+       cap=st.integers(min_value=1, max_value=1500))
+def test_s6f_commissioning_threshold_cap(env, value, s, op, cap):
+    """Whatever envelope is installed (including one minted with sk_PA, C3), S6+F never accepts an alert threshold
+    above the write-once commissioning bound -- no message can change the bound."""
+    import dataclasses
+    floor = dataclasses.replace(INV, max_alert_threshold=cap)
+    for pol in (env, ev.permissive_policy(CAT, env.handle)):
+        msg = ev.make_command(KEY, pol.handle, s.last_counter + 1, ev.A_THRESHOLD, 0, value, 8)
+        d, _ = ev.check_s6f(pol, floor, CAT, s, msg, KEY, 8, op)
+        if d.accepted:
+            assert value <= cap
+        if value > cap:
+            assert not d.accepted
+
+
+def test_commissioning_reason():
+    import dataclasses
+    floor = dataclasses.replace(INV, max_alert_threshold=500)
+    s = ev.DeviceState(0, alert_active=False, soc_pct=90.0)
+    assert ev.invariant_violation(floor, s, ev.A_THRESHOLD, 501) == "commissioning:max_alert_threshold"
+    assert ev.invariant_violation(floor, s, ev.A_THRESHOLD, 500) is None
+    assert ev.invariant_violation(INV, s, ev.A_THRESHOLD, 1500) is None            # no bound by default
+    perm = ev.permissive_policy(CAT, 7)
+    hi = ev.make_command(KEY, 7, 1, ev.A_THRESHOLD, 0, 900, 8)
+    assert ev.check_s6f(perm, floor, CAT, s, hi, KEY, 8, True)[0].reason == "floor:commissioning:max_alert_threshold"

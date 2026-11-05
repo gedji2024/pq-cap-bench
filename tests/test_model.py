@@ -223,3 +223,12 @@ def test_run_end_to_end(tmp_path, cfgs):
     assert (mc.verify_ms_per_day_V6h > mc.verify_ms_per_day_V72h).all()
     assert (tmp_path / "model_harm.csv").exists() and "source" in json.loads((tmp_path / "harm_meta.json").read_text())["events"][0]
     assert 0 < kc["K5"]["ratio"] < 1 and "K6" in kc and (tmp_path / "model_blast_compromise.csv").exists()
+
+
+def test_commissioning_threshold_cm():
+    from pqcap import nws
+    from pqcap.config import REPO_ROOT
+    a = load_yaml(CONFIG / "actions.yaml")
+    exp = round(nws.load(REPO_ROOT / "data/nws", "08074000", 0.5)["action"] * 30.48)
+    assert M.commissioning_threshold_cm(a, REPO_ROOT) == exp
+    assert M.commissioning_threshold_cm({}, REPO_ROOT) == 0

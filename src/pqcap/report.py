@@ -535,13 +535,25 @@ def section_d2(results: Path) -> str:
         bp = h.battery_profile.iloc[0]
         h = h[h.scheme.isin(["S4-F", "S6", "S6+F"]) & (h.compromise != "none") & (h.strategy == "suppress")
               & (h.battery_profile == bp)]
-        harm_t = (f"\n\n**S4-F suppress attack re-run against S6+F** (replay of Sec. 7e, battery profile {bp}; "
-                  "suppress does not depend on the battery):\n\n"
-                  + md_table(h[["event", "scheme", "compromise", "strategy", "crossings", "missed", "delayed",
-                                "max_delay_min", "floor_violating_uplinks", "died"]], {"max_delay_min": lambda v: f"{v:,.0f}"}))
+        dp = results / "model_harm_delays.csv"
+        if dp.exists():   # F5: many events -> aggregate delay distribution instead of one row per event
+            dd = pd.read_csv(dp)
+            dd = dd[dd.scheme.isin(["S4-F", "S6", "S6+F"]) & (dd.compromise != "none") & (dd.strategy == "suppress")
+                    & (dd.battery_profile == bp)]
+            fm = lambda v: "inf (missed)" if v == float("inf") else f"{v:,.0f}"  # noqa: E731
+            harm_t = (f"\n\n**S4-F suppress attack re-run against S6+F, with the F3 commissioning bound** (all "
+                      f"{int(dd.events.max())} events of Sec. 7e, battery profile {bp}; suppress does not depend on the "
+                      "battery; delays in minutes, missed = inf; the earlier C1+C3 rows without the bound are "
+                      "**SUPERSEDED**):\n\n"
+                      + md_table(dd[["scheme", "compromise", "events", "crossings", "missed", "median_delay_min",
+                                     "p90_delay_min", "max_delay_min", "late_or_missed_share"]],
+                                 {"events": ints, "crossings": ints, "missed": ints, "median_delay_min": fm,
+                                  "p90_delay_min": fm, "max_delay_min": fm, "late_or_missed_share": lambda v: f"{v:.2f}"}))
+
     tk = t.pivot_table(index=["op_token_alg", "token_bytes"], columns=["region", "dr"], values="frames", sort=False)
     tk.columns = [f"{r} DR{d}" for r, d in tk.columns]
-    return ("**D2 - S6+F: non-updatable firmware floor (battery floor, minimum alert reporting rate) + updatable S6 "
+    return ("**D2 - S6+F: non-updatable firmware floor (battery floor, minimum alert reporting rate; F3: write-once "
+            "commissioning bound on the alert threshold = NWS action stage, `config/actions.yaml` commissioning) + updatable S6 "
             "envelopes; 'disable sensor' only with an OP approval token (sk_OP distinct from sk_PA).** Blast radius "
             "(accepted commands, ASSUMED profile of `config/actions.yaml`) under C1, C1+C3 (OP key safe) and C1+C3+OP, "
             "in every device state; catalogue ranges for S6+F are in Sec. 8a:\n\n"

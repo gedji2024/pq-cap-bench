@@ -329,3 +329,19 @@ def test_prereg_skips_gauge_without_data(tmp_path):
     p = tmp_path / "pr.yaml"
     p.write_text(yaml.safe_dump(pr))
     assert harm.prereg_events({**HCFG, "events_prereg": {"file": str(p), "data_dir": "data/usgs10"}}, REPO_ROOT) == []
+
+
+def test_f3_commissioning_closes_c1c3_threshold_weakness():
+    evs = [{"name": "harvey", "file": HCFG["series"]["file"], "start": "2017-08-26", "end": "2017-08-31", "usgs": "08074000"}]
+    base = {**HCFG, "events": evs, "events_rule": None, "events_prereg": None, "schemes": ["S6+F"],
+            "compromises": ["C1+C3"], "attacker": {"strategies": ["suppress"]},
+            "battery": {**HCFG["battery"], "profiles": HCFG["battery"]["profiles"][:1]}}
+    off, _, m0 = harm.run({**base, "commissioning": None}, ACFG, REPO_ROOT)
+    on, _, m1 = harm.run(base, ACFG, REPO_ROOT)
+    assert m0["events"][0]["commissioning_max_alert_threshold_cm"] == 0
+    assert m1["events"][0]["commissioning_max_alert_threshold_cm"] == m1["events"][0]["alert_threshold_cm"] > 0
+    assert off.iloc[0].delayed + off.iloc[0].missed > on.iloc[0].delayed + on.iloc[0].missed
+    assert on.iloc[0].missed == 0
+    sch = harm.Scheme("S6", harm.ev.catalogue_from_config(ACFG), harm.ev.envelope_from_config(ACFG),
+                      harm.ev.firmware_policy_from_config(ACFG), False, max_alert_threshold=10)
+    assert sch.floor == harm.ev.NO_INVARIANTS                     # only S6+F has the floor

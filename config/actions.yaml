@@ -50,3 +50,10 @@ firmware_bounds:
 
 # Device state in which blast radius is counted (K5/K6). All four combinations go to the CSV.
 count_state: {alert_active: true, battery_above_floor: true}
+
+# F3: write-once commissioning bounds of the S6+F firmware floor (set once at installation, never updatable over
+# the air, so they survive C1+C3). Maximum alert threshold = the NWS ACTION stage of the gauge (F4 data, CHOICE of
+# category); for this profile (Buffalo Bayou, envelope band 15.1-24.9 ft) that is NWS BBST2. The maximum
+# reporting interval while in alert is invariants.alert_max_interval_min (ASSUMED, unchanged).
+commissioning:
+  max_alert_threshold_nws: {usgs: "08074000", category: action}

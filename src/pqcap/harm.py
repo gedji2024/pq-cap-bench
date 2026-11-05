@@ -13,6 +13,7 @@ violation, death; legitimate-command rejection rate (no compromise).
 
 from __future__ import annotations
 
+import dataclasses
 import datetime as dt
 import functools
 import gzip
@@ -143,8 +144,9 @@ def effective_interval(interval: int, alert: bool, soc_pct: float, inv: ev.Invar
 class Scheme:
     """Device-side check for one scheme, with the policy in force (possibly attacker-replaced)."""
 
-    def __init__(self, name: str, cat, env: ev.Policy, fw: ev.Policy, replaced: bool, op_key: bool = False):
-        self.name, self.cat, self.op_key = name, cat, op_key
+    def __init__(self, name: str, cat, env: ev.Policy, fw: ev.Policy, replaced: bool, op_key: bool = False,
+                 max_alert_threshold: int = 0):
+        self.name, self.cat, self.op_key, self.max_alert_threshold = name, cat, op_key, max_alert_threshold
         enveloped = name in ("S4-E", "S6", "S6+F")
         self.env = ev.permissive_policy(cat, env.handle) if replaced and enveloped else env
         self.fw = fw
@@ -158,8 +160,11 @@ class Scheme:
 
     @property
     def floor(self) -> ev.Invariants:
-        """S6+F non-updatable firmware floor (profile invariants); none for the other schemes."""
-        return self.fw.invariants if self.name == "S6+F" else ev.NO_INVARIANTS
+        """S6+F non-updatable firmware floor (profile invariants + F3 write-once commissioning bound on the alert
+        threshold); none for the other schemes."""
+        if self.name != "S6+F":
+            return ev.NO_INVARIANTS
+        return dataclasses.replace(self.fw.invariants, max_alert_threshold=self.max_alert_threshold)
 
     def check(self, state: ev.DeviceState, msg: bytes):
         if self.name == "S4":
@@ -244,7 +249,8 @@ def simulate(stage: np.ndarray, scheme: str, compromise: str, strategy: str | No
              env: ev.Policy, fw: ev.Policy, legit_variant: str = "naive", bat: dict | None = None) -> dict:
     dv = cfg["device"]
     bat = bat or cfg["_battery"]
-    sch = Scheme(scheme, cat, env, fw, replaced=compromise.startswith("C1+C3"), op_key=compromise.endswith("+OP"))
+    sch = Scheme(scheme, cat, env, fw, replaced=compromise.startswith("C1+C3"), op_key=compromise.endswith("+OP"),
+                 max_alert_threshold=cfg.get("_max_alert_threshold", 0))
     inv, floor = sch.invariants, sch.floor
     cap, q_tx, sleep_per_min = bat["capacity"], bat["q"], bat["sleep_per_h"] / 60
     d = Dev(dv["default_reporting_interval_min"], dv["alert_threshold_cm"],
@@ -491,6 +497,8 @@ def _event(args) -> tuple[list, list, dict]:
         acfg_e = threshold_profile(actions_cfg, th["band_cm"])
         env, fw = ev.envelope_from_config(acfg_e), ev.firmware_policy_from_config(acfg_e)
         ecfg = {**cfg, "device": {**cfg["device"], "alert_threshold_cm": th["alert_cm"]}}
+        if (cfg.get("commissioning") or {}).get("max_alert_threshold") == "nws_action":
+            ecfg["_max_alert_threshold"] = th["alert_cm"]          # F3: write-once, = NWS action stage
         levels, level_src = th["levels_cm"], th["source"]
     else:
         if rel:
@@ -511,6 +519,7 @@ def _event(args) -> tuple[list, list, dict]:
                   "alert_threshold_cm": ecfg["device"]["alert_threshold_cm"],
                   "peak_bracketed_by_gap": any(g["after"] <= str(s.idxmax()) <= g["before"] for g in gaps(s, 60)),
                   "minutes": int(stage.size), "levels_cm": levels, "threshold_source": level_src,
+                  "commissioning_max_alert_threshold_cm": ecfg.get("_max_alert_threshold", 0),
                   "level_names": th["level_names"] if th else None})
     for bat in bats:
         for scheme in cfg["schemes"]:

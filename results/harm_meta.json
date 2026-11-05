@@ -23,6 +23,7 @@
         975.36
       ],
       "threshold_source": "NWS BBST2",
+      "commissioning_max_alert_threshold_cm": 518,
       "level_names": [
         "action",
         "minor",
@@ -68,6 +69,7 @@
         975.36
       ],
       "threshold_source": "NWS BBST2",
+      "commissioning_max_alert_threshold_cm": 518,
       "level_names": [
         "action",
         "minor",
@@ -129,6 +131,7 @@
         975.36
       ],
       "threshold_source": "NWS BBST2",
+      "commissioning_max_alert_threshold_cm": 518,
       "level_names": [
         "action",
         "minor",
@@ -174,6 +177,7 @@
         975.36
       ],
       "threshold_source": "NWS BBST2",
+      "commissioning_max_alert_threshold_cm": 518,
       "level_names": [
         "action",
         "minor",
@@ -219,6 +223,7 @@
         975.36
       ],
       "threshold_source": "NWS BBST2",
+      "commissioning_max_alert_threshold_cm": 518,
       "level_names": [
         "action",
         "minor",
@@ -270,6 +275,7 @@
         1097.28
       ],
       "threshold_source": "NWS HGTT2",
+      "commissioning_max_alert_threshold_cm": 884,
       "level_names": [
         "action",
         "minor",
@@ -315,6 +321,7 @@
         1097.28
       ],
       "threshold_source": "NWS HGTT2",
+      "commissioning_max_alert_threshold_cm": 884,
       "level_names": [
         "action",
         "minor",
@@ -360,6 +367,7 @@
         1097.28
       ],
       "threshold_source": "NWS HGTT2",
+      "commissioning_max_alert_threshold_cm": 884,
       "level_names": [
         "action",
         "minor",
@@ -411,6 +419,7 @@
         1097.28
       ],
       "threshold_source": "NWS HGTT2",
+      "commissioning_max_alert_threshold_cm": 884,
       "level_names": [
         "action",
         "minor",
@@ -456,6 +465,7 @@
         1097.28
       ],
       "threshold_source": "NWS HGTT2",
+      "commissioning_max_alert_threshold_cm": 884,
       "level_names": [
         "action",
         "minor",
@@ -501,6 +511,7 @@
         1097.28
       ],
       "threshold_source": "NWS HGTT2",
+      "commissioning_max_alert_threshold_cm": 884,
       "level_names": [
         "action",
         "minor",
@@ -546,6 +557,7 @@
         1310.64
       ],
       "threshold_source": "NWS HBMT2",
+      "commissioning_max_alert_threshold_cm": 1158,
       "level_names": [
         "action",
         "minor",
@@ -591,6 +603,7 @@
         1310.64
       ],
       "threshold_source": "NWS HBMT2",
+      "commissioning_max_alert_threshold_cm": 1158,
       "level_names": [
         "action",
         "minor",
@@ -636,6 +649,7 @@
         1310.64
       ],
       "threshold_source": "NWS HBMT2",
+      "commissioning_max_alert_threshold_cm": 1158,
       "level_names": [
         "action",
         "minor",
@@ -681,6 +695,7 @@
         1310.64
       ],
       "threshold_source": "NWS HBMT2",
+      "commissioning_max_alert_threshold_cm": 1158,
       "level_names": [
         "action",
         "minor",
@@ -726,6 +741,7 @@
         1813.56
       ],
       "threshold_source": "NWS GBHT2",
+      "commissioning_max_alert_threshold_cm": 1585,
       "level_names": [
         "action",
         "minor",
@@ -777,6 +793,7 @@
         1813.56
       ],
       "threshold_source": "NWS GBHT2",
+      "commissioning_max_alert_threshold_cm": 1585,
       "level_names": [
         "action",
         "minor",
@@ -822,6 +839,7 @@
         1813.56
       ],
       "threshold_source": "NWS GBHT2",
+      "commissioning_max_alert_threshold_cm": 1585,
       "level_names": [
         "action",
         "minor",
@@ -867,6 +885,7 @@
         1813.56
       ],
       "threshold_source": "NWS GBHT2",
+      "commissioning_max_alert_threshold_cm": 1585,
       "level_names": [
         "action",
         "minor",
@@ -912,6 +931,7 @@
         1813.56
       ],
       "threshold_source": "NWS GBHT2",
+      "commissioning_max_alert_threshold_cm": 1585,
       "level_names": [
         "action",
         "minor",
@@ -957,6 +977,7 @@
         1813.56
       ],
       "threshold_source": "NWS GBHT2",
+      "commissioning_max_alert_threshold_cm": 1585,
       "level_names": [
         "action",
         "minor",
@@ -1002,6 +1023,7 @@
         1813.56
       ],
       "threshold_source": "NWS GBHT2",
+      "commissioning_max_alert_threshold_cm": 1585,
       "level_names": [
         "action",
         "minor",
@@ -1053,6 +1075,7 @@
         1813.56
       ],
       "threshold_source": "NWS GBHT2",
+      "commissioning_max_alert_threshold_cm": 1585,
       "level_names": [
         "action",
         "minor",
@@ -1098,6 +1121,7 @@
         1813.56
       ],
       "threshold_source": "NWS GBHT2",
+      "commissioning_max_alert_threshold_cm": 1585,
       "level_names": [
         "action",
         "minor",
@@ -1143,6 +1167,7 @@
         1813.56
       ],
       "threshold_source": "NWS GBHT2",
+      "commissioning_max_alert_threshold_cm": 1585,
       "level_names": [
         "action",
         "minor",
@@ -1188,6 +1213,7 @@
         1813.56
       ],
       "threshold_source": "NWS GBHT2",
+      "commissioning_max_alert_threshold_cm": 1585,
       "level_names": [
         "action",
         "minor",
@@ -1233,6 +1259,7 @@
         1813.56
       ],
       "threshold_source": "NWS GBHT2",
+      "commissioning_max_alert_threshold_cm": 1585,
       "level_names": [
         "action",
         "minor",
@@ -1278,6 +1305,7 @@
         1813.56
       ],
       "threshold_source": "NWS GBHT2",
+      "commissioning_max_alert_threshold_cm": 1585,
       "level_names": [
         "action",
         "minor",
@@ -1323,6 +1351,7 @@
         1813.56
       ],
       "threshold_source": "NWS GBHT2",
+      "commissioning_max_alert_threshold_cm": 1585,
       "level_names": [
         "action",
         "minor",
@@ -1368,6 +1397,7 @@
         3590.544
       ],
       "threshold_source": "NWS CFKT2",
+      "commissioning_max_alert_threshold_cm": 3499,
       "level_names": [
         "action",
         "minor",
@@ -1413,6 +1443,7 @@
         3590.544
       ],
       "threshold_source": "NWS CFKT2",
+      "commissioning_max_alert_threshold_cm": 3499,
       "level_names": [
         "action",
         "minor",
@@ -1464,6 +1495,7 @@
         3590.544
       ],
       "threshold_source": "NWS CFKT2",
+      "commissioning_max_alert_threshold_cm": 3499,
       "level_names": [
         "action",
         "minor",
@@ -1509,6 +1541,7 @@
         3590.544
       ],
       "threshold_source": "NWS CFKT2",
+      "commissioning_max_alert_threshold_cm": 3499,
       "level_names": [
         "action",
         "minor",
@@ -1554,6 +1587,7 @@
         3590.544
       ],
       "threshold_source": "NWS CFKT2",
+      "commissioning_max_alert_threshold_cm": 3499,
       "level_names": [
         "action",
         "minor",
@@ -1605,6 +1639,7 @@
         3590.544
       ],
       "threshold_source": "NWS CFKT2",
+      "commissioning_max_alert_threshold_cm": 3499,
       "level_names": [
         "action",
         "minor",
@@ -1650,6 +1685,7 @@
         701.04
       ],
       "threshold_source": "NWS HARP1",
+      "commissioning_max_alert_threshold_cm": 335,
       "level_names": [
         "action",
         "minor",
@@ -1695,6 +1731,7 @@
         426.72
       ],
       "threshold_source": "NWS BRKM2",
+      "commissioning_max_alert_threshold_cm": 152,
       "level_names": [
         "action",
         "minor",
@@ -1740,6 +1777,7 @@
         426.72
       ],
       "threshold_source": "NWS BRKM2",
+      "commissioning_max_alert_threshold_cm": 152,
       "level_names": [
         "action",
         "minor",
@@ -1785,6 +1823,7 @@
         426.72
       ],
       "threshold_source": "NWS BRKM2",
+      "commissioning_max_alert_threshold_cm": 152,
       "level_names": [
         "action",
         "minor",
@@ -1830,6 +1869,7 @@
         426.72
       ],
       "threshold_source": "NWS BRKM2",
+      "commissioning_max_alert_threshold_cm": 152,
       "level_names": [
         "action",
         "minor",
@@ -1875,6 +1915,7 @@
         426.72
       ],
       "threshold_source": "NWS BRKM2",
+      "commissioning_max_alert_threshold_cm": 152,
       "level_names": [
         "action",
         "minor",
