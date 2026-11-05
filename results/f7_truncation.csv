@@ -1,0 +1,11 @@
+tag_bytes,budget,attempts,p_forge,log2_p
+8,one attempt,1.0,5.421010862427522e-20,-64.0
+8,every Class A slot of 10 devices for 1 year,1051200.0,5.698566618583811e-14,-43.99639424990295
+8,every Class A slot of 50 devices for 1 year,5256000.0,2.8492833092919057e-13,-41.67446615501559
+8,every Class A slot of 200 devices for 1 year,21024000.0,1.1397133237167623e-12,-39.67446615501559
+8,"whole 4-byte counter window, one device",4294967296.0,2.3283064365386963e-10,-32.0
+16,one attempt,1.0,2.938735877055719e-39,-128.0
+16,every Class A slot of 10 devices for 1 year,1051200.0,3.0891991539609716e-33,-107.99639424990295
+16,every Class A slot of 50 devices for 1 year,5256000.0,1.5445995769804858e-32,-105.67446615501558
+16,every Class A slot of 200 devices for 1 year,21024000.0,6.178398307921943e-32,-103.67446615501558
+16,"whole 4-byte counter window, one device",4294967296.0,1.262177448353619e-29,-96.0

@@ -259,6 +259,10 @@ def run(config: Path, results: Path) -> dict[str, pd.DataFrame]:
             gw.forging_power(devs_, pols, load_yaml(config / "threat.yaml"), acfg_["invariants"],
                              {"alert_active": c_["alert_active"], "battery_below_floor": not c_["battery_above_floor"]}
                              ).to_csv(results / "d6_forging_power.csv", index=False)
+    if "s6" in model:   # F7: truncated-tag forgery bounds (computational note to the symbolic model)
+        from . import truncation  # noqa: PLC0415
+        truncation.table(model["s6"]["tag_bytes"], model["s6"]["crisis_fields"]["counter"], model["uplink_interval_s"],
+                         model.get("revocation", {}).get("devices", [1])).to_csv(results / "f7_truncation.csv", index=False)
     from .config import REPO_ROOT as _root  # noqa: PLC0415
     if (_root / "formal/proofs").is_dir():
         from . import formal  # noqa: PLC0415

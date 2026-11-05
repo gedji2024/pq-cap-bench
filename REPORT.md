@@ -1605,6 +1605,21 @@ Tamarin models `formal/crisis.spthy`, `formal/freshness.spthy` (P4; a trace-incl
 | opchain | exec_two_approvals | exists-trace | verified | 17 |
 | opchain | one_reveal_one_approval | all-traces | verified | 76 |
 
+**F7 - computational note: truncated HMAC tags** (`pqcap.truncation`; ideal-PRF bound q x 2^-t, union bound; a failed forgery does not advance the device counter, so attempts are limited by the radio; the soundness lemma for `freshness.spthy` is stated with a proof sketch in `formal/README.md`):
+
+| tag_bytes | budget | attempts | p_forge | log2_p |
+|---|---|---|---|---|
+| 8 | one attempt | 1 | 5.42e-20 | -64.0 |
+| 8 | every Class A slot of 10 devices for 1 year | 1.051e+06 | 5.7e-14 | -44.0 |
+| 8 | every Class A slot of 50 devices for 1 year | 5.256e+06 | 2.85e-13 | -41.7 |
+| 8 | every Class A slot of 200 devices for 1 year | 2.102e+07 | 1.14e-12 | -39.7 |
+| 8 | whole 4-byte counter window, one device | 4.295e+09 | 2.33e-10 | -32.0 |
+| 16 | one attempt | 1 | 2.94e-39 | -128.0 |
+| 16 | every Class A slot of 10 devices for 1 year | 1.051e+06 | 3.09e-33 | -108.0 |
+| 16 | every Class A slot of 50 devices for 1 year | 5.256e+06 | 1.54e-32 | -105.7 |
+| 16 | every Class A slot of 200 devices for 1 year | 2.102e+07 | 6.18e-32 | -103.7 |
+| 16 | whole 4-byte counter window, one device | 4.295e+09 | 1.26e-29 | -96.0 |
+
 ## 9. Figures
 
 - [fig1_token_frames_per_dr.png](figures/fig1_token_frames_per_dr.png) ([pdf](figures/fig1_token_frames_per_dr.pdf))

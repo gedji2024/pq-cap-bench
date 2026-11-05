@@ -15,3 +15,10 @@ def test_bound():
     assert w.attempts == 2.0 ** 32 and math.isclose(w.log2_p, -32)
     y = t[(t.tag_bytes == 16) & t.budget.str.contains("1 devices")].iloc[0]
     assert math.isclose(y.attempts, 12 * 24 * 365) and y.p_forge < 2.0 ** -100
+
+
+def test_section_truncation(tmp_path):
+    from pqcap.report import section_truncation
+    assert section_truncation(tmp_path) == ""
+    tr.table([8], 4, 300, [1]).to_csv(tmp_path / "f7_truncation.csv", index=False)
+    assert "**F7 - computational note" in section_truncation(tmp_path) and "-64.0" in section_truncation(tmp_path)

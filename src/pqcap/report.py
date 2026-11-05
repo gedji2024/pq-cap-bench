@@ -647,6 +647,18 @@ def section_d6(results: Path, model: dict) -> str:
     return "\n\n".join(out)
 
 
+def section_truncation(results: Path) -> str:
+    p = results / "f7_truncation.csv"
+    if not p.exists():
+        return ""
+    t = pd.read_csv(p)
+    return ("**F7 - computational note: truncated HMAC tags** (`pqcap.truncation`; ideal-PRF bound q x 2^-t, union "
+            "bound; a failed forgery does not advance the device counter, so attempts are limited by the radio; "
+            "the soundness lemma for `freshness.spthy` is stated with a proof sketch in `formal/README.md`):\n\n"
+            + md_table(t, {"attempts": lambda v: f"{v:.4g}", "p_forge": lambda v: f"{v:.3g}",
+                           "log2_p": lambda v: f"{v:.1f}"}))
+
+
 def section_formal(results: Path) -> str:
     p = results / "formal_lemmas.csv"
     if not p.exists() or p.stat().st_size <= 1:
@@ -740,7 +752,7 @@ def run(config: Path, results: Path, figures: Path) -> None:
         "## 8a. K5/K6 on the manufacturer device catalogue (supersedes the K5/K6 of Sec. 8)",
         section_catalogue(results, config),
         "## 8b. Traceability to the Étape 2 threat model", section_traceability(config),
-        "## 8c. Formal verification (Tamarin)", section_formal(results),
+        "## 8c. Formal verification (Tamarin)", section_formal(results), section_truncation(results),
         "## 9. Figures", "\n".join(f"- [{f}](figures/{f}) ([pdf](figures/{f[:-4]}.pdf))" for f in figs),
     ]
     (results.parent / "REPORT.md").write_text("\n\n".join(parts) + "\n")
