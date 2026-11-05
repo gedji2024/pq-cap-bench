@@ -34,13 +34,14 @@ def test_version_and_committed_proofs():
     v = (REPO_ROOT / "formal/proofs/VERSION.txt").read_text()
     assert formal.version(v) == "1.12.0"
     d = formal.results(REPO_ROOT / "formal/proofs")
-    assert set(d.model) == {"crisis", "delegation", "freshness"}
+    assert set(d.model) == {"crisis", "delegation", "freshness", "opchain"}
     res = {(m, x): r for m, x, r in zip(d.model, d.lemma, d.result)}
     need = {("freshness", "ctr_monotone"), ("freshness", "P4_no_replay"), ("freshness", "P4_injective_agreement"),
             ("crisis", "P1_confinement"), ("crisis", "revocation"), ("crisis", "revocation_needs_PA"),
             ("crisis", "disable_needs_OP"), ("crisis", "exec_accept"), ("crisis", "exec_disable"),
             ("crisis", "exec_revoke"), ("delegation", "P2_attenuation_only"),
-            ("delegation", "exec_attenuated_child")}
+            ("delegation", "exec_attenuated_child"), ("opchain", "exec_two_approvals"),
+            ("opchain", "disable_needs_OP_chain"), ("opchain", "one_reveal_one_approval")}
     assert need <= set(res) and all(res[k] == "verified" for k in need)
     assert (d.result == "verified").all()
 

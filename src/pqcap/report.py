@@ -331,6 +331,33 @@ def section_revocation(results: Path, model: dict) -> str:
     return "\n\n".join(out)
 
 
+def section_f6(results: Path) -> str:
+    p = results / "f6_op_approval.csv"
+    if not p.exists():
+        return "_F6 not run_"
+    a, c = pd.read_csv(p), pd.read_csv(results / "f6_op_commit.csv")
+    us = a[a.region == "US915"]
+    fr = us.pivot_table(index=["approval", "message_bytes"], columns="dr", values="frames", sort=False)
+    fr.columns = [f"DR{d} frames" for d in fr.columns]
+    la = us.pivot_table(index=["approval", "message_bytes"], columns="dr", values="latency_worst_s", sort=False) / 60
+    la.columns = [f"DR{d} min" for d in la.columns]
+    cu = c[c.region == "US915"].pivot_table(index=["commit_signer", "commit_bytes"], columns="dr", values="frames",
+                                             sort=False)
+    cu.columns = [f"DR{d} frames" for d in cu.columns]
+    i = lambda v: f"{int(v)}"  # noqa: E731
+    return ("**F6 - pre-committed operator approvals.** At commissioning OP signs a commitment to the top of a hash "
+            "chain bound to (device, 'disable'); each approval reveals the next chain element (16 or 32 B), checked "
+            "by the device against its anchor. One reveal = one approval. Compared with a per-command OP signature "
+            "token (D2). Message = crisis command + approval; latency = worst-case Class A delivery to one device "
+            "(one downlink per uplink interval). Field sizes are design choices (`config/model.yaml` f6_op_chain); "
+            "signature sizes are measured (Sec. 3). Formal: `formal/opchain.spthy` (Sec. 8c).\n\n"
+            "Frames per disable message, US915:\n\n" + md_table(fr.reset_index(), {c_: i for c_ in fr.columns})
+            + "\n\nWorst-case latency (minutes), US915:\n\n"
+            + md_table(la.reset_index(), {c_: (lambda v: f"{v:,.1f}") for c_ in la.columns})
+            + "\n\nOne-off commissioning message (commitment + OP signature), frames, US915:\n\n"
+            + md_table(cu.reset_index(), {c_: i for c_ in cu.columns}))
+
+
 def section_f4(config: Path) -> str:
     """F4: NWS flood categories of every cached gauge, with source and datum check."""
     from . import nws  # noqa: PLC0415
@@ -632,7 +659,7 @@ def section_formal(results: Path) -> str:
     note = ("**all verified**" if open_.empty else
             f"**{nv} verified; NOT verified: {', '.join(f'`{x}` ({r})' for x, r in zip(open_.lemma, open_.result))}**")
     return (f"Tamarin models `formal/crisis.spthy`, `formal/freshness.spthy` (P4; a trace-inclusion projection "
-            f"generated from crisis.spthy) and `formal/delegation.spthy`. Proofs are in `formal/proofs/`, the version in "
+            f"generated from crisis.spthy), `formal/opchain.spthy` (F6 hash-chain OP approvals) and `formal/delegation.spthy`. Proofs are in `formal/proofs/`, the version in "
             f"`formal/proofs/VERSION.txt`, abstractions and the soundness argument in `formal/README.md`. "
             f"{len(d)} lemmas, {note}.\n\n"
             + md_table(d.fillna(""), {"steps": lambda v: f"{int(v)}" if v != "" else "-"}))
@@ -708,6 +735,7 @@ def run(config: Path, results: Path, figures: Path) -> None:
         "## 7g. D2: two-tier defence S6+F", section_d2(results),
         "## 7h. D6: gateway-side filtering of a C1 flood", section_d6(results, model),
         "## 7i. F4: NWS flood categories", section_f4(config),
+        "## 7j. F6: pre-committed operator approvals", section_f6(results),
         "## 8. Kill criteria", section_kill(results),
         "## 8a. K5/K6 on the manufacturer device catalogue (supersedes the K5/K6 of Sec. 8)",
         section_catalogue(results, config),

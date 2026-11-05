@@ -81,6 +81,21 @@ The symbolic model treats `mac/2` as an ideal MAC. The computational cost of tru
   - the whole 4-byte counter window of one device (2^32 attempts, the most a device processes before a counter wrap forces a new epoch key).
 - **Ignored:** the PRF distinguishing advantage of HMAC-SHA256.
 
+## `opchain.spthy`: F6, pre-committed operator approvals (extends `disable_needs_OP`)
+
+| Lemma | Property | Holds under |
+|---|---|---|
+| `exec_two_approvals` | two successive approvals can each be used for one "disable" | honest run |
+| `disable_needs_OP_chain` | "disable" is accepted only with a chain element the OP released for that device | C1 (session keys revealed), Dolev-Yao network; breaks only if the OP secrets leak |
+| `one_reveal_one_approval` | a device never accepts the same reveal twice | all |
+
+Abstractions:
+- **Chain length is 3.** Longer chains repeat the same step.
+- **The device checks h^k(x) = top at step k against the signed top.** This is the same acceptance set as keeping a moving anchor, and it avoids an induction over anchor updates.
+- **The crisis command is reduced to its session-key MAC.** Counters and freshness are in `freshness.spthy`.
+- **`Reveal_OP` reveals sk_OP and the chain seeds.**
+- **Like the D2 token, a reveal is bound to (device, action), not to a time.** A C1 platform that relays the OP's reveal can choose *when* to use that one approval.
+
 ## `delegation.spthy`: P2, delegation by attenuation only
 
 | Lemma | Property | Holds under |

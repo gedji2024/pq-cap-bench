@@ -312,6 +312,17 @@ def run(config: Path, results: Path) -> dict[str, pd.DataFrame]:
                             tok.append({"op_token_alg": alg, "token_bytes": sig[alg], "region": ch.region, "dr": ch.dr,
                                         "frames": lcx["frames"], "airtime_s": lcx["airtime_s"]})
             pd.DataFrame(tok).to_csv(results / "d2_op_token_cost.csv", index=False)
+            f6 = model.get("f6_op_chain")
+            if f6:
+                from . import opapproval  # noqa: PLC0415
+                algs = [a for a in model.get("d2_op_token_algorithms", []) if a in sig]
+                cmd = sum(model["s6"]["crisis_fields"].values()) + model["s6"]["tag_bytes"][0]
+                appr = {f"chain reveal {b} B": b for b in f6["reveal_bytes"]} | {f"{a} token": sig[a] for a in algs}
+                pc, cm = opapproval.approval_rows(channels(radio, model), cmd, appr, sum(f6["commit_fields"].values()),
+                                                  {a: sig[a] for a in algs}, model["uplink_interval_s"],
+                                                  lambda n, ch: link_cost(n, ch, model["fragment_header_bytes"]))
+                pc.to_csv(results / "f6_op_approval.csv", index=False)
+                cm.to_csv(results / "f6_op_commit.csv", index=False)
             if "revocation" in model:
                 from . import revocation as rv  # noqa: PLC0415
                 chans = channels(radio, model)

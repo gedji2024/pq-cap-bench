@@ -87,6 +87,11 @@ def _fake_results(tmp_path, cfgs):  # noqa: F811
     _ks = _d.c4_key_scope(_devs, _pol, load_yaml(CONFIG / "threat.yaml"), acfg["invariants"],
                           {"alert_active": True, "battery_below_floor": False})
     _d.c4_k6(_ks).to_csv(r / "f1_c4_k6.csv", index=False)
+    from pqcap import opapproval as _oa
+    _pc, _cm = _oa.approval_rows(_m.channels(radio, mdl), 24, {"chain reveal 16 B": 16, "Ed25519 token": 64}, 39,
+                                 {"Ed25519": 64}, 300, lambda n, c: _m.link_cost(n, c, 2))
+    _pc.to_csv(r / "f6_op_approval.csv", index=False)
+    _cm.to_csv(r / "f6_op_commit.csv", index=False)
     from pqcap import pqm4 as _p
     _p.verification_cost(CONFIG, REPO_ROOT).to_csv(r / "mcu_verify_cost.csv", index=False)
     from pqcap import harm
@@ -109,7 +114,7 @@ def test_report_renders(tmp_path, cfgs):  # noqa: F811
     (figs / "fig1_x.png").write_bytes(b"")
     report.run(cfg, r, figs)
     md = (tmp_path / "REPORT.md").read_text()
-    for h in ("## 1. Environment", "## 4. Host timings", "## 8. Kill criteria", "**K1", "**K2", "**K3", "**K4", "**K5 - Blast radius", "**K5 - blast radius per compromise", "## 7d. Revocation", "**D2 - S6+F", "**D6 - an untrusted gateway", "**Forging power of a filtering gateway**", "**OP token cost**", "**D1 - active revocation time", "## 8b. Traceability", "## 8a. K5/K6 on the manufacturer", "**SUPERSEDED**", "## 7f. Device-side", "Energy is **not reported**", "## 0. Repository state", "kept `7df90f4`", "T10", "## 7e. Harm-weighted replay", "Gaps > 60 min", "**Battery profiles (D5)**", "**K6 - blast(S4-E)", "**F1 - C4 fairness", "**F2 - realistic filtering points**", "**Gateway given AppSKey (upper bound)**",
+    for h in ("## 1. Environment", "## 4. Host timings", "## 8. Kill criteria", "**K1", "**K2", "**K3", "**K4", "**K5 - Blast radius", "**K5 - blast radius per compromise", "## 7d. Revocation", "**D2 - S6+F", "**D6 - an untrusted gateway", "**Forging power of a filtering gateway**", "**OP token cost**", "**D1 - active revocation time", "## 8b. Traceability", "## 8a. K5/K6 on the manufacturer", "**SUPERSEDED**", "## 7f. Device-side", "Energy is **not reported**", "## 0. Repository state", "kept `7df90f4`", "T10", "## 7e. Harm-weighted replay", "Gaps > 60 min", "**Battery profiles (D5)**", "**K6 - blast(S4-E)", "**F1 - C4 fairness", "**F6 - pre-committed operator approvals.**", "**F2 - realistic filtering points**", "**Gateway given AppSKey (upper bound)**",
               "## 7c. S6", "Crisis commands per gateway", "**Why the crisis capacities differ", "its capacity equals S6", "fig1_x.png"):
         assert h in md
     assert "env.json missing" in md

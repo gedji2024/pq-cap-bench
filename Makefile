@@ -22,6 +22,7 @@ formal:
 	cd formal && ./prove.sh freshness.spthy s 1800 ctr_monotone P4_no_replay P4_injective_agreement
 	cd formal && ./prove.sh crisis.spthy s 1800 exec_accept exec_disable exec_revoke P1_confinement \
 	  revocation revocation_needs_PA disable_needs_OP
+	cd formal && ./prove.sh opchain.spthy s 900 exec_two_approvals disable_needs_OP_chain one_reveal_one_approval
 	tamarin-prover --prove formal/delegation.spthy > formal/proofs/delegation.txt 2>&1
 
 sync:

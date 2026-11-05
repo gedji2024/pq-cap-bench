@@ -11,3 +11,6 @@ crisis,revocation_needs_PA,all-traces,verified,142
 freshness,P4_injective_agreement,all-traces,verified,50
 freshness,P4_no_replay,all-traces,verified,4
 freshness,ctr_monotone,all-traces,verified,47794
+opchain,disable_needs_OP_chain,all-traces,verified,88
+opchain,exec_two_approvals,exists-trace,verified,17
+opchain,one_reveal_one_approval,all-traces,verified,76

@@ -1,0 +1,82 @@
+/*
+ * pq-cap-bench -- F6: pre-committed operator approvals for "disable sensor" (extends disable_needs_OP, D2).
+ *
+ * At commissioning OP draws a secret ~s and signs a commitment to the top of a hash chain bound to
+ * (device, action): sign(<'chain', D, 'disable', h(h(h(~s))))>, skOP). The device stores the anchor.
+ * Approval k (k = 1, 2, 3) reveals x_k = h^(3-k)(~s); the device accepts "disable" at step k only with a
+ * reveal x such that h^k(x) equals the signed top, then moves to step k+1. This is the same acceptance
+ * set as keeping a moving anchor (anchor after k-1 approvals = h(x_k)), written so that every check refers
+ * to the signed top directly. One reveal = one approval.
+ *
+ * Abstractions (see formal/README.md): chain length 3 (three approvals per commissioning; longer chains
+ * repeat the same step); hash = ideal `hashing` builtin (preimage resistance); signature = ideal
+ * `signing`; the crisis command is reduced to its MAC under the session key k_{d,e} (counter/freshness
+ * is proved in freshness.spthy); C1 = Reveal_Session; the network is Dolev-Yao; Reveal_OP reveals both
+ * sk_OP and the chain seeds.
+ */
+theory OpChain
+begin
+
+builtins: signing, hashing
+functions: mac/2
+
+rule OP_Setup:
+  [ Fr(~skOP) ] --[ OnlyOnce('OP') ]-> [ !OPsk(~skOP), !OPpk(pk(~skOP)), Out(pk(~skOP)) ]
+
+rule Device_Setup:
+  [ Fr(~d), Fr(~k) ] --[ DeviceInit(~d) ]-> [ !SessKey(~d, ~k), !DevId(~d), NoChain(~d), Out(~d) ]
+
+/* commissioning: OP commits to the chain top for (D, 'disable') */
+rule OP_Commit:
+  let top = h(h(h(~s))) in
+  [ !OPsk(sk), !DevId(D), Fr(~s) ]
+  --[ Commit(D, top) ]->
+  [ OPChain(D, h(h(~s)), h(~s), ~s), !Seed(D, ~s), Out(<<'chain', D, 'disable', top>, sign(<'chain', D, 'disable', top>, sk)>) ]
+
+rule Device_InstallChain:
+  [ !OPpk(pkOP), NoChain(D), In(<<'chain', D, 'disable', top>, sig>) ]
+  --[ Eq(verify(sig, <'chain', D, 'disable', top>, pkOP), true), ChainInstalled(D, top) ]->
+  [ !Top(D, top), Step1(D) ]
+
+/* approvals, released in chain order */
+rule OP_Approve1: [ OPChain(D, x1, x2, x3) ] --[ Approve(D, x1) ]-> [ OPChain2(D, x2, x3), Out(x1) ]
+rule OP_Approve2: [ OPChain2(D, x2, x3) ]   --[ Approve(D, x2) ]-> [ OPChain3(D, x3), Out(x2) ]
+rule OP_Approve3: [ OPChain3(D, x3) ]       --[ Approve(D, x3) ]-> [ Out(x3) ]
+
+/* the platform (PDP) sends the disable command with the reveal it was given */
+rule PDP_SendDisable:
+  [ !SessKey(D, k), In(x) ] --> [ Out(<'disable', x, mac(k, <'disable', x>)>) ]
+
+rule Device_AcceptDisable1:
+  [ !SessKey(D, k), !Top(D, h(x)), Step1(D), In(<'disable', x, mac(k, <'disable', x>)>) ]
+  --[ Accept(D, 'disable', x) ]-> [ Step2(D) ]
+
+rule Device_AcceptDisable2:
+  [ !SessKey(D, k), !Top(D, h(h(x))), Step2(D), In(<'disable', x, mac(k, <'disable', x>)>) ]
+  --[ Accept(D, 'disable', x) ]-> [ Step3(D) ]
+
+rule Device_AcceptDisable3:
+  [ !SessKey(D, k), !Top(D, h(h(h(x)))), Step3(D), In(<'disable', x, mac(k, <'disable', x>)>) ]
+  --[ Accept(D, 'disable', x) ]-> [ ]
+
+rule Reveal_Session: [ !SessKey(D, k) ] --[ RevealSess(D) ]-> [ Out(k) ]
+rule Reveal_OP:      [ !OPsk(sk), !Seed(D, s) ] --[ RevealOP() ]-> [ Out(sk), Out(s) ]
+
+restriction eq:   "All x y #i. Eq(x, y)@i ==> x = y"
+restriction once: "All x #i #j. OnlyOnce(x)@i & OnlyOnce(x)@j ==> #i = #j"
+restriction device_once: "All d #i #j. DeviceInit(d)@i & DeviceInit(d)@j ==> #i = #j"
+
+lemma exec_two_approvals: exists-trace
+  "Ex D x1 x2 #i #j. Accept(D, 'disable', x1)@i & Accept(D, 'disable', x2)@j & #i < #j
+   & not(Ex #r. RevealOP()@r) & not(Ex D2 #r. RevealSess(D2)@r)"
+
+/* D2/F6: even under C1 (session keys revealed) and a Dolev-Yao network, "disable" is accepted only with a
+   preimage the OP released for that device -- unless the OP secrets leak */
+lemma disable_needs_OP_chain:
+  "All D x #i. Accept(D, 'disable', x)@i ==> (Ex #j. Approve(D, x)@j & #j < #i) | (Ex #r. RevealOP()@r & #r < #i)"
+
+/* one reveal = one approval: the same preimage is never accepted twice by a device */
+lemma one_reveal_one_approval:
+  "All D x #i #j. Accept(D, 'disable', x)@i & Accept(D, 'disable', x)@j ==> #i = #j"
+
+end

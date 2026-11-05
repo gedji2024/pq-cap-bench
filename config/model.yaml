@@ -35,6 +35,12 @@ kill_criteria:
 # D2: candidate signature algorithms for the OP approval token (sk_OP is distinct from sk_PA; no choice is
 # imposed, the size of each measured algorithm is reported)
 d2_op_token_algorithms: [Ed25519, Falcon-512, ML-DSA-44]
+# F6: pre-committed OP approvals (hash chain bound to device and action). Field sizes are DESIGN CHOICES:
+#   reveal = one chain element (16 or 32 B); the disable command = crisis fields + first tag length (s6 below);
+#   commitment = device id 4 B + action 1 B + chain length 2 B + top 32 B (SHA-256), plus one OP signature.
+f6_op_chain:
+  reveal_bytes: [16, 32]
+  commit_fields: {device_id: 4, action: 1, chain_length: 2, top: 32}
 
 # S4-E envelope authenticator: HMAC-SHA256 (full 32-B tag, measured algorithm label) under a per-device key
 s4e_envelope_mac: HMAC-SHA256-T32

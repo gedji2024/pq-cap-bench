@@ -1338,6 +1338,38 @@ Reference levels: NWS flood categories where the gauge has them (Sec. 7i, F4); o
 | 08075000 | HBMT2 | Brays Bayou at Houston | 38.00 | 41.00 | 42.00 | 43.00 | https://water.noaa.gov/gauges/HBMT2 | 2026-11-05T04:59:35+00:00 | 1a44f4541606a861... | 16.77 | 16.77 | True |
 | 08076000 | GBHT2 | Greens Bayou at Houston | 52.00 | 55.00 | 56.50 | 59.50 | https://water.noaa.gov/gauges/GBHT2 | 2026-11-05T04:59:36+00:00 | ada925a531f28787... | 39.28 | 39.28 | True |
 
+## 7j. F6: pre-committed operator approvals
+
+**F6 - pre-committed operator approvals.** At commissioning OP signs a commitment to the top of a hash chain bound to (device, 'disable'); each approval reveals the next chain element (16 or 32 B), checked by the device against its anchor. One reveal = one approval. Compared with a per-command OP signature token (D2). Message = crisis command + approval; latency = worst-case Class A delivery to one device (one downlink per uplink interval). Field sizes are design choices (`config/model.yaml` f6_op_chain); signature sizes are measured (Sec. 3). Formal: `formal/opchain.spthy` (Sec. 8c).
+
+Frames per disable message, US915:
+
+| approval | message_bytes | DR8 frames | DR9 frames | DR10 frames | DR11 frames | DR12 frames | DR13 frames |
+|---|---|---|---|---|---|---|---|
+| chain reveal 16 B | 40 | 1 | 1 | 1 | 1 | 1 | 1 |
+| chain reveal 32 B | 56 | 2 | 1 | 1 | 1 | 1 | 1 |
+| Ed25519 token | 88 | 2 | 1 | 1 | 1 | 1 | 1 |
+| Falcon-512 token | 688 | 14 | 6 | 3 | 3 | 3 | 3 |
+| ML-DSA-44 token | 2444 | 48 | 20 | 11 | 11 | 11 | 11 |
+
+Worst-case latency (minutes), US915:
+
+| approval | message_bytes | DR8 min | DR9 min | DR10 min | DR11 min | DR12 min | DR13 min |
+|---|---|---|---|---|---|---|---|
+| chain reveal 16 B | 40 | 5.0 | 5.0 | 5.0 | 5.0 | 5.0 | 5.0 |
+| chain reveal 32 B | 56 | 10.0 | 5.0 | 5.0 | 5.0 | 5.0 | 5.0 |
+| Ed25519 token | 88 | 10.0 | 5.0 | 5.0 | 5.0 | 5.0 | 5.0 |
+| Falcon-512 token | 688 | 70.0 | 30.0 | 15.0 | 15.0 | 15.0 | 15.0 |
+| ML-DSA-44 token | 2444 | 240.0 | 100.0 | 55.0 | 55.0 | 55.0 | 55.0 |
+
+One-off commissioning message (commitment + OP signature), frames, US915:
+
+| commit_signer | commit_bytes | DR8 frames | DR9 frames | DR10 frames | DR11 frames | DR12 frames | DR13 frames |
+|---|---|---|---|---|---|---|---|
+| Ed25519 | 103 | 3 | 1 | 1 | 1 | 1 | 1 |
+| Falcon-512 | 703 | 14 | 6 | 3 | 3 | 3 | 3 |
+| ML-DSA-44 | 2459 | 49 | 20 | 11 | 11 | 11 | 11 |
+
 ## 8. Kill criteria
 
 **K1 - Is S1 with ML-DSA-44 deliverable within W = 30 min for N = 50 at US915 DR8? -> NO.**
@@ -1553,7 +1585,7 @@ Naming follows *Étape 2 — Modèle de menace et propriétés de sécurité* v0
 
 ## 8c. Formal verification (Tamarin)
 
-Tamarin models `formal/crisis.spthy`, `formal/freshness.spthy` (P4; a trace-inclusion projection generated from crisis.spthy) and `formal/delegation.spthy`. Proofs are in `formal/proofs/`, the version in `formal/proofs/VERSION.txt`, abstractions and the soundness argument in `formal/README.md`. 12 lemmas, **all verified**.
+Tamarin models `formal/crisis.spthy`, `formal/freshness.spthy` (P4; a trace-inclusion projection generated from crisis.spthy), `formal/opchain.spthy` (F6 hash-chain OP approvals) and `formal/delegation.spthy`. Proofs are in `formal/proofs/`, the version in `formal/proofs/VERSION.txt`, abstractions and the soundness argument in `formal/README.md`. 15 lemmas, **all verified**.
 
 | model | lemma | kind | result | steps |
 |---|---|---|---|---|
@@ -1569,6 +1601,9 @@ Tamarin models `formal/crisis.spthy`, `formal/freshness.spthy` (P4; a trace-incl
 | freshness | P4_injective_agreement | all-traces | verified | 50 |
 | freshness | P4_no_replay | all-traces | verified | 4 |
 | freshness | ctr_monotone | all-traces | verified | 47794 |
+| opchain | disable_needs_OP_chain | all-traces | verified | 88 |
+| opchain | exec_two_approvals | exists-trace | verified | 17 |
+| opchain | one_reveal_one_approval | all-traces | verified | 76 |
 
 ## 9. Figures
 
