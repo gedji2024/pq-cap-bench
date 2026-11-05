@@ -2,7 +2,7 @@ UV ?= uv
 export OQS_INSTALL_PATH := $(CURDIR)/vendor/liboqs-install
 RUN := env -u VIRTUAL_ENV $(UV) run --frozen
 
-.PHONY: all liboqs sync bench env model figures report test cov clean data formal
+.PHONY: all liboqs sync bench env model figures report paper-tables test cov clean data formal
 
 all: bench model report
 
@@ -43,6 +43,9 @@ figures: sync
 
 report: model figures
 	$(RUN) pqcap report
+
+paper-tables: sync
+	$(RUN) python scripts/export_tex.py
 
 test: sync
 	$(RUN) pytest
