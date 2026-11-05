@@ -1,0 +1,64 @@
+/*
+ * pq-cap-bench -- envelope delegation chain (P2: delegation by attenuation only). Étape 2 naming.
+ *
+ * PA signs a ROOT envelope for device d with action multiset A and the public key of a delegate M (e.g. a
+ * municipality). M signs a CHILD envelope with action multiset C. The device installs the child only if both
+ * signatures verify and C is a sub-multiset of A (restriction subset). The delegate may be compromised
+ * (Reveal_M) or malicious -- it can sign any C -- and P2 must still hold.
+ *
+ * Abstractions (formal/README.md): bounds = a multiset of public action names (an interval box is not
+ * modelled); validity-window attenuation [t'0,t'1] within [t0,t1] is not modelled; chain depth is 1 (deeper
+ * chains repeat the same check, argued by induction in the paper, not mechanised here).
+ */
+theory Delegation
+begin
+
+builtins: signing, multiset
+
+rule PA_Setup:
+  [ Fr(~skPA) ] --[ OnlyOnce('PA') ]-> [ !PAsk(~skPA), !PApk(pk(~skPA)), Out(pk(~skPA)) ]
+
+rule Delegate_Setup:
+  [ Fr(~skM) ] --> [ !Msk(~skM), !Mpk(pk(~skM)), Out(pk(~skM)) ]
+
+rule Device_Setup:
+  [ Fr(~d), !PApk(pkPA) ] --> [ !Dev(~d, pkPA), Out(~d) ]
+
+/* the PA chooses the root bounds A (any multiset of public names, attacker-supplied as input) */
+rule PA_IssueRoot:
+  let root = <'root', d, A, pkM> in
+  [ !PAsk(sk), !Dev(d, pkPA), !Mpk(pkM), In(A) ]
+  --[ IssueRoot(d, A, pkM) ]->
+  [ Out(<root, sign(root, sk)>) ]
+
+/* a delegate signs ANY child bounds C (it may try to widen them) */
+rule Delegate_Child:
+  let child = <'child', d, C> in
+  [ !Msk(skM), In(d), In(C) ] --[ SignChild(d, C) ]-> [ Out(<child, sign(child, skM)>) ]
+
+rule Device_InstallChild:
+  let root = <'root', d, A, pkM>
+      child = <'child', d, C> in
+  [ !Dev(d, pkPA), In(<root, s1>), In(<child, s2>) ]
+  --[ InstallChild(d, C, A), Eq(verify(s1, root, pkPA), true), Eq(verify(s2, child, pkM), true),
+      Subset(C, A) ]->
+  [ ]
+
+rule Reveal_PA: [ !PAsk(sk) ] --[ RevealPA() ]-> [ Out(sk) ]
+rule Reveal_M:  [ !Msk(sk) ]  --[ RevealM() ]->  [ Out(sk) ]
+
+restriction eq: "All x y #i. Eq(x, y)@i ==> x = y"
+restriction once: "All x #i #j. OnlyOnce(x)@i & OnlyOnce(x)@j ==> #i = #j"
+restriction subset: "All c a #i. Subset(c, a)@i ==> (c = a) | (Ex z. c + z = a)"
+
+lemma exec_attenuated_child: exists-trace
+  "Ex d C A z #i. InstallChild(d, C, A)@i & C + z = A & not(Ex #r. RevealPA()@r) & not(Ex #r. RevealM()@r)"
+
+/* P2: an installed child never exceeds a root the honest PA issued for that device -- even when the delegate
+   key is revealed; only revealing sk_PA (C3) breaks it. */
+lemma P2_attenuation_only:
+  "All d C A #i. InstallChild(d, C, A)@i ==>
+     ((C = A) | (Ex z. C + z = A))
+   & ((Ex pkM #j. IssueRoot(d, A, pkM)@j & #j < #i) | (Ex #r. RevealPA()@r & #r < #i))"
+
+end

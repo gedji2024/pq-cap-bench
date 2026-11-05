@@ -1,0 +1,142 @@
+/*
+ * pq-cap-bench -- crisis-command protocol with PQ-signed envelopes (S6), S6-R revocation (D1) and the OP
+ * approval token for "disable" (D2). Naming follows "Étape 2 -- Modèle de menace" v0.1.
+ *
+ * Roles: PA (signs envelopes, keeps r_rev), OP (approval key, distinct from PA), PDP (holds the per-device
+ * session key k_{d,e}), D (device). The network is Dolev-Yao (C2: read, drop, replay, inject).
+ * Compromise rules: Reveal_Session (C1), Reveal_PA (C3), Reveal_OP.
+ *
+ * Abstractions (see formal/README.md):
+ *  - the PQ signature is the ideal `signing` builtin (EUF-CMA assumed, Étape 2 H4);
+ *  - the truncated HMAC is an ideal MAC: free function mac/2 with no equations (truncation not modelled);
+ *  - envelope bounds are abstracted to the single action name the envelope covers: "covering" = equality;
+ *  - validity windows and time are not modelled (freshness = monotone counter only);
+ *  - a device ignores re-installation of a handle it already held (restriction install_once);
+ *  - a device holds at most ONE active envelope at a time: Hnd(D, <'hnd', handle>), or Hnd(D, 'none') when
+ *    no envelope is active. The tag makes the two states structurally distinct, so an attacker who holds
+ *    sk_PA (C3) cannot alias "no envelope" with a handle of its own; a single Hnd fact keeps it injective,
+ *    which the inductions in ctr_monotone and revocation rely on. Several envelopes per device are not modelled. The counter lives in its own fact DevCtr(D, n),
+ *    touched only by accepts (needed for the induction in ctr_monotone).
+ */
+theory Crisis
+begin
+
+builtins: signing, hashing, natural-numbers
+functions: mac/2
+
+/* ---------------------------------------------------------------- setup */
+rule PA_Setup:
+  [ Fr(~skPA) ] --[ OnlyOnce('PA') ]-> [ !PAsk(~skPA), !PApk(pk(~skPA)), Out(pk(~skPA)) ]
+
+rule OP_Setup:
+  [ Fr(~skOP) ] --[ OnlyOnce('OP') ]-> [ !OPsk(~skOP), !OPpk(pk(~skOP)), Out(pk(~skOP)) ]
+
+/* the device identity is a fresh value, published (identities are public); fresh ids let Tamarin treat
+   the per-device state facts DevCtr and Hnd as injective */
+rule Device_Setup:
+  [ Fr(~d), Fr(~k), !PApk(pkPA), !OPpk(pkOP) ]
+  --[ DeviceInit(~d) ]->
+  [ !SessKey(~d, ~k), DevCtr(~d, %1), Hnd(~d, 'none'), PDPCtr(~d, %1), !DevKeys(~d, pkPA, pkOP), !DevId(~d),
+    Out(~d) ]
+
+/* ---------------------------------------------------------------- envelopes (calm phase) */
+rule PA_Issue:
+  let env = <'env', d, ~h, $a, h(~r)> in
+  [ !PAsk(sk), !DevId(d), Fr(~h), Fr(~r) ]
+  --[ IssueEnv(d, ~h, $a) ]->
+  [ Out(<env, sign(env, sk)>), !RevSecret(d, ~h, ~r) ]
+
+rule Device_Install:
+  let env = <'env', D, h, a, c> in
+  [ !DevKeys(D, pkPA, pkOP), Hnd(D, 'none'), In(<env, s>) ]
+  --[ Installed(D, h, a), Eq(verify(s, env, pkPA), true) ]->
+  [ !Env(D, h, a, c), Hnd(D, <'hnd', h>) ]
+
+/* ---------------------------------------------------------------- crisis commands */
+rule PDP_Send:
+  [ !SessKey(D, k), PDPCtr(D, %n), In(<h, a>) ]
+  --[ Send(D, h, %n %+ %1, a), Neq(a, 'disable') ]->
+  [ PDPCtr(D, %n %+ %1), Out(<h, %n %+ %1, a, mac(k, <h, %n %+ %1, a>), 'none'>) ]
+
+rule Device_Accept:
+  /* one rule for every action; "disable" additionally needs an OP token (restriction op_token) */
+  [ !SessKey(D, k), DevCtr(D, %n), Hnd(D, <'hnd', h>), !Env(D, h, a, c), !DevKeys(D, pkPA, pkOP),
+    In(<h, %m, a, mac(k, <h, %m, a>), tok>) ]
+  --[ Accept(D, h, %m, a), Lt(%n, %m), OPCheck(a, verify(tok, <'disable', D, h, %m>, pkOP)) ]->
+  [ DevCtr(D, %m), Hnd(D, <'hnd', h>) ]
+
+/* "disable sensor": the OP approval token signs (D, h, ctr) with sk_OP (D2) */
+rule OP_Approve:
+  [ !OPsk(sk), In(<D, h, %m>) ] --[ Approve(D, h, %m) ]-> [ Out(sign(<'disable', D, h, %m>, sk)) ]
+
+rule PDP_SendDisable:
+  [ !SessKey(D, k), PDPCtr(D, %n), In(<h, tok>) ]
+  --[ Send(D, h, %n %+ %1, 'disable') ]->
+  [ PDPCtr(D, %n %+ %1), Out(<h, %n %+ %1, 'disable', mac(k, <h, %n %+ %1, 'disable'>), tok>) ]
+
+/* ---------------------------------------------------------------- S6-R revocation (D1) */
+rule PA_Revoke:
+  [ !RevSecret(D, h, r) ] --[ RevokeIssued(D, h) ]-> [ Out(r) ]
+
+rule Device_Revoke:
+  [ Hnd(D, <'hnd', h>), !Env(D, h, a, h(r)), In(r) ] --[ Revoked(D, h) ]-> [ Hnd(D, 'none') ]
+
+/* ---------------------------------------------------------------- compromise */
+rule Reveal_Session: [ !SessKey(D, k) ] --[ RevealSess(D) ]-> [ Out(k) ]
+rule Reveal_PA:      [ !PAsk(sk) ]      --[ RevealPA() ]->    [ Out(sk) ]
+rule Reveal_OP:      [ !OPsk(sk) ]      --[ RevealOP() ]->    [ Out(sk) ]
+
+/* ---------------------------------------------------------------- restrictions */
+restriction eq:  "All x y #i. Eq(x, y)@i ==> x = y"
+restriction lt:  "All n m #i. Lt(n, m)@i ==> n << m"
+restriction neq: "All x y #i. Neq(x, y)@i ==> not(x = y)"
+restriction once: "All x #i #j. OnlyOnce(x)@i & OnlyOnce(x)@j ==> #i = #j"
+restriction device_once: "All d #i #j. DeviceInit(d)@i & DeviceInit(d)@j ==> #i = #j"
+restriction op_token: "All a v #i. OPCheck(a, v)@i ==> (a = 'disable' ==> v = true)"
+restriction install_once: "All d h a b #i #j. Installed(d, h, a)@i & Installed(d, h, b)@j ==> #i = #j"
+
+/* ---------------------------------------------------------------- executability */
+lemma exec_accept: exists-trace
+  "Ex D h m a #i. Accept(D, h, m, a)@i
+   & not(Ex D2 #r. RevealSess(D2)@r) & not(Ex #r. RevealPA()@r) & not(Ex #r. RevealOP()@r)"
+
+lemma exec_disable: exists-trace
+  "Ex D h m #i. Accept(D, h, m, 'disable')@i
+   & not(Ex D2 #r. RevealSess(D2)@r) & not(Ex #r. RevealPA()@r) & not(Ex #r. RevealOP()@r)"
+
+lemma exec_revoke: exists-trace
+  "Ex D h #i. Revoked(D, h)@i & not(Ex #r. RevealPA()@r)"
+
+/* ---------------------------------------------------------------- P4: freshness / anti-replay */
+lemma ctr_monotone [use_induction, reuse]:
+  "All D h1 h2 m n a b #i #j. Accept(D, h1, m, a)@i & Accept(D, h2, n, b)@j & #i < #j ==> m << n"
+
+lemma P4_no_replay:
+  "All D h1 h2 m a b #i #j. Accept(D, h1, m, a)@i & Accept(D, h2, m, b)@j ==> #i = #j"
+
+lemma P4_injective_agreement:
+  "All D h m a #i. Accept(D, h, m, a)@i ==>
+     (Ex #j. Send(D, h, m, a)@j & #j < #i
+        & not(Ex h2 a2 #i2. Accept(D, h2, m, a2)@i2 & not(#i2 = #i)))
+   | (Ex #r. RevealSess(D)@r & #r < #i)"
+
+/* ---------------------------------------------------------------- P1 (symbolic) under C1 and C2 */
+/* Session keys MAY be revealed (C1) and the network is Dolev-Yao (C2): an accepted command is still covered by
+   an envelope the honest PA issued for that device, handle and action -- unless sk_PA was revealed (C3). */
+lemma P1_confinement:
+  "All D h m a #i. Accept(D, h, m, a)@i ==>
+     (Ex #j. IssueEnv(D, h, a)@j & #j < #i) | (Ex #r. RevealPA()@r & #r < #i)"
+
+/* ---------------------------------------------------------------- revocation (D1) */
+lemma revocation [use_induction]:
+  "All D h m a #i #j. Revoked(D, h)@j & Accept(D, h, m, a)@i & #j < #i ==> F"
+
+lemma revocation_needs_PA:
+  "All D h #i. Revoked(D, h)@i ==> (Ex #j. RevokeIssued(D, h)@j & #j < #i) | (Ex #r. RevealPA()@r & #r < #i)"
+
+/* ---------------------------------------------------------------- disable needs OP (D2), even under C1 */
+lemma disable_needs_OP:
+  "All D h m #i. Accept(D, h, m, 'disable')@i ==>
+     (Ex #j. Approve(D, h, m)@j & #j < #i) | (Ex #r. RevealOP()@r & #r < #i)"
+
+end

@@ -1263,10 +1263,10 @@ Naming follows *Étape 2 — Modèle de menace et propriétés de sécurité* v0
 
 | id | name | status | artefacts |
 |---|---|---|---|
-| P1 | Envelope confinement | tested; symbolic proof pending (formal/) | K5/K6 compromise matrix; tests/test_envelope.py soundness; formal/crisis.spthy P1 lemmas |
-| P2 | Delegation by attenuation only | pending (formal/); device-side delegation not implemented | formal/delegation.spthy P2 lemma |
+| P1 | Envelope confinement | tested; symbolic proof verified (Tamarin, formal/proofs/crisis/P1_confinement.txt) | K5/K6 compromise matrix; tests/test_envelope.py soundness; formal/crisis.spthy P1_confinement |
+| P2 | Delegation by attenuation only | symbolic proof verified (Tamarin, depth 1); device-side delegation not implemented | formal/delegation.spthy P2_attenuation_only |
 | P3 | Offline enforcement | partial (no backhaul-outage experiment) | pqcap.envelope checks use only installed state; harm replay |
-| P4 | Freshness / anti-replay | tested; symbolic proof pending (formal/) | tests/test_envelope.py reject_reasons (replay); formal/crisis.spthy P4 lemmas |
+| P4 | Freshness / anti-replay | tested; symbolic proof verified (Tamarin, formal/proofs/freshness/) | tests/test_envelope.py reject_reasons (replay); formal/freshness.spthy P4 lemmas |
 | P5 | Receipt fidelity | open (receipts not implemented) | - |
 | P6 | Physical invariants preserved | tested (per device); zone invariant open | tests/test_harm.py battery-floor property; tests/test_envelope.py invariants |
 | P7 | Bounded exposure after compromise | measured (model) | REPORT 7d revocation |
@@ -1275,15 +1275,34 @@ Naming follows *Étape 2 — Modèle de menace et propriétés de sécurité* v0
 | id | name | adversary | covered_by | status |
 |---|---|---|---|---|
 | T1 | Fake bulletin asks to disable sensors | A1 | C0 row of K5 (honest PDP filter) | partial |
-| T2 | Delegation with widened rights | A2 | formal/delegation.spthy | pending (formal/) |
+| T2 | Delegation with widened rights | A2 | formal/delegation.spthy | symbolic proof verified (depth 1) |
 | T3 | Falsified measurements lower the rate | A3 | - | open |
-| T4 | Replay of an old command | A4, C2 | replay tests + formal P4 | tested; symbolic pending |
+| T4 | Replay of an old command | A4, C2 | replay tests + formal P4 | tested; symbolic proof verified |
 | T5 | Targeted delay of envelopes in calm phase | C2 | - | open |
 | T6 | Compromised platform floods in-bounds commands | C1 | harm replay C1 suppress/drain; K5 | measured |
 | T7 | MCP tool rewrites parameters | A5 | C0 row of K5 (in-bounds rewrites accepted) | partial |
 | T8 | Quantum forgery of a classical envelope | A4-Q | - | open |
 | T9 | Brute force on the 8-byte tag over LoRa | A4 | - | open |
 | T10 | Coordinated disabling of neighbouring sensors | C1 | - | open (known limit) |
+
+## 8c. Formal verification (Tamarin)
+
+Tamarin models `formal/crisis.spthy`, `formal/freshness.spthy` (P4; a trace-inclusion projection generated from crisis.spthy) and `formal/delegation.spthy`. Proofs are in `formal/proofs/`, the version in `formal/proofs/VERSION.txt`, abstractions and the soundness argument in `formal/README.md`. 12 lemmas, **all verified**.
+
+| model | lemma | kind | result | steps |
+|---|---|---|---|---|
+| delegation | exec_attenuated_child | exists-trace | verified | 8 |
+| delegation | P2_attenuation_only | all-traces | verified | 16 |
+| crisis | P1_confinement | all-traces | verified | 48 |
+| crisis | disable_needs_OP | all-traces | verified | 13 |
+| crisis | exec_accept | exists-trace | verified | 15 |
+| crisis | exec_disable | exists-trace | verified | 14 |
+| crisis | exec_revoke | exists-trace | verified | 15 |
+| crisis | revocation | all-traces | verified | 11341 |
+| crisis | revocation_needs_PA | all-traces | verified | 142 |
+| freshness | P4_injective_agreement | all-traces | verified | 50 |
+| freshness | P4_no_replay | all-traces | verified | 4 |
+| freshness | ctr_monotone | all-traces | verified | 47794 |
 
 ## 9. Figures
 

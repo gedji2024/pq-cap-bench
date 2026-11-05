@@ -526,6 +526,24 @@ def section_d6(results: Path, model: dict) -> str:
     return "\n\n".join(out)
 
 
+def section_formal(results: Path) -> str:
+    p = results / "formal_lemmas.csv"
+    if not p.exists() or p.stat().st_size <= 1:
+        return "_no Tamarin proofs_"
+    d = pd.read_csv(p)
+    if d.empty:
+        return "_no Tamarin proofs_"
+    nv = int((d.result == "verified").sum())
+    open_ = d[d.result != "verified"]
+    note = ("**all verified**" if open_.empty else
+            f"**{nv} verified; NOT verified: {', '.join(f'`{x}` ({r})' for x, r in zip(open_.lemma, open_.result))}**")
+    return (f"Tamarin models `formal/crisis.spthy`, `formal/freshness.spthy` (P4; a trace-inclusion projection "
+            f"generated from crisis.spthy) and `formal/delegation.spthy`. Proofs are in `formal/proofs/`, the version in "
+            f"`formal/proofs/VERSION.txt`, abstractions and the soundness argument in `formal/README.md`. "
+            f"{len(d)} lemmas, {note}.\n\n"
+            + md_table(d.fillna(""), {"steps": lambda v: f"{int(v)}" if v != "" else "-"}))
+
+
 def section_kill(results: Path) -> str:
     k = json.loads((results / "kill_criteria.json").read_text())
     k1 = k["K1"]
@@ -599,6 +617,7 @@ def run(config: Path, results: Path, figures: Path) -> None:
         "## 8a. K5/K6 on the manufacturer device catalogue (supersedes the K5/K6 of Sec. 8)",
         section_catalogue(results, config),
         "## 8b. Traceability to the Étape 2 threat model", section_traceability(config),
+        "## 8c. Formal verification (Tamarin)", section_formal(results),
         "## 9. Figures", "\n".join(f"- [{f}](figures/{f}) ([pdf](figures/{f[:-4]}.pdf))" for f in figs),
     ]
     (results.parent / "REPORT.md").write_text("\n\n".join(parts) + "\n")

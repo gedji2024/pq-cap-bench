@@ -231,6 +231,10 @@ def run(config: Path, results: Path) -> dict[str, pd.DataFrame]:
             gw.forging_power(devs_, pols, load_yaml(config / "threat.yaml"), acfg_["invariants"],
                              {"alert_active": c_["alert_active"], "battery_below_floor": not c_["battery_above_floor"]}
                              ).to_csv(results / "d6_forging_power.csv", index=False)
+    from .config import REPO_ROOT as _root  # noqa: PLC0415
+    if (_root / "formal/proofs").is_dir():
+        from . import formal  # noqa: PLC0415
+        formal.results(_root / "formal/proofs").to_csv(results / "formal_lemmas.csv", index=False)
     if (config / "mcu.yaml").exists():
         from . import pqm4  # noqa: PLC0415
         from .config import REPO_ROOT  # noqa: PLC0415

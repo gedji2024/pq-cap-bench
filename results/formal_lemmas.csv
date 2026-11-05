@@ -1,0 +1,13 @@
+model,lemma,kind,result,steps
+delegation,exec_attenuated_child,exists-trace,verified,8
+delegation,P2_attenuation_only,all-traces,verified,16
+crisis,P1_confinement,all-traces,verified,48
+crisis,disable_needs_OP,all-traces,verified,13
+crisis,exec_accept,exists-trace,verified,15
+crisis,exec_disable,exists-trace,verified,14
+crisis,exec_revoke,exists-trace,verified,15
+crisis,revocation,all-traces,verified,11341
+crisis,revocation_needs_PA,all-traces,verified,142
+freshness,P4_injective_agreement,all-traces,verified,50
+freshness,P4_no_replay,all-traces,verified,4
+freshness,ctr_monotone,all-traces,verified,47794

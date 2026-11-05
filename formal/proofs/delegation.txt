@@ -1,0 +1,264 @@
+theory Delegation
+
+begin
+
+// Function signature and definition of the equational theory E
+
+builtins: multiset
+functions: fst/1, pair/2, pk/1, sign/2, snd/1, true/0, verify/3
+equations:
+    fst(<x.1, x.2>) = x.1,
+    snd(<x.1, x.2>) = x.2,
+    verify(sign(x.1, x.2), x.1, pk(x.2)) = true
+
+rule (modulo E) PA_Setup:
+   [ Fr( ~skPA ) ]
+  --[ OnlyOnce( 'PA' ) ]->
+   [ !PAsk( ~skPA ), !PApk( pk(~skPA) ), Out( pk(~skPA) ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Delegate_Setup:
+   [ Fr( ~skM ) ] --> [ !Msk( ~skM ), !Mpk( pk(~skM) ), Out( pk(~skM) ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Device_Setup:
+   [ Fr( ~d ), !PApk( pkPA ) ] --> [ !Dev( ~d, pkPA ), Out( ~d ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) PA_IssueRoot:
+   [ !PAsk( sk ), !Dev( d, pkPA ), !Mpk( pkM ), In( A ) ]
+  --[ IssueRoot( d, A, pkM ) ]->
+   [ Out( <<'root', d, A, pkM>, sign(<'root', d, A, pkM>, sk)> ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Delegate_Child:
+   [ !Msk( skM ), In( d ), In( C ) ]
+  --[ SignChild( d, C ) ]->
+   [ Out( <<'child', d, C>, sign(<'child', d, C>, skM)> ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Device_InstallChild:
+   [
+   !Dev( d, pkPA ), In( <<'root', d, A, pkM>, s1> ),
+   In( <<'child', d, C>, s2> )
+   ]
+  --[
+  InstallChild( d, C, A ),
+  Eq( verify(s1, <'root', d, A, pkM>, pkPA), true ),
+  Eq( verify(s2, <'child', d, C>, pkM), true ), Subset( C, A )
+  ]->
+   [ ]
+
+  /*
+  rule (modulo AC) Device_InstallChild:
+     [
+     !Dev( d, pkPA ), In( <<'root', d, A, pkM>, s1> ),
+     In( <<'child', d, C>, s2> )
+     ]
+    --[
+    InstallChild( d, C, A ), Eq( z, true ), Eq( z.1, true ), Subset( C, A )
+    ]->
+     [ ]
+    variants (modulo AC)
+    1. A     = A.19
+       C     = C.20
+       d     = d.21
+       pkM   = pkM.22
+       pkPA  = pkPA.23
+       s1    = s1.24
+       s2    = s2.25
+       z     = verify(s1.24, <'root', d.21, A.19, pkM.22>, pkPA.23)
+       z.1   = verify(s2.25, <'child', d.21, C.20>, pkM.22)
+    
+    2. A     = A.26
+       C     = C.27
+       d     = d.28
+       pkM   = pk(x.50)
+       pkPA  = pkPA.30
+       s1    = s1.31
+       s2    = sign(<'child', d.28, C.27>, x.50)
+       z     = verify(s1.31, <'root', d.28, A.26, pk(x.50)>, pkPA.30)
+       z.1   = true
+    
+    3. A     = A.28
+       C     = C.29
+       d     = d.30
+       pkM   = pkM.31
+       pkPA  = pk(x.54)
+       s1    = sign(<'root', d.30, A.28, pkM.31>, x.54)
+       s2    = s2.34
+       z     = true
+       z.1   = verify(s2.34, <'child', d.30, C.29>, pkM.31)
+    
+    4. A     = A.28
+       C     = C.29
+       d     = d.30
+       pkM   = pk(x.53)
+       pkPA  = pk(x.54)
+       s1    = sign(<'root', d.30, A.28, pk(x.53)>, x.54)
+       s2    = sign(<'child', d.30, C.29>, x.53)
+       z     = true
+       z.1   = true
+  */
+
+rule (modulo E) Reveal_PA:
+   [ !PAsk( sk ) ] --[ RevealPA( ) ]-> [ Out( sk ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Reveal_M:
+   [ !Msk( sk ) ] --[ RevealM( ) ]-> [ Out( sk ) ]
+
+  /* has exactly the trivial AC variant */
+
+restriction eq:
+  "∀ x y #i. (Eq( x, y ) @ #i) ⇒ (x = y)"
+  // safety formula
+
+  /*
+  expanded formula:
+  "∀ x y #i. (Eq( x, y ) @ #i) ⇒ (x = y)"
+  */
+
+restriction once:
+  "∀ x #i #j. ((OnlyOnce( x ) @ #i) ∧ (OnlyOnce( x ) @ #j)) ⇒ (#i = #j)"
+  // safety formula
+
+  /*
+  expanded formula:
+  "∀ x #i #j. ((OnlyOnce( x ) @ #i) ∧ (OnlyOnce( x ) @ #j)) ⇒ (#i = #j)"
+  */
+
+restriction subset:
+  "∀ c a #i. (Subset( c, a ) @ #i) ⇒ ((c = a) ∨ (∃ z. (c++z) = a))"
+
+  /*
+  expanded formula:
+  "∀ c a #i. (Subset( c, a ) @ #i) ⇒ ((c = a) ∨ (∃ z. (c++z) = a))"
+  */
+
+lemma exec_attenuated_child:
+  exists-trace
+  "∃ d C A z #i.
+    (((InstallChild( d, C, A ) @ #i) ∧ ((C++z) = A)) ∧
+     (¬(∃ #r. RevealPA( ) @ #r))) ∧
+    (¬(∃ #r. RevealM( ) @ #r))"
+/*
+guarded formula characterizing all satisfying traces:
+"∃ d C A z #i.
+  (InstallChild( d, C, A ) @ #i) ∧ ((C++z) = A)
+ ∧
+  (∀ #r. (RevealPA( ) @ #r) ⇒ ⊥) ∧ (∀ #r. (RevealM( ) @ #r) ⇒ ⊥)"
+*/
+simplify
+solve( InstallChild( d, C, (C++z) ) @ #i )
+  case Device_InstallChild
+  solve( !Dev( d, pk(x) ) ▶₀ #i )
+    case Device_Setup
+    solve( !KU( sign(<'root', ~d, (C++z), pk(x)>, ~skPA) ) @ #vk.10 )
+      case PA_IssueRoot
+      solve( !KU( sign(<'child', ~d, C>, ~skM) ) @ #vk.14 )
+        case Delegate_Child
+        solve( !KU( ~d ) @ #vk.6 )
+          case Device_Setup
+          solve( !KU( pk(~skM) ) @ #vk.12 )
+            case Delegate_Setup
+            SOLVED // trace found
+          qed
+        qed
+      qed
+    qed
+  qed
+qed
+
+lemma P2_attenuation_only:
+  all-traces
+  "∀ d C A #i.
+    (InstallChild( d, C, A ) @ #i) ⇒
+    (((C = A) ∨ (∃ z. (C++z) = A)) ∧
+     ((∃ pkM #j. (IssueRoot( d, A, pkM ) @ #j) ∧ (#j < #i)) ∨
+      (∃ #r. (RevealPA( ) @ #r) ∧ (#r < #i))))"
+/*
+guarded formula characterizing all counter-examples:
+"∃ d C A #i.
+  (InstallChild( d, C, A ) @ #i)
+ ∧
+  (((¬(C = A)) ∧ (∀ z. ((C++z) = A) ⇒ ⊥)) ∨
+   ((∀ pkM #j. (IssueRoot( d, A, pkM ) @ #j) ⇒ ¬(#j < #i)) ∧
+    (∀ #r. (RevealPA( ) @ #r) ⇒ ¬(#r < #i))))"
+*/
+simplify
+solve( ((¬(C = A)) ∧ (∀ z. ((C++z) = A) ⇒ ⊥))  ∥
+       ((∀ pkM #j. (IssueRoot( d, A, pkM ) @ #j) ⇒ ¬(#j < #i)) ∧
+        (∀ #r. (RevealPA( ) @ #r) ⇒ ¬(#r < #i))) )
+  case case_1
+  solve( (C = A)  ∥ (∃ z. ((C++z) = A)) )
+    case case_1
+    by contradiction /* from formulas */
+  next
+    case case_2
+    by contradiction /* from formulas */
+  qed
+next
+  case case_2
+  solve( (C = A)  ∥ (∃ z. ((C++z) = A)) )
+    case case_1
+    solve( !Dev( d, pk(x) ) ▶₀ #i )
+      case Device_Setup
+      solve( !KU( sign(<'root', ~d, A, pk(x)>, ~skPA) ) @ #vk.11 )
+        case PA_IssueRoot
+        by contradiction /* from formulas */
+      next
+        case c_sign
+        solve( !KU( ~skPA ) @ #vk.14 )
+          case Reveal_PA
+          by contradiction /* from formulas */
+        qed
+      qed
+    qed
+  next
+    case case_2
+    solve( !Dev( d, pk(x) ) ▶₀ #i )
+      case Device_Setup
+      solve( !KU( sign(<'root', ~d, (C++z), pk(x)>, ~skPA) ) @ #vk.11 )
+        case PA_IssueRoot
+        by contradiction /* from formulas */
+      next
+        case c_sign
+        solve( !KU( ~skPA ) @ #vk.16 )
+          case Reveal_PA
+          by contradiction /* from formulas */
+        qed
+      qed
+    qed
+  qed
+qed
+
+/* All wellformedness checks were successful. */
+
+/*
+Generated from:
+Tamarin version 1.12.0
+Maude version 3.5.1
+Git revision: UNKNOWN, branch: UNKNOWN
+Compiled at: 2026-03-08 09:49:47.765662 UTC
+*/
+
+end
+
+==============================================================================
+summary of summaries:
+
+analyzed: delegation.spthy
+
+  processing time: 0.32s
+  
+  exec_attenuated_child (exists-trace): verified (8 steps)
+  P2_attenuation_only (all-traces): verified (16 steps)
+
+==============================================================================

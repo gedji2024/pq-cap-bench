@@ -1,0 +1,864 @@
+maude tool: 'maude'
+ checking version: 3.5.1. OK.
+ checking installation: OK.
+[Theory Crisis] Theory loaded
+[Theory Crisis] Theory translated
+[Theory Crisis] Derivation checks started
+[Theory Crisis] Derivation checks ended
+[Theory Crisis] Theory closed
+[Saturating Sources] Step 1 (Max 5)
+[Saturating Sources] Done
+theory Crisis
+
+begin
+
+// Function signature and definition of the equational theory E
+
+builtins: natural-numbers
+functions: fst/1, h/1, mac/2, pair/2, pk/1, sign/2, snd/1, true/0,
+           verify/3
+equations:
+    fst(<x.1, x.2>) = x.1,
+    snd(<x.1, x.2>) = x.2,
+    verify(sign(x.1, x.2), x.1, pk(x.2)) = true
+
+/* looping facts with injective instances: DevCtr/2, Hnd/2, PDPCtr/2 */
+
+rule (modulo E) PA_Setup:
+   [ Fr( ~skPA ) ]
+  --[ OnlyOnce( 'PA' ) ]->
+   [ !PAsk( ~skPA ), !PApk( pk(~skPA) ), Out( pk(~skPA) ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) OP_Setup:
+   [ Fr( ~skOP ) ]
+  --[ OnlyOnce( 'OP' ) ]->
+   [ !OPsk( ~skOP ), !OPpk( pk(~skOP) ), Out( pk(~skOP) ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Device_Setup:
+   [ Fr( ~d ), Fr( ~k ), !PApk( pkPA ), !OPpk( pkOP ) ]
+  --[ DeviceInit( ~d ) ]->
+   [
+   !SessKey( ~d, ~k ), DevCtr( ~d, %1 ), Hnd( ~d, 'none' ),
+   PDPCtr( ~d, %1 ), !DevKeys( ~d, pkPA, pkOP ), !DevId( ~d ), Out( ~d )
+   ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) PA_Issue:
+   [ !PAsk( sk ), !DevId( d ), Fr( ~h ), Fr( ~r ) ]
+  --[ IssueEnv( d, ~h, $a ) ]->
+   [
+   Out( <<'env', d, ~h, $a, h(~r)>, sign(<'env', d, ~h, $a, h(~r)>, sk)> ),
+   !RevSecret( d, ~h, ~r )
+   ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Device_Install:
+   [
+   !DevKeys( D, pkPA, pkOP ), Hnd( D, 'none' ),
+   In( <<'env', D, h, a, c>, s> )
+   ]
+  --[
+  Installed( D, h, a ), Eq( verify(s, <'env', D, h, a, c>, pkPA), true )
+  ]->
+   [ !Env( D, h, a, c ), Hnd( D, <'hnd', h> ) ]
+
+  /*
+  rule (modulo AC) Device_Install:
+     [
+     !DevKeys( D, pkPA, pkOP ), Hnd( D, 'none' ),
+     In( <<'env', D, h, a, c>, s> )
+     ]
+    --[ Installed( D, h, a ), Eq( z, true ) ]->
+     [ !Env( D, h, a, c ), Hnd( D, <'hnd', h> ) ]
+    variants (modulo AC)
+    1. D     = D.19
+       a     = a.20
+       c     = c.21
+       h     = h.22
+       pkPA  = pkPA.24
+       s     = s.25
+       z     = verify(s.25, <'env', D.19, h.22, a.20, c.21>, pkPA.24)
+    
+    2. D     = D.40
+       a     = a.41
+       c     = c.42
+       h     = h.43
+       pkPA  = pk(x.78)
+       s     = sign(<'env', D.40, h.43, a.41, c.42>, x.78)
+       z     = true
+  */
+
+rule (modulo E) PDP_Send:
+   [ !SessKey( D, k ), PDPCtr( D, %n ), In( <h, a> ) ]
+  --[ Send( D, h, (%n%+%1), a ), Neq( a, 'disable' ) ]->
+   [
+   PDPCtr( D, (%n%+%1) ),
+   Out( <h, (%n%+%1), a, mac(k, <h, (%n%+%1), a>), 'none'> )
+   ]
+
+  // loop breaker: [1]
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Device_Accept:
+   [
+   !SessKey( D, k ), DevCtr( D, %n ), Hnd( D, <'hnd', h> ),
+   !Env( D, h, a, c ), !DevKeys( D, pkPA, pkOP ),
+   In( <h, %m, a, mac(k, <h, %m, a>), tok> )
+   ]
+  --[
+  Accept( D, h, %m, a ), Lt( %n, %m ),
+  OPCheck( a, verify(tok, <'disable', D, h, %m>, pkOP) )
+  ]->
+   [ DevCtr( D, %m ), Hnd( D, <'hnd', h> ) ]
+
+  // loop breakers: [1,2]
+  /*
+  rule (modulo AC) Device_Accept:
+     [
+     !SessKey( D, k ), DevCtr( D, %n ), Hnd( D, <'hnd', h> ),
+     !Env( D, h, a, c ), !DevKeys( D, pkPA, pkOP ),
+     In( <h, %m, a, mac(k, <h, %m, a>), tok> )
+     ]
+    --[ Accept( D, h, %m, a ), Lt( %n, %m ), OPCheck( a, z ) ]->
+     [ DevCtr( D, %m ), Hnd( D, <'hnd', h> ) ]
+    variants (modulo AC)
+    1. D     = D.14
+       h     = h.17
+       pkOP  = pkOP.19
+       tok   = tok.21
+       z     = verify(tok.21, <'disable', D.14, h.17, %m.22>, pkOP.19)
+       %m    = %m.22
+    
+    2. D     = D.21
+       h     = h.24
+       pkOP  = pk(x.38)
+       tok   = sign(<'disable', D.21, h.24, %m.29>, x.38)
+       z     = true
+       %m    = %m.29
+    // loop breakers: [1,2]
+  */
+
+rule (modulo E) OP_Approve:
+   [ !OPsk( sk ), In( <D, h, %m> ) ]
+  --[ Approve( D, h, %m ) ]->
+   [ Out( sign(<'disable', D, h, %m>, sk) ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) PDP_SendDisable:
+   [ !SessKey( D, k ), PDPCtr( D, %n ), In( <h, tok> ) ]
+  --[ Send( D, h, (%n%+%1), 'disable' ) ]->
+   [
+   PDPCtr( D, (%n%+%1) ),
+   Out( <h, (%n%+%1), 'disable', mac(k, <h, (%n%+%1), 'disable'>), tok> )
+   ]
+
+  // loop breaker: [1]
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) PA_Revoke:
+   [ !RevSecret( D, h, r ) ] --[ RevokeIssued( D, h ) ]-> [ Out( r ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Device_Revoke:
+   [ Hnd( D, <'hnd', h> ), !Env( D, h, a, h(r) ), In( r ) ]
+  --[ Revoked( D, h ) ]->
+   [ Hnd( D, 'none' ) ]
+
+  // loop breakers: [0,1]
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Reveal_Session:
+   [ !SessKey( D, k ) ] --[ RevealSess( D ) ]-> [ Out( k ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Reveal_PA:
+   [ !PAsk( sk ) ] --[ RevealPA( ) ]-> [ Out( sk ) ]
+
+  /* has exactly the trivial AC variant */
+
+rule (modulo E) Reveal_OP:
+   [ !OPsk( sk ) ] --[ RevealOP( ) ]-> [ Out( sk ) ]
+
+  /* has exactly the trivial AC variant */
+
+restriction eq:
+  "∀ x y #i. (Eq( x, y ) @ #i) ⇒ (x = y)"
+  // safety formula
+
+  /*
+  expanded formula:
+  "∀ x y #i. (Eq( x, y ) @ #i) ⇒ (x = y)"
+  */
+
+restriction lt:
+  "∀ n m #i. (Lt( n, m ) @ #i) ⇒ (n ⊏ m)"
+  // safety formula
+
+  /*
+  expanded formula:
+  "∀ n m #i. (Lt( n, m ) @ #i) ⇒ (n ⊏ m)"
+  */
+
+restriction neq:
+  "∀ x y #i. (Neq( x, y ) @ #i) ⇒ (¬(x = y))"
+  // safety formula
+
+  /*
+  expanded formula:
+  "∀ x y #i. (Neq( x, y ) @ #i) ⇒ (¬(x = y))"
+  */
+
+restriction once:
+  "∀ x #i #j. ((OnlyOnce( x ) @ #i) ∧ (OnlyOnce( x ) @ #j)) ⇒ (#i = #j)"
+  // safety formula
+
+  /*
+  expanded formula:
+  "∀ x #i #j. ((OnlyOnce( x ) @ #i) ∧ (OnlyOnce( x ) @ #j)) ⇒ (#i = #j)"
+  */
+
+restriction device_once:
+  "∀ d #i #j.
+    ((DeviceInit( d ) @ #i) ∧ (DeviceInit( d ) @ #j)) ⇒ (#i = #j)"
+  // safety formula
+
+  /*
+  expanded formula:
+  "∀ d #i #j.
+    ((DeviceInit( d ) @ #i) ∧ (DeviceInit( d ) @ #j)) ⇒ (#i = #j)"
+  */
+
+restriction op_token:
+  "∀ a v #i. (OPCheck( a, v ) @ #i) ⇒ ((a = 'disable') ⇒ (v = true))"
+  // safety formula
+
+  /*
+  expanded formula:
+  "∀ a v #i. (OPCheck( a, v ) @ #i) ⇒ ((a = 'disable') ⇒ (v = true))"
+  */
+
+restriction install_once:
+  "∀ d h a b #i #j.
+    ((Installed( d, h, a ) @ #i) ∧ (Installed( d, h, b ) @ #j)) ⇒ (#i = #j)"
+  // safety formula
+
+  /*
+  expanded formula:
+  "∀ d h a b #i #j.
+    ((Installed( d, h, a ) @ #i) ∧ (Installed( d, h, b ) @ #j)) ⇒ (#i = #j)"
+  */
+
+lemma exec_accept:
+  exists-trace
+  "∃ D h m a #i.
+    (((Accept( D, h, m, a ) @ #i) ∧ (¬(∃ D2 #r. RevealSess( D2 ) @ #r))) ∧
+     (¬(∃ #r. RevealPA( ) @ #r))) ∧
+    (¬(∃ #r. RevealOP( ) @ #r))"
+/*
+guarded formula characterizing all satisfying traces:
+"∃ D h m a #i.
+  (Accept( D, h, m, a ) @ #i)
+ ∧
+  (∀ D2 #r. (RevealSess( D2 ) @ #r) ⇒ ⊥) ∧
+  (∀ #r. (RevealPA( ) @ #r) ⇒ ⊥) ∧
+  (∀ #r. (RevealOP( ) @ #r) ⇒ ⊥)"
+*/
+by sorry
+
+lemma exec_disable:
+  exists-trace
+  "∃ D h m #i.
+    (((Accept( D, h, m, 'disable' ) @ #i) ∧
+      (¬(∃ D2 #r. RevealSess( D2 ) @ #r))) ∧
+     (¬(∃ #r. RevealPA( ) @ #r))) ∧
+    (¬(∃ #r. RevealOP( ) @ #r))"
+/*
+guarded formula characterizing all satisfying traces:
+"∃ D h m #i.
+  (Accept( D, h, m, 'disable' ) @ #i)
+ ∧
+  (∀ D2 #r. (RevealSess( D2 ) @ #r) ⇒ ⊥) ∧
+  (∀ #r. (RevealPA( ) @ #r) ⇒ ⊥) ∧
+  (∀ #r. (RevealOP( ) @ #r) ⇒ ⊥)"
+*/
+by sorry
+
+lemma exec_revoke:
+  exists-trace
+  "∃ D h #i. (Revoked( D, h ) @ #i) ∧ (¬(∃ #r. RevealPA( ) @ #r))"
+/*
+guarded formula characterizing all satisfying traces:
+"∃ D h #i. (Revoked( D, h ) @ #i) ∧ ∀ #r. (RevealPA( ) @ #r) ⇒ ⊥"
+*/
+by sorry
+
+lemma ctr_monotone [use_induction, reuse]:
+  all-traces
+  "∀ D h1 h2 m n a b #i #j.
+    (((Accept( D, h1, m, a ) @ #i) ∧ (Accept( D, h2, n, b ) @ #j)) ∧
+     (#i < #j)) ⇒
+    (m ⊏ n)"
+/*
+guarded formula characterizing all counter-examples:
+"∃ D h1 h2 m n a b #i #j.
+  (Accept( D, h1, m, a ) @ #i) ∧ (Accept( D, h2, n, b ) @ #j)
+ ∧
+  (#i < #j) ∧ (¬(m ⊏ n))"
+*/
+by sorry
+
+lemma P4_no_replay:
+  all-traces
+  "∀ D h1 h2 m a b #i #j.
+    ((Accept( D, h1, m, a ) @ #i) ∧ (Accept( D, h2, m, b ) @ #j)) ⇒
+    (#i = #j)"
+/*
+guarded formula characterizing all counter-examples:
+"∃ D h1 h2 m a b #i #j.
+  (Accept( D, h1, m, a ) @ #i) ∧ (Accept( D, h2, m, b ) @ #j) ∧ ¬(#i = #j)"
+*/
+by sorry
+
+lemma P4_injective_agreement:
+  all-traces
+  "∀ D h m a #i.
+    (Accept( D, h, m, a ) @ #i) ⇒
+    ((∃ #j.
+       ((Send( D, h, m, a ) @ #j) ∧ (#j < #i)) ∧
+       (¬(∃ h2 a2 #i2. (Accept( D, h2, m, a2 ) @ #i2) ∧ (¬(#i2 = #i))))) ∨
+     (∃ #r. (RevealSess( D ) @ #r) ∧ (#r < #i)))"
+/*
+guarded formula characterizing all counter-examples:
+"∃ D h m a #i.
+  (Accept( D, h, m, a ) @ #i)
+ ∧
+  (∀ #j.
+    (Send( D, h, m, a ) @ #j)
+   ⇒
+    ((¬(#j < #i)) ∨
+     (∃ h2 a2 #i2. (Accept( D, h2, m, a2 ) @ #i2) ∧ ¬(#i2 = #i)))) ∧
+  (∀ #r. (RevealSess( D ) @ #r) ⇒ ¬(#r < #i))"
+*/
+by sorry
+
+lemma P1_confinement:
+  all-traces
+  "∀ D h m a #i.
+    (Accept( D, h, m, a ) @ #i) ⇒
+    ((∃ #j. (IssueEnv( D, h, a ) @ #j) ∧ (#j < #i)) ∨
+     (∃ #r. (RevealPA( ) @ #r) ∧ (#r < #i)))"
+/*
+guarded formula characterizing all counter-examples:
+"∃ D h m a #i.
+  (Accept( D, h, m, a ) @ #i)
+ ∧
+  (∀ #j. (IssueEnv( D, h, a ) @ #j) ⇒ ¬(#j < #i)) ∧
+  (∀ #r. (RevealPA( ) @ #r) ⇒ ¬(#r < #i))"
+*/
+by sorry
+
+lemma revocation [use_induction]:
+  all-traces
+  "∀ D h m a #i #j.
+    (((Revoked( D, h ) @ #j) ∧ (Accept( D, h, m, a ) @ #i)) ∧ (#j < #i)) ⇒
+    (⊥)"
+/*
+guarded formula characterizing all counter-examples:
+"∃ D h m a #i #j.
+  (Revoked( D, h ) @ #j) ∧ (Accept( D, h, m, a ) @ #i) ∧ #j < #i"
+*/
+by sorry
+
+lemma revocation_needs_PA:
+  all-traces
+  "∀ D h #i.
+    (Revoked( D, h ) @ #i) ⇒
+    ((∃ #j. (RevokeIssued( D, h ) @ #j) ∧ (#j < #i)) ∨
+     (∃ #r. (RevealPA( ) @ #r) ∧ (#r < #i)))"
+/*
+guarded formula characterizing all counter-examples:
+"∃ D h #i.
+  (Revoked( D, h ) @ #i)
+ ∧
+  (∀ #j. (RevokeIssued( D, h ) @ #j) ⇒ ¬(#j < #i)) ∧
+  (∀ #r. (RevealPA( ) @ #r) ⇒ ¬(#r < #i))"
+*/
+simplify
+solve( Hnd( D, <'hnd', h> ) ▶₀ #i )
+  case Device_Accept_case_1
+  solve( (¬(a.1 = 'disable'))  ∥ (z = true) )
+    case case_1
+    solve( splitEqs(1) )
+      case split_case_1
+      solve( !KU( sign(<'env', ~d, h, a.1, c>, ~skPA) ) @ #vk.18 )
+        case PA_Issue
+        solve( !KU( mac(~k, <~h, %m, $a.1>) ) @ #vk.14 )
+          case PDP_Send
+          solve( !Env( ~d, ~h, a, h(r) ) ▶₁ #i )
+            case Device_Install
+            solve( !KU( ~r ) @ #vk.4 )
+              case PA_Revoke
+              by contradiction /* from formulas */
+            qed
+          qed
+        next
+          case PDP_SendDisable
+          by contradiction /* from formulas */
+        next
+          case c_mac
+          solve( !KU( ~k ) @ #vk.21 )
+            case Reveal_Session
+            solve( !Env( ~d, ~h, a, h(r) ) ▶₁ #i )
+              case Device_Install
+              solve( !KU( ~r ) @ #vk.6 )
+                case PA_Revoke
+                by contradiction /* from formulas */
+              qed
+            qed
+          qed
+        qed
+      next
+        case c_sign
+        solve( !KU( ~skPA ) @ #vk.19 )
+          case Reveal_PA
+          by contradiction /* from formulas */
+        qed
+      qed
+    next
+      case split_case_2
+      solve( !KU( sign(<'env', ~d, h, a.1, c>, ~skPA) ) @ #vk.18 )
+        case PA_Issue
+        solve( !KU( sign(<'disable', ~d, ~h, %m>, ~skOP) ) @ #vk.15 )
+          case OP_Approve
+          solve( !KU( mac(~k, <~h, %m, $a.1>) ) @ #vk.16 )
+            case PDP_Send
+            solve( !Env( ~d, ~h, a, h(r) ) ▶₁ #i )
+              case Device_Install
+              solve( !KU( ~r ) @ #vk.6 )
+                case PA_Revoke
+                by contradiction /* from formulas */
+              qed
+            qed
+          next
+            case PDP_SendDisable
+            by contradiction /* from formulas */
+          next
+            case c_mac
+            solve( !KU( ~k ) @ #vk.23 )
+              case Reveal_Session
+              solve( !Env( ~d, ~h, a, h(r) ) ▶₁ #i )
+                case Device_Install
+                solve( !KU( ~r ) @ #vk.8 )
+                  case PA_Revoke
+                  by contradiction /* from formulas */
+                qed
+              qed
+            qed
+          qed
+        next
+          case c_sign
+          solve( !KU( ~skOP ) @ #vk.22 )
+            case Reveal_OP
+            solve( !KU( mac(~k, <~h, %m, $a.1>) ) @ #vk.18 )
+              case PDP_Send
+              solve( !Env( ~d, ~h, a, h(r) ) ▶₁ #i )
+                case Device_Install
+                solve( !KU( ~r ) @ #vk.8 )
+                  case PA_Revoke
+                  by contradiction /* from formulas */
+                qed
+              qed
+            next
+              case PDP_SendDisable
+              by contradiction /* from formulas */
+            next
+              case c_mac
+              solve( !KU( ~k ) @ #vk.26 )
+                case Reveal_Session
+                solve( !Env( ~d, ~h, a, h(r) ) ▶₁ #i )
+                  case Device_Install
+                  solve( !KU( ~r ) @ #vk.10 )
+                    case PA_Revoke
+                    by contradiction /* from formulas */
+                  qed
+                qed
+              qed
+            qed
+          qed
+        qed
+      next
+        case c_sign
+        solve( !KU( ~skPA ) @ #vk.19 )
+          case Reveal_PA
+          by contradiction /* from formulas */
+        qed
+      qed
+    qed
+  next
+    case case_2
+    solve( !KU( sign(<'env', ~d, h, a.1, c>, ~skPA) ) @ #vk.18 )
+      case PA_Issue
+      solve( !KU( sign(<'disable', ~d, ~h, %m>, ~skOP) ) @ #vk.15 )
+        case OP_Approve
+        solve( !KU( mac(~k, <~h, %m, $a.1>) ) @ #vk.16 )
+          case PDP_Send
+          solve( !Env( ~d, ~h, a, h(r) ) ▶₁ #i )
+            case Device_Install
+            solve( !KU( ~r ) @ #vk.6 )
+              case PA_Revoke
+              by contradiction /* from formulas */
+            qed
+          qed
+        next
+          case PDP_SendDisable
+          solve( !Env( ~d, ~h, a, h(r) ) ▶₁ #i )
+            case Device_Install
+            solve( !KU( ~r ) @ #vk.6 )
+              case PA_Revoke
+              by contradiction /* from formulas */
+            qed
+          qed
+        next
+          case c_mac
+          solve( !KU( ~k ) @ #vk.23 )
+            case Reveal_Session
+            solve( !Env( ~d, ~h, a, h(r) ) ▶₁ #i )
+              case Device_Install
+              solve( !KU( ~r ) @ #vk.8 )
+                case PA_Revoke
+                by contradiction /* from formulas */
+              qed
+            qed
+          qed
+        qed
+      next
+        case c_sign
+        solve( !KU( ~skOP ) @ #vk.22 )
+          case Reveal_OP
+          solve( !KU( mac(~k, <~h, %m, $a.1>) ) @ #vk.18 )
+            case PDP_Send
+            solve( !Env( ~d, ~h, a, h(r) ) ▶₁ #i )
+              case Device_Install
+              solve( !KU( ~r ) @ #vk.8 )
+                case PA_Revoke
+                by contradiction /* from formulas */
+              qed
+            qed
+          next
+            case PDP_SendDisable
+            solve( !Env( ~d, ~h, a, h(r) ) ▶₁ #i )
+              case Device_Install
+              solve( !KU( ~r ) @ #vk.8 )
+                case PA_Revoke
+                by contradiction /* from formulas */
+              qed
+            qed
+          next
+            case c_mac
+            solve( !KU( ~k ) @ #vk.26 )
+              case Reveal_Session
+              solve( !Env( ~d, ~h, a, h(r) ) ▶₁ #i )
+                case Device_Install
+                solve( !KU( ~r ) @ #vk.10 )
+                  case PA_Revoke
+                  by contradiction /* from formulas */
+                qed
+              qed
+            qed
+          qed
+        qed
+      qed
+    next
+      case c_sign
+      solve( !KU( ~skPA ) @ #vk.19 )
+        case Reveal_PA
+        by contradiction /* from formulas */
+      qed
+    qed
+  qed
+next
+  case Device_Accept_case_2
+  solve( (¬(a.1 = 'disable'))  ∥ (z = true) )
+    case case_1
+    solve( splitEqs(1) )
+      case split_case_1
+      solve( !KU( sign(<'env', ~d, h, a.1, c>, ~skPA) ) @ #vk.18 )
+        case PA_Issue
+        solve( !KU( mac(~k, <~h, %m, $a.1>) ) @ #vk.14 )
+          case PDP_Send
+          solve( !Env( ~d, ~h, a, h(r) ) ▶₁ #i )
+            case Device_Install
+            solve( !KU( ~r ) @ #vk.4 )
+              case PA_Revoke
+              by contradiction /* from formulas */
+            qed
+          qed
+        next
+          case PDP_SendDisable
+          by contradiction /* from formulas */
+        next
+          case c_mac
+          solve( !KU( ~k ) @ #vk.22 )
+            case Reveal_Session
+            solve( !Env( ~d, ~h, a, h(r) ) ▶₁ #i )
+              case Device_Install
+              solve( !KU( ~r ) @ #vk.6 )
+                case PA_Revoke
+                by contradiction /* from formulas */
+              qed
+            qed
+          qed
+        qed
+      next
+        case c_sign
+        solve( !KU( ~skPA ) @ #vk.20 )
+          case Reveal_PA
+          by contradiction /* from formulas */
+        qed
+      qed
+    next
+      case split_case_2
+      solve( !KU( sign(<'env', ~d, h, a.1, c>, ~skPA) ) @ #vk.18 )
+        case PA_Issue
+        solve( !KU( sign(<'disable', ~d, ~h, %m>, ~skOP) ) @ #vk.15 )
+          case OP_Approve
+          solve( !KU( mac(~k, <~h, %m, $a.1>) ) @ #vk.16 )
+            case PDP_Send
+            solve( !Env( ~d, ~h, a, h(r) ) ▶₁ #i )
+              case Device_Install
+              solve( !KU( ~r ) @ #vk.6 )
+                case PA_Revoke
+                by contradiction /* from formulas */
+              qed
+            qed
+          next
+            case PDP_SendDisable
+            by contradiction /* from formulas */
+          next
+            case c_mac
+            solve( !KU( ~k ) @ #vk.24 )
+              case Reveal_Session
+              solve( !Env( ~d, ~h, a, h(r) ) ▶₁ #i )
+                case Device_Install
+                solve( !KU( ~r ) @ #vk.8 )
+                  case PA_Revoke
+                  by contradiction /* from formulas */
+                qed
+              qed
+            qed
+          qed
+        next
+          case c_sign
+          solve( !KU( ~skOP ) @ #vk.23 )
+            case Reveal_OP
+            solve( !KU( mac(~k, <~h, %m, $a.1>) ) @ #vk.18 )
+              case PDP_Send
+              solve( !Env( ~d, ~h, a, h(r) ) ▶₁ #i )
+                case Device_Install
+                solve( !KU( ~r ) @ #vk.8 )
+                  case PA_Revoke
+                  by contradiction /* from formulas */
+                qed
+              qed
+            next
+              case PDP_SendDisable
+              by contradiction /* from formulas */
+            next
+              case c_mac
+              solve( !KU( ~k ) @ #vk.27 )
+                case Reveal_Session
+                solve( !Env( ~d, ~h, a, h(r) ) ▶₁ #i )
+                  case Device_Install
+                  solve( !KU( ~r ) @ #vk.10 )
+                    case PA_Revoke
+                    by contradiction /* from formulas */
+                  qed
+                qed
+              qed
+            qed
+          qed
+        qed
+      next
+        case c_sign
+        solve( !KU( ~skPA ) @ #vk.20 )
+          case Reveal_PA
+          by contradiction /* from formulas */
+        qed
+      qed
+    qed
+  next
+    case case_2
+    solve( !KU( sign(<'env', ~d, h, a.1, c>, ~skPA) ) @ #vk.18 )
+      case PA_Issue
+      solve( !KU( sign(<'disable', ~d, ~h, %m>, ~skOP) ) @ #vk.15 )
+        case OP_Approve
+        solve( !KU( mac(~k, <~h, %m, $a.1>) ) @ #vk.16 )
+          case PDP_Send
+          solve( !Env( ~d, ~h, a, h(r) ) ▶₁ #i )
+            case Device_Install
+            solve( !KU( ~r ) @ #vk.6 )
+              case PA_Revoke
+              by contradiction /* from formulas */
+            qed
+          qed
+        next
+          case PDP_SendDisable
+          solve( !Env( ~d, ~h, a, h(r) ) ▶₁ #i )
+            case Device_Install
+            solve( !KU( ~r ) @ #vk.6 )
+              case PA_Revoke
+              by contradiction /* from formulas */
+            qed
+          qed
+        next
+          case c_mac
+          solve( !KU( ~k ) @ #vk.24 )
+            case Reveal_Session
+            solve( !Env( ~d, ~h, a, h(r) ) ▶₁ #i )
+              case Device_Install
+              solve( !KU( ~r ) @ #vk.8 )
+                case PA_Revoke
+                by contradiction /* from formulas */
+              qed
+            qed
+          qed
+        qed
+      next
+        case c_sign
+        solve( !KU( ~skOP ) @ #vk.23 )
+          case Reveal_OP
+          solve( !KU( mac(~k, <~h, %m, $a.1>) ) @ #vk.18 )
+            case PDP_Send
+            solve( !Env( ~d, ~h, a, h(r) ) ▶₁ #i )
+              case Device_Install
+              solve( !KU( ~r ) @ #vk.8 )
+                case PA_Revoke
+                by contradiction /* from formulas */
+              qed
+            qed
+          next
+            case PDP_SendDisable
+            solve( !Env( ~d, ~h, a, h(r) ) ▶₁ #i )
+              case Device_Install
+              solve( !KU( ~r ) @ #vk.8 )
+                case PA_Revoke
+                by contradiction /* from formulas */
+              qed
+            qed
+          next
+            case c_mac
+            solve( !KU( ~k ) @ #vk.27 )
+              case Reveal_Session
+              solve( !Env( ~d, ~h, a, h(r) ) ▶₁ #i )
+                case Device_Install
+                solve( !KU( ~r ) @ #vk.10 )
+                  case PA_Revoke
+                  by contradiction /* from formulas */
+                qed
+              qed
+            qed
+          qed
+        qed
+      qed
+    next
+      case c_sign
+      solve( !KU( ~skPA ) @ #vk.20 )
+        case Reveal_PA
+        by contradiction /* from formulas */
+      qed
+    qed
+  qed
+next
+  case Device_Install_case_1
+  solve( !KU( sign(<'env', ~d, h, a.1, c>, ~skPA) ) @ #vk.11 )
+    case PA_Issue
+    solve( !Env( ~d, ~h, a, h(r) ) ▶₁ #i )
+      case Device_Install
+      solve( !KU( ~r ) @ #vk.2 )
+        case PA_Revoke
+        by contradiction /* from formulas */
+      qed
+    qed
+  next
+    case c_sign
+    solve( !KU( ~skPA ) @ #vk.12 )
+      case Reveal_PA
+      by contradiction /* from formulas */
+    qed
+  qed
+next
+  case Device_Install_case_2
+  solve( !KU( sign(<'env', ~d, h, a.1, c>, ~skPA) ) @ #vk.11 )
+    case PA_Issue
+    solve( !Env( ~d, ~h, a, h(r) ) ▶₁ #i )
+      case Device_Install
+      solve( !KU( ~r ) @ #vk.2 )
+        case PA_Revoke
+        by contradiction /* from formulas */
+      qed
+    qed
+  next
+    case c_sign
+    solve( !KU( ~skPA ) @ #vk.13 )
+      case Reveal_PA
+      by contradiction /* from formulas */
+    qed
+  qed
+qed
+
+lemma disable_needs_OP:
+  all-traces
+  "∀ D h m #i.
+    (Accept( D, h, m, 'disable' ) @ #i) ⇒
+    ((∃ #j. (Approve( D, h, m ) @ #j) ∧ (#j < #i)) ∨
+     (∃ #r. (RevealOP( ) @ #r) ∧ (#r < #i)))"
+/*
+guarded formula characterizing all counter-examples:
+"∃ D h m #i.
+  (Accept( D, h, m, 'disable' ) @ #i)
+ ∧
+  (∀ #j. (Approve( D, h, m ) @ #j) ⇒ ¬(#j < #i)) ∧
+  (∀ #r. (RevealOP( ) @ #r) ⇒ ¬(#r < #i))"
+*/
+by sorry
+
+/* All wellformedness checks were successful. */
+
+/*
+Generated from:
+Tamarin version 1.12.0
+Maude version 3.5.1
+Git revision: UNKNOWN, branch: UNKNOWN
+Compiled at: 2026-03-08 09:49:47.765662 UTC
+*/
+
+end
+
+==============================================================================
+summary of summaries:
+
+analyzed: crisis.spthy
+
+  processing time: 4.35s
+  
+  exec_accept (exists-trace): analysis incomplete (1 steps)
+  exec_disable (exists-trace): analysis incomplete (1 steps)
+  exec_revoke (exists-trace): analysis incomplete (1 steps)
+  ctr_monotone (all-traces): analysis incomplete (1 steps)
+  P4_no_replay (all-traces): analysis incomplete (1 steps)
+  P4_injective_agreement (all-traces): analysis incomplete (1 steps)
+  P1_confinement (all-traces): analysis incomplete (1 steps)
+  revocation (all-traces): analysis incomplete (1 steps)
+  revocation_needs_PA (all-traces): verified (142 steps)
+  disable_needs_OP (all-traces): analysis incomplete (1 steps)
+
+==============================================================================
