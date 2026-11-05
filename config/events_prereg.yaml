@@ -1,0 +1,36 @@
+# F5 PRE-REGISTRATION of the flood-event rule. Committed BEFORE the 10-year series were downloaded or any
+# event was selected. Any later change is logged in DEVIATIONS.md with its reason; this file is not edited.
+registered_utc: "2026-11-05"
+status: "pre-registered; not yet run"
+
+gauges:            # USGS sites with NWS flood categories and a passing datum check (data/nws/, Sec. 7i)
+  # Buffalo Bayou is required (project). The others were chosen from the gauges with NWS categories cached
+  # in F4, before looking at their flood history, to mix flashy urban bayous (Houston) with large rivers.
+  - {usgs: "08074000", site: "Buffalo Bayou at Houston, TX (NWS BBST2)"}
+  - {usgs: "08074500", site: "White Oak Bayou at Houston, TX (NWS HGTT2)"}
+  - {usgs: "08075000", site: "Brays Bayou at Houston, TX (NWS HBMT2)"}
+  - {usgs: "08076000", site: "Greens Bayou near Houston, TX (NWS GBHT2)"}
+  - {usgs: "08068000", site: "West Fork San Jacinto River near Conroe, TX (NWS CFKT2)"}
+  - {usgs: "01570500", site: "Susquehanna River at Harrisburg, PA (NWS HARP1)"}
+  - {usgs: "01646500", site: "Potomac River near Washington DC Little Falls (NWS BRKM2)"}
+period: {start: "2015-01-01", end: "2024-12-31"}   # 10 calendar years
+parameter_cd: "00065"                              # gage height, ft (USGS IV)
+download: "one USGS IV request per gauge and calendar year (scripts/fetch_usgs.py), raw JSON cached with query URL, retrieval date and SHA-256"
+
+rule:
+  threshold: nws_minor                 # a peak counts only if the stage reaches the NWS minor flood stage
+  candidate_peaks: "maximum of each maximal run of readings >= minor flood stage"
+  separation_h: 72                     # CHOICE: accepted peaks are >= 72 h apart; greedy by descending peak
+  window: {before_peak_d: 5, after_peak_d: 2}   # CHOICE: replay window around each accepted peak
+  datum_tolerance_ft: 0.5              # gauge excluded if NWS stage and USGS gage height differ by more
+  cap: none                            # every event the rule selects is replayed
+  shortfall: "if fewer than 20 events are selected, report the shortfall; the rule is not changed"
+interpolation: "linear on a 1-min grid; gaps > 60 min are listed per event and a peak at a gap edge is flagged"
+
+scoring:
+  levels: "NWS action, minor, moderate, major (those defined), upward crossings inside the window"
+  delay: "minutes from the crossing to the first uplink carrying a sample >= level taken during the excursion"
+  missed: "no such uplink; counted as an infinite delay in the delay distribution"
+  tolerance_min: 30                    # a crossing reported later than this is delayed (ASSUMED, unchanged)
+  statistics: "per scheme x compromise x strategy x battery profile: delay median, p90 and max over all crossings, with 95% percentile-bootstrap CIs resampling EVENTS (cluster bootstrap), B = 10000, seed 20261104; share of crossings delayed > 30 min or missed"
+grid: "unchanged from config/harm.yaml (battery profiles, schemes, compromises, attacker strategies, legit policies)"
