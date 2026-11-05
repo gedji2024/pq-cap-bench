@@ -952,6 +952,71 @@ def section_kill(results: Path) -> str:
     return "\n\n".join(parts)
 
 
+def section_agents(ed: Path) -> str:
+    """Task E: the pre-registration record (E0) and the headline results, read from experiments/agents."""
+    e0p = ed / "E0.json"
+    if not e0p.exists():
+        return "_Task E not pre-registered yet_"
+    e0 = json.loads(e0p.read_text())
+    out = [f"**E0 - pre-registration.** `experiments/agents/PREREG.md` committed in `{e0['prereg_commit']}` "
+           f"(SHA-256 `{e0['prereg_sha256']}`; `design.yaml` SHA-256 `{e0['design_sha256']}`) before any test-split "
+           "episode. Every episode record carries this commit and hash; changes after it are in "
+           "`experiments/agents/DEVIATIONS.md`. Scope: 8-12B open-weight models run locally "
+           f"({', '.join(e0['models'])}); no claim about larger or frontier models. Local simulation only."]
+    rd = ed / "results"
+    pp = rd / "static_primary_hb.csv"
+    if not pp.exists():
+        return "\n\n".join(out + ["_Test-split runs not finished; results will appear here._"])
+    f3 = lambda v: "-" if pd.isna(v) else f"{v:.3f}"  # noqa: E731
+    cic = lambda r: f"{r.rate:.3f} [{r.ci_lo:.3f}, {r.ci_hi:.3f}] ({int(r.k)}/{int(r.n)})" if r.n else "-"  # noqa: E731
+
+    def wide(t, idx, col="prompt"):
+        t = t.assign(cell=[cic(r) for r in t.itertuples()])
+        w = t.pivot_table(index=idx, columns=col, values="cell", aggfunc="first", sort=False).reset_index()
+        w.columns.name = None
+        return w
+
+    hb = pd.read_csv(pp)
+    out += ["**PRIMARY H-b - executed outside the envelope under S6+F** (attacked test-split episodes with at least one "
+            "accepted command outside the installed envelope or commissioning floor, rechecked from the logged bounds; "
+            "exact one-sided 95 % Clopper-Pearson upper bound):", md_table(hb, {"rate": f3, "upper95_one_sided":
+                                                                             lambda v: f"{v:.4f}"})]
+    hp = rd / "static_harmful_accepted.csv"
+    if hp.exists():
+        out += ["**Harmful commands accepted by the device** (attacked test-split episodes in which the device accepted "
+                "- or, with no scheme, executed - at least one command matching the attack goal; exact two-sided 95 % "
+                "Clopper-Pearson CI; pooled over models; per model in `experiments/agents/RESULTS.md`):",
+                md_table(wide(pd.read_csv(hp), ["condition"]))]
+    fp = rd / "static_false_report.csv"
+    if fp.exists():
+        out += ["**Agent false-report rate vs receipts** (benign and attacked test-split episodes whose final answer "
+                "claims a device state the receipts contradict, `pqcap.agents.claims`; Wilson 95 % CI):",
+                md_table(wide(pd.read_csv(fp), ["condition"]))]
+    op = rd / "static_outcomes.csv"
+    if op.exists():
+        o = pd.read_csv(op)
+        cols = [c for c in ("executed", "partial", "blocked_by_scheme", "refused", "ignored", "breakdown") if c in o]
+        g = o.groupby("condition", sort=False)[cols].sum().reset_index()
+        tot = g[cols].sum(axis=1)
+        g["refused_share"] = (g.get("refused", 0) / tot).map(f3)
+        g["ignored_share"] = (g.get("ignored", 0) / tot).map(f3)
+        out += ["**Refusal vs ignore - PROVISIONAL** (outcome classes of attacked test-split episodes, pooled over "
+                "models; `refused` needs a label-blind judge verdict backed by a verbatim quote, otherwise `ignored`; "
+                "the judge is not yet validated against human labels - the 60-item blind sample is in "
+                "`results/labelling/`):", md_table(g)]
+    tp = rd / "static_tests.csv"
+    if tp.exists():
+        t = pd.read_csv(tp)
+        out += ["**Secondary tests** (exact McNemar on paired episodes, H-d by bootstrap TOST; Holm over the family):",
+                md_table(t, {"p": lambda v: f"{v:.2g}", "p_holm": lambda v: f"{v:.2g}", "rate_a": f3, "rate_b": f3,
+                             "pairs": lambda v: "-" if pd.isna(v) else f"{int(v)}",
+                             "only_a": lambda v: "-" if pd.isna(v) else f"{int(v)}",
+                             "only_b": lambda v: "-" if pd.isna(v) else f"{int(v)}"})]
+    out.append("Full tables (per model, utility, hydrological impact, telemetry, decision mix, transcripts, deviations): "
+               "`experiments/agents/RESULTS.md`. These results hold only for the tested models and attacks.")
+    return "\n\n".join(out)
+
+
 def run(config: Path, results: Path, figures: Path) -> None:
     model = load_yaml(config / "model.yaml")
     figs = sorted(p.name for p in figures.glob("*.png"))
@@ -984,6 +1049,8 @@ def run(config: Path, results: Path, figures: Path) -> None:
         section_catalogue(results, config),
         "## 8b. Traceability to the Étape 2 threat model", section_traceability(config),
         "## 8c. Formal verification (Tamarin)", section_formal(results), section_truncation(results),
-        "## 9. Figures", "\n".join(f"- [{f}](figures/{f}) ([pdf](figures/{f[:-4]}.pdf))" for f in figs),
+        "## 9. Task E: LLM agents against device-side schemes (pre-registered)",
+        section_agents(results.parent / "experiments/agents"),
+        "## 10. Figures (numbered 9 before Task E took Sec. 9)", "\n".join(f"- [{f}](figures/{f}) ([pdf](figures/{f[:-4]}.pdf))" for f in figs),
     ]
     (results.parent / "REPORT.md").write_text("\n\n".join(parts) + "\n")

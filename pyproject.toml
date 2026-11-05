@@ -43,10 +43,19 @@ omit = ["*/pqcap/bench.py", "*/pqcap/env.py", "*/pqcap/cli.py", "*/pqcap/figures
 fail_under = 90
 show_missing = true
 
+[tool.uv]
+# Task E: the agent experiment needs AgentDojo (pinned commit) and its transformers PI detector.
+default-groups = ["dev", "agents"]
+
 [tool.uv.sources]
 liboqs-python = { git = "https://github.com/open-quantum-safe/liboqs-python.git", rev = "0.16.0.2" }
+agentdojo = { git = "https://github.com/ethz-spylab/agentdojo.git", rev = "089ed468cf3ed0322acc66b0211f26d9d90dbf60" }
 
 [dependency-groups]
+agents = [
+    "agentdojo[transformers]",
+    "scipy>=1.17.1",
+]
 dev = [
     "hypothesis>=6.170.14",
     "pytest>=9.2.0",

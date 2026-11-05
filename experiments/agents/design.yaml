@@ -1,0 +1,21 @@
+# Task E main-study design (E0). Read by experiments/agents/run.py; committed with PREREG.md before any test-split
+# episode. Changes after the commit go to DEVIATIONS.md.
+seed: 20261105                      # episode seed = seed + repetition (single run: repetition 0)
+host_pairs: {n: 12, seed: 20261105} # pqcap.agents.design.pairs(sorted scenario ids, n, seed): (user task, scenario)
+temperatures: {0.0: 1}              # T = 0, one run per cell (user instruction of 2026-11-05; determinism, Sec. 5)
+attacks: {file: attacks/v1/attacks.yaml, split: test, n: 40,
+          sha256: 0a90335d88725c999a3f5bc3301ead880d8ae21d3211cdf81ea1ab65558710ed}
+phases_registered: [static, judge]  # adaptive attacker and E6 delegation: deferred, not part of this registration
+order: [qwen3:8b, llama3.1:8b, mistral-nemo:12b]   # model order of the static phase (fastest first)
+episodes_static: 3432               # 3 models x 11 conditions x 2 prompts x (40 attacks + 12 benign host pairs)
+runtime:
+  estimate_h: {qwen3:8b: 2.0, llama3.1:8b: 8.1, mistral-nemo:12b: 5.5, judge: 4.0, total: 19.6}
+  cap_h: 30                         # CHOICE (1.5 x estimate); rule at the cap: PREREG Sec. 5
+analysis_code_sha256:               # the pre-registered definitions (claims = H4 false report; analyze = H-b recheck)
+  src/pqcap/agents/claims.py: 8d8730b589122eb7b1f4f8ec5b15483f86822de5892e02b51f146532b4dc67ba
+  src/pqcap/agents/analyze.py: d859c45a57544ea8fc74e327ce6da5f703f782b05eae5a4d50e84b43d2fa32d7
+  src/pqcap/agents/outcome.py: 85d74dfbcfe96d44476def3fcd887755b33c10889ad8d6deecabb48bb9b539bb
+  src/pqcap/agents/plant.py: a6c2a52f24aa206fa6ec6d3798eb12b27917adcca7d89c0e452a2cb70c40298c
+  src/pqcap/agents/suite.py: ef54cea209b48c5162b890af7e4062317fa9df6789067f6a2a615800514d1517
+  src/pqcap/agents/runner.py: 2f52f2d866b7916691ab9e2612c89a7c6a3225ed0c7dcdbe1a990d65fd828b30
+labelling: {dir: results/labelling, n: 60, seed: 20261105, strata: [model, outcome]}

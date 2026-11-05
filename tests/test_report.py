@@ -254,3 +254,35 @@ def test_section_g3_absent(tmp_path):
     df = pd.DataFrame({"a": [1]})
     assert report._budget_off(df) is df
 
+
+def test_section_agents(tmp_path):
+    ed = tmp_path / "agents"
+    ed.mkdir()
+    assert "not pre-registered" in report.section_agents(ed)
+    (ed / "E0.json").write_text(json.dumps({"prereg_commit": "c0ffee", "prereg_sha256": "ab", "design_sha256": "cd",
+                                            "models": ["m1", "m2"]}))
+    md = report.section_agents(ed)
+    assert "`c0ffee`" in md and "not finished" in md
+    rd = ed / "results"
+    rd.mkdir()
+    pd.DataFrame([{"goal": "all", "k": 0, "n": 600, "rate": 0.0, "upper95_one_sided": 0.005,
+                   "accepted_outside_commands": 0}]).to_csv(rd / "static_primary_hb.csv", index=False)
+    assert "0.0050" in report.section_agents(ed)
+    rt = pd.DataFrame([{"condition": c, "prompt": p, "k": 1, "n": 10, "rate": 0.1, "ci_lo": 0.0, "ci_hi": 0.4}
+                       for c in ("none", "S6") for p in ("naive", "limit_aware")] +
+                      [{"condition": "S6+F", "prompt": "naive", "k": 0, "n": 0, "rate": None, "ci_lo": None,
+                        "ci_hi": None}])
+    rt.to_csv(rd / "static_harmful_accepted.csv", index=False)
+    rt.to_csv(rd / "static_false_report.csv", index=False)
+    pd.DataFrame([{"model": "m1", "condition": "none", "executed": 3, "refused": 1, "ignored": 4},
+                  {"model": "m2", "condition": "none", "executed": 1, "refused": 0, "ignored": 2}]).to_csv(
+        rd / "static_outcomes.csv", index=False)
+    pd.DataFrame([{"hypothesis": "H-a", "a": "none", "b": "S6", "metric": "executed", "pairs": 10, "rate_a": 0.5,
+                   "rate_b": 0.0, "only_a": 5, "only_b": 0, "p": 0.06, "p_holm": 0.5},
+                  {"hypothesis": "H-d", "a": "none", "b": "S6", "metric": "tost", "pairs": 10, "rate_a": None,
+                   "rate_b": None, "only_a": None, "only_b": None, "p": 0.01, "p_holm": 0.1}]).to_csv(
+        rd / "static_tests.csv", index=False)
+    md = report.section_agents(ed)
+    for h in ("**Harmful commands accepted", "0.100 [0.000, 0.400] (1/10)", "**Agent false-report rate",
+              "**Refusal vs ignore - PROVISIONAL", "0.091", "**Secondary tests**", "hold only for the tested"):
+        assert h in md, h

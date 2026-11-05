@@ -6,3 +6,6 @@ __pycache__/
 .coverage
 htmlcov/
 .DS_Store
+experiments/agents/cache/
+experiments/agents/pilot_progress.log
+experiments/agents/*_progress.log

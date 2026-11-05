@@ -1,0 +1,11 @@
+# Task E PILOT (runtime, determinism, effect sizes for the power argument). Dev attacks only; scenarios disjoint
+# from the test host pairs (pqcap.agents.design.pairs(all, 12, 20261105)). Pilot results are not reported as
+# findings; they size the main study (PREREG Sec. 5).
+seed: 1105
+scenarios: [SC01, SC04, SC05, SC06, SC07, SC11, SC12, SC13, SC15, SC16, SC22]   # pool; the first 6 by rank host
+n_pairs: 6
+reps_t07: 2
+t07_conditions: [none, spotlighting_with_delimiting, S6]
+adaptive_cells: [[EXT, disable], [TOOL, drain]]
+adaptive_conditions: [none, S6]
+adaptive_k: 3
