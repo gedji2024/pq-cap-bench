@@ -693,12 +693,47 @@ Message size in frames per DR:
 
 **Events** (USGS NWIS instantaneous values; raw JSON cached in `data/`):
 
-- **USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)**: `data/usgs_08074000_00065_2017-01-01_2017-12-31.json`, query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-04T15:13:04+00:00, SHA-256 `94c36b3ccf8a9b09...`; 461 readings 2017-08-25 06:00:00+00:00 to 2017-08-31 06:00:00+00:00; peak 41.90 ft at 2017-08-28 06:00:00+00:00 - **peak reading lies at the edge of a >60-min gap: its timing and the levels near it are interpolation-dependent**. Gaps > 60 min (linear interpolation): 2017-08-26 08:15:00+00:00 -> 2017-08-26 21:15:00+00:00 (780 min); 2017-08-27 20:00:00+00:00 -> 2017-08-28 06:00:00+00:00 (600 min); 2017-08-28 06:00:00+00:00 -> 2017-08-28 12:45:00+00:00 (405 min). Thresholds: NWS BBST2.
-- **USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)**: `data/usgs_08074000_00065_2017-01-01_2017-12-31.json`, query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-04T15:13:04+00:00, SHA-256 `94c36b3ccf8a9b09...`; 577 readings 2017-01-15 15:00:00+00:00 to 2017-01-21 15:00:00+00:00; peak 23.27 ft at 2017-01-18 15:00:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS BBST2.
-- **USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)**: `data/usgs_04174500_00065_2017-01-01_2017-12-31.json`, query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=04174500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-04T15:13:05+00:00, SHA-256 `01938fd925952c77...`; 577 readings 2017-11-15 19:30:00+00:00 to 2017-11-21 19:30:00+00:00; peak 13.73 ft at 2017-11-18 19:30:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS ANNM4.
-- **USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)**: `data/usgs_04174500_00065_2017-01-01_2017-12-31.json`, query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=04174500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-04T15:13:05+00:00, SHA-256 `01938fd925952c77...`; 577 readings 2017-10-13 22:00:00+00:00 to 2017-10-19 22:00:00+00:00; peak 13.50 ft at 2017-10-16 22:00:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS ANNM4.
-- **USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)**: `data/usgs_01646500_00065_2017-01-01_2017-12-31.json`, query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=01646500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-04T15:13:07+00:00, SHA-256 `67f029d1739d2785...`; 577 readings 2017-05-04 12:45:00+00:00 to 2017-05-10 12:45:00+00:00; peak 8.30 ft at 2017-05-07 12:45:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS BRKM2.
-- **USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)**: `data/usgs_01646500_00065_2017-01-01_2017-12-31.json`, query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=01646500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-04T15:13:07+00:00, SHA-256 `67f029d1739d2785...`; 577 readings 2017-01-23 06:15:00+00:00 to 2017-01-29 06:15:00+00:00; peak 6.94 ft at 2017-01-26 06:15:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS BRKM2.
+- **USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2015-05-26)**: `data/usgs10/usgs_08074000_00065_2015-01-01_2015-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2015-01-01&endDT=2015-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:10+00:00, SHA-256 `7a55a7c15b776010...`); 673 readings 2015-05-21 10:45:00+00:00 to 2015-05-28 10:45:00+00:00; peak 33.77 ft at 2015-05-26 10:45:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS BBST2.
+- **USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2016-04-18)**: `data/usgs10/usgs_08074000_00065_2016-01-01_2016-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2016-01-01&endDT=2016-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:12+00:00, SHA-256 `854f68265505be4f...`); 673 readings 2016-04-13 18:45:00+00:00 to 2016-04-20 18:45:00+00:00; peak 31.94 ft at 2016-04-18 18:45:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS BBST2.
+- **USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2017-08-28)**: `data/usgs10/usgs_08074000_00065_2017-01-01_2017-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:14+00:00, SHA-256 `1c770072778e1212...`); 557 readings 2017-08-23 06:00:00+00:00 to 2017-08-30 06:00:00+00:00; peak 41.90 ft at 2017-08-28 06:00:00+00:00 - **peak reading lies at the edge of a >60-min gap: its timing and the levels near it are interpolation-dependent**. Gaps > 60 min (linear interpolation): 2017-08-26 08:15:00+00:00 -> 2017-08-26 21:15:00+00:00 (780 min); 2017-08-27 20:00:00+00:00 -> 2017-08-28 06:00:00+00:00 (600 min); 2017-08-28 06:00:00+00:00 -> 2017-08-28 12:45:00+00:00 (405 min). Thresholds: NWS BBST2.
+- **USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2019-09-19)**: `data/usgs10/usgs_08074000_00065_2019-01-01_2019-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2019-01-01&endDT=2019-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:18+00:00, SHA-256 `33a182dbbe3cc77a...`); 673 readings 2019-09-14 23:00:00+00:00 to 2019-09-21 23:00:00+00:00; peak 31.01 ft at 2019-09-19 23:00:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS BBST2.
+- **USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2024-07-08)**: `data/usgs10/usgs_08074000_00065_2024-01-01_2024-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2024-01-01&endDT=2024-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:28+00:00, SHA-256 `a1f25c0df7c7d166...`); 673 readings 2024-07-03 18:45:00+00:00 to 2024-07-10 18:45:00+00:00; peak 32.42 ft at 2024-07-08 18:45:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS BBST2.
+- **USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-05-26)**: `data/usgs10/usgs_08074500_00065_2015-01-01_2015-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074500&startDT=2015-01-01&endDT=2015-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:10+00:00, SHA-256 `7cf9043083250093...`); 543 readings 2015-05-21 04:45:00+00:00 to 2015-05-28 04:45:00+00:00; peak 35.64 ft at 2015-05-26 04:45:00+00:00 - **peak reading lies at the edge of a >60-min gap: its timing and the levels near it are interpolation-dependent**. Gaps > 60 min (linear interpolation): 2015-05-26 04:45:00+00:00 -> 2015-05-27 05:00:00+00:00 (1455 min). Thresholds: NWS HGTT2.
+- **USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-10-25)**: `data/usgs10/usgs_08074500_00065_2015-01-01_2015-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074500&startDT=2015-01-01&endDT=2015-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:10+00:00, SHA-256 `7cf9043083250093...`); 667 readings 2015-10-20 07:00:00+00:00 to 2015-10-27 07:00:00+00:00; peak 34.26 ft at 2015-10-25 07:00:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS HGTT2.
+- **USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-08)**: `data/usgs10/usgs_08074500_00065_2017-01-01_2017-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:15+00:00, SHA-256 `b6ea6fae9de3ce5c...`); 673 readings 2017-08-03 11:30:00+00:00 to 2017-08-10 11:30:00+00:00; peak 34.34 ft at 2017-08-08 11:30:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS HGTT2.
+- **USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-27)**: `data/usgs10/usgs_08074500_00065_2017-01-01_2017-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:15+00:00, SHA-256 `b6ea6fae9de3ce5c...`); 450 readings 2017-08-22 18:30:00+00:00 to 2017-08-27 18:30:00+00:00; peak 44.31 ft at 2017-08-27 18:30:00+00:00 - **peak reading lies at the edge of a >60-min gap: its timing and the levels near it are interpolation-dependent**. Gaps > 60 min (linear interpolation): 2017-08-27 10:30:00+00:00 -> 2017-08-27 18:30:00+00:00 (480 min). Thresholds: NWS HGTT2.
+- **USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2019-09-19)**: `data/usgs10/usgs_08074500_00065_2019-01-01_2019-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074500&startDT=2019-01-01&endDT=2019-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:19+00:00, SHA-256 `2699d5d53f251f1a...`); 673 readings 2019-09-14 19:15:00+00:00 to 2019-09-21 19:15:00+00:00; peak 38.02 ft at 2019-09-19 19:15:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS HGTT2.
+- **USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2024-07-08)**: `data/usgs10/usgs_08074500_00065_2024-01-01_2024-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074500&startDT=2024-01-01&endDT=2024-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:29+00:00, SHA-256 `9a9f7db60fcf3fd8...`); 673 readings 2024-07-03 17:00:00+00:00 to 2024-07-10 17:00:00+00:00; peak 38.72 ft at 2024-07-08 17:00:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS HGTT2.
+- **USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2015-05-26)**: `data/usgs10/usgs_08075000_00065_2015-01-01_2015-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08075000&startDT=2015-01-01&endDT=2015-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:10+00:00, SHA-256 `24a403a5ee8e9f20...`); 673 readings 2015-05-21 09:00:00+00:00 to 2015-05-28 09:00:00+00:00; peak 42.83 ft at 2015-05-26 09:00:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS HBMT2.
+- **USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2016-04-18)**: `data/usgs10/usgs_08075000_00065_2016-01-01_2016-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08075000&startDT=2016-01-01&endDT=2016-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:12+00:00, SHA-256 `3434d9b102c1934a...`); 673 readings 2016-04-13 14:45:00+00:00 to 2016-04-20 14:45:00+00:00; peak 41.98 ft at 2016-04-18 14:45:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS HBMT2.
+- **USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2017-08-27)**: `data/usgs10/usgs_08075000_00065_2017-01-01_2017-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08075000&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:14+00:00, SHA-256 `ebd88296fb285f95...`); 673 readings 2017-08-22 17:30:00+00:00 to 2017-08-29 17:30:00+00:00; peak 45.67 ft at 2017-08-27 17:30:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS HBMT2.
+- **USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2024-07-08)**: `data/usgs10/usgs_08075000_00065_2024-01-01_2024-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08075000&startDT=2024-01-01&endDT=2024-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:27+00:00, SHA-256 `b1ed3c7da20edbf0...`); 673 readings 2024-07-03 15:15:00+00:00 to 2024-07-10 15:15:00+00:00; peak 41.73 ft at 2024-07-08 15:15:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS HBMT2.
+- **USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-05-26)**: `data/usgs10/usgs_08076000_00065_2015-01-01_2015-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2015-01-01&endDT=2015-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:10+00:00, SHA-256 `b374bb8b22ece24c...`); 672 readings 2015-05-21 08:45:00+00:00 to 2015-05-28 08:45:00+00:00; peak 58.09 ft at 2015-05-26 08:45:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS GBHT2.
+- **USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-25)**: `data/usgs10/usgs_08076000_00065_2015-01-01_2015-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2015-01-01&endDT=2015-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:10+00:00, SHA-256 `b374bb8b22ece24c...`); 670 readings 2015-10-20 07:30:00+00:00 to 2015-10-27 07:30:00+00:00; peak 56.86 ft at 2015-10-25 07:30:00+00:00. Gaps > 60 min (linear interpolation): 2015-10-20 14:30:00+00:00 -> 2015-10-20 15:30:00+00:00 (60 min). Thresholds: NWS GBHT2.
+- **USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-31)**: `data/usgs10/usgs_08076000_00065_2015-01-01_2015-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2015-01-01&endDT=2015-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:10+00:00, SHA-256 `b374bb8b22ece24c...`); 673 readings 2015-10-26 16:45:00+00:00 to 2015-11-02 16:45:00+00:00; peak 56.78 ft at 2015-10-31 16:45:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS GBHT2.
+- **USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-04-18)**: `data/usgs10/usgs_08076000_00065_2016-01-01_2016-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2016-01-01&endDT=2016-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:12+00:00, SHA-256 `3a93ae555188c797...`); 673 readings 2016-04-13 22:00:00+00:00 to 2016-04-20 22:00:00+00:00; peak 59.53 ft at 2016-04-18 22:00:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS GBHT2.
+- **USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-05-28)**: `data/usgs10/usgs_08076000_00065_2016-01-01_2016-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2016-01-01&endDT=2016-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:12+00:00, SHA-256 `3a93ae555188c797...`); 673 readings 2016-05-23 01:00:00+00:00 to 2016-05-30 01:00:00+00:00; peak 55.51 ft at 2016-05-28 01:00:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS GBHT2.
+- **USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-06-03)**: `data/usgs10/usgs_08076000_00065_2016-01-01_2016-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2016-01-01&endDT=2016-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:12+00:00, SHA-256 `3a93ae555188c797...`); 673 readings 2016-05-29 01:45:00+00:00 to 2016-06-05 01:45:00+00:00; peak 55.83 ft at 2016-06-03 01:45:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS GBHT2.
+- **USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-08)**: `data/usgs10/usgs_08076000_00065_2017-01-01_2017-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:15+00:00, SHA-256 `9d9b3e570494e6a4...`); 673 readings 2017-08-03 11:45:00+00:00 to 2017-08-10 11:45:00+00:00; peak 57.27 ft at 2017-08-08 11:45:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS GBHT2.
+- **USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-28)**: `data/usgs10/usgs_08076000_00065_2017-01-01_2017-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:15+00:00, SHA-256 `9d9b3e570494e6a4...`); 668 readings 2017-08-23 05:00:00+00:00 to 2017-08-30 05:00:00+00:00; peak 62.88 ft at 2017-08-28 05:00:00+00:00. Gaps > 60 min (linear interpolation): 2017-08-29 14:30:00+00:00 -> 2017-08-29 15:30:00+00:00 (60 min). Thresholds: NWS GBHT2.
+- **USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-07-04)**: `data/usgs10/usgs_08076000_00065_2018-01-01_2018-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2018-01-01&endDT=2018-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:17+00:00, SHA-256 `d788bb7235fe63b2...`); 673 readings 2018-06-29 20:45:00+00:00 to 2018-07-06 20:45:00+00:00; peak 55.68 ft at 2018-07-04 20:45:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS GBHT2.
+- **USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-12-08)**: `data/usgs10/usgs_08076000_00065_2018-01-01_2018-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2018-01-01&endDT=2018-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:17+00:00, SHA-256 `d788bb7235fe63b2...`); 673 readings 2018-12-03 08:15:00+00:00 to 2018-12-10 08:15:00+00:00; peak 56.19 ft at 2018-12-08 08:15:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS GBHT2.
+- **USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2019-09-19)**: `data/usgs10/usgs_08076000_00065_2019-01-01_2019-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2019-01-01&endDT=2019-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:19+00:00, SHA-256 `075cd4205e384243...`); 673 readings 2019-09-14 20:15:00+00:00 to 2019-09-21 20:15:00+00:00; peak 59.48 ft at 2019-09-19 20:15:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS GBHT2.
+- **USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2020-09-23)**: `data/usgs10/usgs_08076000_00065_2020-01-01_2020-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2020-01-01&endDT=2020-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:21+00:00, SHA-256 `1f4aae6d8e2c3beb...`); 673 readings 2020-09-18 07:45:00+00:00 to 2020-09-25 07:45:00+00:00; peak 55.74 ft at 2020-09-23 07:45:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS GBHT2.
+- **USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2022-01-09)**: `data/usgs10/usgs_08076000_00065_2022-01-01_2022-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2022-01-01&endDT=2022-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:24+00:00, SHA-256 `c8d774030d4da146...`); 673 readings 2022-01-04 09:30:00+00:00 to 2022-01-11 09:30:00+00:00; peak 55.68 ft at 2022-01-09 09:30:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS GBHT2.
+- **USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2024-07-08)**: `data/usgs10/usgs_08076000_00065_2024-01-01_2024-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2024-01-01&endDT=2024-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:28+00:00, SHA-256 `bf970ee530bc20ed...`); 673 readings 2024-07-03 16:45:00+00:00 to 2024-07-10 16:45:00+00:00; peak 58.07 ft at 2024-07-08 16:45:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS GBHT2.
+- **USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-13)**: `data/usgs10/usgs_08068000_00065_2015-01-01_2015-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08068000&startDT=2015-01-01&endDT=2015-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:10+00:00, SHA-256 `6f04f8ebe9a60984...`); 673 readings 2015-05-08 19:00:00+00:00 to 2015-05-15 19:00:00+00:00; peak 116.05 ft at 2015-05-13 19:00:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS CFKT2.
+- **USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-28)**: `data/usgs10/usgs_08068000_00065_2015-01-01_2015-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08068000&startDT=2015-01-01&endDT=2015-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:10+00:00, SHA-256 `6f04f8ebe9a60984...`); 673 readings 2015-05-23 08:15:00+00:00 to 2015-05-30 08:15:00+00:00; peak 116.51 ft at 2015-05-28 08:15:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS CFKT2.
+- **USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2016-05-28)**: `data/usgs10/usgs_08068000_00065_2016-01-01_2016-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08068000&startDT=2016-01-01&endDT=2016-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:12+00:00, SHA-256 `b1a460441e6de910...`); 481 readings 2016-05-23 19:00:00+00:00 to 2016-05-30 19:00:00+00:00; peak 121.14 ft at 2016-05-28 19:00:00+00:00. Gaps > 60 min (linear interpolation): 2016-05-26 04:45:00+00:00 -> 2016-05-28 05:00:00+00:00 (2895 min). Thresholds: NWS CFKT2.
+- **USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2017-08-29)**: `data/usgs10/usgs_08068000_00065_2017-01-01_2017-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08068000&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:14+00:00, SHA-256 `a912ca126600afe4...`); 673 readings 2017-08-24 06:45:00+00:00 to 2017-08-31 06:45:00+00:00; peak 126.93 ft at 2017-08-29 06:45:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS CFKT2.
+- **USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-01-26)**: `data/usgs10/usgs_08068000_00065_2024-01-01_2024-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08068000&startDT=2024-01-01&endDT=2024-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:27+00:00, SHA-256 `ac8f7e6d513dcfb3...`); 673 readings 2024-01-21 00:30:00+00:00 to 2024-01-28 00:30:00+00:00; peak 118.59 ft at 2024-01-26 00:30:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS CFKT2.
+- **USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-05-03)**: `data/usgs10/usgs_08068000_00065_2024-01-01_2024-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08068000&startDT=2024-01-01&endDT=2024-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:27+00:00, SHA-256 `ac8f7e6d513dcfb3...`); 663 readings 2024-04-28 19:45:00+00:00 to 2024-05-05 19:00:00+00:00; peak 121.82 ft at 2024-05-03 19:00:00+00:00. Gaps > 60 min (linear interpolation): 2024-04-28 20:15:00+00:00 -> 2024-04-28 21:30:00+00:00 (75 min). Thresholds: NWS CFKT2.
+- **USGS 01570500 Susquehanna River at Harrisburg, PA (NWS HARP1) (2018-07-26)**: `data/usgs10/usgs_01570500_00065_2018-01-01_2018-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=01570500&startDT=2018-01-01&endDT=2018-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:14+00:00, SHA-256 `ae3f7a6b80e302cd...`); 337 readings 2018-07-21 18:00:00+00:00 to 2018-07-28 18:00:00+00:00; peak 17.32 ft at 2018-07-26 18:00:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS HARP1.
+- **USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-06-05)**: `data/usgs10/usgs_01646500_00065_2018-01-01_2018-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=01646500&startDT=2018-01-01&endDT=2018-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:16+00:00, SHA-256 `967ededafa794c44...`); 669 readings 2018-05-31 08:30:00+00:00 to 2018-06-07 07:30:00+00:00; peak 12.47 ft at 2018-06-05 08:30:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS BRKM2.
+- **USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-11)**: `data/usgs10/usgs_01646500_00065_2018-01-01_2018-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=01646500&startDT=2018-01-01&endDT=2018-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:16+00:00, SHA-256 `967ededafa794c44...`); 673 readings 2018-09-06 17:00:00+00:00 to 2018-09-13 17:00:00+00:00; peak 10.85 ft at 2018-09-11 17:00:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS BRKM2.
+- **USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29)**: `data/usgs10/usgs_01646500_00065_2018-01-01_2018-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=01646500&startDT=2018-01-01&endDT=2018-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:16+00:00, SHA-256 `967ededafa794c44...`); 673 readings 2018-09-24 21:45:00+00:00 to 2018-10-01 21:45:00+00:00; peak 11.01 ft at 2018-09-29 21:45:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS BRKM2.
+- **USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-12-17)**: `data/usgs10/usgs_01646500_00065_2018-01-01_2018-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=01646500&startDT=2018-01-01&endDT=2018-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:16+00:00, SHA-256 `967ededafa794c44...`); 673 readings 2018-12-12 18:15:00+00:00 to 2018-12-19 18:00:00+00:00; peak 11.65 ft at 2018-12-17 18:07:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS BRKM2.
+- **USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2022-05-09)**: `data/usgs10/usgs_01646500_00065_2022-01-01_2022-12-31.json.gz` (query `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=01646500&startDT=2022-01-01&endDT=2022-12-31&parameterCd=00065&siteStatus=all`, retrieved 2026-11-05T05:05:24+00:00, SHA-256 `e79221072568a618...`); 673 readings 2022-05-04 03:45:00+00:00 to 2022-05-11 03:45:00+00:00; peak 10.16 ft at 2022-05-09 03:45:00+00:00. Gaps > 60 min (linear interpolation): none. Thresholds: NWS BRKM2.
 
 **Battery profiles (D5)** from the manufacturer catalogue (`config/devices/*.yaml`, Sec. 8a); the earlier 'drains in a week' interpretation is **superseded**. `q` = charge per uplink (mAh, or battery fraction for an uplink-budget profile); `lower_bound` = RX windows, MCU and probe power not documented. ASSUMED: initial state of charge; PS-LB: RX windows, MCU and probe-excitation charge excluded (charge per uplink is a LOWER bound); LWL01: sleep drain neglected (no capacity given to convert 5 uA into a battery fraction). Not derivable from the manuals: EM400-UDL, EM410-RDL.
 
@@ -711,177 +746,342 @@ Message size in frames per DR:
 
 Reference levels: NWS flood categories where the gauge has them (Sec. 7i, F4); otherwise [0.25, 0.5, 0.75, 0.9] (fractions of each event range, ASSUMED); a crossing is *delayed* if first reported more than 30 min after it occurs. A *floor violation* is an uplink below the battery floor at a rate the battery invariant forbids (firmware alert uplinks exempt), scored identically for every scheme. Device, policy, threshold and invariant values are ASSUMED (config/actions.yaml, config/harm.yaml).
 
-**D4 - statistics over 6 events** (median [95 % percentile-bootstrap CI of the median], `statistics` in config/harm.yaml; per-event rows in `results/model_harm.csv`). Fractions are per crossing.
+**F5 - detection-delay distribution over all crossings** (minutes; missed crossing = inf; [95 % CI] from a percentile bootstrap that resamples events, pre-registered in `config/events_prereg.yaml`; `late_or_missed` = share of crossings reported more than the tolerance after they occur, or never):
+
+| battery_profile | scheme | compromise | strategy | legit_policy | events | crossings | missed | median | p90 | max | late_or_missed |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| PS-LB/good | S4 | none | - | naive | 41 | 135 | 3 | 5 [4, 6] | 21 [9, 45] | inf (missed) [58, inf (missed)] | 0.09 [0.04, 0.15] |
+| PS-LB/good | S4 | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 21 [9, 45] | inf (missed) [58, inf (missed)] | 0.09 [0.03, 0.15] |
+| PS-LB/good | S4 | C1 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/good | S4 | C1 | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S4 | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/good | S4 | C1+C3 | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S4 | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/good | S4 | C1+C3+OP | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S4-F | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S4-F | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S4-F | C1 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/good | S4-F | C1 | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S4-F | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/good | S4-F | C1+C3 | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S4-F | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/good | S4-F | C1+C3+OP | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S4-E | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S4-E | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S4-E | C1 | suppress | - | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 36] | inf (missed) [54, inf (missed)] | 0.10 [0.05, 0.14] |
+| PS-LB/good | S4-E | C1 | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S4-E | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/good | S4-E | C1+C3 | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S4-E | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/good | S4-E | C1+C3+OP | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S6 | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.04] |
+| PS-LB/good | S6 | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S6 | C1 | suppress | - | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 36] | inf (missed) [54, inf (missed)] | 0.10 [0.05, 0.14] |
+| PS-LB/good | S6 | C1 | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S6 | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/good | S6 | C1+C3 | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S6 | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/good | S6 | C1+C3+OP | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S6+F | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S6+F | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S6+F | C1 | suppress | - | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 36] | inf (missed) [54, inf (missed)] | 0.10 [0.05, 0.14] |
+| PS-LB/good | S6+F | C1 | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S6+F | C1+C3 | suppress | - | 41 | 135 | 9 | 128 [10, 237] | 1,171 [483, inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.53 [0.37, 0.69] |
+| PS-LB/good | S6+F | C1+C3 | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/good | S6+F | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/good | S6+F | C1+C3+OP | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S4 | none | - | naive | 41 | 135 | 3 | 5 [4, 6] | 21 [9, 45] | inf (missed) [58, inf (missed)] | 0.09 [0.03, 0.15] |
+| PS-LB/poor | S4 | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 21 [9, 45] | inf (missed) [58, inf (missed)] | 0.09 [0.04, 0.15] |
+| PS-LB/poor | S4 | C1 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/poor | S4 | C1 | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S4 | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/poor | S4 | C1+C3 | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S4 | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/poor | S4 | C1+C3+OP | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S4-F | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S4-F | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S4-F | C1 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/poor | S4-F | C1 | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S4-F | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/poor | S4-F | C1+C3 | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S4-F | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/poor | S4-F | C1+C3+OP | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S4-E | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S4-E | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S4-E | C1 | suppress | - | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 36] | inf (missed) [54, inf (missed)] | 0.10 [0.05, 0.14] |
+| PS-LB/poor | S4-E | C1 | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S4-E | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/poor | S4-E | C1+C3 | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S4-E | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/poor | S4-E | C1+C3+OP | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S6 | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S6 | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S6 | C1 | suppress | - | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 36] | inf (missed) [54, inf (missed)] | 0.10 [0.05, 0.14] |
+| PS-LB/poor | S6 | C1 | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S6 | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/poor | S6 | C1+C3 | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S6 | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/poor | S6 | C1+C3+OP | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S6+F | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S6+F | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S6+F | C1 | suppress | - | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 36] | inf (missed) [54, inf (missed)] | 0.10 [0.05, 0.14] |
+| PS-LB/poor | S6+F | C1 | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S6+F | C1+C3 | suppress | - | 41 | 135 | 9 | 128 [10, 237] | 1,171 [500, inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.53 [0.37, 0.69] |
+| PS-LB/poor | S6+F | C1+C3 | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
+| PS-LB/poor | S6+F | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| PS-LB/poor | S6+F | C1+C3+OP | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/good | S4 | none | - | naive | 41 | 135 | 3 | 5 [4, 6] | 21 [9, 45] | inf (missed) [58, inf (missed)] | 0.09 [0.03, 0.15] |
+| LWL01/good | S4 | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 21 [9, 45] | inf (missed) [58, inf (missed)] | 0.09 [0.03, 0.15] |
+| LWL01/good | S4 | C1 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/good | S4 | C1 | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/good | S4 | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/good | S4 | C1+C3 | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/good | S4 | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/good | S4 | C1+C3+OP | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/good | S4-F | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/good | S4-F | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/good | S4-F | C1 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/good | S4-F | C1 | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/good | S4-F | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/good | S4-F | C1+C3 | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/good | S4-F | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/good | S4-F | C1+C3+OP | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/good | S4-E | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/good | S4-E | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/good | S4-E | C1 | suppress | - | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 36] | inf (missed) [54, inf (missed)] | 0.10 [0.05, 0.14] |
+| LWL01/good | S4-E | C1 | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/good | S4-E | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.97, 1.00] |
+| LWL01/good | S4-E | C1+C3 | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/good | S4-E | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/good | S4-E | C1+C3+OP | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/good | S6 | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/good | S6 | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/good | S6 | C1 | suppress | - | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 36] | inf (missed) [54, inf (missed)] | 0.10 [0.05, 0.14] |
+| LWL01/good | S6 | C1 | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/good | S6 | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/good | S6 | C1+C3 | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/good | S6 | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/good | S6 | C1+C3+OP | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/good | S6+F | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/good | S6+F | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/good | S6+F | C1 | suppress | - | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 36] | inf (missed) [54, inf (missed)] | 0.10 [0.05, 0.14] |
+| LWL01/good | S6+F | C1 | drain | - | 41 | 135 | 3 | 5 [4, 6] | 9 [9, 10] | inf (missed) [10, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/good | S6+F | C1+C3 | suppress | - | 41 | 135 | 9 | 128 [10, 237] | 1,171 [483, inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.53 [0.37, 0.69] |
+| LWL01/good | S6+F | C1+C3 | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/good | S6+F | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/good | S6+F | C1+C3+OP | drain | - | 41 | 135 | 3 | 4 [3, 5] | 8 [8, 9] | inf (missed) [9, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/poor | S4 | none | - | naive | 41 | 135 | 3 | 5 [4, 6] | 21 [9, 45] | inf (missed) [58, inf (missed)] | 0.09 [0.03, 0.15] |
+| LWL01/poor | S4 | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 21 [9, 45] | inf (missed) [58, inf (missed)] | 0.09 [0.03, 0.15] |
+| LWL01/poor | S4 | C1 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/poor | S4 | C1 | drain | - | 41 | 135 | 132 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.98 [0.94, 1.00] |
+| LWL01/poor | S4 | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/poor | S4 | C1+C3 | drain | - | 41 | 135 | 132 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.98 [0.94, 1.00] |
+| LWL01/poor | S4 | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/poor | S4 | C1+C3+OP | drain | - | 41 | 135 | 132 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.98 [0.94, 1.00] |
+| LWL01/poor | S4-F | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/poor | S4-F | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/poor | S4-F | C1 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/poor | S4-F | C1 | drain | - | 41 | 135 | 3 | 34 [20, 48] | 105 [90, 109] | inf (missed) [118, inf (missed)] | 0.53 [0.46, 0.60] |
+| LWL01/poor | S4-F | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/poor | S4-F | C1+C3 | drain | - | 41 | 135 | 3 | 34 [20, 48] | 105 [90, 109] | inf (missed) [118, inf (missed)] | 0.53 [0.46, 0.60] |
+| LWL01/poor | S4-F | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/poor | S4-F | C1+C3+OP | drain | - | 41 | 135 | 3 | 34 [20, 48] | 105 [90, 109] | inf (missed) [118, inf (missed)] | 0.53 [0.46, 0.60] |
+| LWL01/poor | S4-E | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/poor | S4-E | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/poor | S4-E | C1 | suppress | - | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 36] | inf (missed) [54, inf (missed)] | 0.10 [0.05, 0.14] |
+| LWL01/poor | S4-E | C1 | drain | - | 41 | 135 | 3 | 34 [17, 48] | 105 [90, 109] | inf (missed) [118, inf (missed)] | 0.53 [0.46, 0.60] |
+| LWL01/poor | S4-E | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/poor | S4-E | C1+C3 | drain | - | 41 | 135 | 132 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.98 [0.94, 1.00] |
+| LWL01/poor | S4-E | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/poor | S4-E | C1+C3+OP | drain | - | 41 | 135 | 132 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.98 [0.94, 1.00] |
+| LWL01/poor | S6 | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/poor | S6 | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/poor | S6 | C1 | suppress | - | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 36] | inf (missed) [54, inf (missed)] | 0.10 [0.05, 0.14] |
+| LWL01/poor | S6 | C1 | drain | - | 41 | 135 | 3 | 34 [20, 48] | 105 [91, 109] | inf (missed) [118, inf (missed)] | 0.53 [0.46, 0.60] |
+| LWL01/poor | S6 | C1+C3 | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/poor | S6 | C1+C3 | drain | - | 41 | 135 | 132 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.98 [0.94, 1.00] |
+| LWL01/poor | S6 | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/poor | S6 | C1+C3+OP | drain | - | 41 | 135 | 132 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.98 [0.94, 1.00] |
+| LWL01/poor | S6+F | none | - | naive | 41 | 135 | 3 | 4 [3, 5] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/poor | S6+F | none | - | limit_aware | 41 | 135 | 3 | 5 [4, 6] | 9 [8, 15] | inf (missed) [15, inf (missed)] | 0.02 [0.00, 0.05] |
+| LWL01/poor | S6+F | C1 | suppress | - | 41 | 135 | 3 | 7 [6, 9] | 30 [19, 36] | inf (missed) [54, inf (missed)] | 0.10 [0.05, 0.14] |
+| LWL01/poor | S6+F | C1 | drain | - | 41 | 135 | 3 | 34 [17, 48] | 105 [90, 109] | inf (missed) [118, inf (missed)] | 0.53 [0.46, 0.60] |
+| LWL01/poor | S6+F | C1+C3 | suppress | - | 41 | 135 | 9 | 128 [10, 237] | 1,171 [500, inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.53 [0.37, 0.69] |
+| LWL01/poor | S6+F | C1+C3 | drain | - | 41 | 135 | 3 | 34 [17, 48] | 105 [90, 109] | inf (missed) [118, inf (missed)] | 0.53 [0.46, 0.60] |
+| LWL01/poor | S6+F | C1+C3+OP | suppress | - | 41 | 135 | 134 | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | inf (missed) [inf (missed), inf (missed)] | 0.99 [0.98, 1.00] |
+| LWL01/poor | S6+F | C1+C3+OP | drain | - | 41 | 135 | 3 | 34 [20, 48] | 105 [90, 109] | inf (missed) [118, inf (missed)] | 0.53 [0.46, 0.60] |
+
+**D4 - statistics over 41 events** Events come from the F5 pre-registered rule; the 2017 top-k event set of D4 is **SUPERSEDED**. (median [95 % percentile-bootstrap CI of the median], `statistics` in config/harm.yaml; per-event rows in `results/model_harm.csv`). Fractions are per crossing.
 
 **Under attack:**
 
 | battery_profile | scheme | compromise | strategy | legit_policy | events | missed_frac | delayed_frac | max_delay_min | floor_violating_uplinks | died |
 |---|---|---|---|---|---|---|---|---|---|---|
-| PS-LB/good | S4 | C1 | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S4 | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 1.50 [0.00, 5.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S4 | C1+C3 | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S4 | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 1.50 [0.00, 5.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S4 | C1+C3+OP | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S4 | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 1.50 [0.00, 5.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S4-F | C1 | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S4-F | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 2.50 [1.00, 6.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S4-F | C1+C3 | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S4-F | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 2.50 [1.00, 6.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S4-F | C1+C3+OP | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S4-F | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 2.50 [1.00, 6.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S4-E | C1 | suppress | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 16.50 [0.00, 23.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S4-E | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 2.50 [1.00, 6.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S4-E | C1+C3 | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S4-E | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 1.50 [0.00, 5.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S4-E | C1+C3+OP | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S4-E | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 1.50 [0.00, 5.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S6 | C1 | suppress | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 16.50 [0.00, 23.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S6 | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 2.50 [1.00, 6.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S6 | C1+C3 | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S6 | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 1.50 [0.00, 5.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S6 | C1+C3+OP | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S6 | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 1.50 [0.00, 5.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S6+F | C1 | suppress | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 16.50 [0.00, 23.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S6+F | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 2.50 [1.00, 6.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S6+F | C1+C3 | suppress | - | 6 | 0.00 [0.00, 0.00] | 1.00 [1.00, 1.00] | 281.50 [190.00, 1403.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S6+F | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 1.50 [0.00, 5.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S6+F | C1+C3+OP | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S6+F | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 1.50 [0.00, 5.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S4 | C1 | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S4 | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 1.50 [0.00, 5.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S4 | C1+C3 | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S4 | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 1.50 [0.00, 5.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S4 | C1+C3+OP | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S4 | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 1.50 [0.00, 5.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S4-F | C1 | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S4-F | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 2.50 [1.00, 6.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S4-F | C1+C3 | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S4-F | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 2.50 [1.00, 6.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S4-F | C1+C3+OP | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S4-F | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 2.50 [1.00, 6.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S4-E | C1 | suppress | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 16.50 [0.00, 23.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S4-E | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 2.50 [1.00, 6.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S4-E | C1+C3 | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S4-E | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 1.50 [0.00, 5.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S4-E | C1+C3+OP | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S4-E | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 1.50 [0.00, 5.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S6 | C1 | suppress | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 16.50 [0.00, 23.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S6 | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 2.50 [1.00, 6.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S6 | C1+C3 | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S6 | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 1.50 [0.00, 5.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S6 | C1+C3+OP | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S6 | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 1.50 [0.00, 5.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S6+F | C1 | suppress | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 16.50 [0.00, 23.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S6+F | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 2.50 [1.00, 6.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S6+F | C1+C3 | suppress | - | 6 | 0.00 [0.00, 0.00] | 1.00 [1.00, 1.00] | 281.50 [190.00, 1403.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S6+F | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 1.50 [0.00, 5.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S6+F | C1+C3+OP | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S6+F | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 1.50 [0.00, 5.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S4 | C1 | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S4 | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 1.50 [0.00, 5.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S4 | C1+C3 | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S4 | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 1.50 [0.00, 5.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S4 | C1+C3+OP | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S4 | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 1.50 [0.00, 5.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S4-F | C1 | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S4-F | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 2.50 [1.00, 6.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S4-F | C1+C3 | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S4-F | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 2.50 [1.00, 6.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S4-F | C1+C3+OP | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S4-F | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 2.50 [1.00, 6.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S4-E | C1 | suppress | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 16.50 [0.00, 23.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S4-E | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 2.50 [1.00, 6.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S4-E | C1+C3 | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S4-E | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 1.50 [0.00, 5.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S4-E | C1+C3+OP | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S4-E | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 1.50 [0.00, 5.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S6 | C1 | suppress | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 16.50 [0.00, 23.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S6 | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 2.50 [1.00, 6.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S6 | C1+C3 | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S6 | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 1.50 [0.00, 5.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S6 | C1+C3+OP | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S6 | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 1.50 [0.00, 5.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S6+F | C1 | suppress | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 16.50 [0.00, 23.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S6+F | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 2.50 [1.00, 6.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S6+F | C1+C3 | suppress | - | 6 | 0.00 [0.00, 0.00] | 1.00 [1.00, 1.00] | 281.50 [190.00, 1403.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S6+F | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 1.50 [0.00, 5.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S6+F | C1+C3+OP | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S6+F | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 1.50 [0.00, 5.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S4 | C1 | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S4 | C1 | drain | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 260.00 [260.00, 260.00] | 1.00 [1.00, 1.00] |
-| LWL01/poor | S4 | C1+C3 | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S4 | C1+C3 | drain | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 260.00 [260.00, 260.00] | 1.00 [1.00, 1.00] |
-| LWL01/poor | S4 | C1+C3+OP | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S4 | C1+C3+OP | drain | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 260.00 [260.00, 260.00] | 1.00 [1.00, 1.00] |
-| LWL01/poor | S4-F | C1 | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S4-F | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.75] | 1.50 [0.00, 95.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S4-F | C1+C3 | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S4-F | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.75] | 1.50 [0.00, 95.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S4-F | C1+C3+OP | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S4-F | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.75] | 1.50 [0.00, 95.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S4-E | C1 | suppress | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 16.50 [0.00, 23.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S4-E | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.75] | 1.50 [0.00, 95.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S4-E | C1+C3 | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S4-E | C1+C3 | drain | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 260.00 [260.00, 260.00] | 1.00 [1.00, 1.00] |
-| LWL01/poor | S4-E | C1+C3+OP | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S4-E | C1+C3+OP | drain | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 260.00 [260.00, 260.00] | 1.00 [1.00, 1.00] |
-| LWL01/poor | S6 | C1 | suppress | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 16.50 [0.00, 23.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S6 | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.75] | 1.50 [0.00, 95.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S6 | C1+C3 | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S6 | C1+C3 | drain | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 260.00 [260.00, 260.00] | 1.00 [1.00, 1.00] |
-| LWL01/poor | S6 | C1+C3+OP | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S6 | C1+C3+OP | drain | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 260.00 [260.00, 260.00] | 1.00 [1.00, 1.00] |
-| LWL01/poor | S6+F | C1 | suppress | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 16.50 [0.00, 23.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S6+F | C1 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.75] | 1.50 [0.00, 95.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S6+F | C1+C3 | suppress | - | 6 | 0.00 [0.00, 0.00] | 1.00 [1.00, 1.00] | 281.50 [190.00, 1403.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S6+F | C1+C3 | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.75] | 1.50 [0.00, 95.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S6+F | C1+C3+OP | suppress | - | 6 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | - | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S6+F | C1+C3+OP | drain | - | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.75] | 1.50 [0.00, 95.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4 | C1 | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4 | C1 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4 | C1+C3 | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4 | C1+C3 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4 | C1+C3+OP | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4 | C1+C3+OP | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4-F | C1 | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4-F | C1 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [6.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4-F | C1+C3 | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4-F | C1+C3 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [6.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4-F | C1+C3+OP | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4-F | C1+C3+OP | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [6.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4-E | C1 | suppress | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 17.00 [15.00, 22.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4-E | C1 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [6.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4-E | C1+C3 | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4-E | C1+C3 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4-E | C1+C3+OP | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4-E | C1+C3+OP | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6 | C1 | suppress | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 17.00 [15.00, 22.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6 | C1 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [6.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6 | C1+C3 | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6 | C1+C3 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6 | C1+C3+OP | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6 | C1+C3+OP | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6+F | C1 | suppress | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 17.00 [15.00, 22.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6+F | C1 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [6.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6+F | C1+C3 | suppress | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 1.00] | 66.50 [16.00, 297.50] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6+F | C1+C3 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6+F | C1+C3+OP | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6+F | C1+C3+OP | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4 | C1 | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4 | C1 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4 | C1+C3 | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4 | C1+C3 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4 | C1+C3+OP | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4 | C1+C3+OP | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4-F | C1 | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4-F | C1 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [6.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4-F | C1+C3 | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4-F | C1+C3 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [6.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4-F | C1+C3+OP | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4-F | C1+C3+OP | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [6.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4-E | C1 | suppress | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 17.00 [15.00, 22.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4-E | C1 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [6.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4-E | C1+C3 | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4-E | C1+C3 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4-E | C1+C3+OP | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4-E | C1+C3+OP | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6 | C1 | suppress | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 17.00 [15.00, 22.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6 | C1 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [6.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6 | C1+C3 | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6 | C1+C3 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6 | C1+C3+OP | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6 | C1+C3+OP | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6+F | C1 | suppress | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 17.00 [15.00, 22.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6+F | C1 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [6.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6+F | C1+C3 | suppress | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 1.00] | 66.50 [16.00, 297.50] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6+F | C1+C3 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6+F | C1+C3+OP | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6+F | C1+C3+OP | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4 | C1 | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4 | C1 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 240.00 [240.00, 240.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4 | C1+C3 | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4 | C1+C3 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 240.00 [240.00, 240.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4 | C1+C3+OP | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4 | C1+C3+OP | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 240.00 [240.00, 240.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4-F | C1 | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4-F | C1 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [6.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4-F | C1+C3 | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4-F | C1+C3 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [6.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4-F | C1+C3+OP | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4-F | C1+C3+OP | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [6.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4-E | C1 | suppress | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 17.00 [15.00, 22.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4-E | C1 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [6.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4-E | C1+C3 | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4-E | C1+C3 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 240.00 [240.00, 240.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4-E | C1+C3+OP | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4-E | C1+C3+OP | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 240.00 [240.00, 240.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6 | C1 | suppress | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 17.00 [15.00, 22.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6 | C1 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [6.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6 | C1+C3 | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6 | C1+C3 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 240.00 [240.00, 240.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6 | C1+C3+OP | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6 | C1+C3+OP | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 240.00 [240.00, 240.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6+F | C1 | suppress | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 17.00 [15.00, 22.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6+F | C1 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 8.00 [6.00, 9.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6+F | C1+C3 | suppress | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 1.00] | 66.50 [16.00, 297.50] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6+F | C1+C3 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6+F | C1+C3+OP | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6+F | C1+C3+OP | drain | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 7.00 [5.00, 8.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4 | C1 | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4 | C1 | drain | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 2.50 [0.00, 5.00] | 260.00 [260.00, 260.00] | 1.00 [1.00, 1.00] |
+| LWL01/poor | S4 | C1+C3 | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4 | C1+C3 | drain | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 2.50 [0.00, 5.00] | 260.00 [260.00, 260.00] | 1.00 [1.00, 1.00] |
+| LWL01/poor | S4 | C1+C3+OP | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4 | C1+C3+OP | drain | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 2.50 [0.00, 5.00] | 260.00 [260.00, 260.00] | 1.00 [1.00, 1.00] |
+| LWL01/poor | S4-F | C1 | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4-F | C1 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.50 [0.50, 0.67] | 84.00 [68.00, 95.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4-F | C1+C3 | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4-F | C1+C3 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.50 [0.50, 0.67] | 84.00 [68.00, 95.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4-F | C1+C3+OP | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4-F | C1+C3+OP | drain | - | 41 | 0.00 [0.00, 0.00] | 0.50 [0.50, 0.67] | 84.00 [68.00, 95.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4-E | C1 | suppress | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 17.00 [15.00, 22.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4-E | C1 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.50 [0.50, 0.67] | 84.00 [68.00, 95.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4-E | C1+C3 | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4-E | C1+C3 | drain | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 2.50 [0.00, 5.00] | 260.00 [260.00, 260.00] | 1.00 [1.00, 1.00] |
+| LWL01/poor | S4-E | C1+C3+OP | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4-E | C1+C3+OP | drain | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 2.50 [0.00, 5.00] | 260.00 [260.00, 260.00] | 1.00 [1.00, 1.00] |
+| LWL01/poor | S6 | C1 | suppress | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 17.00 [15.00, 22.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S6 | C1 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.50 [0.50, 0.67] | 84.00 [68.00, 95.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S6 | C1+C3 | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S6 | C1+C3 | drain | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 2.50 [0.00, 5.00] | 260.00 [260.00, 260.00] | 1.00 [1.00, 1.00] |
+| LWL01/poor | S6 | C1+C3+OP | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S6 | C1+C3+OP | drain | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 2.50 [0.00, 5.00] | 260.00 [260.00, 260.00] | 1.00 [1.00, 1.00] |
+| LWL01/poor | S6+F | C1 | suppress | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 17.00 [15.00, 22.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S6+F | C1 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.50 [0.50, 0.67] | 84.00 [68.00, 95.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S6+F | C1+C3 | suppress | - | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 1.00] | 66.50 [16.00, 297.50] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S6+F | C1+C3 | drain | - | 41 | 0.00 [0.00, 0.00] | 0.50 [0.50, 0.67] | 84.00 [68.00, 95.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S6+F | C1+C3+OP | suppress | - | 41 | 1.00 [1.00, 1.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S6+F | C1+C3+OP | drain | - | 41 | 0.00 [0.00, 0.00] | 0.50 [0.50, 0.67] | 84.00 [68.00, 95.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 
 **Legitimate operation (D3)** - unique-request rejection rate (raw-retry rate superseded):
 
 | battery_profile | scheme | compromise | strategy | legit_policy | events | legit_unique_rejection_rate | missed_frac | delayed_frac | floor_violating_uplinks |
 |---|---|---|---|---|---|---|---|---|---|
-| PS-LB/good | S4 | none | - | naive | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S4 | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S4-F | none | - | naive | 6 | 0.00 [0.00, 0.05] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S4-F | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S4-E | none | - | naive | 6 | 0.00 [0.00, 0.05] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S4-E | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S6 | none | - | naive | 6 | 0.00 [0.00, 0.05] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S6 | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S6+F | none | - | naive | 6 | 0.00 [0.00, 0.05] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/good | S6+F | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S4 | none | - | naive | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S4 | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S4-F | none | - | naive | 6 | 0.00 [0.00, 0.05] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S4-F | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S4-E | none | - | naive | 6 | 0.00 [0.00, 0.05] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S4-E | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S6 | none | - | naive | 6 | 0.00 [0.00, 0.05] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S6 | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S6+F | none | - | naive | 6 | 0.00 [0.00, 0.05] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| PS-LB/poor | S6+F | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S4 | none | - | naive | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S4 | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S4-F | none | - | naive | 6 | 0.00 [0.00, 0.05] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S4-F | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S4-E | none | - | naive | 6 | 0.00 [0.00, 0.05] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S4-E | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S6 | none | - | naive | 6 | 0.00 [0.00, 0.05] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S6 | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S6+F | none | - | naive | 6 | 0.00 [0.00, 0.05] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/good | S6+F | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S4 | none | - | naive | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S4 | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S4-F | none | - | naive | 6 | 0.00 [0.00, 0.05] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S4-F | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S4-E | none | - | naive | 6 | 0.00 [0.00, 0.05] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S4-E | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S6 | none | - | naive | 6 | 0.00 [0.00, 0.05] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S6 | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S6+F | none | - | naive | 6 | 0.00 [0.00, 0.05] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
-| LWL01/poor | S6+F | none | - | limit_aware | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4 | none | - | naive | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4 | none | - | limit_aware | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4-F | none | - | naive | 41 | 0.12 [0.00, 0.17] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4-F | none | - | limit_aware | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4-E | none | - | naive | 41 | 0.12 [0.00, 0.17] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S4-E | none | - | limit_aware | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6 | none | - | naive | 41 | 0.12 [0.00, 0.17] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6 | none | - | limit_aware | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6+F | none | - | naive | 41 | 0.12 [0.00, 0.17] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/good | S6+F | none | - | limit_aware | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4 | none | - | naive | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4 | none | - | limit_aware | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4-F | none | - | naive | 41 | 0.12 [0.00, 0.17] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4-F | none | - | limit_aware | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4-E | none | - | naive | 41 | 0.12 [0.00, 0.17] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S4-E | none | - | limit_aware | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6 | none | - | naive | 41 | 0.12 [0.00, 0.17] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6 | none | - | limit_aware | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6+F | none | - | naive | 41 | 0.12 [0.00, 0.17] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| PS-LB/poor | S6+F | none | - | limit_aware | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4 | none | - | naive | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4 | none | - | limit_aware | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4-F | none | - | naive | 41 | 0.12 [0.00, 0.17] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4-F | none | - | limit_aware | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4-E | none | - | naive | 41 | 0.12 [0.00, 0.17] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S4-E | none | - | limit_aware | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6 | none | - | naive | 41 | 0.12 [0.00, 0.17] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6 | none | - | limit_aware | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6+F | none | - | naive | 41 | 0.12 [0.00, 0.17] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/good | S6+F | none | - | limit_aware | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4 | none | - | naive | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4 | none | - | limit_aware | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4-F | none | - | naive | 41 | 0.12 [0.00, 0.17] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4-F | none | - | limit_aware | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4-E | none | - | naive | 41 | 0.12 [0.00, 0.17] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S4-E | none | - | limit_aware | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S6 | none | - | naive | 41 | 0.12 [0.00, 0.17] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S6 | none | - | limit_aware | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S6+F | none | - | naive | 41 | 0.12 [0.00, 0.17] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| LWL01/poor | S6+F | none | - | limit_aware | 41 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 
 ## 7f. Device-side envelope verification (pqm4, published)
 
@@ -917,60 +1117,375 @@ Reference levels: NWS flood categories where the gauge has them (Sec. 7i, F4); o
 
 | event | scheme | compromise | strategy | crossings | missed | delayed | max_delay_min | floor_violating_uplinks | died |
 |---|---|---|---|---|---|---|---|---|---|
-| USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28) | S4-F | C1 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28) | S4-F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28) | S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28) | S6 | C1 | suppress | 4 | 0 | 0 | 23 | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28) | S6 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28) | S6 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28) | S6+F | C1 | suppress | 4 | 0 | 0 | 23 | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28) | S6+F | C1+C3 | suppress | 4 | 0 | 4 | 1,403 | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28) | S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18) | S4-F | C1 | suppress | 1 | 1 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18) | S4-F | C1+C3 | suppress | 1 | 1 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18) | S4-F | C1+C3+OP | suppress | 1 | 1 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18) | S6 | C1 | suppress | 1 | 0 | 0 | 23 | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18) | S6 | C1+C3 | suppress | 1 | 1 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18) | S6 | C1+C3+OP | suppress | 1 | 1 | 0 | - | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18) | S6+F | C1 | suppress | 1 | 0 | 0 | 23 | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18) | S6+F | C1+C3 | suppress | 1 | 0 | 1 | 263 | 0 | False |
-| USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18) | S6+F | C1+C3+OP | suppress | 1 | 1 | 0 | - | 0 | False |
-| USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18) | S4-F | C1 | suppress | 0 | 0 | 0 | - | 0 | False |
-| USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18) | S4-F | C1+C3 | suppress | 0 | 0 | 0 | - | 0 | False |
-| USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18) | S4-F | C1+C3+OP | suppress | 0 | 0 | 0 | - | 0 | False |
-| USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18) | S6 | C1 | suppress | 0 | 0 | 0 | - | 0 | False |
-| USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18) | S6 | C1+C3 | suppress | 0 | 0 | 0 | - | 0 | False |
-| USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18) | S6 | C1+C3+OP | suppress | 0 | 0 | 0 | - | 0 | False |
-| USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18) | S6+F | C1 | suppress | 0 | 0 | 0 | - | 0 | False |
-| USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18) | S6+F | C1+C3 | suppress | 0 | 0 | 0 | - | 0 | False |
-| USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18) | S6+F | C1+C3+OP | suppress | 0 | 0 | 0 | - | 0 | False |
-| USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16) | S4-F | C1 | suppress | 0 | 0 | 0 | - | 0 | False |
-| USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16) | S4-F | C1+C3 | suppress | 0 | 0 | 0 | - | 0 | False |
-| USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16) | S4-F | C1+C3+OP | suppress | 0 | 0 | 0 | - | 0 | False |
-| USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16) | S6 | C1 | suppress | 0 | 0 | 0 | - | 0 | False |
-| USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16) | S6 | C1+C3 | suppress | 0 | 0 | 0 | - | 0 | False |
-| USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16) | S6 | C1+C3+OP | suppress | 0 | 0 | 0 | - | 0 | False |
-| USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16) | S6+F | C1 | suppress | 0 | 0 | 0 | - | 0 | False |
-| USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16) | S6+F | C1+C3 | suppress | 0 | 0 | 0 | - | 0 | False |
-| USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16) | S6+F | C1+C3+OP | suppress | 0 | 0 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07) | S4-F | C1 | suppress | 1 | 1 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07) | S4-F | C1+C3 | suppress | 1 | 1 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07) | S4-F | C1+C3+OP | suppress | 1 | 1 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07) | S6 | C1 | suppress | 1 | 0 | 0 | 10 | 0 | False |
-| USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07) | S6 | C1+C3 | suppress | 1 | 1 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07) | S6 | C1+C3+OP | suppress | 1 | 1 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07) | S6+F | C1 | suppress | 1 | 0 | 0 | 10 | 0 | False |
-| USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07) | S6+F | C1+C3 | suppress | 1 | 0 | 1 | 190 | 0 | False |
-| USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07) | S6+F | C1+C3+OP | suppress | 1 | 1 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26) | S4-F | C1 | suppress | 1 | 1 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26) | S4-F | C1+C3 | suppress | 1 | 1 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26) | S4-F | C1+C3+OP | suppress | 1 | 1 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26) | S6 | C1 | suppress | 1 | 0 | 0 | 0 | 0 | False |
-| USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26) | S6 | C1+C3 | suppress | 1 | 1 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26) | S6 | C1+C3+OP | suppress | 1 | 1 | 0 | - | 0 | False |
-| USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26) | S6+F | C1 | suppress | 1 | 0 | 0 | 0 | 0 | False |
-| USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26) | S6+F | C1+C3 | suppress | 1 | 0 | 1 | 300 | 0 | False |
-| USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26) | S6+F | C1+C3+OP | suppress | 1 | 1 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2015-05-26) | S4-F | C1 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2015-05-26) | S4-F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2015-05-26) | S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2015-05-26) | S6 | C1 | suppress | 4 | 0 | 0 | 17 | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2015-05-26) | S6 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2015-05-26) | S6 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2015-05-26) | S6+F | C1 | suppress | 4 | 0 | 0 | 17 | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2015-05-26) | S6+F | C1+C3 | suppress | 4 | 0 | 4 | 377 | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2015-05-26) | S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2016-04-18) | S4-F | C1 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2016-04-18) | S4-F | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2016-04-18) | S4-F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2016-04-18) | S6 | C1 | suppress | 3 | 0 | 1 | 33 | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2016-04-18) | S6 | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2016-04-18) | S6 | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2016-04-18) | S6+F | C1 | suppress | 3 | 0 | 1 | 33 | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2016-04-18) | S6+F | C1+C3 | suppress | 3 | 0 | 3 | 513 | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2016-04-18) | S6+F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2017-08-28) | S4-F | C1 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2017-08-28) | S4-F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2017-08-28) | S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2017-08-28) | S6 | C1 | suppress | 4 | 0 | 0 | 23 | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2017-08-28) | S6 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2017-08-28) | S6 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2017-08-28) | S6+F | C1 | suppress | 4 | 0 | 0 | 23 | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2017-08-28) | S6+F | C1+C3 | suppress | 4 | 0 | 4 | 1,403 | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2017-08-28) | S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2019-09-19) | S4-F | C1 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2019-09-19) | S4-F | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2019-09-19) | S4-F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2019-09-19) | S6 | C1 | suppress | 3 | 0 | 1 | 36 | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2019-09-19) | S6 | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2019-09-19) | S6 | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2019-09-19) | S6+F | C1 | suppress | 3 | 0 | 1 | 36 | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2019-09-19) | S6+F | C1+C3 | suppress | 3 | 0 | 3 | 396 | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2019-09-19) | S6+F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2024-07-08) | S4-F | C1 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2024-07-08) | S4-F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2024-07-08) | S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2024-07-08) | S6 | C1 | suppress | 4 | 0 | 0 | 20 | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2024-07-08) | S6 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2024-07-08) | S6 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2024-07-08) | S6+F | C1 | suppress | 4 | 0 | 0 | 20 | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2024-07-08) | S6+F | C1+C3 | suppress | 4 | 0 | 4 | 500 | 0 | False |
+| USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2024-07-08) | S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-05-26) | S4-F | C1 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-05-26) | S4-F | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-05-26) | S4-F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-05-26) | S6 | C1 | suppress | 3 | 0 | 0 | 24 | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-05-26) | S6 | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-05-26) | S6 | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-05-26) | S6+F | C1 | suppress | 3 | 0 | 0 | 24 | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-05-26) | S6+F | C1+C3 | suppress | 3 | 0 | 3 | 114 | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-05-26) | S6+F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-10-25) | S4-F | C1 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-10-25) | S4-F | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-10-25) | S4-F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-10-25) | S6 | C1 | suppress | 3 | 0 | 0 | 29 | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-10-25) | S6 | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-10-25) | S6 | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-10-25) | S6+F | C1 | suppress | 3 | 0 | 0 | 29 | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-10-25) | S6+F | C1+C3 | suppress | 3 | 0 | 3 | 209 | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-10-25) | S6+F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-08) | S4-F | C1 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-08) | S4-F | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-08) | S4-F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-08) | S6 | C1 | suppress | 3 | 0 | 1 | 33 | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-08) | S6 | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-08) | S6 | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-08) | S6+F | C1 | suppress | 3 | 0 | 1 | 33 | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-08) | S6+F | C1+C3 | suppress | 3 | 0 | 3 | 213 | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-08) | S6+F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-27) | S4-F | C1 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-27) | S4-F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-27) | S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-27) | S6 | C1 | suppress | 4 | 0 | 1 | 50 | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-27) | S6 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-27) | S6 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-27) | S6+F | C1 | suppress | 4 | 0 | 1 | 50 | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-27) | S6+F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-27) | S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2019-09-19) | S4-F | C1 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2019-09-19) | S4-F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2019-09-19) | S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2019-09-19) | S6 | C1 | suppress | 4 | 0 | 1 | 35 | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2019-09-19) | S6 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2019-09-19) | S6 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2019-09-19) | S6+F | C1 | suppress | 4 | 0 | 1 | 35 | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2019-09-19) | S6+F | C1+C3 | suppress | 4 | 0 | 4 | 215 | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2019-09-19) | S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2024-07-08) | S4-F | C1 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2024-07-08) | S4-F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2024-07-08) | S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2024-07-08) | S6 | C1 | suppress | 4 | 0 | 1 | 33 | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2024-07-08) | S6 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2024-07-08) | S6 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2024-07-08) | S6+F | C1 | suppress | 4 | 0 | 1 | 33 | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2024-07-08) | S6+F | C1+C3 | suppress | 4 | 0 | 4 | 333 | 0 | False |
+| USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2024-07-08) | S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2015-05-26) | S4-F | C1 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2015-05-26) | S4-F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2015-05-26) | S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2015-05-26) | S6 | C1 | suppress | 4 | 0 | 0 | 14 | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2015-05-26) | S6 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2015-05-26) | S6 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2015-05-26) | S6+F | C1 | suppress | 4 | 0 | 0 | 14 | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2015-05-26) | S6+F | C1+C3 | suppress | 4 | 0 | 4 | 1,290 | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2015-05-26) | S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2016-04-18) | S4-F | C1 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2016-04-18) | S4-F | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2016-04-18) | S4-F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2016-04-18) | S6 | C1 | suppress | 2 | 0 | 1 | 54 | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2016-04-18) | S6 | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2016-04-18) | S6 | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2016-04-18) | S6+F | C1 | suppress | 2 | 0 | 1 | 54 | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2016-04-18) | S6+F | C1+C3 | suppress | 2 | 0 | 2 | 234 | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2016-04-18) | S6+F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2017-08-27) | S4-F | C1 | suppress | 8 | 8 | 0 | - | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2017-08-27) | S4-F | C1+C3 | suppress | 8 | 8 | 0 | - | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2017-08-27) | S4-F | C1+C3+OP | suppress | 8 | 8 | 0 | - | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2017-08-27) | S6 | C1 | suppress | 8 | 1 | 1 | 38 | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2017-08-27) | S6 | C1+C3 | suppress | 8 | 8 | 0 | - | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2017-08-27) | S6 | C1+C3+OP | suppress | 8 | 8 | 0 | - | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2017-08-27) | S6+F | C1 | suppress | 8 | 1 | 1 | 38 | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2017-08-27) | S6+F | C1+C3 | suppress | 8 | 3 | 5 | 938 | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2017-08-27) | S6+F | C1+C3+OP | suppress | 8 | 8 | 0 | - | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2024-07-08) | S4-F | C1 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2024-07-08) | S4-F | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2024-07-08) | S4-F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2024-07-08) | S6 | C1 | suppress | 2 | 0 | 0 | 22 | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2024-07-08) | S6 | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2024-07-08) | S6 | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2024-07-08) | S6+F | C1 | suppress | 2 | 0 | 0 | 22 | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2024-07-08) | S6+F | C1+C3 | suppress | 2 | 0 | 2 | 262 | 0 | False |
+| USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2024-07-08) | S6+F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-05-26) | S4-F | C1 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-05-26) | S4-F | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-05-26) | S4-F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-05-26) | S6 | C1 | suppress | 3 | 0 | 0 | 10 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-05-26) | S6 | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-05-26) | S6 | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-05-26) | S6+F | C1 | suppress | 3 | 0 | 0 | 10 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-05-26) | S6+F | C1+C3 | suppress | 3 | 0 | 0 | 10 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-05-26) | S6+F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-25) | S4-F | C1 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-25) | S4-F | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-25) | S4-F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-25) | S6 | C1 | suppress | 3 | 0 | 0 | 7 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-25) | S6 | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-25) | S6 | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-25) | S6+F | C1 | suppress | 3 | 0 | 0 | 7 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-25) | S6+F | C1+C3 | suppress | 3 | 0 | 0 | 7 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-25) | S6+F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-31) | S4-F | C1 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-31) | S4-F | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-31) | S4-F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-31) | S6 | C1 | suppress | 3 | 0 | 0 | 19 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-31) | S6 | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-31) | S6 | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-31) | S6+F | C1 | suppress | 3 | 0 | 0 | 19 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-31) | S6+F | C1+C3 | suppress | 3 | 0 | 0 | 19 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-31) | S6+F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-04-18) | S4-F | C1 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-04-18) | S4-F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-04-18) | S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-04-18) | S6 | C1 | suppress | 4 | 0 | 0 | 19 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-04-18) | S6 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-04-18) | S6 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-04-18) | S6+F | C1 | suppress | 4 | 0 | 0 | 19 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-04-18) | S6+F | C1+C3 | suppress | 4 | 0 | 0 | 19 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-04-18) | S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-05-28) | S4-F | C1 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-05-28) | S4-F | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-05-28) | S4-F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-05-28) | S6 | C1 | suppress | 2 | 0 | 0 | 19 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-05-28) | S6 | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-05-28) | S6 | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-05-28) | S6+F | C1 | suppress | 2 | 0 | 0 | 19 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-05-28) | S6+F | C1+C3 | suppress | 2 | 0 | 0 | 19 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-05-28) | S6+F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-06-03) | S4-F | C1 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-06-03) | S4-F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-06-03) | S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-06-03) | S6 | C1 | suppress | 4 | 0 | 0 | 7 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-06-03) | S6 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-06-03) | S6 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-06-03) | S6+F | C1 | suppress | 4 | 0 | 0 | 7 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-06-03) | S6+F | C1+C3 | suppress | 4 | 0 | 0 | 7 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-06-03) | S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-08) | S4-F | C1 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-08) | S4-F | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-08) | S4-F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-08) | S6 | C1 | suppress | 3 | 0 | 0 | 17 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-08) | S6 | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-08) | S6 | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-08) | S6+F | C1 | suppress | 3 | 0 | 0 | 17 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-08) | S6+F | C1+C3 | suppress | 3 | 0 | 0 | 17 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-08) | S6+F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-28) | S4-F | C1 | suppress | 6 | 6 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-28) | S4-F | C1+C3 | suppress | 6 | 6 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-28) | S4-F | C1+C3+OP | suppress | 6 | 6 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-28) | S6 | C1 | suppress | 6 | 0 | 0 | 13 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-28) | S6 | C1+C3 | suppress | 6 | 6 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-28) | S6 | C1+C3+OP | suppress | 6 | 6 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-28) | S6+F | C1 | suppress | 6 | 0 | 0 | 13 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-28) | S6+F | C1+C3 | suppress | 6 | 0 | 0 | 13 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-28) | S6+F | C1+C3+OP | suppress | 6 | 6 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-07-04) | S4-F | C1 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-07-04) | S4-F | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-07-04) | S4-F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-07-04) | S6 | C1 | suppress | 2 | 0 | 0 | 16 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-07-04) | S6 | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-07-04) | S6 | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-07-04) | S6+F | C1 | suppress | 2 | 0 | 0 | 16 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-07-04) | S6+F | C1+C3 | suppress | 2 | 0 | 0 | 16 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-07-04) | S6+F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-12-08) | S4-F | C1 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-12-08) | S4-F | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-12-08) | S4-F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-12-08) | S6 | C1 | suppress | 2 | 0 | 0 | 16 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-12-08) | S6 | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-12-08) | S6 | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-12-08) | S6+F | C1 | suppress | 2 | 0 | 0 | 16 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-12-08) | S6+F | C1+C3 | suppress | 2 | 0 | 0 | 16 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-12-08) | S6+F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2019-09-19) | S4-F | C1 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2019-09-19) | S4-F | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2019-09-19) | S4-F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2019-09-19) | S6 | C1 | suppress | 3 | 0 | 0 | 15 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2019-09-19) | S6 | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2019-09-19) | S6 | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2019-09-19) | S6+F | C1 | suppress | 3 | 0 | 0 | 15 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2019-09-19) | S6+F | C1+C3 | suppress | 3 | 0 | 0 | 15 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2019-09-19) | S6+F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2020-09-23) | S4-F | C1 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2020-09-23) | S4-F | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2020-09-23) | S4-F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2020-09-23) | S6 | C1 | suppress | 2 | 0 | 0 | 10 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2020-09-23) | S6 | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2020-09-23) | S6 | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2020-09-23) | S6+F | C1 | suppress | 2 | 0 | 0 | 10 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2020-09-23) | S6+F | C1+C3 | suppress | 2 | 0 | 0 | 10 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2020-09-23) | S6+F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2022-01-09) | S4-F | C1 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2022-01-09) | S4-F | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2022-01-09) | S4-F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2022-01-09) | S6 | C1 | suppress | 2 | 0 | 0 | 18 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2022-01-09) | S6 | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2022-01-09) | S6 | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2022-01-09) | S6+F | C1 | suppress | 2 | 0 | 0 | 18 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2022-01-09) | S6+F | C1+C3 | suppress | 2 | 0 | 0 | 18 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2022-01-09) | S6+F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2024-07-08) | S4-F | C1 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2024-07-08) | S4-F | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2024-07-08) | S4-F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2024-07-08) | S6 | C1 | suppress | 3 | 0 | 0 | 14 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2024-07-08) | S6 | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2024-07-08) | S6 | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2024-07-08) | S6+F | C1 | suppress | 3 | 0 | 0 | 14 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2024-07-08) | S6+F | C1+C3 | suppress | 3 | 0 | 0 | 14 | 0 | False |
+| USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2024-07-08) | S6+F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-13) | S4-F | C1 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-13) | S4-F | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-13) | S4-F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-13) | S6 | C1 | suppress | 2 | 0 | 0 | 4 | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-13) | S6 | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-13) | S6 | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-13) | S6+F | C1 | suppress | 2 | 0 | 0 | 4 | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-13) | S6+F | C1+C3 | suppress | 2 | 0 | 0 | 4 | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-13) | S6+F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-28) | S4-F | C1 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-28) | S4-F | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-28) | S4-F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-28) | S6 | C1 | suppress | 2 | 0 | 0 | 5 | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-28) | S6 | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-28) | S6 | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-28) | S6+F | C1 | suppress | 2 | 0 | 0 | 5 | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-28) | S6+F | C1+C3 | suppress | 2 | 0 | 0 | 5 | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-28) | S6+F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2016-05-28) | S4-F | C1 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2016-05-28) | S4-F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2016-05-28) | S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2016-05-28) | S6 | C1 | suppress | 4 | 0 | 0 | 13 | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2016-05-28) | S6 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2016-05-28) | S6 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2016-05-28) | S6+F | C1 | suppress | 4 | 0 | 0 | 13 | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2016-05-28) | S6+F | C1+C3 | suppress | 4 | 0 | 0 | 13 | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2016-05-28) | S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2017-08-29) | S4-F | C1 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2017-08-29) | S4-F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2017-08-29) | S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2017-08-29) | S6 | C1 | suppress | 4 | 0 | 0 | 5 | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2017-08-29) | S6 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2017-08-29) | S6 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2017-08-29) | S6+F | C1 | suppress | 4 | 0 | 0 | 5 | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2017-08-29) | S6+F | C1+C3 | suppress | 4 | 0 | 0 | 5 | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2017-08-29) | S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-01-26) | S4-F | C1 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-01-26) | S4-F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-01-26) | S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-01-26) | S6 | C1 | suppress | 4 | 0 | 0 | 11 | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-01-26) | S6 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-01-26) | S6 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-01-26) | S6+F | C1 | suppress | 4 | 0 | 0 | 11 | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-01-26) | S6+F | C1+C3 | suppress | 4 | 0 | 0 | 11 | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-01-26) | S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-05-03) | S4-F | C1 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-05-03) | S4-F | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-05-03) | S4-F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-05-03) | S6 | C1 | suppress | 4 | 0 | 0 | 16 | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-05-03) | S6 | C1+C3 | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-05-03) | S6 | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-05-03) | S6+F | C1 | suppress | 4 | 0 | 0 | 16 | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-05-03) | S6+F | C1+C3 | suppress | 4 | 0 | 0 | 16 | 0 | False |
+| USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-05-03) | S6+F | C1+C3+OP | suppress | 4 | 4 | 0 | - | 0 | False |
+| USGS 01570500 Susquehanna River at Harrisburg, PA (NWS HARP1) (2018-07-26) | S4-F | C1 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 01570500 Susquehanna River at Harrisburg, PA (NWS HARP1) (2018-07-26) | S4-F | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 01570500 Susquehanna River at Harrisburg, PA (NWS HARP1) (2018-07-26) | S4-F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 01570500 Susquehanna River at Harrisburg, PA (NWS HARP1) (2018-07-26) | S6 | C1 | suppress | 2 | 0 | 0 | 11 | 0 | False |
+| USGS 01570500 Susquehanna River at Harrisburg, PA (NWS HARP1) (2018-07-26) | S6 | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 01570500 Susquehanna River at Harrisburg, PA (NWS HARP1) (2018-07-26) | S6 | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 01570500 Susquehanna River at Harrisburg, PA (NWS HARP1) (2018-07-26) | S6+F | C1 | suppress | 2 | 0 | 0 | 11 | 0 | False |
+| USGS 01570500 Susquehanna River at Harrisburg, PA (NWS HARP1) (2018-07-26) | S6+F | C1+C3 | suppress | 2 | 0 | 2 | 1,031 | 0 | False |
+| USGS 01570500 Susquehanna River at Harrisburg, PA (NWS HARP1) (2018-07-26) | S6+F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-06-05) | S4-F | C1 | suppress | 7 | 7 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-06-05) | S4-F | C1+C3 | suppress | 7 | 7 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-06-05) | S4-F | C1+C3+OP | suppress | 7 | 7 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-06-05) | S6 | C1 | suppress | 7 | 1 | 1 | 45 | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-06-05) | S6 | C1+C3 | suppress | 7 | 7 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-06-05) | S6 | C1+C3+OP | suppress | 7 | 7 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-06-05) | S6+F | C1 | suppress | 7 | 1 | 1 | 45 | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-06-05) | S6+F | C1+C3 | suppress | 7 | 1 | 6 | 1,171 | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-06-05) | S6+F | C1+C3+OP | suppress | 7 | 7 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-11) | S4-F | C1 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-11) | S4-F | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-11) | S4-F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-11) | S6 | C1 | suppress | 2 | 0 | 0 | 9 | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-11) | S6 | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-11) | S6 | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-11) | S6+F | C1 | suppress | 2 | 0 | 0 | 9 | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-11) | S6+F | C1+C3 | suppress | 2 | 0 | 2 | 1,263 | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-11) | S6+F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29) | S4-F | C1 | suppress | 2 | 1 | 0 | 0 | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29) | S4-F | C1+C3 | suppress | 2 | 1 | 0 | 0 | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29) | S4-F | C1+C3+OP | suppress | 2 | 1 | 0 | 0 | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29) | S6 | C1 | suppress | 2 | 0 | 0 | 25 | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29) | S6 | C1+C3 | suppress | 2 | 1 | 0 | 0 | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29) | S6 | C1+C3+OP | suppress | 2 | 1 | 0 | 0 | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29) | S6+F | C1 | suppress | 2 | 0 | 0 | 25 | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29) | S6+F | C1+C3 | suppress | 2 | 0 | 1 | 1,005 | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29) | S6+F | C1+C3+OP | suppress | 2 | 1 | 0 | 0 | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-12-17) | S4-F | C1 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-12-17) | S4-F | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-12-17) | S4-F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-12-17) | S6 | C1 | suppress | 2 | 0 | 1 | 32 | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-12-17) | S6 | C1+C3 | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-12-17) | S6 | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-12-17) | S6+F | C1 | suppress | 2 | 0 | 1 | 32 | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-12-17) | S6+F | C1+C3 | suppress | 2 | 0 | 2 | 1,232 | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-12-17) | S6+F | C1+C3+OP | suppress | 2 | 2 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2022-05-09) | S4-F | C1 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2022-05-09) | S4-F | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2022-05-09) | S4-F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2022-05-09) | S6 | C1 | suppress | 3 | 1 | 0 | 15 | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2022-05-09) | S6 | C1+C3 | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2022-05-09) | S6 | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2022-05-09) | S6+F | C1 | suppress | 3 | 1 | 0 | 15 | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2022-05-09) | S6+F | C1+C3 | suppress | 3 | 1 | 2 | 615 | 0 | False |
+| USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2022-05-09) | S6+F | C1+C3+OP | suppress | 3 | 3 | 0 | - | 0 | False |
 
 **OP token cost** - one signature over the command, frames per DR for each measured algorithm (`results/sizes.csv`):
 

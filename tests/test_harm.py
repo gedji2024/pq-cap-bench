@@ -13,7 +13,7 @@ from pqcap import envelope as ev
 from pqcap import harm
 from pqcap.config import CONFIG, REPO_ROOT, load_yaml
 
-HCFG = load_yaml(CONFIG / "harm.yaml")
+HCFG = {**load_yaml(CONFIG / "harm.yaml"), "workers": 1}   # coverage is measured in-process
 ACFG = load_yaml(CONFIG / "actions.yaml")
 CAT, ENV, FW = ev.catalogue_from_config(ACFG), ev.envelope_from_config(ACFG), ev.firmware_policy_from_config(ACFG)
 INV = ev.invariants_from_config(ACFG)
@@ -151,7 +151,7 @@ def test_legit_policy_rules():
 def test_run_end_to_end():
     one = {**HCFG, "schemes": ["S4", "S6"], "compromises": ["none", "C1"], "attacker": {"strategies": ["drain"]},
            "battery": {**HCFG["battery"], "profiles": HCFG["battery"]["profiles"][-1:]}, "events": None,
-           "events_rule": None, "harm": {**HCFG["harm"], "reference_levels_ft": LEVELS_FT, "relative": None},
+           "events_rule": None, "events_prereg": None, "harm": {**HCFG["harm"], "reference_levels_ft": LEVELS_FT, "relative": None},
            "device": {**HCFG["device"], "alert_threshold_cm": 610}}
     df, evs, meta = harm.run(one, ACFG, REPO_ROOT)
     assert len(df) == 2 * (len(HCFG["legit_policy"]["variants"]) + 1) and set(df.strategy) == {"-", "drain"}
@@ -202,7 +202,7 @@ def test_event_window_and_fraction_levels():
     assert harm.event_list({"series": {"file": f}})[0]["file"] == f
     stage, s = harm.event_stage(evs[0], HCFG, REPO_ROOT)
     assert str(s.index[0]) >= "2017-08-27" and str(s.index[-1]) <= "2017-08-29 00:00:00-05:00"
-    cfg = {**HCFG, "events": evs, "events_rule": None, "schemes": ["S6"], "compromises": ["C1"], "attacker": {"strategies": ["drain"]},
+    cfg = {**HCFG, "events": evs, "events_rule": None, "events_prereg": None, "schemes": ["S6"], "compromises": ["C1"], "attacker": {"strategies": ["drain"]},
            "battery": {**HCFG["battery"], "profiles": HCFG["battery"]["profiles"][:1]},
            "harm": {**HCFG["harm"], "reference_levels_ft": None, "reference_level_fractions": [0.5]}}
     df, ev_, meta = harm.run(cfg, ACFG, REPO_ROOT)
@@ -225,8 +225,8 @@ def test_select_events_rule():
 
 def test_d4_events_and_provenance():
     import hashlib
-    evs = harm.event_list(HCFG, REPO_ROOT)
-    rule = HCFG["events_rule"]
+    rule = HCFG["superseded_events_rule"]
+    evs = harm.event_list({**HCFG, "events_prereg": None, "events_rule": rule}, REPO_ROOT)
     assert len(evs) == len(rule["gauges"]) * rule["top_k"] >= 5 and len(rule["gauges"]) >= 3
     assert any("08074000" in e["name"] and "2017-08-28" in e["name"] for e in evs)          # Harvey selected
     for g in rule["gauges"]:
@@ -258,3 +258,74 @@ def test_bootstrap_and_summary():
     s = harm.summarize_events(df, 500, 7).iloc[0]
     assert s.events == 5 and s.missed_frac_median == 0.0 and s.delayed_frac_median == 0.25
     assert s.max_delay_min_ci_lo <= s.max_delay_min_median <= s.max_delay_min_ci_hi
+
+
+# ---------------------------------------------------------------- F5
+def test_select_events_above():
+    idx = pd.date_range("2020-01-01", periods=24 * 20, freq="h", tz="UTC")
+    v = np.zeros(len(idx))
+    for h, x in ((24, 5), (30, 6), (24 * 10, 4), (24 * 10 + 80, 7)):   # two runs 6 h apart; two 80 h apart
+        v[h] = x
+    s = pd.Series(v, index=idx)
+    e = harm.select_events_above(s, 3.0, 72, 5, 2)
+    assert [x["peak"] for x in e] == [6.0, 4.0, 7.0]             # 5 (6 h from 6) merged; 4 and 7 are 80 h apart
+    assert e[0]["end"] - e[0]["start"] == pd.Timedelta(days=7)
+    assert harm.select_events_above(s, 100.0, 72, 5, 2) == []
+
+
+def test_prereg_events_f5():
+    import gzip
+    import hashlib
+    pr = load_yaml(CONFIG / "events_prereg.yaml")
+    evs = harm.event_list(HCFG, REPO_ROOT)
+    gauges = {e["usgs"] for e in evs}
+    assert len(evs) >= 20 and len(gauges) >= 5 and "08074000" in gauges
+    assert any(e["usgs"] == "08074000" and "2017-08-28" in e["name"] for e in evs)        # Harvey
+    from pqcap import nws
+    for g in gauges:
+        minor = nws.load(REPO_ROOT / "data/nws", g, 0.5)["minor"] * HCFG["series"]["ft_to_cm"]
+        mine = [e for e in evs if e["usgs"] == g]
+        peaks = [pd.Timestamp(e["start"]) + pd.Timedelta(days=pr["rule"]["window"]["before_peak_d"]) for e in mine]
+        assert all(abs((a - b).total_seconds()) >= 72 * 3600 for i, a in enumerate(peaks) for b in peaks[i + 1:])
+        stage, _ = harm.event_stage(mine[0], HCFG, REPO_ROOT)
+        assert stage.max() >= minor - 1e-6
+    for f in sorted((REPO_ROOT / "data/usgs10").glob("*.json.gz"))[:3]:
+        m = json.loads((f.parent / f.name.replace(".json.gz", ".meta.json")).read_text())
+        assert hashlib.sha256(gzip.decompress(f.read_bytes())).hexdigest() == m["sha256"] and m["gzip"]
+
+
+def test_parallel_run_matches_serial():
+    evs = [{"name": "w", "file": HCFG["series"]["file"], "start": "2017-08-27", "end": "2017-08-28"},
+           {"name": "x", "file": HCFG["series"]["file"], "start": "2017-08-28", "end": "2017-08-29"}]
+    cfg = {**HCFG, "events": evs, "events_rule": None, "events_prereg": None, "schemes": ["S6"], "compromises": ["C1"],
+           "attacker": {"strategies": ["drain"]}, "battery": {**HCFG["battery"], "profiles": HCFG["battery"]["profiles"][:1]}}
+    a, _, _ = harm.run({**cfg, "workers": 1}, ACFG, REPO_ROOT)
+    b, _, _ = harm.run({**cfg, "workers": 2}, ACFG, REPO_ROOT)
+    pd.testing.assert_frame_equal(a, b)
+
+
+def test_delay_distribution():
+    ev = pd.DataFrame({"event": ["a", "a", "b", "c"], "battery_profile": "p", "scheme": "S", "compromise": "C1",
+                       "strategy": "x", "legit_policy": "-", "delay_min": [0, 40, None, 10]})
+    r = harm.delay_distribution(ev, 30, 2000, 1).iloc[0]
+    assert r.crossings == 4 and r.missed == 1 and r.events == 3
+    assert r.median_delay_min == 10 and r.p90_delay_min == np.inf and r.max_delay_min == np.inf
+    assert r.late_or_missed_share == 0.5 and 0 <= r.late_or_missed_share_ci_lo <= 0.5 <= r.late_or_missed_share_ci_hi
+    assert r.median_delay_min_ci_lo <= r.median_delay_min <= r.median_delay_min_ci_hi
+
+
+def test_load_series_empty_and_gz(tmp_path):
+    import gzip
+    p = tmp_path / "e.json.gz"
+    p.write_bytes(gzip.compress(json.dumps({"value": {"timeSeries": []}}).encode()))
+    assert harm.load_series(p, 30.48).empty
+    assert harm.load_series([p, p], 30.48).empty
+
+
+def test_prereg_skips_gauge_without_data(tmp_path):
+    import yaml
+    pr = load_yaml(CONFIG / "events_prereg.yaml")
+    pr["gauges"] = [{"usgs": "04174500", "site": "Huron (NWS data, no 10-year files)"}]
+    p = tmp_path / "pr.yaml"
+    p.write_text(yaml.safe_dump(pr))
+    assert harm.prereg_events({**HCFG, "events_prereg": {"file": str(p), "data_dir": "data/usgs10"}}, REPO_ROOT) == []

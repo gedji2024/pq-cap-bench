@@ -49,7 +49,8 @@ battery:
 # in each data/*.meta.json). Gauge-year choice: Buffalo Bayou 2017 (contains Hurricane Harvey, project
 # requirement); Huron River at Ann Arbor (the Kerkez et al. 2026 watershed) and Potomac River at Little Falls,
 # same calendar year. top_k / separation / window are selection parameters, not data.
-events_rule:
+# SUPERSEDED by F5 (events_prereg below): the 2017 top-k rule, kept for the record and not run.
+superseded_events_rule:
   gauges:
     - {usgs: "08074000", site: "USGS 08074000 Buffalo Bayou at Houston, TX", file: data/usgs_08074000_00065_2017-01-01_2017-12-31.json}
     - {usgs: "04174500", site: "USGS 04174500 Huron River at Ann Arbor, MI", file: data/usgs_04174500_00065_2017-01-01_2017-12-31.json}
@@ -64,6 +65,10 @@ events_rule:
 # USGS gage height agree within datum_tol_ft at the latest common reading (datum check, CHOICE of tolerance).
 # Gauges without NWS categories keep the fraction rule below (ASSUMED).
 nws: {dir: data/nws, datum_tol_ft: 0.5}
+# F5: events selected by the PRE-REGISTERED rule in config/events_prereg.yaml (committed before the data were
+# fetched) from 10 years of USGS IV data per gauge, cached gzipped in data/usgs10/ with per-file meta.
+events_prereg: {file: config/events_prereg.yaml, data_dir: data/usgs10}
+workers: 8                 # parallel replay processes (results do not depend on it)
 statistics: {bootstrap: 10000, seed: 20261104, ci: 0.95}
 
 # Scoring. Gauges differ in stage scale, so thresholds are FRACTIONS of each event's own stage range (ASSUMED).

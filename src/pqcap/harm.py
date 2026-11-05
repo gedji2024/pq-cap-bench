@@ -14,6 +14,8 @@ violation, death; legitimate-command rejection rate (no compromise).
 from __future__ import annotations
 
 import datetime as dt
+import functools
+import gzip
 import json
 import math
 from dataclasses import dataclass, field
@@ -24,15 +26,27 @@ import pandas as pd
 
 from . import envelope as ev
 from . import nws
+from .config import load_yaml as load_yaml_file
 
 KEY = bytes(range(64, 96))
 TAG = 8
 
 
 # ---------------------------------------------------------------- data
-def load_series(path: Path, ft_to_cm: float) -> pd.Series:
-    """USGS NWIS IV JSON -> stage (cm) indexed by timestamp; noData values dropped."""
-    d = json.loads(Path(path).read_text())
+def _read_json(path: Path) -> dict:
+    p = Path(path)
+    return json.loads(gzip.decompress(p.read_bytes()) if p.suffix == ".gz" else p.read_text())
+
+
+def load_series(path, ft_to_cm: float) -> pd.Series:
+    """USGS NWIS IV JSON (optionally gzipped, or a list of files concatenated) -> stage (cm) indexed by UTC
+    timestamp; noData values dropped; duplicate timestamps (overlapping files) keep the first reading."""
+    if isinstance(path, (list, tuple)):
+        s = pd.concat([load_series(p, ft_to_cm) for p in path])
+        return s[~s.index.duplicated(keep="first")].sort_index()
+    d = _read_json(path)
+    if not d["value"]["timeSeries"]:
+        return pd.Series([], index=pd.DatetimeIndex([], tz="UTC"), name="stage_cm", dtype=float)
     ts = d["value"]["timeSeries"][0]
     nodata = float(ts["variable"]["noDataValue"])
     pts = [(dt.datetime.fromisoformat(v["dateTime"]), float(v["value"])) for v in ts["values"][0]["value"]
@@ -349,8 +363,56 @@ def select_events(s: pd.Series, k: int, sep_days: float, half_window_days: float
     return [{"peak_time": t, "peak": v, "start": t - w, "end": t + w} for t, v in picked]
 
 
+def select_events_above(s: pd.Series, level: float, sep_h: float, before_d: float, after_d: float) -> list[dict]:
+    """F5 pre-registered rule (config/events_prereg.yaml): candidate peaks = maximum of each maximal run of readings
+    >= level; accepted greedily by descending peak if >= sep_h from every accepted peak; window
+    [peak - before_d, peak + after_d]. Returned in time order."""
+    above = (s >= level).to_numpy()
+    if not above.any():
+        return []
+    run_id = np.cumsum(np.r_[True, above[1:] != above[:-1]])
+    cand = [g.idxmax() for _, g in s[above].groupby(run_id[above])]
+    picked: list = []
+    for t in sorted(cand, key=lambda t: (-s[t], t)):
+        if all(abs((t - p).total_seconds()) >= sep_h * 3600 for p in picked):
+            picked.append(t)
+    return [{"peak_time": t, "peak": float(s[t]), "start": t - pd.Timedelta(days=before_d),
+             "end": t + pd.Timedelta(days=after_d)} for t in sorted(picked)]
+
+
+@functools.lru_cache(maxsize=16)
+def _cached_series(files: tuple, ft_to_cm: float) -> pd.Series:
+    return load_series(list(files), ft_to_cm)
+
+
+def prereg_events(cfg: dict, root: Path) -> list[dict]:
+    """Events selected by the F5 pre-registered rule from the cached multi-year series."""
+    pr = load_yaml_file(root / cfg["events_prereg"]["file"])
+    rule, n = pr["rule"], cfg["nws"]
+    out = []
+    for g in pr["gauges"]:
+        cats = nws.load(root / n["dir"], g["usgs"], rule["datum_tolerance_ft"])
+        files = tuple(str(p.relative_to(root)) for p in
+                      sorted((root / cfg["events_prereg"]["data_dir"]).glob(f"usgs_{g['usgs']}_*.json.gz")))
+        if not cats["datum_ok"] or cats["minor"] is None or not files:
+            continue
+        s = _cached_series(tuple(str(root / f) for f in files), cfg["series"]["ft_to_cm"])
+        y0, y1 = pr["period"]["start"], pr["period"]["end"]
+        s = s[(s.index >= pd.Timestamp(y0, tz="UTC")) & (s.index < pd.Timestamp(y1, tz="UTC") + pd.Timedelta(days=1))]
+        for e in select_events_above(s, cats["minor"] * cfg["series"]["ft_to_cm"], rule["separation_h"],
+                                     rule["window"]["before_peak_d"], rule["window"]["after_peak_d"]):
+            years = range(e["start"].year, e["end"].year + 1)        # only the yearly files the window touches
+            ef = [f for f in files if any(f"_{y}-01-01_" in f for y in years)]
+            out.append({"name": f"USGS {g['usgs']} {g['site']} ({e['peak_time']:%Y-%m-%d})", "files": ef,
+                        "start": str(e["start"]), "end": str(e["end"]), "usgs": g["usgs"]})
+    return out
+
+
 def event_list(cfg: dict, root: Path | None = None) -> list[dict]:
-    """Events to replay: rule-selected (D4 `events_rule`), explicit `events`, or the single legacy `series`."""
+    """Events to replay: F5 pre-registered (`events_prereg`), rule-selected (D4 `events_rule`), explicit `events`,
+    or the single legacy `series`."""
+    if cfg.get("events_prereg"):
+        return prereg_events(cfg, root)
     rule = cfg.get("events_rule")
     if rule:
         out = []
@@ -401,82 +463,101 @@ def nws_thresholds(cats: dict, ft_to_cm: float) -> dict | None:
 
 
 def event_stage(ev_: dict, cfg: dict, root: Path) -> tuple[np.ndarray, pd.Series]:
-    s = load_series(root / ev_["file"], cfg["series"]["ft_to_cm"])
+    if ev_.get("files"):
+        s = _cached_series(tuple(str(root / f) for f in ev_["files"]), cfg["series"]["ft_to_cm"])
+    else:
+        s = load_series(root / ev_["file"], cfg["series"]["ft_to_cm"])
     if ev_.get("start"):
         s = s[(s.index >= pd.Timestamp(ev_["start"], tz=s.index.tz)) & (s.index <= pd.Timestamp(ev_["end"], tz=s.index.tz))]
     return to_minutes(s), s
+
+
+def _event(args) -> tuple[list, list, dict]:
+    """Replay one event over the whole grid (top-level so it can run in a worker process)."""
+    ev_, cfg, actions_cfg, root, bats = args
+    cat = ev.catalogue_from_config(actions_cfg)
+    env = ev.envelope_from_config(actions_cfg)  # routine renewal assumed to succeed: validity never lapses
+    fw = ev.firmware_policy_from_config(actions_cfg)
+    rel = cfg["harm"].get("relative")
+    nws_cfg = cfg.get("nws")
+    rows, events, metas = [], [], []
+    stage, s = event_stage(ev_, cfg, root)
+    ecfg = cfg
+    th = None
+    if nws_cfg and ev_.get("usgs") and (root / nws_cfg["dir"] / f"{ev_['usgs']}.json").exists():
+        th = nws_thresholds(nws.load(root / nws_cfg["dir"], ev_["usgs"], nws_cfg["datum_tol_ft"]),
+                            cfg["series"]["ft_to_cm"])
+    if th:
+        acfg_e = threshold_profile(actions_cfg, th["band_cm"])
+        env, fw = ev.envelope_from_config(acfg_e), ev.firmware_policy_from_config(acfg_e)
+        ecfg = {**cfg, "device": {**cfg["device"], "alert_threshold_cm": th["alert_cm"]}}
+        levels, level_src = th["levels_cm"], th["source"]
+    else:
+        if rel:
+            acfg_e, alert = relative_profile(actions_cfg, stage, rel)
+            env, fw = ev.envelope_from_config(acfg_e), ev.firmware_policy_from_config(acfg_e)
+            ecfg = {**cfg, "device": {**cfg["device"], "alert_threshold_cm": alert}}
+        # reference levels: absolute (ft) when given, else fractions of the event's own stage range (ASSUMED)
+        if cfg["harm"].get("reference_levels_ft"):
+            levels = [x * cfg["series"]["ft_to_cm"] for x in cfg["harm"]["reference_levels_ft"]]
+            level_src = "reference_levels_ft (ASSUMED)"
+        else:
+            lo, hi = float(stage.min()), float(stage.max())
+            levels = [lo + f * (hi - lo) for f in cfg["harm"]["reference_level_fractions"]]
+            level_src = "fractions of event range (ASSUMED)"
+    metas.append({"event": ev_["name"], "file": ev_.get("file"), "files": ev_.get("files") or [ev_["file"]], "n_readings": int(s.size), "first": str(s.index[0]),
+                  "last": str(s.index[-1]), "max_gap_min": max_gap_min(s), "gaps_over_60_min": gaps(s, 60),
+                  "peak_cm": float(s.max()), "peak_time": str(s.idxmax()),
+                  "alert_threshold_cm": ecfg["device"]["alert_threshold_cm"],
+                  "peak_bracketed_by_gap": any(g["after"] <= str(s.idxmax()) <= g["before"] for g in gaps(s, 60)),
+                  "minutes": int(stage.size), "levels_cm": levels, "threshold_source": level_src,
+                  "level_names": th["level_names"] if th else None})
+    for bat in bats:
+        for scheme in cfg["schemes"]:
+            for comp in cfg["compromises"]:
+                runs = ([(None, v) for v in cfg["legit_policy"].get("variants", ["naive"])] if comp == "none"
+                        else [(x, "-") for x in cfg["attacker"]["strategies"]])
+                for strat, variant in runs:
+                    r = simulate(stage, scheme, comp, strat, ecfg, cat, env, fw,
+                                 variant if strat is None else "naive", bat)
+                    sc = score(stage, r["delivered"], levels, cfg["harm"]["delay_tolerance_min"])
+                    st = r["stats"]
+                    key = {"event": ev_["name"], "battery_profile": bat["name"], "scheme": scheme,
+                           "compromise": comp, "strategy": strat or "-", "legit_policy": variant}
+                    rows.append({**key, **{k: sc[k] for k in ("crossings", "missed", "delayed", "on_time",
+                                                              "mean_delay_min", "max_delay_min")},
+                                 "floor_violating_uplinks": st["floor_violating_uplinks"],
+                                 "battery_floor_violated": st["floor_violating_uplinks"] > 0 or st["died_min"] is not None,
+                                 "hours_below_floor": st["minutes_below_floor"] / 60,
+                                 "min_soc_pct": st["min_soc_pct"], "died": st["died_min"] is not None,
+                                 "died_h": None if st["died_min"] is None else st["died_min"] / 60,
+                                 "uplinks": st["uplinks"], "legit_sent": st["legit_sent"],
+                                 "legit_rejected": st["legit_rejected"], "legit_intents": st["legit_intents"],
+                                 "legit_intents_rejected": st["legit_intents_rejected"],
+                                 "legit_unique_rejection_rate": (st["legit_intents_rejected"] / st["legit_intents"])
+                                 if st["legit_intents"] else 0.0,
+                                 "legit_reject_reasons": ";".join(f"{k}={v}" for k, v in sorted(st["reject_reasons"].items())),
+                                 "attacker_sent": st["attacker_sent"], "attacker_accepted": st["attacker_accepted"]})
+                    events += [{**key, **e} for e in sc["events"]]
+    return rows, events, metas[0]
 
 
 def run(cfg: dict, actions_cfg: dict, root: Path) -> tuple[pd.DataFrame, pd.DataFrame, dict]:
     from .devices import load_catalogue  # noqa: PLC0415
     devs = {d.model: d for d in load_catalogue(root / "config/devices")}
     bats = [battery_from_profile(p, devs) for p in cfg["battery"]["profiles"]]
-    cat = ev.catalogue_from_config(actions_cfg)
-    env = ev.envelope_from_config(actions_cfg)  # routine renewal assumed to succeed: validity never lapses
-    fw = ev.firmware_policy_from_config(actions_cfg)
     cfg = {**cfg, "_profile_inv": ev.invariants_from_config(actions_cfg)}
-    rows, events, metas = [], [], []
-    rel = cfg["harm"].get("relative")
-    nws_cfg = cfg.get("nws")
-    for ev_ in event_list(cfg, root):
-        stage, s = event_stage(ev_, cfg, root)
-        ecfg = cfg
-        th = None
-        if nws_cfg and ev_.get("usgs") and (root / nws_cfg["dir"] / f"{ev_['usgs']}.json").exists():
-            th = nws_thresholds(nws.load(root / nws_cfg["dir"], ev_["usgs"], nws_cfg["datum_tol_ft"]),
-                                cfg["series"]["ft_to_cm"])
-        if th:
-            acfg_e = threshold_profile(actions_cfg, th["band_cm"])
-            env, fw = ev.envelope_from_config(acfg_e), ev.firmware_policy_from_config(acfg_e)
-            ecfg = {**cfg, "device": {**cfg["device"], "alert_threshold_cm": th["alert_cm"]}}
-            levels, level_src = th["levels_cm"], th["source"]
-        else:
-            if rel:
-                acfg_e, alert = relative_profile(actions_cfg, stage, rel)
-                env, fw = ev.envelope_from_config(acfg_e), ev.firmware_policy_from_config(acfg_e)
-                ecfg = {**cfg, "device": {**cfg["device"], "alert_threshold_cm": alert}}
-            # reference levels: absolute (ft) when given, else fractions of the event's own stage range (ASSUMED)
-            if cfg["harm"].get("reference_levels_ft"):
-                levels = [x * cfg["series"]["ft_to_cm"] for x in cfg["harm"]["reference_levels_ft"]]
-                level_src = "reference_levels_ft (ASSUMED)"
-            else:
-                lo, hi = float(stage.min()), float(stage.max())
-                levels = [lo + f * (hi - lo) for f in cfg["harm"]["reference_level_fractions"]]
-                level_src = "fractions of event range (ASSUMED)"
-        metas.append({"event": ev_["name"], "file": ev_["file"], "n_readings": int(s.size), "first": str(s.index[0]),
-                      "last": str(s.index[-1]), "max_gap_min": max_gap_min(s), "gaps_over_60_min": gaps(s, 60),
-                      "peak_cm": float(s.max()), "peak_time": str(s.idxmax()),
-                      "alert_threshold_cm": ecfg["device"]["alert_threshold_cm"],
-                      "peak_bracketed_by_gap": any(g["after"] <= str(s.idxmax()) <= g["before"] for g in gaps(s, 60)),
-                      "minutes": int(stage.size), "levels_cm": levels, "threshold_source": level_src,
-                      "level_names": th["level_names"] if th else None})
-        for bat in bats:
-            for scheme in cfg["schemes"]:
-                for comp in cfg["compromises"]:
-                    runs = ([(None, v) for v in cfg["legit_policy"].get("variants", ["naive"])] if comp == "none"
-                            else [(x, "-") for x in cfg["attacker"]["strategies"]])
-                    for strat, variant in runs:
-                        r = simulate(stage, scheme, comp, strat, ecfg, cat, env, fw,
-                                     variant if strat is None else "naive", bat)
-                        sc = score(stage, r["delivered"], levels, cfg["harm"]["delay_tolerance_min"])
-                        st = r["stats"]
-                        key = {"event": ev_["name"], "battery_profile": bat["name"], "scheme": scheme,
-                               "compromise": comp, "strategy": strat or "-", "legit_policy": variant}
-                        rows.append({**key, **{k: sc[k] for k in ("crossings", "missed", "delayed", "on_time",
-                                                                  "mean_delay_min", "max_delay_min")},
-                                     "floor_violating_uplinks": st["floor_violating_uplinks"],
-                                     "battery_floor_violated": st["floor_violating_uplinks"] > 0 or st["died_min"] is not None,
-                                     "hours_below_floor": st["minutes_below_floor"] / 60,
-                                     "min_soc_pct": st["min_soc_pct"], "died": st["died_min"] is not None,
-                                     "died_h": None if st["died_min"] is None else st["died_min"] / 60,
-                                     "uplinks": st["uplinks"], "legit_sent": st["legit_sent"],
-                                     "legit_rejected": st["legit_rejected"], "legit_intents": st["legit_intents"],
-                                     "legit_intents_rejected": st["legit_intents_rejected"],
-                                     "legit_unique_rejection_rate": (st["legit_intents_rejected"] / st["legit_intents"])
-                                     if st["legit_intents"] else 0.0,
-                                     "legit_reject_reasons": ";".join(f"{k}={v}" for k, v in sorted(st["reject_reasons"].items())),
-                                     "attacker_sent": st["attacker_sent"], "attacker_accepted": st["attacker_accepted"]})
-                        events += [{**key, **e} for e in sc["events"]]
+    jobs = [(e, cfg, actions_cfg, root, bats) for e in event_list(cfg, root)]
+    workers = int(cfg.get("workers", 1))
+    if workers > 1:
+        from concurrent.futures import ProcessPoolExecutor  # noqa: PLC0415
+        with ProcessPoolExecutor(max_workers=workers) as ex:
+            out = list(ex.map(_event, jobs))
+    else:
+        out = [_event(j) for j in jobs]
+    rows = [r for o in out for r in o[0]]
+    events = [e for o in out for e in o[1]]
+    metas = [o[2] for o in out]
     meta = {"events": metas, "battery_profiles": bats}
     return pd.DataFrame(rows), pd.DataFrame(events), meta
 
@@ -508,5 +589,45 @@ def summarize_events(df: pd.DataFrame, n_boot: int, seed: int) -> pd.DataFrame:
         for m in METRICS:
             med, lo, hi = bootstrap_ci(g[m].to_numpy(), n_boot, seed)
             r.update({f"{m}_median": med, f"{m}_ci_lo": lo, f"{m}_ci_hi": hi})
+        rows.append(r)
+    return pd.DataFrame(rows)
+
+
+# ---------------------------------------------------------------- F5 delay distributions
+def _weighted_quantile_rows(v_sorted: np.ndarray, w: np.ndarray, q: float) -> np.ndarray:
+    """Row-wise weighted quantile of sorted values v for a weight matrix w (B x N): the smallest value whose
+    cumulative weight reaches q x total (inverse empirical CDF; the same rule for point estimates and bootstrap)."""
+    cw = np.cumsum(w, axis=1)
+    idx = (cw >= q * cw[:, -1:]).argmax(axis=1)
+    return v_sorted[idx]
+
+
+def delay_distribution(evdf: pd.DataFrame, tol_min: float, n_boot: int, seed: int, alpha: float = 0.05) -> pd.DataFrame:
+    """F5 (pre-registered): per scheme x compromise x strategy x battery profile x legit policy, the median, p90 and max
+    detection delay over ALL crossings (missed = +inf) and the share of crossings delayed beyond `tol_min` or
+    missed, each with a percentile-bootstrap CI that resamples EVENTS (cluster bootstrap)."""
+    keys = ["battery_profile", "scheme", "compromise", "strategy", "legit_policy"]
+    rng = np.random.default_rng(seed)
+    rows = []
+    for k, g in evdf.groupby(keys, sort=False):
+        d = g.delay_min.astype(float).fillna(np.inf).to_numpy()
+        ev_codes, ev_idx = np.unique(g.event.to_numpy(), return_inverse=True)
+        order = np.argsort(d, kind="stable")
+        v, e = d[order], ev_idx[order]
+        counts = rng.multinomial(len(ev_codes), np.full(len(ev_codes), 1 / len(ev_codes)), size=n_boot)
+        w = counts[:, e].astype(float)
+        bad = (v > tol_min).astype(float)
+        boot = {"median": _weighted_quantile_rows(v, w, 0.5), "p90": _weighted_quantile_rows(v, w, 0.9),
+                "max": np.where(w > 0, v, -np.inf).max(axis=1),
+                "late_or_missed_share": (w * bad).sum(axis=1) / w.sum(axis=1)}
+        one = np.ones((1, len(v)))
+        point = {"median": float(_weighted_quantile_rows(v, one, 0.5)[0]), "p90": float(_weighted_quantile_rows(v, one, 0.9)[0]),
+                 "max": float(v[-1]), "late_or_missed_share": float(bad.mean())}
+        r = {**dict(zip(keys, k)), "events": len(ev_codes), "crossings": len(d), "missed": int(np.isinf(d).sum())}
+        for m, x in boot.items():
+            r[f"{m}_delay_min" if m != "late_or_missed_share" else m] = point[m]
+            lo, hi = np.quantile(x, [alpha / 2, 1 - alpha / 2], method="lower")
+            base = f"{m}_delay_min" if m != "late_or_missed_share" else m
+            r[f"{base}_ci_lo"], r[f"{base}_ci_hi"] = float(lo), float(hi)
         rows.append(r)
     return pd.DataFrame(rows)

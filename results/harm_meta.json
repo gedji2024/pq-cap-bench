@@ -1,11 +1,104 @@
 {
   "events": [
     {
-      "event": "USGS 08074000 Buffalo Bayou at Houston, TX peak 1 (2017-08-28)",
-      "file": "data/usgs_08074000_00065_2017-01-01_2017-12-31.json",
-      "n_readings": 461,
-      "first": "2017-08-25 06:00:00+00:00",
-      "last": "2017-08-31 06:00:00+00:00",
+      "event": "USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2015-05-26)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08074000_00065_2015-01-01_2015-12-31.json.gz"
+      ],
+      "n_readings": 673,
+      "first": "2015-05-21 10:45:00+00:00",
+      "last": "2015-05-28 10:45:00+00:00",
+      "max_gap_min": 15.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 1029.3096,
+      "peak_time": "2015-05-26 10:45:00+00:00",
+      "alert_threshold_cm": 518,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10081,
+      "levels_cm": [
+        518.16,
+        853.44,
+        899.16,
+        975.36
+      ],
+      "threshold_source": "NWS BBST2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2015-01-01&endDT=2015-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2015-01-01&endDT=2015-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:10+00:00",
+          "sha256": "7a55a7c15b776010acfb379837b92f4fed3fe7911737a8e7478ee148ae460299",
+          "bytes": 2764039,
+          "gzip": true,
+          "site": "08074000",
+          "parameter_cd": "00065",
+          "start": "2015-01-01",
+          "end": "2015-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2016-04-18)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08074000_00065_2016-01-01_2016-12-31.json.gz"
+      ],
+      "n_readings": 673,
+      "first": "2016-04-13 18:45:00+00:00",
+      "last": "2016-04-20 18:45:00+00:00",
+      "max_gap_min": 15.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 973.5312,
+      "peak_time": "2016-04-18 18:45:00+00:00",
+      "alert_threshold_cm": 518,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10081,
+      "levels_cm": [
+        518.16,
+        853.44,
+        899.16,
+        975.36
+      ],
+      "threshold_source": "NWS BBST2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2016-01-01&endDT=2016-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2016-01-01&endDT=2016-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:12+00:00",
+          "sha256": "854f68265505be4f9535ecabee090cb48ced9dca00d5fab95de94b54176e9936",
+          "bytes": 2772741,
+          "gzip": true,
+          "site": "08074000",
+          "parameter_cd": "00065",
+          "start": "2016-01-01",
+          "end": "2016-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2017-08-28)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08074000_00065_2017-01-01_2017-12-31.json.gz"
+      ],
+      "n_readings": 557,
+      "first": "2017-08-23 06:00:00+00:00",
+      "last": "2017-08-30 06:00:00+00:00",
       "max_gap_min": 780.0,
       "gaps_over_60_min": [
         {
@@ -28,7 +121,7 @@
       "peak_time": "2017-08-28 06:00:00+00:00",
       "alert_threshold_cm": 518,
       "peak_bracketed_by_gap": true,
-      "minutes": 8641,
+      "minutes": 10081,
       "levels_cm": [
         518.16,
         853.44,
@@ -42,32 +135,38 @@
         "moderate",
         "major"
       ],
-      "source": {
-        "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
-        "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
-        "http_status": 200,
-        "retrieved_utc": "2026-11-04T15:13:04+00:00",
-        "sha256": "94c36b3ccf8a9b093d5df0c9099586e0b38555a6b44c238423efb16182d630fb",
-        "bytes": 2763780,
-        "site": "08074000",
-        "parameter_cd": "00065",
-        "start": "2017-01-01",
-        "end": "2017-12-31"
-      }
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:14+00:00",
+          "sha256": "1c770072778e121226c565b648ec3faa41f5ac3653426913f5c2c21c94538194",
+          "bytes": 2763780,
+          "gzip": true,
+          "site": "08074000",
+          "parameter_cd": "00065",
+          "start": "2017-01-01",
+          "end": "2017-12-31"
+        }
+      ]
     },
     {
-      "event": "USGS 08074000 Buffalo Bayou at Houston, TX peak 2 (2017-01-18)",
-      "file": "data/usgs_08074000_00065_2017-01-01_2017-12-31.json",
-      "n_readings": 577,
-      "first": "2017-01-15 15:00:00+00:00",
-      "last": "2017-01-21 15:00:00+00:00",
+      "event": "USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2019-09-19)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08074000_00065_2019-01-01_2019-12-31.json.gz"
+      ],
+      "n_readings": 673,
+      "first": "2019-09-14 23:00:00+00:00",
+      "last": "2019-09-21 23:00:00+00:00",
       "max_gap_min": 15.0,
       "gaps_over_60_min": [],
-      "peak_cm": 709.2696,
-      "peak_time": "2017-01-18 15:00:00+00:00",
+      "peak_cm": 945.1848000000001,
+      "peak_time": "2019-09-19 23:00:00+00:00",
       "alert_threshold_cm": 518,
       "peak_bracketed_by_gap": false,
-      "minutes": 8641,
+      "minutes": 10081,
       "levels_cm": [
         518.16,
         853.44,
@@ -81,110 +180,1514 @@
         "moderate",
         "major"
       ],
-      "source": {
-        "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
-        "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
-        "http_status": 200,
-        "retrieved_utc": "2026-11-04T15:13:04+00:00",
-        "sha256": "94c36b3ccf8a9b093d5df0c9099586e0b38555a6b44c238423efb16182d630fb",
-        "bytes": 2763780,
-        "site": "08074000",
-        "parameter_cd": "00065",
-        "start": "2017-01-01",
-        "end": "2017-12-31"
-      }
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2019-01-01&endDT=2019-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2019-01-01&endDT=2019-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:18+00:00",
+          "sha256": "33a182dbbe3cc77abaa2b58fd1f026cb574038a6d50c17e56b9e1094ce0d6847",
+          "bytes": 2770877,
+          "gzip": true,
+          "site": "08074000",
+          "parameter_cd": "00065",
+          "start": "2019-01-01",
+          "end": "2019-12-31"
+        }
+      ]
     },
     {
-      "event": "USGS 04174500 Huron River at Ann Arbor, MI peak 1 (2017-11-18)",
-      "file": "data/usgs_04174500_00065_2017-01-01_2017-12-31.json",
-      "n_readings": 577,
-      "first": "2017-11-15 19:30:00+00:00",
-      "last": "2017-11-21 19:30:00+00:00",
+      "event": "USGS 08074000 Buffalo Bayou at Houston, TX (NWS BBST2) (2024-07-08)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08074000_00065_2024-01-01_2024-12-31.json.gz"
+      ],
+      "n_readings": 673,
+      "first": "2024-07-03 18:45:00+00:00",
+      "last": "2024-07-10 18:45:00+00:00",
       "max_gap_min": 15.0,
       "gaps_over_60_min": [],
-      "peak_cm": 418.4904,
-      "peak_time": "2017-11-18 19:30:00+00:00",
-      "alert_threshold_cm": 427,
+      "peak_cm": 988.1616,
+      "peak_time": "2024-07-08 18:45:00+00:00",
+      "alert_threshold_cm": 518,
       "peak_bracketed_by_gap": false,
-      "minutes": 8641,
+      "minutes": 10081,
       "levels_cm": [
-        426.72,
-        487.68,
         518.16,
-        548.64
+        853.44,
+        899.16,
+        975.36
       ],
-      "threshold_source": "NWS ANNM4",
+      "threshold_source": "NWS BBST2",
       "level_names": [
         "action",
         "minor",
         "moderate",
         "major"
       ],
-      "source": {
-        "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=04174500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
-        "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=04174500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
-        "http_status": 200,
-        "retrieved_utc": "2026-11-04T15:13:05+00:00",
-        "sha256": "01938fd925952c77453e222929dce6d7fccbc11842e08aa58976b7648307c59f",
-        "bytes": 709103,
-        "site": "04174500",
-        "parameter_cd": "00065",
-        "start": "2017-01-01",
-        "end": "2017-12-31"
-      }
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2024-01-01&endDT=2024-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08074000&startDT=2024-01-01&endDT=2024-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:28+00:00",
+          "sha256": "a1f25c0df7c7d166a1712b78d0b30d9e9ec3301ada29be0081a7d63149d6c4e8",
+          "bytes": 2779591,
+          "gzip": true,
+          "site": "08074000",
+          "parameter_cd": "00065",
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        }
+      ]
     },
     {
-      "event": "USGS 04174500 Huron River at Ann Arbor, MI peak 2 (2017-10-16)",
-      "file": "data/usgs_04174500_00065_2017-01-01_2017-12-31.json",
-      "n_readings": 577,
-      "first": "2017-10-13 22:00:00+00:00",
-      "last": "2017-10-19 22:00:00+00:00",
-      "max_gap_min": 15.0,
-      "gaps_over_60_min": [],
-      "peak_cm": 411.48,
-      "peak_time": "2017-10-16 22:00:00+00:00",
-      "alert_threshold_cm": 427,
-      "peak_bracketed_by_gap": false,
-      "minutes": 8641,
-      "levels_cm": [
-        426.72,
-        487.68,
-        518.16,
-        548.64
+      "event": "USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-05-26)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08074500_00065_2015-01-01_2015-12-31.json.gz"
       ],
-      "threshold_source": "NWS ANNM4",
+      "n_readings": 543,
+      "first": "2015-05-21 04:45:00+00:00",
+      "last": "2015-05-28 04:45:00+00:00",
+      "max_gap_min": 1455.0,
+      "gaps_over_60_min": [
+        {
+          "after": "2015-05-26 04:45:00+00:00",
+          "before": "2015-05-27 05:00:00+00:00",
+          "minutes": 1455.0
+        }
+      ],
+      "peak_cm": 1086.3072,
+      "peak_time": "2015-05-26 04:45:00+00:00",
+      "alert_threshold_cm": 884,
+      "peak_bracketed_by_gap": true,
+      "minutes": 10081,
+      "levels_cm": [
+        883.92,
+        975.36,
+        1021.08,
+        1097.28
+      ],
+      "threshold_source": "NWS HGTT2",
       "level_names": [
         "action",
         "minor",
         "moderate",
         "major"
       ],
-      "source": {
-        "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=04174500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
-        "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=04174500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
-        "http_status": 200,
-        "retrieved_utc": "2026-11-04T15:13:05+00:00",
-        "sha256": "01938fd925952c77453e222929dce6d7fccbc11842e08aa58976b7648307c59f",
-        "bytes": 709103,
-        "site": "04174500",
-        "parameter_cd": "00065",
-        "start": "2017-01-01",
-        "end": "2017-12-31"
-      }
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074500&startDT=2015-01-01&endDT=2015-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08074500&startDT=2015-01-01&endDT=2015-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:10+00:00",
+          "sha256": "7cf90430832500936e52a854b4900dd800a75248989083b89a9df37d61e68a30",
+          "bytes": 2727178,
+          "gzip": true,
+          "site": "08074500",
+          "parameter_cd": "00065",
+          "start": "2015-01-01",
+          "end": "2015-12-31"
+        }
+      ]
     },
     {
-      "event": "USGS 01646500 Potomac River near Wash, DC Little Falls peak 1 (2017-05-07)",
-      "file": "data/usgs_01646500_00065_2017-01-01_2017-12-31.json",
-      "n_readings": 577,
-      "first": "2017-05-04 12:45:00+00:00",
-      "last": "2017-05-10 12:45:00+00:00",
+      "event": "USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2015-10-25)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08074500_00065_2015-01-01_2015-12-31.json.gz"
+      ],
+      "n_readings": 667,
+      "first": "2015-10-20 07:00:00+00:00",
+      "last": "2015-10-27 07:00:00+00:00",
+      "max_gap_min": 45.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 1044.2448,
+      "peak_time": "2015-10-25 07:00:00+00:00",
+      "alert_threshold_cm": 884,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10081,
+      "levels_cm": [
+        883.92,
+        975.36,
+        1021.08,
+        1097.28
+      ],
+      "threshold_source": "NWS HGTT2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074500&startDT=2015-01-01&endDT=2015-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08074500&startDT=2015-01-01&endDT=2015-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:10+00:00",
+          "sha256": "7cf90430832500936e52a854b4900dd800a75248989083b89a9df37d61e68a30",
+          "bytes": 2727178,
+          "gzip": true,
+          "site": "08074500",
+          "parameter_cd": "00065",
+          "start": "2015-01-01",
+          "end": "2015-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-08)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08074500_00065_2017-01-01_2017-12-31.json.gz"
+      ],
+      "n_readings": 673,
+      "first": "2017-08-03 11:30:00+00:00",
+      "last": "2017-08-10 11:30:00+00:00",
       "max_gap_min": 15.0,
       "gaps_over_60_min": [],
-      "peak_cm": 252.98400000000004,
-      "peak_time": "2017-05-07 12:45:00+00:00",
+      "peak_cm": 1046.6832000000002,
+      "peak_time": "2017-08-08 11:30:00+00:00",
+      "alert_threshold_cm": 884,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10081,
+      "levels_cm": [
+        883.92,
+        975.36,
+        1021.08,
+        1097.28
+      ],
+      "threshold_source": "NWS HGTT2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08074500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:15+00:00",
+          "sha256": "b6ea6fae9de3ce5cc729f1bea7bd66c56966d577751cff795172bc1498bb57b1",
+          "bytes": 2733583,
+          "gzip": true,
+          "site": "08074500",
+          "parameter_cd": "00065",
+          "start": "2017-01-01",
+          "end": "2017-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2017-08-27)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08074500_00065_2017-01-01_2017-12-31.json.gz"
+      ],
+      "n_readings": 450,
+      "first": "2017-08-22 18:30:00+00:00",
+      "last": "2017-08-27 18:30:00+00:00",
+      "max_gap_min": 480.0,
+      "gaps_over_60_min": [
+        {
+          "after": "2017-08-27 10:30:00+00:00",
+          "before": "2017-08-27 18:30:00+00:00",
+          "minutes": 480.0
+        }
+      ],
+      "peak_cm": 1350.5688,
+      "peak_time": "2017-08-27 18:30:00+00:00",
+      "alert_threshold_cm": 884,
+      "peak_bracketed_by_gap": true,
+      "minutes": 7201,
+      "levels_cm": [
+        883.92,
+        975.36,
+        1021.08,
+        1097.28
+      ],
+      "threshold_source": "NWS HGTT2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08074500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:15+00:00",
+          "sha256": "b6ea6fae9de3ce5cc729f1bea7bd66c56966d577751cff795172bc1498bb57b1",
+          "bytes": 2733583,
+          "gzip": true,
+          "site": "08074500",
+          "parameter_cd": "00065",
+          "start": "2017-01-01",
+          "end": "2017-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2019-09-19)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08074500_00065_2019-01-01_2019-12-31.json.gz"
+      ],
+      "n_readings": 673,
+      "first": "2019-09-14 19:15:00+00:00",
+      "last": "2019-09-21 19:15:00+00:00",
+      "max_gap_min": 15.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 1158.8496,
+      "peak_time": "2019-09-19 19:15:00+00:00",
+      "alert_threshold_cm": 884,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10081,
+      "levels_cm": [
+        883.92,
+        975.36,
+        1021.08,
+        1097.28
+      ],
+      "threshold_source": "NWS HGTT2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074500&startDT=2019-01-01&endDT=2019-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08074500&startDT=2019-01-01&endDT=2019-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:19+00:00",
+          "sha256": "2699d5d53f251f1adbfe9b4e7d49458cd3f213991abae4392312f0510062e416",
+          "bytes": 2772746,
+          "gzip": true,
+          "site": "08074500",
+          "parameter_cd": "00065",
+          "start": "2019-01-01",
+          "end": "2019-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 08074500 White Oak Bayou at Houston, TX (NWS HGTT2) (2024-07-08)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08074500_00065_2024-01-01_2024-12-31.json.gz"
+      ],
+      "n_readings": 673,
+      "first": "2024-07-03 17:00:00+00:00",
+      "last": "2024-07-10 17:00:00+00:00",
+      "max_gap_min": 15.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 1180.1856,
+      "peak_time": "2024-07-08 17:00:00+00:00",
+      "alert_threshold_cm": 884,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10081,
+      "levels_cm": [
+        883.92,
+        975.36,
+        1021.08,
+        1097.28
+      ],
+      "threshold_source": "NWS HGTT2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08074500&startDT=2024-01-01&endDT=2024-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08074500&startDT=2024-01-01&endDT=2024-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:29+00:00",
+          "sha256": "9a9f7db60fcf3fd89cb9eb215e6afe75318383ee65704e9b4d92ee35e36b612f",
+          "bytes": 2781386,
+          "gzip": true,
+          "site": "08074500",
+          "parameter_cd": "00065",
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2015-05-26)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08075000_00065_2015-01-01_2015-12-31.json.gz"
+      ],
+      "n_readings": 673,
+      "first": "2015-05-21 09:00:00+00:00",
+      "last": "2015-05-28 09:00:00+00:00",
+      "max_gap_min": 15.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 1305.4584,
+      "peak_time": "2015-05-26 09:00:00+00:00",
+      "alert_threshold_cm": 1158,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10081,
+      "levels_cm": [
+        1158.24,
+        1249.68,
+        1280.16,
+        1310.64
+      ],
+      "threshold_source": "NWS HBMT2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08075000&startDT=2015-01-01&endDT=2015-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08075000&startDT=2015-01-01&endDT=2015-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:10+00:00",
+          "sha256": "24a403a5ee8e9f20dc9e8c64a2a78dc5385fc7c1f2b65ac9f2457625116dc10c",
+          "bytes": 2789974,
+          "gzip": true,
+          "site": "08075000",
+          "parameter_cd": "00065",
+          "start": "2015-01-01",
+          "end": "2015-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2016-04-18)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08075000_00065_2016-01-01_2016-12-31.json.gz"
+      ],
+      "n_readings": 673,
+      "first": "2016-04-13 14:45:00+00:00",
+      "last": "2016-04-20 14:45:00+00:00",
+      "max_gap_min": 15.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 1279.5503999999999,
+      "peak_time": "2016-04-18 14:45:00+00:00",
+      "alert_threshold_cm": 1158,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10081,
+      "levels_cm": [
+        1158.24,
+        1249.68,
+        1280.16,
+        1310.64
+      ],
+      "threshold_source": "NWS HBMT2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08075000&startDT=2016-01-01&endDT=2016-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08075000&startDT=2016-01-01&endDT=2016-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:12+00:00",
+          "sha256": "3434d9b102c1934a7a3a17f4af3e59b3a3384b75c0ee9b1487a25bad197df43d",
+          "bytes": 2805494,
+          "gzip": true,
+          "site": "08075000",
+          "parameter_cd": "00065",
+          "start": "2016-01-01",
+          "end": "2016-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2017-08-27)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08075000_00065_2017-01-01_2017-12-31.json.gz"
+      ],
+      "n_readings": 673,
+      "first": "2017-08-22 17:30:00+00:00",
+      "last": "2017-08-29 17:30:00+00:00",
+      "max_gap_min": 15.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 1392.0216,
+      "peak_time": "2017-08-27 17:30:00+00:00",
+      "alert_threshold_cm": 1158,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10081,
+      "levels_cm": [
+        1158.24,
+        1249.68,
+        1280.16,
+        1310.64
+      ],
+      "threshold_source": "NWS HBMT2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08075000&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08075000&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:14+00:00",
+          "sha256": "ebd88296fb285f95180f1d910b47b70cf4e08da3998f89cd6dd40b4cf418717e",
+          "bytes": 2814614,
+          "gzip": true,
+          "site": "08075000",
+          "parameter_cd": "00065",
+          "start": "2017-01-01",
+          "end": "2017-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 08075000 Brays Bayou at Houston, TX (NWS HBMT2) (2024-07-08)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08075000_00065_2024-01-01_2024-12-31.json.gz"
+      ],
+      "n_readings": 673,
+      "first": "2024-07-03 15:15:00+00:00",
+      "last": "2024-07-10 15:15:00+00:00",
+      "max_gap_min": 15.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 1271.9304,
+      "peak_time": "2024-07-08 15:15:00+00:00",
+      "alert_threshold_cm": 1158,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10081,
+      "levels_cm": [
+        1158.24,
+        1249.68,
+        1280.16,
+        1310.64
+      ],
+      "threshold_source": "NWS HBMT2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08075000&startDT=2024-01-01&endDT=2024-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08075000&startDT=2024-01-01&endDT=2024-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:27+00:00",
+          "sha256": "b1ed3c7da20edbf02f9f79b47839b7cb2489f0333c9d4c7fcc3caf5962aec2d7",
+          "bytes": 2813334,
+          "gzip": true,
+          "site": "08075000",
+          "parameter_cd": "00065",
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-05-26)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08076000_00065_2015-01-01_2015-12-31.json.gz"
+      ],
+      "n_readings": 672,
+      "first": "2015-05-21 08:45:00+00:00",
+      "last": "2015-05-28 08:45:00+00:00",
+      "max_gap_min": 30.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 1770.5832,
+      "peak_time": "2015-05-26 08:45:00+00:00",
+      "alert_threshold_cm": 1585,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10081,
+      "levels_cm": [
+        1584.96,
+        1676.4,
+        1722.1200000000001,
+        1813.56
+      ],
+      "threshold_source": "NWS GBHT2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2015-01-01&endDT=2015-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2015-01-01&endDT=2015-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:10+00:00",
+          "sha256": "b374bb8b22ece24c66954aabb67272e95dd1d19e5060c784e85d04ea5e2ef778",
+          "bytes": 2805415,
+          "gzip": true,
+          "site": "08076000",
+          "parameter_cd": "00065",
+          "start": "2015-01-01",
+          "end": "2015-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-25)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08076000_00065_2015-01-01_2015-12-31.json.gz"
+      ],
+      "n_readings": 670,
+      "first": "2015-10-20 07:30:00+00:00",
+      "last": "2015-10-27 07:30:00+00:00",
+      "max_gap_min": 60.0,
+      "gaps_over_60_min": [
+        {
+          "after": "2015-10-20 14:30:00+00:00",
+          "before": "2015-10-20 15:30:00+00:00",
+          "minutes": 60.0
+        }
+      ],
+      "peak_cm": 1733.0928,
+      "peak_time": "2015-10-25 07:30:00+00:00",
+      "alert_threshold_cm": 1585,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10081,
+      "levels_cm": [
+        1584.96,
+        1676.4,
+        1722.1200000000001,
+        1813.56
+      ],
+      "threshold_source": "NWS GBHT2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2015-01-01&endDT=2015-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2015-01-01&endDT=2015-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:10+00:00",
+          "sha256": "b374bb8b22ece24c66954aabb67272e95dd1d19e5060c784e85d04ea5e2ef778",
+          "bytes": 2805415,
+          "gzip": true,
+          "site": "08076000",
+          "parameter_cd": "00065",
+          "start": "2015-01-01",
+          "end": "2015-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2015-10-31)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08076000_00065_2015-01-01_2015-12-31.json.gz"
+      ],
+      "n_readings": 673,
+      "first": "2015-10-26 16:45:00+00:00",
+      "last": "2015-11-02 16:45:00+00:00",
+      "max_gap_min": 15.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 1730.6544000000001,
+      "peak_time": "2015-10-31 16:45:00+00:00",
+      "alert_threshold_cm": 1585,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10081,
+      "levels_cm": [
+        1584.96,
+        1676.4,
+        1722.1200000000001,
+        1813.56
+      ],
+      "threshold_source": "NWS GBHT2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2015-01-01&endDT=2015-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2015-01-01&endDT=2015-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:10+00:00",
+          "sha256": "b374bb8b22ece24c66954aabb67272e95dd1d19e5060c784e85d04ea5e2ef778",
+          "bytes": 2805415,
+          "gzip": true,
+          "site": "08076000",
+          "parameter_cd": "00065",
+          "start": "2015-01-01",
+          "end": "2015-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-04-18)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08076000_00065_2016-01-01_2016-12-31.json.gz"
+      ],
+      "n_readings": 673,
+      "first": "2016-04-13 22:00:00+00:00",
+      "last": "2016-04-20 22:00:00+00:00",
+      "max_gap_min": 15.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 1814.4744,
+      "peak_time": "2016-04-18 22:00:00+00:00",
+      "alert_threshold_cm": 1585,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10081,
+      "levels_cm": [
+        1584.96,
+        1676.4,
+        1722.1200000000001,
+        1813.56
+      ],
+      "threshold_source": "NWS GBHT2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2016-01-01&endDT=2016-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2016-01-01&endDT=2016-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:12+00:00",
+          "sha256": "3a93ae555188c797de6fb8b1a6ebf17c06a9825fcf9a8fbe3d87330a00a67aae",
+          "bytes": 2797495,
+          "gzip": true,
+          "site": "08076000",
+          "parameter_cd": "00065",
+          "start": "2016-01-01",
+          "end": "2016-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-05-28)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08076000_00065_2016-01-01_2016-12-31.json.gz"
+      ],
+      "n_readings": 673,
+      "first": "2016-05-23 01:00:00+00:00",
+      "last": "2016-05-30 01:00:00+00:00",
+      "max_gap_min": 15.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 1691.9448,
+      "peak_time": "2016-05-28 01:00:00+00:00",
+      "alert_threshold_cm": 1585,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10081,
+      "levels_cm": [
+        1584.96,
+        1676.4,
+        1722.1200000000001,
+        1813.56
+      ],
+      "threshold_source": "NWS GBHT2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2016-01-01&endDT=2016-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2016-01-01&endDT=2016-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:12+00:00",
+          "sha256": "3a93ae555188c797de6fb8b1a6ebf17c06a9825fcf9a8fbe3d87330a00a67aae",
+          "bytes": 2797495,
+          "gzip": true,
+          "site": "08076000",
+          "parameter_cd": "00065",
+          "start": "2016-01-01",
+          "end": "2016-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2016-06-03)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08076000_00065_2016-01-01_2016-12-31.json.gz"
+      ],
+      "n_readings": 673,
+      "first": "2016-05-29 01:45:00+00:00",
+      "last": "2016-06-05 01:45:00+00:00",
+      "max_gap_min": 15.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 1701.6984,
+      "peak_time": "2016-06-03 01:45:00+00:00",
+      "alert_threshold_cm": 1585,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10081,
+      "levels_cm": [
+        1584.96,
+        1676.4,
+        1722.1200000000001,
+        1813.56
+      ],
+      "threshold_source": "NWS GBHT2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2016-01-01&endDT=2016-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2016-01-01&endDT=2016-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:12+00:00",
+          "sha256": "3a93ae555188c797de6fb8b1a6ebf17c06a9825fcf9a8fbe3d87330a00a67aae",
+          "bytes": 2797495,
+          "gzip": true,
+          "site": "08076000",
+          "parameter_cd": "00065",
+          "start": "2016-01-01",
+          "end": "2016-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-08)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08076000_00065_2017-01-01_2017-12-31.json.gz"
+      ],
+      "n_readings": 673,
+      "first": "2017-08-03 11:45:00+00:00",
+      "last": "2017-08-10 11:45:00+00:00",
+      "max_gap_min": 15.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 1745.5896,
+      "peak_time": "2017-08-08 11:45:00+00:00",
+      "alert_threshold_cm": 1585,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10081,
+      "levels_cm": [
+        1584.96,
+        1676.4,
+        1722.1200000000001,
+        1813.56
+      ],
+      "threshold_source": "NWS GBHT2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:15+00:00",
+          "sha256": "9d9b3e570494e6a430472122ea6a3a92c201f5c91f38aa73c0ef550b42b78b1b",
+          "bytes": 2803735,
+          "gzip": true,
+          "site": "08076000",
+          "parameter_cd": "00065",
+          "start": "2017-01-01",
+          "end": "2017-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2017-08-28)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08076000_00065_2017-01-01_2017-12-31.json.gz"
+      ],
+      "n_readings": 668,
+      "first": "2017-08-23 05:00:00+00:00",
+      "last": "2017-08-30 05:00:00+00:00",
+      "max_gap_min": 60.0,
+      "gaps_over_60_min": [
+        {
+          "after": "2017-08-29 14:30:00+00:00",
+          "before": "2017-08-29 15:30:00+00:00",
+          "minutes": 60.0
+        }
+      ],
+      "peak_cm": 1916.5824,
+      "peak_time": "2017-08-28 05:00:00+00:00",
+      "alert_threshold_cm": 1585,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10081,
+      "levels_cm": [
+        1584.96,
+        1676.4,
+        1722.1200000000001,
+        1813.56
+      ],
+      "threshold_source": "NWS GBHT2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:15+00:00",
+          "sha256": "9d9b3e570494e6a430472122ea6a3a92c201f5c91f38aa73c0ef550b42b78b1b",
+          "bytes": 2803735,
+          "gzip": true,
+          "site": "08076000",
+          "parameter_cd": "00065",
+          "start": "2017-01-01",
+          "end": "2017-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-07-04)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08076000_00065_2018-01-01_2018-12-31.json.gz"
+      ],
+      "n_readings": 673,
+      "first": "2018-06-29 20:45:00+00:00",
+      "last": "2018-07-06 20:45:00+00:00",
+      "max_gap_min": 15.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 1697.1264,
+      "peak_time": "2018-07-04 20:45:00+00:00",
+      "alert_threshold_cm": 1585,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10081,
+      "levels_cm": [
+        1584.96,
+        1676.4,
+        1722.1200000000001,
+        1813.56
+      ],
+      "threshold_source": "NWS GBHT2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2018-01-01&endDT=2018-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2018-01-01&endDT=2018-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:17+00:00",
+          "sha256": "d788bb7235fe63b2263a01251f5180a383290812df2ccc127330e4208bc4126c",
+          "bytes": 2805095,
+          "gzip": true,
+          "site": "08076000",
+          "parameter_cd": "00065",
+          "start": "2018-01-01",
+          "end": "2018-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2018-12-08)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08076000_00065_2018-01-01_2018-12-31.json.gz"
+      ],
+      "n_readings": 673,
+      "first": "2018-12-03 08:15:00+00:00",
+      "last": "2018-12-10 08:15:00+00:00",
+      "max_gap_min": 15.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 1712.6712,
+      "peak_time": "2018-12-08 08:15:00+00:00",
+      "alert_threshold_cm": 1585,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10081,
+      "levels_cm": [
+        1584.96,
+        1676.4,
+        1722.1200000000001,
+        1813.56
+      ],
+      "threshold_source": "NWS GBHT2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2018-01-01&endDT=2018-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2018-01-01&endDT=2018-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:17+00:00",
+          "sha256": "d788bb7235fe63b2263a01251f5180a383290812df2ccc127330e4208bc4126c",
+          "bytes": 2805095,
+          "gzip": true,
+          "site": "08076000",
+          "parameter_cd": "00065",
+          "start": "2018-01-01",
+          "end": "2018-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2019-09-19)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08076000_00065_2019-01-01_2019-12-31.json.gz"
+      ],
+      "n_readings": 673,
+      "first": "2019-09-14 20:15:00+00:00",
+      "last": "2019-09-21 20:15:00+00:00",
+      "max_gap_min": 15.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 1812.9504,
+      "peak_time": "2019-09-19 20:15:00+00:00",
+      "alert_threshold_cm": 1585,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10081,
+      "levels_cm": [
+        1584.96,
+        1676.4,
+        1722.1200000000001,
+        1813.56
+      ],
+      "threshold_source": "NWS GBHT2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2019-01-01&endDT=2019-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2019-01-01&endDT=2019-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:19+00:00",
+          "sha256": "075cd4205e384243f7682517afa3a9702469967aad6c0acf7ca7c72ec204c223",
+          "bytes": 2804055,
+          "gzip": true,
+          "site": "08076000",
+          "parameter_cd": "00065",
+          "start": "2019-01-01",
+          "end": "2019-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2020-09-23)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08076000_00065_2020-01-01_2020-12-31.json.gz"
+      ],
+      "n_readings": 673,
+      "first": "2020-09-18 07:45:00+00:00",
+      "last": "2020-09-25 07:45:00+00:00",
+      "max_gap_min": 15.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 1698.9552,
+      "peak_time": "2020-09-23 07:45:00+00:00",
+      "alert_threshold_cm": 1585,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10081,
+      "levels_cm": [
+        1584.96,
+        1676.4,
+        1722.1200000000001,
+        1813.56
+      ],
+      "threshold_source": "NWS GBHT2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2020-01-01&endDT=2020-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2020-01-01&endDT=2020-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:21+00:00",
+          "sha256": "1f4aae6d8e2c3bebeb8440ef23509ce71d62fa2ff0bbc5848cda146791624947",
+          "bytes": 2803255,
+          "gzip": true,
+          "site": "08076000",
+          "parameter_cd": "00065",
+          "start": "2020-01-01",
+          "end": "2020-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2022-01-09)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08076000_00065_2022-01-01_2022-12-31.json.gz"
+      ],
+      "n_readings": 673,
+      "first": "2022-01-04 09:30:00+00:00",
+      "last": "2022-01-11 09:30:00+00:00",
+      "max_gap_min": 15.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 1697.1264,
+      "peak_time": "2022-01-09 09:30:00+00:00",
+      "alert_threshold_cm": 1585,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10081,
+      "levels_cm": [
+        1584.96,
+        1676.4,
+        1722.1200000000001,
+        1813.56
+      ],
+      "threshold_source": "NWS GBHT2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2022-01-01&endDT=2022-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2022-01-01&endDT=2022-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:24+00:00",
+          "sha256": "c8d774030d4da14696f7df60451eec3143c801bdeb4673512fcea88b6f3726c0",
+          "bytes": 2696375,
+          "gzip": true,
+          "site": "08076000",
+          "parameter_cd": "00065",
+          "start": "2022-01-01",
+          "end": "2022-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 08076000 Greens Bayou near Houston, TX (NWS GBHT2) (2024-07-08)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08076000_00065_2024-01-01_2024-12-31.json.gz"
+      ],
+      "n_readings": 673,
+      "first": "2024-07-03 16:45:00+00:00",
+      "last": "2024-07-10 16:45:00+00:00",
+      "max_gap_min": 15.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 1769.9736,
+      "peak_time": "2024-07-08 16:45:00+00:00",
+      "alert_threshold_cm": 1585,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10081,
+      "levels_cm": [
+        1584.96,
+        1676.4,
+        1722.1200000000001,
+        1813.56
+      ],
+      "threshold_source": "NWS GBHT2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2024-01-01&endDT=2024-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08076000&startDT=2024-01-01&endDT=2024-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:28+00:00",
+          "sha256": "bf970ee530bc20eda9247b6eaaebca8a93e4807e2b16ab02ff568fa33b66dd85",
+          "bytes": 2776935,
+          "gzip": true,
+          "site": "08076000",
+          "parameter_cd": "00065",
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-13)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08068000_00065_2015-01-01_2015-12-31.json.gz"
+      ],
+      "n_readings": 673,
+      "first": "2015-05-08 19:00:00+00:00",
+      "last": "2015-05-15 19:00:00+00:00",
+      "max_gap_min": 15.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 3537.204,
+      "peak_time": "2015-05-13 19:00:00+00:00",
+      "alert_threshold_cm": 3499,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10081,
+      "levels_cm": [
+        3499.104,
+        3529.584,
+        3560.064,
+        3590.544
+      ],
+      "threshold_source": "NWS CFKT2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08068000&startDT=2015-01-01&endDT=2015-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08068000&startDT=2015-01-01&endDT=2015-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:10+00:00",
+          "sha256": "6f04f8ebe9a60984148f8766a23cb75294a29a9efdf46b608e5c01cc2b368e41",
+          "bytes": 2791600,
+          "gzip": true,
+          "site": "08068000",
+          "parameter_cd": "00065",
+          "start": "2015-01-01",
+          "end": "2015-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2015-05-28)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08068000_00065_2015-01-01_2015-12-31.json.gz"
+      ],
+      "n_readings": 673,
+      "first": "2015-05-23 08:15:00+00:00",
+      "last": "2015-05-30 08:15:00+00:00",
+      "max_gap_min": 15.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 3551.2248000000004,
+      "peak_time": "2015-05-28 08:15:00+00:00",
+      "alert_threshold_cm": 3499,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10081,
+      "levels_cm": [
+        3499.104,
+        3529.584,
+        3560.064,
+        3590.544
+      ],
+      "threshold_source": "NWS CFKT2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08068000&startDT=2015-01-01&endDT=2015-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08068000&startDT=2015-01-01&endDT=2015-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:10+00:00",
+          "sha256": "6f04f8ebe9a60984148f8766a23cb75294a29a9efdf46b608e5c01cc2b368e41",
+          "bytes": 2791600,
+          "gzip": true,
+          "site": "08068000",
+          "parameter_cd": "00065",
+          "start": "2015-01-01",
+          "end": "2015-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2016-05-28)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08068000_00065_2016-01-01_2016-12-31.json.gz"
+      ],
+      "n_readings": 481,
+      "first": "2016-05-23 19:00:00+00:00",
+      "last": "2016-05-30 19:00:00+00:00",
+      "max_gap_min": 2895.0,
+      "gaps_over_60_min": [
+        {
+          "after": "2016-05-26 04:45:00+00:00",
+          "before": "2016-05-28 05:00:00+00:00",
+          "minutes": 2895.0
+        }
+      ],
+      "peak_cm": 3692.3472,
+      "peak_time": "2016-05-28 19:00:00+00:00",
+      "alert_threshold_cm": 3499,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10081,
+      "levels_cm": [
+        3499.104,
+        3529.584,
+        3560.064,
+        3590.544
+      ],
+      "threshold_source": "NWS CFKT2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08068000&startDT=2016-01-01&endDT=2016-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08068000&startDT=2016-01-01&endDT=2016-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:12+00:00",
+          "sha256": "b1a460441e6de9108719fc33b88b1a5a25416b418cf212785d34992ad648bca2",
+          "bytes": 2794020,
+          "gzip": true,
+          "site": "08068000",
+          "parameter_cd": "00065",
+          "start": "2016-01-01",
+          "end": "2016-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2017-08-29)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08068000_00065_2017-01-01_2017-12-31.json.gz"
+      ],
+      "n_readings": 673,
+      "first": "2017-08-24 06:45:00+00:00",
+      "last": "2017-08-31 06:45:00+00:00",
+      "max_gap_min": 15.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 3868.8264000000004,
+      "peak_time": "2017-08-29 06:45:00+00:00",
+      "alert_threshold_cm": 3499,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10081,
+      "levels_cm": [
+        3499.104,
+        3529.584,
+        3560.064,
+        3590.544
+      ],
+      "threshold_source": "NWS CFKT2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08068000&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08068000&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:14+00:00",
+          "sha256": "a912ca126600afe40d84135545f0a8b92b199cc55119bc22bcb9e31e01383373",
+          "bytes": 2776362,
+          "gzip": true,
+          "site": "08068000",
+          "parameter_cd": "00065",
+          "start": "2017-01-01",
+          "end": "2017-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-01-26)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08068000_00065_2024-01-01_2024-12-31.json.gz"
+      ],
+      "n_readings": 673,
+      "first": "2024-01-21 00:30:00+00:00",
+      "last": "2024-01-28 00:30:00+00:00",
+      "max_gap_min": 15.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 3614.6232,
+      "peak_time": "2024-01-26 00:30:00+00:00",
+      "alert_threshold_cm": 3499,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10081,
+      "levels_cm": [
+        3499.104,
+        3529.584,
+        3560.064,
+        3590.544
+      ],
+      "threshold_source": "NWS CFKT2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08068000&startDT=2024-01-01&endDT=2024-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08068000&startDT=2024-01-01&endDT=2024-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:27+00:00",
+          "sha256": "ac8f7e6d513dcfb36ed0fb83cf428e47fdd8497a25cc3ea78911529cc5afe89d",
+          "bytes": 2775441,
+          "gzip": true,
+          "site": "08068000",
+          "parameter_cd": "00065",
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 08068000 West Fork San Jacinto River near Conroe, TX (NWS CFKT2) (2024-05-03)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_08068000_00065_2024-01-01_2024-12-31.json.gz"
+      ],
+      "n_readings": 663,
+      "first": "2024-04-28 19:45:00+00:00",
+      "last": "2024-05-05 19:00:00+00:00",
+      "max_gap_min": 75.0,
+      "gaps_over_60_min": [
+        {
+          "after": "2024-04-28 20:15:00+00:00",
+          "before": "2024-04-28 21:30:00+00:00",
+          "minutes": 75.0
+        }
+      ],
+      "peak_cm": 3713.0735999999997,
+      "peak_time": "2024-05-03 19:00:00+00:00",
+      "alert_threshold_cm": 3499,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10036,
+      "levels_cm": [
+        3499.104,
+        3529.584,
+        3560.064,
+        3590.544
+      ],
+      "threshold_source": "NWS CFKT2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=08068000&startDT=2024-01-01&endDT=2024-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=08068000&startDT=2024-01-01&endDT=2024-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:27+00:00",
+          "sha256": "ac8f7e6d513dcfb36ed0fb83cf428e47fdd8497a25cc3ea78911529cc5afe89d",
+          "bytes": 2775441,
+          "gzip": true,
+          "site": "08068000",
+          "parameter_cd": "00065",
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 01570500 Susquehanna River at Harrisburg, PA (NWS HARP1) (2018-07-26)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_01570500_00065_2018-01-01_2018-12-31.json.gz"
+      ],
+      "n_readings": 337,
+      "first": "2018-07-21 18:00:00+00:00",
+      "last": "2018-07-28 18:00:00+00:00",
+      "max_gap_min": 30.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 527.9136,
+      "peak_time": "2018-07-26 18:00:00+00:00",
+      "alert_threshold_cm": 335,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10081,
+      "levels_cm": [
+        335.28000000000003,
+        518.16,
+        609.6,
+        701.04
+      ],
+      "threshold_source": "NWS HARP1",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=01570500&startDT=2018-01-01&endDT=2018-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=01570500&startDT=2018-01-01&endDT=2018-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:14+00:00",
+          "sha256": "ae3f7a6b80e302cd5e9c39427066fb764aac49bb8e3dea578d0b318b3c9d95d9",
+          "bytes": 1387826,
+          "gzip": true,
+          "site": "01570500",
+          "parameter_cd": "00065",
+          "start": "2018-01-01",
+          "end": "2018-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-06-05)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_01646500_00065_2018-01-01_2018-12-31.json.gz"
+      ],
+      "n_readings": 669,
+      "first": "2018-05-31 08:30:00+00:00",
+      "last": "2018-06-07 07:30:00+00:00",
+      "max_gap_min": 15.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 380.0856,
+      "peak_time": "2018-06-05 08:30:00+00:00",
       "alert_threshold_cm": 152,
       "peak_bracketed_by_gap": false,
-      "minutes": 8641,
+      "minutes": 10021,
       "levels_cm": [
         152.4,
         304.8,
@@ -198,32 +1701,38 @@
         "moderate",
         "major"
       ],
-      "source": {
-        "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=01646500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
-        "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=01646500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
-        "http_status": 200,
-        "retrieved_utc": "2026-11-04T15:13:07+00:00",
-        "sha256": "67f029d1739d27856a8162816d05adf5096b469efde429913b3d0e474c89dfd7",
-        "bytes": 2741887,
-        "site": "01646500",
-        "parameter_cd": "00065",
-        "start": "2017-01-01",
-        "end": "2017-12-31"
-      }
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=01646500&startDT=2018-01-01&endDT=2018-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=01646500&startDT=2018-01-01&endDT=2018-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:16+00:00",
+          "sha256": "967ededafa794c442934884346bfd18c4de9201fa098c15baec7ba6ed4f198c0",
+          "bytes": 2664175,
+          "gzip": true,
+          "site": "01646500",
+          "parameter_cd": "00065",
+          "start": "2018-01-01",
+          "end": "2018-12-31"
+        }
+      ]
     },
     {
-      "event": "USGS 01646500 Potomac River near Wash, DC Little Falls peak 2 (2017-01-26)",
-      "file": "data/usgs_01646500_00065_2017-01-01_2017-12-31.json",
-      "n_readings": 577,
-      "first": "2017-01-23 06:15:00+00:00",
-      "last": "2017-01-29 06:15:00+00:00",
+      "event": "USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-11)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_01646500_00065_2018-01-01_2018-12-31.json.gz"
+      ],
+      "n_readings": 673,
+      "first": "2018-09-06 17:00:00+00:00",
+      "last": "2018-09-13 17:00:00+00:00",
       "max_gap_min": 15.0,
       "gaps_over_60_min": [],
-      "peak_cm": 211.5312,
-      "peak_time": "2017-01-26 06:15:00+00:00",
+      "peak_cm": 330.70799999999997,
+      "peak_time": "2018-09-11 17:00:00+00:00",
       "alert_threshold_cm": 152,
       "peak_bracketed_by_gap": false,
-      "minutes": 8641,
+      "minutes": 10081,
       "levels_cm": [
         152.4,
         304.8,
@@ -237,18 +1746,156 @@
         "moderate",
         "major"
       ],
-      "source": {
-        "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=01646500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
-        "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=01646500&startDT=2017-01-01&endDT=2017-12-31&parameterCd=00065&siteStatus=all",
-        "http_status": 200,
-        "retrieved_utc": "2026-11-04T15:13:07+00:00",
-        "sha256": "67f029d1739d27856a8162816d05adf5096b469efde429913b3d0e474c89dfd7",
-        "bytes": 2741887,
-        "site": "01646500",
-        "parameter_cd": "00065",
-        "start": "2017-01-01",
-        "end": "2017-12-31"
-      }
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=01646500&startDT=2018-01-01&endDT=2018-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=01646500&startDT=2018-01-01&endDT=2018-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:16+00:00",
+          "sha256": "967ededafa794c442934884346bfd18c4de9201fa098c15baec7ba6ed4f198c0",
+          "bytes": 2664175,
+          "gzip": true,
+          "site": "01646500",
+          "parameter_cd": "00065",
+          "start": "2018-01-01",
+          "end": "2018-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-09-29)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_01646500_00065_2018-01-01_2018-12-31.json.gz"
+      ],
+      "n_readings": 673,
+      "first": "2018-09-24 21:45:00+00:00",
+      "last": "2018-10-01 21:45:00+00:00",
+      "max_gap_min": 15.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 335.5848,
+      "peak_time": "2018-09-29 21:45:00+00:00",
+      "alert_threshold_cm": 152,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10081,
+      "levels_cm": [
+        152.4,
+        304.8,
+        365.76,
+        426.72
+      ],
+      "threshold_source": "NWS BRKM2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=01646500&startDT=2018-01-01&endDT=2018-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=01646500&startDT=2018-01-01&endDT=2018-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:16+00:00",
+          "sha256": "967ededafa794c442934884346bfd18c4de9201fa098c15baec7ba6ed4f198c0",
+          "bytes": 2664175,
+          "gzip": true,
+          "site": "01646500",
+          "parameter_cd": "00065",
+          "start": "2018-01-01",
+          "end": "2018-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2018-12-17)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_01646500_00065_2018-01-01_2018-12-31.json.gz"
+      ],
+      "n_readings": 673,
+      "first": "2018-12-12 18:15:00+00:00",
+      "last": "2018-12-19 18:00:00+00:00",
+      "max_gap_min": 15.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 355.09200000000004,
+      "peak_time": "2018-12-17 18:07:00+00:00",
+      "alert_threshold_cm": 152,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10066,
+      "levels_cm": [
+        152.4,
+        304.8,
+        365.76,
+        426.72
+      ],
+      "threshold_source": "NWS BRKM2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=01646500&startDT=2018-01-01&endDT=2018-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=01646500&startDT=2018-01-01&endDT=2018-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:16+00:00",
+          "sha256": "967ededafa794c442934884346bfd18c4de9201fa098c15baec7ba6ed4f198c0",
+          "bytes": 2664175,
+          "gzip": true,
+          "site": "01646500",
+          "parameter_cd": "00065",
+          "start": "2018-01-01",
+          "end": "2018-12-31"
+        }
+      ]
+    },
+    {
+      "event": "USGS 01646500 Potomac River near Washington DC Little Falls (NWS BRKM2) (2022-05-09)",
+      "file": null,
+      "files": [
+        "data/usgs10/usgs_01646500_00065_2022-01-01_2022-12-31.json.gz"
+      ],
+      "n_readings": 673,
+      "first": "2022-05-04 03:45:00+00:00",
+      "last": "2022-05-11 03:45:00+00:00",
+      "max_gap_min": 15.0,
+      "gaps_over_60_min": [],
+      "peak_cm": 309.6768,
+      "peak_time": "2022-05-09 03:45:00+00:00",
+      "alert_threshold_cm": 152,
+      "peak_bracketed_by_gap": false,
+      "minutes": 10081,
+      "levels_cm": [
+        152.4,
+        304.8,
+        365.76,
+        426.72
+      ],
+      "threshold_source": "NWS BRKM2",
+      "level_names": [
+        "action",
+        "minor",
+        "moderate",
+        "major"
+      ],
+      "source": [
+        {
+          "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=01646500&startDT=2022-01-01&endDT=2022-12-31&parameterCd=00065&siteStatus=all",
+          "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=01646500&startDT=2022-01-01&endDT=2022-12-31&parameterCd=00065&siteStatus=all",
+          "http_status": 200,
+          "retrieved_utc": "2026-11-05T05:05:24+00:00",
+          "sha256": "e79221072568a6184ded996b9b77472aecff659ad42c1722ab2bc8a41399c88b",
+          "bytes": 2765396,
+          "gzip": true,
+          "site": "01646500",
+          "parameter_cd": "00065",
+          "start": "2022-01-01",
+          "end": "2022-12-31"
+        }
+      ]
     }
   ],
   "battery_profiles": [

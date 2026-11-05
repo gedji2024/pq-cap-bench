@@ -208,9 +208,15 @@ def run(config: Path, results: Path) -> dict[str, pd.DataFrame]:
             st = hcfg.get("statistics", {"bootstrap": 10000, "seed": 0})
             harm.summarize_events(hd, st["bootstrap"], st["seed"]).to_csv(results / "model_harm_summary.csv", index=False)
             he.to_csv(results / "model_harm_events.csv", index=False)
+            if not he.empty:
+                harm.delay_distribution(he, hcfg["harm"]["delay_tolerance_min"], st["bootstrap"], st["seed"]).to_csv(
+                    results / "model_harm_delays.csv", index=False)
             for em in hm["events"]:
-                mp = (REPO_ROOT / em["file"]).with_suffix(".meta.json")
-                em["source"] = json.loads(mp.read_text()) if mp.exists() else {}
+                srcs = []
+                for f in em["files"]:
+                    mp = REPO_ROOT / (f.removesuffix(".gz").removesuffix(".json") + ".meta.json")
+                    srcs.append(json.loads(mp.read_text()) if mp.exists() else {})
+                em["source"] = srcs
             (results / "harm_meta.json").write_text(json.dumps(hm, indent=2, default=str))
     if (config / "devices").is_dir() and (config / "policies.yaml").exists():
         from . import devices as devm  # noqa: PLC0415

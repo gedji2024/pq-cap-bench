@@ -206,8 +206,8 @@ def test_run_end_to_end(tmp_path, cfgs):
     (cfg / "policies.yaml").write_text((CONFIG / "policies.yaml").read_text())
     import shutil
     shutil.copytree(CONFIG / "devices", cfg / "devices")
-    h = load_yaml(CONFIG / "harm.yaml")
-    h.update(schemes=["S4", "S6"], compromises=["none", "C1"], attacker={"strategies": ["drain"]}, events_rule=None,
+    h = {**load_yaml(CONFIG / "harm.yaml"), "workers": 1}
+    h.update(schemes=["S4", "S6"], compromises=["none", "C1"], attacker={"strategies": ["drain"]}, events_rule=None, events_prereg=None,
              battery={**h["battery"], "profiles": h["battery"]["profiles"][-1:]})
     (cfg / "harm.yaml").write_text(json.dumps(h))
     M.run(cfg, tmp_path)

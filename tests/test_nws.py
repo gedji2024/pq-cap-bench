@@ -50,10 +50,10 @@ def test_load_committed_and_thresholds():
 
 def test_run_uses_nws_thresholds():
     from pqcap.config import CONFIG, load_yaml
-    h = load_yaml(CONFIG / "harm.yaml")
+    h = {**load_yaml(CONFIG / "harm.yaml"), "workers": 1}
     a = load_yaml(CONFIG / "actions.yaml")
     evs = [{"name": "harvey", "file": h["series"]["file"], "start": "2017-08-27", "end": "2017-08-29", "usgs": "08074000"}]
-    cfg = {**h, "events": evs, "events_rule": None, "schemes": ["S6"], "compromises": ["C1"],
+    cfg = {**h, "events": evs, "events_rule": None, "events_prereg": None, "schemes": ["S6"], "compromises": ["C1"],
            "attacker": {"strategies": ["suppress"]}, "battery": {**h["battery"], "profiles": h["battery"]["profiles"][:1]}}
     df, _, meta = harm.run(cfg, a, REPO_ROOT)
     e = meta["events"][0]

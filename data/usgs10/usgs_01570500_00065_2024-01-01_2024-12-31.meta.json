@@ -1,0 +1,13 @@
+{
+  "query_url": "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=01570500&startDT=2024-01-01&endDT=2024-12-31&parameterCd=00065&siteStatus=all",
+  "final_url": "https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=01570500&startDT=2024-01-01&endDT=2024-12-31&parameterCd=00065&siteStatus=all",
+  "http_status": 200,
+  "retrieved_utc": "2026-11-05T05:05:21+00:00",
+  "sha256": "019f45f51f5c15cb7d284901b530d0a93ca4dac81f3e321ca77f54229579db5d",
+  "bytes": 1391023,
+  "gzip": true,
+  "site": "01570500",
+  "parameter_cd": "00065",
+  "start": "2024-01-01",
+  "end": "2024-12-31"
+}

@@ -90,8 +90,8 @@ def _fake_results(tmp_path, cfgs):  # noqa: F811
     from pqcap import pqm4 as _p
     _p.verification_cost(CONFIG, REPO_ROOT).to_csv(r / "mcu_verify_cost.csv", index=False)
     from pqcap import harm
-    h = load_yaml(CONFIG / "harm.yaml")
-    h.update(schemes=["S4", "S6"], compromises=["none", "C1"], attacker={"strategies": ["drain"]}, events_rule=None,
+    h = {**load_yaml(CONFIG / "harm.yaml"), "workers": 1}
+    h.update(schemes=["S4", "S6"], compromises=["none", "C1"], attacker={"strategies": ["drain"]}, events_rule=None, events_prereg=None,
              battery={**h["battery"], "profiles": h["battery"]["profiles"][-1:]})
     (cfg / "harm.yaml").write_text(json.dumps(h))
     hd, _, hm = harm.run(h, acfg, REPO_ROOT)
@@ -188,3 +188,17 @@ def test_harm_multi_event_tables(tmp_path):
     harm.summarize_events(d, 100, 1).to_csv(tmp_path / "model_harm_summary.csv", index=False)
     out = report.harm_summary_tables(d, tmp_path, lambda v: f"{v:.1f}")
     assert "statistics over 2 events" in out[0] and "0.25 [0.25, 0.25]" in out[2]
+
+
+def test_harm_delay_table(tmp_path):
+    d = pd.DataFrame([{"event": e, "battery_profile": "b", "scheme": "S6", "compromise": "C1", "strategy": "drain",
+                       "legit_policy": "-", "crossings": 2, "missed": 0, "delayed": 0, "max_delay_min": 5.0,
+                       "floor_violating_uplinks": 0, "died": False, "legit_unique_rejection_rate": 0.0}
+                      for e in ("e1", "e2")])
+    from pqcap import harm
+    harm.summarize_events(d, 100, 1).to_csv(tmp_path / "model_harm_summary.csv", index=False)
+    ev = pd.DataFrame([{"event": e, "battery_profile": "b", "scheme": "S6", "compromise": "C1", "strategy": "drain",
+                        "legit_policy": "-", "delay_min": x} for e, x in (("e1", 5.0), ("e1", None), ("e2", 40.0))])
+    harm.delay_distribution(ev, 30, 200, 1).to_csv(tmp_path / "model_harm_delays.csv", index=False)
+    out = report.harm_summary_tables(d, tmp_path, lambda v: f"{v:.1f}")
+    assert "F5 - detection-delay distribution" in out[0] and "inf (missed)" in out[1] and "statistics over 2" in out[2]

@@ -361,10 +361,13 @@ def section_harm(results: Path, config: Path) -> str:
     num = lambda v: f"{v:,.1f}"  # noqa: E731
     prov = []
     for e in m["events"]:
-        src = e.get("source", {})
+        srcs = e.get("source") or [{}]
+        srcs = srcs if isinstance(srcs, list) else [srcs]
+        files = e.get("files") or [e.get("file")]
         gaps = "; ".join(f"{g['after']} -> {g['before']} ({g['minutes']:.0f} min)" for g in e["gaps_over_60_min"]) or "none"
-        prov.append(f"- **{e['event']}**: `{e['file']}`, query `{src.get('query_url', '?')}`, retrieved "
-                    f"{src.get('retrieved_utc', '?')}, SHA-256 `{src.get('sha256', '?')[:16]}...`; {e['n_readings']} readings "
+        srcd = "; ".join(f"`{f}` (query `{x.get('query_url', '?')}`, retrieved {x.get('retrieved_utc', '?')}, SHA-256 "
+                         f"`{x.get('sha256', '?')[:16]}...`)" for f, x in zip(files, srcs + [{}] * (len(files) - len(srcs))))
+        prov.append(f"- **{e['event']}**: {srcd}; {e['n_readings']} readings "
                     f"{e['first']} to {e['last']}; peak {e['peak_cm'] / cfg['series']['ft_to_cm']:.2f} ft at {e['peak_time']}"
                     + (" - **peak reading lies at the edge of a >60-min gap: its timing and the levels near it are interpolation-dependent**" if e["peak_bracketed_by_gap"] else "")
                     + f". Gaps > 60 min ({cfg['series']['interpolation']} interpolation): {gaps}. "
@@ -410,7 +413,26 @@ def harm_summary_tables(d: pd.DataFrame, results: Path, num) -> list[str]:
         return md_table(t, {"events": lambda v: f"{int(v)}"})
     att = sm[sm.compromise != "none"]
     leg = sm[sm.compromise == "none"]
-    return [f"**D4 - statistics over {ev.shape[0]} events** (median [95 % percentile-bootstrap CI of the median], "
+    delays = []
+    dp = results / "model_harm_delays.csv"
+    if dp.exists():
+        dd = pd.read_csv(dp)
+        fm = lambda v: "inf (missed)" if v == float("inf") else f"{v:,.0f}"  # noqa: E731
+        t = dd[["battery_profile", "scheme", "compromise", "strategy", "legit_policy", "events", "crossings", "missed"]].copy()
+        for m in ("median_delay_min", "p90_delay_min", "max_delay_min"):
+            t[m.replace("_delay_min", "")] = [f"{fm(a)} [{fm(b)}, {fm(c)}]" for a, b, c in
+                                              zip(dd[m], dd[m + "_ci_lo"], dd[m + "_ci_hi"])]
+        t["late_or_missed"] = [f"{a:.2f} [{b:.2f}, {c:.2f}]" for a, b, c in
+                               zip(dd.late_or_missed_share, dd.late_or_missed_share_ci_lo, dd.late_or_missed_share_ci_hi)]
+        delays = [f"**F5 - detection-delay distribution over all crossings** (minutes; missed crossing = inf; "
+                  "[95 % CI] from a percentile bootstrap that resamples events, pre-registered in "
+                  "`config/events_prereg.yaml`; `late_or_missed` = share of crossings reported more than the "
+                  "tolerance after they occur, or never):",
+                  md_table(t, {"events": lambda v: f"{int(v)}", "crossings": lambda v: f"{int(v)}",
+                               "missed": lambda v: f"{int(v)}"})]
+    sup = (" Events come from the F5 pre-registered rule; the 2017 top-k event set of D4 is **SUPERSEDED**."
+           if dp.exists() else "")
+    return delays + [f"**D4 - statistics over {ev.shape[0]} events**{sup} (median [95 % percentile-bootstrap CI of the median], "
             "`statistics` in config/harm.yaml; per-event rows in `results/model_harm.csv`). Fractions are per crossing.",
             "**Under attack:**", tab(att, ["missed_frac", "delayed_frac", "max_delay_min", "floor_violating_uplinks", "died"]),
             "**Legitimate operation (D3)** - unique-request rejection rate (raw-retry rate superseded):",
