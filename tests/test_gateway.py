@@ -45,3 +45,27 @@ def test_s4e_filtering_gateway_can_forge():
     assert (s4e.accepted == s4e.catalogue).all()                                     # whole catalogue
     s6 = fp[fp.scheme == "S6"].pivot_table(index=["device", "policy"], columns="compromise", values="accepted")
     assert (s6["C1"] == s6["C1 + filtering gateway"]).all()                          # S6 gateway adds nothing
+
+
+def test_pass_fraction_f2():
+    dev = next(d for d in DEVS if d.model == "PS-LB")
+    tight = D.policy_for(dev, POL["levels"]["tight"])
+    up = gw.pass_fraction(dev, tight, "appskey_upper_bound")
+    ns = gw.pass_fraction(dev, tight, "ns_metadata")
+    fp = gw.pass_fraction(dev, tight, "fport_action_binding")
+    # the AppSKey filter is never weaker than a metadata filter (it forwards a subset)
+    assert all(up[a] <= fp[a] <= ns[a] for a in up)
+    # set_dr (4 B) shares its length with the admitted set_reporting_interval (4 B): the NS cannot drop it,
+    # the FPort binding can
+    assert ns["set_dr"] == 1.0 and fp["set_dr"] == 0.0
+    assert ns["set_alarm_threshold"] == 0.0                    # 8 B: no admitted command has that length
+    with pytest.raises(ValueError):
+        gw.pass_fraction(dev, tight, "bogus")
+
+
+def test_filter_points_savings_order():
+    f = gw.filter_savings(DEVS, POL, CH, 300, [50], LC, ["uniform_type", "uniform_payload"], gw.FILTER_POINTS)
+    p = f.pivot_table(index=["device", "policy", "mix", "region", "dr"], columns="filter_point", values="saved_s_per_h")
+    assert (p.appskey_upper_bound >= p.fport_action_binding - 1e-9).all()
+    assert (p.fport_action_binding >= p.ns_metadata - 1e-9).all()
+    assert set(f.filter_point) == set(gw.FILTER_POINTS)

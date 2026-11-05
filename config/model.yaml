@@ -70,7 +70,21 @@ revocation:
 
 # D6: gateway-side filtering of a C1 command flood (pqcap.gateway).
 d6:
-  # ASSUMED: the filtering gateway is given AppSKey (confidentiality only) so it can read command parameters.
-  gateway_reads_parameters: "ASSUMED -- AppSKey disclosed to the gateway; integrity key k_{d,e} is not"
+  # Original D6 point, kept as an UPPER BOUND: the filtering gateway is given AppSKey (confidentiality only).
+  gateway_reads_parameters: "gateway given AppSKey (upper bound) -- ASSUMED, not standard LoRaWAN; integrity key k_{d,e} is not given"
+  # F2: filtering points LoRaWAN allows. Source: LoRa Alliance TS001-1.0.4 "LoRaWAN L2 1.0.4 Specification",
+  # https://lora-alliance.org/wp-content/uploads/2021/11/LoRaWAN-Link-Layer-Specification-v1.0.4.pdf
+  # (accessed 2026-11-04, SHA-256 d193a4124e984bdfd608a920d7a428b62cbe717171e6fb7e066ab482baad75a5):
+  #  Sec. 1   "gateways relay transmissions between end-devices and a central Network Server"
+  #  Sec. 6.1.2 NwkSKey "is used by both the Network Server and the end-device to calculate and verify the MIC
+  #           ... of all data frames"; Sec. 6.1.3 AppSKey "is used by both the Application Server and the
+  #           end-device"; "Application payloads SHALL be encrypted end-to-end between the end-device and the
+  #           Application Server"
+  #  Sec. 4.3.3 Table 11: FRMPayload key K = NwkSKey if FPort = 0, AppSKey if FPort = 1..255
+  # Consequence: the NS sees DevAddr, FCnt, FPort (clear, MIC-covered) and the FRMPayload length; no
+  # application frame can carry parameters in clear, so an "in clear, integrity-protected" field can only
+  # be the FPort itself (fport_action_binding: one FPort per action, enforced by the device firmware --
+  # a firmware change, since Milesight uses one FPort (85) for every command).
+  filter_points: [appskey_upper_bound, ns_metadata, fport_action_binding]
   flood_mixes: [uniform_payload, uniform_type]   # attacker draws commands uniformly over payloads / over types
   devices_per_gateway: [10, 50, 200]

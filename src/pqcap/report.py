@@ -509,11 +509,36 @@ def section_d6(results: Path, model: dict) -> str:
     p = results / "d6_gateway_filter.csv"
     if not p.exists():
         return "_D6 not run_"
-    f, fp = pd.read_csv(p), pd.read_csv(results / "d6_forging_power.csv")
+    f_all, fp = pd.read_csv(p), pd.read_csv(results / "d6_forging_power.csv")
+    f = f_all[f_all.filter_point == "appskey_upper_bound"]
     out = [f"**D6 - an untrusted gateway verifies S6 envelopes with pk_PA and drops C1 flood commands outside the "
-           f"envelope bounds.** {model['d6']['gateway_reads_parameters']}. Flood = one command per Class A downlink "
-           "slot per device; saved airtime = transmitted flood airtime x out-of-bounds share. Ranges over "
+           f"envelope bounds.** Label: **{model['d6']['gateway_reads_parameters']}**. Flood = one command per Class A "
+           "downlink slot per device; saved airtime = transmitted flood airtime x out-of-bounds share. Ranges over "
            f"{f.device.nunique()} devices (Sec. 8a catalogue):"]
+    pts = [x for x in dict.fromkeys(f_all.filter_point) if x != "appskey_upper_bound"]
+    if pts:
+        n_mid = sorted(f_all.devices.unique())[len(f_all.devices.unique()) // 2]
+        fr = f_all[f_all.devices == n_mid]
+        t = (fr.groupby(["region", "dr", "filter_point", "mix", "policy"], sort=False)
+             .agg(out_frac_min=("out_of_envelope_fraction", "min"), out_frac_max=("out_of_envelope_fraction", "max"),
+                  saved_s_per_h_min=("saved_s_per_h", "min"), saved_s_per_h_max=("saved_s_per_h", "max"),
+                  saved_budget_share_min=("saved_share_of_budget", "min"),
+                  saved_budget_share_max=("saved_share_of_budget", "max")).reset_index())
+        t = t[[(r, d) in [tuple(c) for c in model["figure_channels"]] for r, d in zip(t.region, t.dr)]]
+        out.append(f"**F2 - realistic filtering points** (N = {n_mid} devices per gateway; sources and quotes in "
+                   "`config/model.yaml` d6, TS001-1.0.4 Sec. 1, 4.3.3 Table 11, 6.1.2, 6.1.3). Gateways only relay "
+                   "frames, so in standard LoRaWAN the filter runs at the network server, which holds NwkSKey but not "
+                   "AppSKey: `ns_metadata` = it sees DevAddr, FPort and FRMPayload length only, and drops commands "
+                   "whose length matches no admitted command; `fport_action_binding` = one FPort per action (FPort "
+                   "is sent in clear and covered by the NwkSKey MIC; the device rejects an action on another FPort), "
+                   "so the network server drops non-admitted action types. Parameter values are always "
+                   "AppSKey-encrypted (Table 11: K = AppSKey for FPort 1..255), so no standard frame can carry "
+                   "bounds fields in clear; only the FPort can serve as the clear, integrity-protected field. "
+                   "`appskey_upper_bound` repeats the original result.\n\n"
+                   + md_table(t, {"dr": lambda v: f"DR{int(v)}"}
+                              | {c: (lambda v: f"{v:.3f}") for c in t.columns if c.startswith(("out_", "saved_budget"))}
+                              | {c: (lambda v: f"{v:,.1f}") for c in t.columns if c.startswith("saved_s")}))
+        out.append("**Gateway given AppSKey (upper bound)**, all N:")
     for reg, dr in model["figure_channels"]:
         g = f[(f.region == reg) & (f.dr == dr)]
         t = (g.groupby(["mix", "policy", "devices"], sort=False)

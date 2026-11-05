@@ -982,7 +982,86 @@ Reference levels: [0.25, 0.5, 0.75, 0.9] (fractions of each event range); a cros
 
 ## 7h. D6: gateway-side filtering of a C1 flood
 
-**D6 - an untrusted gateway verifies S6 envelopes with pk_PA and drops C1 flood commands outside the envelope bounds.** ASSUMED -- AppSKey disclosed to the gateway; integrity key k_{d,e} is not. Flood = one command per Class A downlink slot per device; saved airtime = transmitted flood airtime x out-of-bounds share. Ranges over 4 devices (Sec. 8a catalogue):
+**D6 - an untrusted gateway verifies S6 envelopes with pk_PA and drops C1 flood commands outside the envelope bounds.** Label: **gateway given AppSKey (upper bound) -- ASSUMED, not standard LoRaWAN; integrity key k_{d,e} is not given**. Flood = one command per Class A downlink slot per device; saved airtime = transmitted flood airtime x out-of-bounds share. Ranges over 4 devices (Sec. 8a catalogue):
+
+**F2 - realistic filtering points** (N = 50 devices per gateway; sources and quotes in `config/model.yaml` d6, TS001-1.0.4 Sec. 1, 4.3.3 Table 11, 6.1.2, 6.1.3). Gateways only relay frames, so in standard LoRaWAN the filter runs at the network server, which holds NwkSKey but not AppSKey: `ns_metadata` = it sees DevAddr, FPort and FRMPayload length only, and drops commands whose length matches no admitted command; `fport_action_binding` = one FPort per action (FPort is sent in clear and covered by the NwkSKey MIC; the device rejects an action on another FPort), so the network server drops non-admitted action types. Parameter values are always AppSKey-encrypted (Table 11: K = AppSKey for FPort 1..255), so no standard frame can carry bounds fields in clear; only the FPort can serve as the clear, integrity-protected field. `appskey_upper_bound` repeats the original result.
+
+| region | dr | filter_point | mix | policy | out_frac_min | out_frac_max | saved_s_per_h_min | saved_s_per_h_max | saved_budget_share_min | saved_budget_share_max |
+|---|---|---|---|---|---|---|---|---|---|---|
+| US915 | DR8 | appskey_upper_bound | uniform_payload | tight | 0.990 | 1.000 | 171.5 | 197.8 | 0.048 | 0.055 |
+| US915 | DR13 | appskey_upper_bound | uniform_payload | tight | 0.990 | 1.000 | 6.9 | 8.5 | 0.002 | 0.002 |
+| EU868 | DR0 | appskey_upper_bound | uniform_payload | tight | 0.990 | 1.000 | 35.6 | 36.0 | 0.990 | 1.000 |
+| EU868 | DR5 | appskey_upper_bound | uniform_payload | tight | 0.990 | 1.000 | 27.5 | 33.9 | 0.765 | 0.943 |
+| US915 | DR8 | appskey_upper_bound | uniform_type | tight | 0.996 | 0.999 | 172.9 | 185.1 | 0.048 | 0.051 |
+| US915 | DR13 | appskey_upper_bound | uniform_type | tight | 0.996 | 0.999 | 6.9 | 7.7 | 0.002 | 0.002 |
+| EU868 | DR0 | appskey_upper_bound | uniform_type | tight | 0.996 | 0.999 | 35.9 | 36.0 | 0.996 | 0.999 |
+| EU868 | DR5 | appskey_upper_bound | uniform_type | tight | 0.996 | 0.999 | 27.7 | 30.8 | 0.771 | 0.856 |
+| US915 | DR8 | ns_metadata | uniform_payload | tight | 0.000 | 1.000 | 0.0 | 197.8 | 0.000 | 0.055 |
+| US915 | DR13 | ns_metadata | uniform_payload | tight | 0.000 | 1.000 | 0.0 | 8.5 | 0.000 | 0.002 |
+| EU868 | DR0 | ns_metadata | uniform_payload | tight | 0.000 | 1.000 | 0.0 | 36.0 | 0.000 | 1.000 |
+| EU868 | DR5 | ns_metadata | uniform_payload | tight | 0.000 | 1.000 | 0.0 | 33.9 | 0.000 | 0.943 |
+| US915 | DR8 | ns_metadata | uniform_type | tight | 0.571 | 0.800 | 106.0 | 142.2 | 0.029 | 0.040 |
+| US915 | DR13 | ns_metadata | uniform_type | tight | 0.571 | 0.800 | 4.2 | 6.0 | 0.001 | 0.002 |
+| EU868 | DR0 | ns_metadata | uniform_type | tight | 0.571 | 0.800 | 20.8 | 28.8 | 0.577 | 0.800 |
+| EU868 | DR5 | ns_metadata | uniform_type | tight | 0.571 | 0.800 | 16.8 | 23.9 | 0.466 | 0.665 |
+| US915 | DR8 | fport_action_binding | uniform_payload | tight | 0.000 | 1.000 | 0.0 | 197.8 | 0.000 | 0.055 |
+| US915 | DR13 | fport_action_binding | uniform_payload | tight | 0.000 | 1.000 | 0.0 | 8.5 | 0.000 | 0.002 |
+| EU868 | DR0 | fport_action_binding | uniform_payload | tight | 0.000 | 1.000 | 0.0 | 36.0 | 0.000 | 1.000 |
+| EU868 | DR5 | fport_action_binding | uniform_payload | tight | 0.000 | 1.000 | 0.0 | 33.9 | 0.000 | 0.943 |
+| US915 | DR8 | fport_action_binding | uniform_type | tight | 0.600 | 0.800 | 113.8 | 142.2 | 0.032 | 0.040 |
+| US915 | DR13 | fport_action_binding | uniform_type | tight | 0.600 | 0.800 | 4.8 | 6.0 | 0.001 | 0.002 |
+| EU868 | DR0 | fport_action_binding | uniform_type | tight | 0.600 | 0.800 | 22.5 | 28.8 | 0.625 | 0.800 |
+| EU868 | DR5 | fport_action_binding | uniform_type | tight | 0.600 | 0.800 | 19.1 | 23.9 | 0.532 | 0.665 |
+| US915 | DR8 | appskey_upper_bound | uniform_payload | medium | 0.900 | 0.999 | 155.9 | 197.7 | 0.043 | 0.055 |
+| US915 | DR13 | appskey_upper_bound | uniform_payload | medium | 0.900 | 0.999 | 6.3 | 8.5 | 0.002 | 0.002 |
+| EU868 | DR0 | appskey_upper_bound | uniform_payload | medium | 0.900 | 0.999 | 32.4 | 36.0 | 0.900 | 0.999 |
+| EU868 | DR5 | appskey_upper_bound | uniform_payload | medium | 0.900 | 0.999 | 25.0 | 33.9 | 0.695 | 0.941 |
+| US915 | DR8 | appskey_upper_bound | uniform_type | medium | 0.580 | 0.841 | 100.5 | 152.8 | 0.028 | 0.042 |
+| US915 | DR13 | appskey_upper_bound | uniform_type | medium | 0.580 | 0.841 | 4.0 | 6.2 | 0.001 | 0.002 |
+| EU868 | DR0 | appskey_upper_bound | uniform_type | medium | 0.580 | 0.841 | 20.9 | 30.6 | 0.580 | 0.850 |
+| EU868 | DR5 | appskey_upper_bound | uniform_type | medium | 0.580 | 0.841 | 16.1 | 24.7 | 0.448 | 0.686 |
+| US915 | DR8 | ns_metadata | uniform_payload | medium | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| US915 | DR13 | ns_metadata | uniform_payload | medium | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| EU868 | DR0 | ns_metadata | uniform_payload | medium | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| EU868 | DR5 | ns_metadata | uniform_payload | medium | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| US915 | DR8 | ns_metadata | uniform_type | medium | 0.000 | 0.200 | 0.0 | 34.7 | 0.000 | 0.010 |
+| US915 | DR13 | ns_metadata | uniform_type | medium | 0.000 | 0.200 | 0.0 | 1.4 | 0.000 | 0.000 |
+| EU868 | DR0 | ns_metadata | uniform_type | medium | 0.000 | 0.200 | 0.0 | 7.2 | 0.000 | 0.200 |
+| EU868 | DR5 | ns_metadata | uniform_type | medium | 0.000 | 0.200 | 0.0 | 5.6 | 0.000 | 0.154 |
+| US915 | DR8 | fport_action_binding | uniform_payload | medium | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| US915 | DR13 | fport_action_binding | uniform_payload | medium | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| EU868 | DR0 | fport_action_binding | uniform_payload | medium | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| EU868 | DR5 | fport_action_binding | uniform_payload | medium | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| US915 | DR8 | fport_action_binding | uniform_type | medium | 0.200 | 0.429 | 39.6 | 77.8 | 0.011 | 0.022 |
+| US915 | DR13 | fport_action_binding | uniform_type | medium | 0.200 | 0.429 | 1.7 | 3.1 | 0.000 | 0.001 |
+| EU868 | DR0 | fport_action_binding | uniform_type | medium | 0.200 | 0.429 | 8.1 | 15.2 | 0.225 | 0.423 |
+| EU868 | DR5 | fport_action_binding | uniform_type | medium | 0.200 | 0.429 | 6.8 | 12.4 | 0.189 | 0.343 |
+| US915 | DR8 | appskey_upper_bound | uniform_payload | loose | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| US915 | DR13 | appskey_upper_bound | uniform_payload | loose | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| EU868 | DR0 | appskey_upper_bound | uniform_payload | loose | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| EU868 | DR5 | appskey_upper_bound | uniform_payload | loose | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| US915 | DR8 | appskey_upper_bound | uniform_type | loose | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| US915 | DR13 | appskey_upper_bound | uniform_type | loose | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| EU868 | DR0 | appskey_upper_bound | uniform_type | loose | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| EU868 | DR5 | appskey_upper_bound | uniform_type | loose | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| US915 | DR8 | ns_metadata | uniform_payload | loose | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| US915 | DR13 | ns_metadata | uniform_payload | loose | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| EU868 | DR0 | ns_metadata | uniform_payload | loose | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| EU868 | DR5 | ns_metadata | uniform_payload | loose | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| US915 | DR8 | ns_metadata | uniform_type | loose | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| US915 | DR13 | ns_metadata | uniform_type | loose | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| EU868 | DR0 | ns_metadata | uniform_type | loose | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| EU868 | DR5 | ns_metadata | uniform_type | loose | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| US915 | DR8 | fport_action_binding | uniform_payload | loose | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| US915 | DR13 | fport_action_binding | uniform_payload | loose | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| EU868 | DR0 | fport_action_binding | uniform_payload | loose | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| EU868 | DR5 | fport_action_binding | uniform_payload | loose | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| US915 | DR8 | fport_action_binding | uniform_type | loose | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| US915 | DR13 | fport_action_binding | uniform_type | loose | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| EU868 | DR0 | fport_action_binding | uniform_type | loose | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+| EU868 | DR5 | fport_action_binding | uniform_type | loose | 0.000 | 0.000 | 0.0 | 0.0 | 0.000 | 0.000 |
+
+**Gateway given AppSKey (upper bound)**, all N:
 
 **US915 DR8**:
 

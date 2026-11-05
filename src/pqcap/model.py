@@ -233,7 +233,8 @@ def run(config: Path, results: Path) -> dict[str, pd.DataFrame]:
             pols = load_yaml(config / "policies.yaml")
             lc6 = lambda n, ch: link_cost(n, ch, model["fragment_header_bytes"])  # noqa: E731
             gw.filter_savings(devs_, pols, channels(load_yaml(config / "radio.yaml"), model), model["uplink_interval_s"],
-                              model["d6"]["devices_per_gateway"], lc6, model["d6"]["flood_mixes"]).to_csv(
+                              model["d6"]["devices_per_gateway"], lc6, model["d6"]["flood_mixes"],
+                              tuple(model["d6"].get("filter_points", ["appskey_upper_bound"]))).to_csv(
                 results / "d6_gateway_filter.csv", index=False)
             acfg_ = load_yaml(config / "actions.yaml")
             c_ = acfg_.get("count_state", {"alert_active": True, "battery_above_floor": True})
