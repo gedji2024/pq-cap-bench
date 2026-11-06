@@ -262,7 +262,9 @@ def test_section_agents(tmp_path):
     (ed / "E0.json").write_text(json.dumps({"prereg_commit": "c0ffee", "prereg_sha256": "ab", "design_sha256": "cd",
                                             "models": ["m1", "m2"]}))
     md = report.section_agents(ed)
-    assert "`c0ffee`" in md and "not finished" in md
+    assert "`c0ffee`" in md and "not finished" in md and "SUPERSEDED" not in md
+    (ed / "results_v0_sysdrop").mkdir()
+    assert "SUPERSEDED - first static run" in report.section_agents(ed)
     rd = ed / "results"
     rd.mkdir()
     pd.DataFrame([{"goal": "all", "k": 0, "n": 600, "rate": 0.0, "upper95_one_sided": 0.005,

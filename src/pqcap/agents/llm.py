@@ -4,6 +4,11 @@
 Inference with a fixed seed is deterministic on this host (checked in the pilot, PREREG Sec. 5), so a cached
 response is the response a re-query would give; conditions that share a conversation prefix reuse it. Every
 call records latency and token counts, and whether it was served from the cache.
+
+Role mapping: AgentDojo (pinned 089ed468) sends the system prompt as an OpenAI "developer" message. Ollama's chat
+templates know only system / user / assistant / tool and silently drop a "developer" message (checked on
+2026-11-06 for all three models: the prompt token count falls and a system-prompt codeword is not recalled), so
+`to_ollama` sends it as "system". The first static run (logs/static_v0_sysdrop) predates this fix: DEVIATIONS #1.
 """
 
 from __future__ import annotations
@@ -28,6 +33,14 @@ BASE_URL = "http://127.0.0.1:11434/v1"
 
 def client() -> openai.OpenAI:
     return openai.OpenAI(base_url=BASE_URL, api_key="ollama", timeout=600)
+
+
+def to_ollama(message, model: str) -> dict:
+    """AgentDojo's OpenAI message conversion, with "developer" sent as "system" (see module docstring)."""
+    m = dict(_message_to_openai(message, model))
+    if m["role"] == "developer":
+        m["role"] = "system"
+    return m
 
 
 class Cache:
@@ -70,7 +83,7 @@ class CachedLLM(OpenAILLM):
 
     def query(self, query, runtime, env=None, messages=(), extra_args=None):
         extra_args = extra_args or {}
-        req = {"model": self.model, "messages": [_message_to_openai(m, self.model) for m in messages],
+        req = {"model": self.model, "messages": [to_ollama(m, self.model) for m in messages],
                "temperature": self.temperature, "seed": self.seed}
         tools = [_function_to_openai(t) for t in runtime.functions.values()]
         if tools:
@@ -95,7 +108,7 @@ class CachedToolFilter:
         from agentdojo.types import ChatUserMessage, get_text_content_as_str, text_content_block_from_string  # noqa: PLC0415
         msgs = [*messages, ChatUserMessage(role="user", content=[text_content_block_from_string(self.prompt)])]
         L = self.llm
-        req = {"model": L.model, "messages": [_message_to_openai(m, L.model) for m in msgs], "temperature": L.temperature,
+        req = {"model": L.model, "messages": [to_ollama(m, L.model) for m in msgs], "temperature": L.temperature,
                "seed": L.seed, "tools": [_function_to_openai(t) for t in runtime.functions.values()], "tool_choice": "none"}
         if L.think is False:
             req["reasoning_effort"] = "none"

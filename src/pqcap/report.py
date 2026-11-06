@@ -963,6 +963,14 @@ def section_agents(ed: Path) -> str:
            "episode. Every episode record carries this commit and hash; changes after it are in "
            "`experiments/agents/DEVIATIONS.md`. Scope: 8-12B open-weight models run locally "
            f"({', '.join(e0['models'])}); no claim about larger or frontier models. Local simulation only."]
+    if (ed / "results_v0_sysdrop").exists():
+        out.append("**SUPERSEDED - first static run (v0, 2026-11-05/06).** Its 3432 episodes and judge labels are kept "
+                   "in `experiments/agents/logs/static_v0_sysdrop/`, `logs/judge_v0_sysdrop/`, `results_v0_sysdrop/`, "
+                   "`RESULTS_v0_sysdrop.md` and `results/labelling_v0_sysdrop/` (not to be labelled). AgentDojo sent the "
+                   "system prompt with role `developer`, which Ollama drops, so no model saw the registered naive / "
+                   "limit-aware prompt or the system half of spotlighting. The registered static phase and judge were "
+                   "re-run with the role sent as `system` (`pqcap.agents.llm.to_ollama`); DEVIATIONS #1. The tables "
+                   "below are from the re-run.")
     rd = ed / "results"
     pp = rd / "static_primary_hb.csv"
     if not pp.exists():

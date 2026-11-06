@@ -309,6 +309,8 @@ def test_run_episode_benign_and_attack(world):
     assert r["utility"] and r["error"] is None and r["receipts"][0]["aud_verified"]
     assert "reasoning_effort" in world.client.chat.completions.requests[0]
     assert "Current limits" in json.dumps(world.client.chat.completions.requests[0]["messages"][0]["content"])
+    assert world.client.chat.completions.requests[0]["messages"][0]["role"] == "system"   # not "developer" (DEV #1)
+    assert all(m["role"] != "developer" for q in world.client.chat.completions.requests for m in q["messages"])
     a = R.Spec("m", 0.0, 1, 0, "none", "naive", "SC08", "UT0_interval", "v1:EXT:drain:direct")
     ra = R.run_episode(world, a)
     assert ra["executed"] and ra["attack_receipts"][0]["value"] == 1 and not ra["utility"]

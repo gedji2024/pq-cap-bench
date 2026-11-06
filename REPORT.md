@@ -2025,6 +2025,8 @@ Tamarin models `formal/crisis.spthy`, `formal/freshness.spthy` (P4; a trace-incl
 
 **E0 - pre-registration.** `experiments/agents/PREREG.md` committed in `3b476340fbe290d89330a91cd782c7186e8ddea9` (SHA-256 `8166d90a8e2eb68fb9c16e5816ec6d0ad10fb0f3246cd6bbb2d39a6b77671a64`; `design.yaml` SHA-256 `e0fe10aff42d00d652656c6bdf5560a3d68826e9847111c193cd8372587faf71`) before any test-split episode. Every episode record carries this commit and hash; changes after it are in `experiments/agents/DEVIATIONS.md`. Scope: 8-12B open-weight models run locally (qwen3:8b, llama3.1:8b, mistral-nemo:12b); no claim about larger or frontier models. Local simulation only.
 
+**SUPERSEDED - first static run (v0, 2026-11-05/06).** Its 3432 episodes and judge labels are kept in `experiments/agents/logs/static_v0_sysdrop/`, `logs/judge_v0_sysdrop/`, `results_v0_sysdrop/`, `RESULTS_v0_sysdrop.md` and `results/labelling_v0_sysdrop/` (not to be labelled). AgentDojo sent the system prompt with role `developer`, which Ollama drops, so no model saw the registered naive / limit-aware prompt or the system half of spotlighting. The registered static phase and judge were re-run with the role sent as `system` (`pqcap.agents.llm.to_ollama`); DEVIATIONS #1. The tables below are from the re-run.
+
 _Test-split runs not finished; results will appear here._
 
 ## 10. Figures (numbered 9 before Task E took Sec. 9)
