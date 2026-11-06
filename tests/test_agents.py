@@ -614,3 +614,43 @@ def test_clopper_pearson_two_sided():
     assert hi == 1.0 and abs(lo - 0.025 ** (1 / 100)) < 1e-12
     lo, hi = ST.clopper_pearson(5, 10)
     assert lo < 0.5 < hi and math.isnan(ST.clopper_pearson(0, 0)[0])
+
+
+def test_syscheck(world):
+    from pqcap.agents import syscheck as SY
+    s = R.Spec("m", 0.0, 1, 0, "none", "limit_aware", "SC08", "UT0_interval", None)
+    req = SY.first_request(world, s)
+    assert req["messages"][0]["role"] == "system" and world.cache is not None and world.client.chat.completions.create
+    sysx = SY.text(req["messages"][0]["content"])
+    assert "Current limits" in sysx and SY.text("plain") == "plain" and SY.text(None) == ""
+
+    def fake(drop: bool, wrap: int = 3):
+        def post(path, body):
+            msgs = body.get("messages", [])
+            has = any(m["role"] == "system" for m in msgs) and not drop
+            n = 100 + (50 + wrap if has else 0)
+            if path == "/api/show":
+                return {"template": "{{ .System }}"}
+            if path == "/api/generate":
+                assert body["raw"] and body["prompt"] in (sysx.strip(), "")
+                return {"prompt_eval_count": 50}
+            if path == "/v1/chat/completions":
+                assert body["max_tokens"] == 1
+                return {"usage": {"prompt_tokens": n}}
+            if body.get("_debug_render_only"):
+                return {"_debug_info": {"rendered_template": (sysx if has else "") + "user"}}
+            assert body["options"]["num_predict"] == 1 and isinstance(msgs[0]["content"], str)
+            return {"prompt_eval_count": n}
+        return post
+
+    ok = SY.check(req, fake(False))
+    assert ok["ok"] and ok["diff_v1"] == 53 and ok["wrapper_tokens"] == 3 and ok["system_text_rendered"]
+    assert len(ok["template_sha256"]) == 64
+    bad = SY.check(req, fake(True))
+    assert not bad["ok"] and bad["diff_native"] == 0 and not bad["system_text_rendered"]
+    assert not SY.check(req, fake(False, wrap=40))["ok"]
+    b = SY.native({**req, "reasoning_effort": "none"})
+    assert b["think"] is False and b["tools"]
+    nosys = SY.check({**req, "messages": req["messages"][1:]}, fake(False))
+    assert not nosys["ok"] and nosys["system_chars"] == 0
+    assert "tools" not in SY.native({"model": "m", "messages": []})

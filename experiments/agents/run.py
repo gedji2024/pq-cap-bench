@@ -173,6 +173,54 @@ def determinism(n: int, seed: int):
     (HERE / "logs/determinism.json").write_text(json.dumps(out, indent=1))
 
 
+def syscheck(models: list[str]) -> bool:
+    """DEVIATIONS #1: per model, prompt_eval_count with and without the system prompt on the same episode (the
+    first benign host pair; naive under none and limit-aware under S6+F), with the rendered prompt and template.
+    Writes logs/syscheck/. Returns True when every check passes."""
+    from pqcap.agents import syscheck as SY  # noqa: PLC0415
+    w, cfg, atks = world("syscheck_unused")
+    dz = load_yaml(HERE / "design.yaml")
+    ut, sc = D.pairs(sorted(w.scenarios), dz["host_pairs"]["n"], dz["host_pairs"]["seed"])[0]
+    d = HERE / "logs/syscheck"
+    d.mkdir(parents=True, exist_ok=True)
+    summ = json.loads((d / "summary.json").read_text()) if (d / "summary.json").exists() else {}
+    for m in models:
+        for cond, prompt in (("none", "naive"), ("S6+F", "limit_aware")):
+            s = R.Spec(m, 0.0, dz["seed"], 0, cond, prompt, sc, ut, None)
+            r = {"checked_at": time.strftime("%Y-%m-%dT%H:%M:%S%z"), "spec_key": s.key(), **SY.check(SY.first_request(w, s))}
+            name = f"{m.replace(':', '_')}_{cond}_{prompt}"
+            (d / f"{name}.json").write_text(json.dumps(r, indent=1))
+            summ[name] = {k: v for k, v in r.items() if not k.startswith(("rendered", "template")) or k == "template_sha256"}
+            print(name, {k: r[k] for k in ("prompt_eval_count_with", "prompt_eval_count_without", "diff_native",
+                                           "diff_v1", "system_tokens_raw", "wrapper_tokens", "system_text_rendered",
+                                           "ok")}, flush=True)
+    (d / "summary.json").write_text(json.dumps(summ, indent=1, sort_keys=True))
+    return all(v["ok"] for v in summ.values())
+
+
+def determinism_sys(n: int, reps: int, seed: int):
+    """After the re-run: n episodes per model drawn from logs/static, each re-run `reps` times at the logged seed and
+    temperature with no cache. Compares the runs with each other and with the logged episode (final output and
+    receipts). Writes logs/determinism_sys.json."""
+    import random  # noqa: PLC0415
+    w, cfg, atks = world("determinism_unused")
+    w.cache = None
+    out = []
+    sig = lambda r: (r["final_output"], [(x["action"], x["value"], x["decision"]) for x in r["receipts"]])  # noqa: E731
+    for f in sorted((HERE / "logs/static").glob("*_t0.0.jsonl")):
+        recs = [json.loads(x) for x in f.read_text().splitlines() if x.strip()]
+        for r in random.Random(seed).sample(recs, min(n, len(recs))):
+            s = R.Spec(**r["spec"])
+            runs = [R.run_episode(w, s) for _ in range(reps)]
+            row = {"key": r["key"], "model": s.model, "condition": s.condition, "prompt": s.prompt,
+                   "runs_identical": all(sig(x) == sig(runs[0]) for x in runs),
+                   "receipts_identical": all(sig(x)[1] == sig(runs[0])[1] for x in runs),
+                   "same_as_logged": all(sig(x) == sig(r) for x in runs)}
+            out.append(row)
+            print(row, flush=True)
+    (HERE / "logs/determinism_sys.json").write_text(json.dumps(out, indent=1))
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("phase")
@@ -191,6 +239,11 @@ def main(argv=None):
                      ["naive"], models, p["adaptive_k"], hp, p["seed"])
     elif a.phase == "determinism":
         determinism(30, 11)
+    elif a.phase == "syscheck":
+        if not syscheck(a.models.split(",") if a.models else list(load_yaml(HERE / "config.yaml")["models"])):
+            sys.exit("system-prompt check FAILED (logs/syscheck/summary.json)")
+    elif a.phase == "determinism_sys":
+        determinism_sys(20, 2, 11)
     elif a.phase in ("static", "adaptive", "e6", "judge"):
         commit, sha = prereg()
         w, cfg, atks = world("main")
