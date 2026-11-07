@@ -469,3 +469,30 @@ def test_f3_ablation_clusters():
     assert k.loc[("with bound", "C1+C3"), "late_or_missed_share"] <= k.loc[("without bound", "C1+C3"),
                                                                            "late_or_missed_share"]
     assert pd.isna(k.loc[("with bound", "none"), "excess"]) and (t.resampling_units == 1).all()
+
+
+def test_f8_free_alert_uplinks_tied_to_commissioned_threshold():
+    """B2 (F8): with `commissioned`, S6+F alert uplinks are free of the budget only when the triggering sample is
+    >= theta_F; a threshold moved below theta_F no longer buys free I_max-rate uplinks. `configured` = old behaviour."""
+    theta_f, days = 610, 2
+    flat = np.full(days * 1440, 300.0)                                  # above a low threshold, below theta_F
+    init = {"threshold": 0}
+    run = lambda stage, mode, scheme="S6+F", **kw: harm.simulate(  # noqa: E731
+        stage, scheme, "C1+C3", None, {**_cfg(commissioning={"free_alert_uplinks": mode}),
+                                       "_max_alert_threshold": theta_f}, CAT, ENV, FW, budget=0, init=init, **kw)
+    conf, comm = run(flat, "configured")["stats"], run(flat, "commissioned")["stats"]
+    i_max, t_def = INV.alert_max_interval, HCFG["device"]["default_reporting_interval_min"]
+    assert conf["uplinks"] == 1 + (days * 1440 - 1) // i_max          # alert-rate uplinks, all free
+    assert comm["uplinks"] == 1 + (days * 1440 - 1) // t_def          # base schedule only (budget 0)
+    assert conf["budget_used"] == comm["budget_used"] == 0
+    default = harm.simulate(flat, "S6+F", "C1+C3", None, {**HCFG, "_profile_inv": INV, "_battery": BATS["LWL01/poor"],
+                            "_max_alert_threshold": theta_f}, CAT, ENV, FW, budget=0, init=init)["stats"]
+    assert default == conf                                              # default flag = configured
+    # flag only affects S6+F
+    assert run(flat, "commissioned", "S6")["stats"] == run(flat, "configured", "S6")["stats"]
+    # above theta_F the alert uplinks stay free: a crossing of theta_F is reported within I_max
+    stage = _hydrograph(1000, minutes=days * 1440)
+    r = run(stage, "commissioned")
+    sc = harm.score(stage, r["delivered"], [theta_f], 30)
+    assert sc["crossings"] > 0 and sc["missed"] == 0 and sc["delayed"] == 0
+    assert r["stats"]["budget_used"] == 0

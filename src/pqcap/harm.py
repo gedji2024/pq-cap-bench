@@ -266,7 +266,11 @@ def simulate(stage: np.ndarray, scheme: str, compromise: str, strategy: str | No
     An uplink is command-caused if it is requested by `request_immediate_uplink` or comes sooner than the default
     reporting interval would (with the alert-mode and low-battery invariants applied). With no budget left in the
     epoch the device keeps the default schedule and drops immediate-uplink requests; firmware alerts always go.
-    `init` (Task E): starting configuration {interval, threshold, enabled, soc_pct} instead of the defaults."""
+    `init` (Task E): starting configuration {interval, threshold, enabled, soc_pct} instead of the defaults.
+    F8 (cfg["commissioning"]["free_alert_uplinks"] == "commissioned", S6+F only): an uplink is free of the budget
+    as an alert uplink (alert onset, or the alert-mode base interval) only if its triggering sample (the onset
+    sample, or the last sample) is >= the commissioned threshold theta_F; otherwise the non-alert base interval
+    applies for budget accounting. Default "configured" = behaviour before F8."""
     dv = cfg["device"]
     bat = bat or cfg["_battery"]
     sch = Scheme(scheme, cat, env, fw, replaced=compromise.startswith("C1+C3"), op_key=compromise.endswith("+OP"),
@@ -283,6 +287,9 @@ def simulate(stage: np.ndarray, scheme: str, compromise: str, strategy: str | No
     cmd_pending = alert_pending = False
     epoch_min = int(cfg["energy_budget"]["epoch_h"] * 60) if budget is not None else 0
     cur_epoch, tokens = -1, 0
+    f8 = scheme == "S6+F" and (cfg.get("commissioning") or {}).get("free_alert_uplinks", "configured") == "commissioned"
+    theta_f = sch.max_alert_threshold
+    onset_v = last_v = -math.inf
     last_rejected = last_sent = None
     stats = {"budget_used": 0, "budget_denied_requests": 0, "legit_intents": 0, "legit_intents_rejected": 0, "floor_violating_uplinks": 0, "uplinks": 0, "legit_sent": 0, "legit_rejected": 0, "attacker_sent": 0, "attacker_accepted": 0,
              "minutes_below_floor": 0, "died_min": None, "min_soc_pct": 100.0, "floor_reached_min": None}
@@ -302,9 +309,11 @@ def simulate(stage: np.ndarray, scheme: str, compromise: str, strategy: str | No
             if d.enabled:
                 v = float(stage[t])
                 d.buffer.append((t, v))
+                last_v = v
                 now_alert = v >= d.threshold
                 if now_alert and not d.alert:
                     d.pending = alert_pending = True                # firmware alert -> immediate uplink
+                    onset_v = v
                 d.alert = now_alert
             else:
                 d.alert = False
@@ -315,9 +324,11 @@ def simulate(stage: np.ndarray, scheme: str, compromise: str, strategy: str | No
         if budget is not None:                                      # G3: energy budget per epoch
             if t // epoch_min != cur_epoch:
                 cur_epoch, tokens = t // epoch_min, budget
-            base = effective_interval(effective_interval(dv["default_reporting_interval_min"], d.alert, soc_pct, inv),
-                                      d.alert, soc_pct, floor)
-            if not (alert_pending or since >= base):
+            free_onset = alert_pending and (not f8 or onset_v >= theta_f)      # F8: tied to theta_F
+            alert_base = d.alert and (not f8 or last_v >= theta_f)
+            base = effective_interval(effective_interval(dv["default_reporting_interval_min"], alert_base, soc_pct, inv),
+                                      alert_base, soc_pct, floor)
+            if not (free_onset or since >= base):
                 if tokens <= 0:
                     if cmd_pending:
                         stats["budget_denied_requests"] += 1
