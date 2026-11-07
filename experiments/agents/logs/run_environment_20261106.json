@@ -1,0 +1,15 @@
+{
+ "recorded_at": "2026-11-06 22:38 EST (run paused, DEVIATIONS 3)",
+ "ollama_version": "0.40.14",
+ "ollama_env": {"OLLAMA_HOST": "127.0.0.1:11434", "OLLAMA_NUM_PARALLEL": "1", "OLLAMA_CONTEXT_LENGTH": "16384"},
+ "model_digests": {
+  "qwen3:8b": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+  "llama3.1:8b": "46e0c10c039e019119339687c3c1757cc81b9da49709a3b3924863ba87ca666e",
+  "mistral-nemo:12b": "e7e06d107c6c86ed0cf45445f1790720b5092149c4c95f4d965844e9afbfdc89"
+ },
+ "code_commit_at_run_start": "e79b6bc91cfe1db76b18b094bd1491f25e9c2b98",
+ "code_commit_head_at_pause": "eddc07fc5049b3207e85b8799793def1bdc94e78",
+ "note": "The static process was started at 07:28:33 on e79b6bc (role fix). Commits 00df190 and eddc07f added the syscheck/determinism_sys phases and the watchers; the running process did not load them, and the agent, runner, analysis and llm code is identical between e79b6bc and eddc07f.",
+ "prereg_commit": "3b476340fbe290d89330a91cd782c7186e8ddea9",
+ "agentdojo_commit": "089ed468cf3ed0322acc66b0211f26d9d90dbf60"
+}

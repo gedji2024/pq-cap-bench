@@ -1,0 +1,7 @@
+2026-11-06 08:53:53 EST  watcher started; run start 2026-11-06 07:28:33; cap 30.0 h -> 2026-11-07 13:28:33
+2026-11-06 09:25:57 EST  qwen3:8b done in 1.95 h (estimate 2.0 h); {"episodes": 1144, "breakdowns": 3, "timeouts": 1, "step_limit": 2, "other_errors": 0, "breakdowns_attacked": 3}
+2026-11-06 09:25:57 EST  projected end 2026-11-07 03:01 (unscaled 03:01, scaled x0.98 02:38); total 19.6 h vs cap 30.0 h; next: llama3.1:8b
+2026-11-06 10:01:07 EST  gap watcher started (gap > 15.0 min outside a logged timeout; end-time resolution 5 s)
+2026-11-06 22:22:59 EST  llama3.1:8b done in 12.95 h (estimate 8.1 h); {"episodes": 1144, "breakdowns": 139, "timeouts": 16, "step_limit": 123, "other_errors": 0, "breakdowns_attacked": 104}
+2026-11-06 22:22:59 EST  projected end 2026-11-07 12:24 (unscaled 07:52, scaled x1.48 12:24); total 28.9 h vs cap 30.0 h; next: mistral-nemo:12b
+2026-11-06 22:39:01 EST  run paused by user (host unavailable until Saturday): run.py static and both watchers stopped at 22:38:37 EST; mistral-nemo:12b partial episodes (54) moved to logs/static_discarded/ (DISCARDED); DEVIATIONS 3
