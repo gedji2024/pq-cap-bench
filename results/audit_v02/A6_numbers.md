@@ -1,5 +1,7 @@
 ### A6. Numbers in the new manuscript text against the results (report only)
 
+- **Commit on main.** `dd0dc3f` (cherry-picked from branch `audit/v0.2`; the merge of `theory/predictions` is `c78f357`).
+
 Scope: abstract, Sec. V (`sec:formal`), VII-E (`sec:replay`), VII-F (`sec:budget`), Tables V-VII (`tab:replay`, `tab:bstar`, `tab:budget`) of `manuscript/v0.2` at eef3dab, against `results/*.csv`, `theory/` outputs and `config/` at 5eb8615. Full table (claim, manuscript value, source file, source value, OK/DIFF): `results/audit_v02/details/A6_numbers.csv`; notes in `details/A6_details.md`.
 
 **136 numbers: 134 OK, 2 DIFF, 0 without a source.**

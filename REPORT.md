@@ -2123,3 +2123,122 @@ Full tables (per model, utility, hydrological impact, telemetry, decision mix, t
 - [fig3_commands_in_window_US915_DR8.png](figures/fig3_commands_in_window_US915_DR8.png) ([pdf](figures/fig3_commands_in_window_US915_DR8.pdf))
 - [fig4_delegation_depth.png](figures/fig4_delegation_depth.png) ([pdf](figures/fig4_delegation_depth.pdf))
 - [fig_g3_budget_sweep.png](figures/fig_g3_budget_sweep.png) ([pdf](figures/fig_g3_budget_sweep.pdf))
+
+## 11. Audit of manuscript v0.2 against the code
+
+### A1-A3, A5. Code against Algorithm 1, Theorems 2-3 and Proposition 1 (report only)
+
+- **Commit on main.** `1719479` (cherry-picked from branch `audit/v0.2`; the merge of `theory/predictions` is `c78f357`).
+
+Audited at 5eb8615 (main + `theory/predictions`, before B1-B4); full findings with file:line and concrete cases in `results/audit_v02/details/A1_A5_details.md`. Manuscript: branch `manuscript/v0.2` at eef3dab (`parts/formal.tex`, `parts/appendix.tex`). Not fixed here unless an item of B covers it.
+
+| Item | Sub-item | Verdict | Finding |
+|---|---|---|---|
+| A1 | Order of checks (tag, replay, handle, envelope, floor, approval) | OK | Same order in `check_s6f`; a `length` check comes first. |
+| A1 | Floor after the envelope check, same pre-state | OK | `check_s6f`. |
+| A1 | State changes only on acceptance (`envelope.py`) | OK | Counter committed only on full acceptance. |
+| A1 | Same, inside the harm replay | DIFF | `harm.simulate` increments `Dev.counter` (also the device's last counter) before the check, so it advances on a rejected command; no effect on outcomes (every later message uses counter + 1). |
+| A1 | Reason codes | DIFF | Code: `length`, `tag`, `replay`, `revoked`, `catalogue`, `expired`, `bounds`, `invariant:*`, `floor:*`, `op_token_required`; Alg. 1: tag / replay / handle / block / floor / approval. |
+| A1 | Extra checks / MAC input | DIFF | Catalogue membership, reserved = 0 and the `target` byte are checked and MACed; Alg. 1 MACs h, n, a, theta only. |
+| A1 | Approval by a fresh chain reveal | DIFF | The device takes a boolean `op_token_valid`; it keeps no chain state, so "one reveal = one approval" is not enforced in `check_s6f` (the hash chain is in `opapproval.py`, separately). |
+| A1 | Binding | DIFF at 5eb8615, fixed by B1 | B1 signs `"PQCAP-ENV-v1" \|\| DevEUI \|\| enc(E)`; the manuscript writes the tag as `"env"`. |
+| A2 | (i) threshold never above theta_F, C1 and C1+C3 without OP | OK (latent DIFF) | Holds for all 41 events. If a gauge had no NWS action stage, `_max_alert_threshold` = 0 would mean no cap; a Task E `init` threshold could also start above theta_F. Neither occurs in the replay. |
+| A2 | (ii) effective interval <= I_max in alert above the floor | OK | Firmware-floor layer of `effective_interval` survives envelope replacement (C1+C3). |
+| A2 | (iii) `since >= base` never charged / blocked | OK | |
+| A2 | (iv) sample at tau delivered by the next uplink | OK | Buffer filled before the uplink decision, flushed at every uplink. |
+| A3 | Uplink classification; tokens <= B per started epoch; non-alert free uplinks >= T apart; onsets <= ceil(samples/2) per run | OK | |
+| A3 | Alert free uplinks >= I_max apart | OK, unstated assumption | Needs T >= I_max (60 >= 15 here); not stated in the manuscript. |
+| A3 | `bound_adaptive.py` = U_B | OK | Term-by-term; \|r\| in minutes, inclusive, open run counted up to t. Covers C1 (band_lo) only; C1+C3 added in B4 (`theory/bound_robust.py`, which reproduces `bound_adaptive_bandlo.csv` exactly). |
+| A3 | `bound.py` = U_B | DIFF | Implements the Corollary-1 fixed-threshold form A(t). Its `band_lo` / `zero` modes count onsets at a fixed threshold, so they are not valid bounds for an adversary that toggles the threshold; PREDICTIONS P1 ("band_lo for any C1 adversary") and P4 rely on them. Replaced by `bound_robust.py` (B4). |
+| A3 | K | OK | |
+| A3 | t_U | DIFF (minor) | `floor_time.py` uses U > K with the A(t) form, not U_B > K - 1; still a valid lower bound for the code's strict floor. |
+| A3 | **Corollary 1, B*(tau)** | **DIFF (proof step fails)** | The corollary divides by j + 1 with j = floor(tau / T_e), but the budget tokens available by tau + I_max are B (floor((tau + I_max) / T_e) + 1). For tau in [T_e - I_max, T_e) the bound is too large by up to a factor (j + 2)/(j + 1). With p = 10 this hits tau = 7190 (last sample of epoch 4): the manuscript formula gives B* = 27.6 / 79.6 / 131.6 (SOC0 40 / 60 / 80), the corrected one (j = floor((tau + I_max)/T_e)) gives 23.0 / 66.3 / 109.7. The lower ends of the manuscript's ranges (27.6-32.4, 79.6-84.4, 131.6-136.4, formal.tex and Table VI) come exactly from that tau; the corrected ranges are 23.0-32.4, 66.3-84.4, 109.7-136.4 (27.8 / 79.8 / 131.8 if tau = 7190 is excluded). Arithmetic: K = (SOC0 - 20)/100 x 1300, tau over the epoch-4 sample instants 5760-7190. PREDICTIONS.md also uses K - 1 instead of the manuscript's K - 2 (32.6 vs 32.4). |
+| A5 | k = ceil(x / (P - 2)) for x > P, 2-byte header, P = 53 at DR8 | OK | `radio.py`. |
+| A5 | Worst / expected delivery time | DIFF (minor) | The code adds the 1 s RX1 delay and the last frame's airtime to k T_up. |
+| A5 | Messages per window, push time | OK | Same small tail on push time. |
+| A5 | Frame counts 50 / 1 / 2 / 14 / 48 | OK | Reproduced from `results/sizes.csv` (`max`), token body 80 B, envelope 112 B, crisis command constants. |
+| A5 | "1 frame for a chain reveal" | DIFF | The reveal alone is 1 frame; the disable message carrying it (24 B command + 32 B reveal = 56 B) is 2 frames in `results/f6_op_approval.csv`. Also the S6-R envelope is 51 frames and an ML-DSA-44 token with a 16-byte-tag command 49. |
+
+Theorem steps that do not hold for the code: none of Theorems 2-3 (and A4 finds no counterexample). Corollary 1 as written does not follow from Theorem 3 at epoch boundaries (above).
+
+### A4. Falsification test of Theorems 2 and 3 (property-based)
+
+- **Commit on main.** `eed424e` (cherry-picked from branch `audit/v0.2`; the merge of `theory/predictions` is `c78f357`).
+
+- **Test.** `tests/test_theorems.py` (hypothesis, derandomised, 500 cases): random synthetic hydrographs (2-5 days, random peak, base, timing, width, random-walk noise), theta_F in the S6 envelope band [460, 760] cm, C1 or C1+C3 (no operator secrets), budget B in [0, 120] per day, initial charge 25-100 %, 300 / 1,300 / 5,000 uplinks per battery. Adversary: at every downlink a uniformly random command that S6+F accepts in the current state (interval, immediate uplink, threshold in [band_lo, theta_F] under C1 and [0, theta_F] under C1+C3; never disable) or nothing; mixed per case with probability greed in {0, 0.5, 0.9, 1} with the most draining accepted command. All these ranges are test CHOICEs. `harm.simulate` gained only instrumentation (an `adversary` callable and `trace=True` returning uplink minutes and the state of charge); behaviour is unchanged when they are not used (the whole earlier test suite is unchanged and passes).
+- **Checks.** Theorem 3: N(t) <= U_B(t) at every minute, with U_B written from the manuscript formula (theta_lo = band_lo under C1, 0 under C1+C3). Theorem 2: every crossing of theta_F, theta_F + 50 or theta_F + 200 cm whose first sample instant tau has stage >= theta_F at every sample instant of [tau, tau + I_max] and charge >= the floor there has the sample at tau delivered by tau + I_max. A second test shows both checkers catch fabricated violations.
+- **Result.** No counterexample in 500 hypothesis cases. A separate diagnostic run of 1,000 cases with the same generator (seed 0, not part of the suite) gives min over t of U_B(t) - N(t) = 0 (the bound is attained, so it is tight for these adversaries, not vacuous) and 1,684 crossings that met Theorem 2's conditions, all reported on time.
+
+### A6. Numbers in the new manuscript text against the results (report only)
+
+- **Commit on main.** `dd0dc3f` (cherry-picked from branch `audit/v0.2`; the merge of `theory/predictions` is `c78f357`).
+
+Scope: abstract, Sec. V (`sec:formal`), VII-E (`sec:replay`), VII-F (`sec:budget`), Tables V-VII (`tab:replay`, `tab:bstar`, `tab:budget`) of `manuscript/v0.2` at eef3dab, against `results/*.csv`, `theory/` outputs and `config/` at 5eb8615. Full table (claim, manuscript value, source file, source value, OK/DIFF): `results/audit_v02/details/A6_numbers.csv`; notes in `details/A6_details.md`.
+
+**136 numbers: 134 OK, 2 DIFF, 0 without a source.**
+
+| Claim | Manuscript | Source | Value | Status |
+|---|---|---|---|---|
+| VII-F: "up to 75 per day the excess stays at or below 0.05" | <= 0.05 | `results/g3_budget_sweep.csv`, B = 75, `excess` | 0.0519 (Table VII prints 0.052) | DIFF |
+| VII-F: "the intervals overlap at 50 and 75" (legit p90 CI vs no budget [8, 15]) | 50, 75 only | `g3_budget_sweep.csv` `legit_p90_delay_min_ci_*` | 30: [13, 18] also overlaps; 10 and 20: [15, 18] touch at 15 | DIFF |
+
+Caveats on rows marked OK: the B* ranges reproduce from the manuscript's own Corollary 1, which fails at an epoch boundary (A3 row above; corrected ranges there); "P_U = 0.94 at 50 per day" matches only SOC0 60, which the sentence does not state; "250 min at the slowest data rate" is the US915 DR8 value (EU868 DR0-2: 260 min); "smallest margin 0.54 h" recomputed as 0.5407 h over the 524 of 615 runs where both times are finite; the formal.tex note "the artifact at b52235a signs enc(E) without id_D" is stale after B1.
+
+### B1. Device binding of the envelope (S6 signature, S4-E MAC)
+
+- **Commit on main.** `e1cb700` (cherry-picked from branch `audit/v0.2`; the merge of `theory/predictions` is `c78f357`).
+
+- **Change.** The S6 envelope signature and the S4-E envelope MAC now cover `b"PQCAP-ENV-v1" || dev_id || enc(E)`, where `dev_id` is the device's 8-byte DevEUI (known to the device, not transmitted) and `enc(E)` the 112-byte envelope (`envelope.envelope_message`; `install_envelope_s6(blob, sig, verify, dev_id, ...)`, `install_envelope_s4e(blob, mac, key, dev_id, ...)`). Domain tag and DevEUI length are fixed by the audit prompt (POLICY), not free parameters.
+- **Test.** `tests/test_threat.py::test_envelope_bound_to_device`: an ML-DSA-44 envelope signed for device A installs on A and is rejected by B; a signature over the unbound 112 bytes is rejected; the same for an S4-E MAC under a policy key shared by A and B; a DevEUI of the wrong length raises.
+- **Sizes on the air.** Unchanged: the transmitted envelope is still the 112-byte encoding plus the authenticator; the DevEUI and tag are only in the signed message. `results/sizes.csv` (signature sizes, from `pqcap bench`) and every model output that uses envelope sizes are byte-identical: `pqcap model` re-run on 2026-11-07 at the audit head (B1, B2 and the B3 strategy in the code) left every tracked file in `results/` unchanged (`git status results/` clean). `sizes.csv` comes from `pqcap bench` (not re-run; B1 does not touch it).
+- **Manuscript.** Sec. V "Binding" writes the message as `"env" || id_D || enc(E)`; the code uses the tag `PQCAP-ENV-v1` given in the audit prompt. Report only (the manuscript is not edited): the tag string in the manuscript and the code differ.
+
+### B2. F8: free alert uplinks tied to the commissioned threshold
+
+- **Commit on main.** `e31c142` (cherry-picked from branch `audit/v0.2`; the merge of `theory/predictions` is `c78f357`).
+
+- **Change.** New config flag `commissioning.free_alert_uplinks` in `config/harm.yaml` (CHOICE): `configured` (default; behaviour before F8, so every earlier result is reproduced) or `commissioned`. With `commissioned`, for S6+F only, `harm.simulate` treats an uplink as a free alert uplink (alert onset, or the alert-mode base interval I_max) only if the triggering sample (the onset sample, or the last sample) is >= theta_F (`_max_alert_threshold`, the gauge's NWS action stage); otherwise the non-alert base interval T applies for budget accounting. The uplink rule itself (when the device wants to send) is unchanged; only which uplinks are charged to the G3 budget changes. The other schemes ignore the flag.
+- **Test.** `tests/test_harm.py::test_f8_free_alert_uplinks_tied_to_commissioned_threshold`: threshold 0 under C1+C3, flat stage 300 cm (below theta_F = 610 cm), budget 0, 2 days: `configured` gives 1 + floor(2879/15) = 192 free uplinks, `commissioned` gives 1 + floor(2879/60) = 48 (base schedule only); with no flag in the config the run is identical to `configured`; S6 is identical under both values; a crossing of theta_F on a synthetic hydrograph is still reported with no delay under `commissioned` and uses no budget.
+- **Results.** No existing result changes: the default is `configured`, and `pqcap model` re-run on 2026-11-07 at the audit head left every tracked file in `results/` unchanged (`git status results/` clean). F8-on runs are in B3/B4.
+
+### B3. Attacker `drain_lowthreshold` (lower the threshold, then drain)
+
+- **Commit on main.** `b9e4bf3` (cherry-picked from branch `audit/v0.2`; the merge of `theory/predictions` is `c78f357`).
+
+- **Strategy** (`harm.attacker_command`): at each downlink, first the lowest alert threshold S6+F accepts (band_lo under C1, the catalogue minimum 0 under C1+C3; the commissioning floor caps it at theta_F from above, not below), then `drain` (shortest accepted interval, else an immediate uplink). Test: `tests/test_harm.py::test_drain_lowthreshold_strategy_b3`.
+- **Runs** (`scripts/b3_drain_lowthreshold.py`, `harm.budget_sweep` unchanged): S6+F, LWL01/poor, SOC0 60 % (ASSUMED, as G3), the registered G3 budget grid (contains the derived budget 50), 41 events, C1 and C1+C3, `drain` and `drain_lowthreshold`, F8 off (`configured`) and on (`commissioned`); storm-cluster bootstrap 95 % CIs as G3. Output: `results/b3_drain_lowthreshold.csv` (new file; no existing result overwritten). Reproduction: the `drain` / C1 / F8-off rows equal `results/g3_budget_sweep.csv` exactly (excess, CI, legitimate p90 at every budget). Bounds from `theory/bound_robust.py` (B4) and, for F8 on, the fixed-threshold P_upper of `theory/bound.py` ('actual').
+
+**Excess late-or-missed share over the legitimate baseline (95 % CI), and P_upper:**
+
+| Budget / day | Compromise | `drain` (F8 off = on) | `drain_lowthreshold`, F8 off | `drain_lowthreshold`, F8 on | P_upper F8 off (C1: band_lo; C1+C3: 0) | P_upper F8 on (theta_F) | P_upper fixed threshold |
+|---|---|---|---|---|---|---|---|
+| 30 | C1 | 0.007 [0.000, 0.028] | 0.037 [0.006, 0.090] | 0.007 [0.000, 0.028] | 0.104 | 0.052 | 0.044 |
+| **50 (derived)** | C1 | 0.037 [0.000, 0.077] | **0.059 [0.020, 0.109]** | **0.037 [0.000, 0.077]** | 0.178 | 0.074 | 0.052 |
+| 75 | C1 | 0.052 [0.019, 0.099] | 0.163 [0.102, 0.242] | 0.059 [0.022, 0.104] | 0.407 | 0.222 | 0.141 |
+| 85 | C1 | 0.385 [0.291, 0.495] | 0.630 [0.500, 0.765] | 0.556 [0.412, 0.708] | 0.911 | 0.867 | 0.867 |
+| 10 | C1+C3 | 0.000 [0.000, 0.000] | 0.022 [0.000, 0.039] | 0.000 [0.000, 0.000] | 0.948 | 0.052 | 0.007 |
+| 30 | C1+C3 | 0.007 [0.000, 0.028] | 0.689 [0.565, 0.818] | 0.007 [0.000, 0.028] | 0.948 | 0.052 | 0.044 |
+| **50 (derived)** | C1+C3 | 0.037 [0.000, 0.077] | **0.659 [0.550, 0.740]** | **0.037 [0.000, 0.077]** | 0.948 | 0.074 | 0.052 |
+| 75 | C1+C3 | 0.052 [0.019, 0.099] | 0.741 [0.649, 0.821] | 0.059 [0.022, 0.104] | 0.956 | 0.222 | 0.141 |
+| 85 | C1+C3 | 0.385 [0.291, 0.495] | 0.770 [0.686, 0.847] | 0.556 [0.412, 0.708] | 0.956 | 0.867 | 0.867 |
+
+All budgets: `theory/check_vs_replay_b4.csv`. No budget: `drain` 0.511, `drain_lowthreshold` 0.711 (C1) and 0.785 (C1+C3), F8 has no effect without a budget.
+
+- **Does the attack exceed `drain` at the derived budget?** Yes. C1: 0.059 vs 0.037 (point estimates; the CIs overlap). C1+C3: 0.659 vs 0.037 (CIs disjoint). Lowering the threshold to 0 makes the device stay in alert mode, whose I_max-rate uplinks are free of the budget, so the budget no longer protects the battery (the PREDICTIONS P4 case, now measured).
+- **Does F8 bring it back?** At and below the derived budget, yes, exactly: with F8 on, `drain_lowthreshold` equals `drain` at every budget <= 50 under both C1 and C1+C3 (identical point estimates and CIs). At 75 it is 0.059 vs 0.052. Above the cliff (85 and more) F8 still lowers the excess but it stays above `drain` (0.556 vs 0.385 at 85): the battery reaches the floor in both cases and the lowered threshold changes which crossings are lost.
+- **Against the bounds:** every one of the 96 budgeted grid points is within its robust P_upper (smallest margin 0.037); every F8-on point is also within the fixed-threshold P_upper of `bound.py`.
+- **Runtime note:** `drain_lowthreshold` under C1 scans every threshold below band_lo at each downlink (stateless attacker), 944 s / 684 s per sweep vs 12 s for `drain`.
+
+### B4. Theory scripts for F8 and C1+C3; check_vs_replay re-run
+
+- **Commit on main.** `f6981b8` (cherry-picked from branch `audit/v0.2`; the merge of `theory/predictions` is `c78f357`).
+
+- **`theory/bound_robust.py`** (new; never calls `harm.simulate`): the manuscript's U_B for every adversary class, `theta_lo` = band_lo (C1, F8 off), 0 (C1+C3, F8 off), theta_F (F8 on, any adversary, C1 or C1+C3; also the fixed-threshold case), K = (SOC0 - 20)/100 x 1300, certification as `bound.py` (stage >= theta_F at every sample instant of [tau, tau + I_max] and U_B(tau + I_max) <= K - 1). Output `theory/bound_robust.csv` (SOC0 40/60/80 x the G3 budget grid). Its C1 / F8-off column reproduces `theory/bound_adaptive_bandlo.csv` exactly (24 of 24 points).
+- **Why theta_F with F8 on:** an alert uplink is free only if its triggering sample is >= theta_F, so free alert uplinks (onsets and I_max-rate) lie in runs of R(theta_F) whatever threshold the adversary sets; non-alert free uplinks stay >= T apart and charged ones <= B per started epoch. Executable check: `tests/test_theorems.py::test_theorems_hold_with_f8` (300 cases, C1 and C1+C3, random and greedy adversaries, no counterexample).
+- **`theory/bound.py`:** header now states that its `band_lo` / `zero` modes are not valid for threshold-moving adversaries (A3); its numbers are unchanged.
+- **`theory/check_vs_replay.py`** gains check (3): the B3 replay against the robust P_upper, written to `theory/check_vs_replay_b4.csv`. Re-run on 2026-11-07 after `bound.py`, `floor_time.py` and `bound_robust.py` (`floor_time_lower_bound.csv` unchanged):
+  - floor-time check: 615 runs, 0 violations, smallest slack 0.54 h (unchanged);
+  - G3 excess <= P_upper ('actual'): 33 grid points, 0 violations (unchanged);
+  - B3 excess <= robust P_upper: 96 grid points, 0 violations (smallest margin 0.037); with F8 on, also <= the fixed-threshold P_upper at all 40 points where it is defined.
+- **P_upper at SOC0 60** (share of crossings not certified): C1 / F8 off 0.178 at B = 50 and 0.407 at 75; C1+C3 / F8 off 0.948 from B = 10 (vacuous); F8 on (both) 0.074 at 50 and 0.222 at 75. With F8 on the bound no longer depends on the compromise level.
+- **PREDICTIONS.md** is left as written before the replay (it is a pre-replay record); the corrections are here and in A3: P1's "band_lo for any C1 adversary" needs `bound_robust.py`, P4 is now tested (B3), and its closed form uses K - 1 where the manuscript uses K - 2.

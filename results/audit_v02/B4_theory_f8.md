@@ -1,5 +1,7 @@
 ### B4. Theory scripts for F8 and C1+C3; check_vs_replay re-run
 
+- **Commit on main.** `f6981b8` (cherry-picked from branch `audit/v0.2`; the merge of `theory/predictions` is `c78f357`).
+
 - **`theory/bound_robust.py`** (new; never calls `harm.simulate`): the manuscript's U_B for every adversary class, `theta_lo` = band_lo (C1, F8 off), 0 (C1+C3, F8 off), theta_F (F8 on, any adversary, C1 or C1+C3; also the fixed-threshold case), K = (SOC0 - 20)/100 x 1300, certification as `bound.py` (stage >= theta_F at every sample instant of [tau, tau + I_max] and U_B(tau + I_max) <= K - 1). Output `theory/bound_robust.csv` (SOC0 40/60/80 x the G3 budget grid). Its C1 / F8-off column reproduces `theory/bound_adaptive_bandlo.csv` exactly (24 of 24 points).
 - **Why theta_F with F8 on:** an alert uplink is free only if its triggering sample is >= theta_F, so free alert uplinks (onsets and I_max-rate) lie in runs of R(theta_F) whatever threshold the adversary sets; non-alert free uplinks stay >= T apart and charged ones <= B per started epoch. Executable check: `tests/test_theorems.py::test_theorems_hold_with_f8` (300 cases, C1 and C1+C3, random and greedy adversaries, no counterexample).
 - **`theory/bound.py`:** header now states that its `band_lo` / `zero` modes are not valid for threshold-moving adversaries (A3); its numbers are unchanged.

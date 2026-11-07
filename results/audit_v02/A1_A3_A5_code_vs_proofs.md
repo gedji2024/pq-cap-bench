@@ -1,5 +1,7 @@
 ### A1-A3, A5. Code against Algorithm 1, Theorems 2-3 and Proposition 1 (report only)
 
+- **Commit on main.** `1719479` (cherry-picked from branch `audit/v0.2`; the merge of `theory/predictions` is `c78f357`).
+
 Audited at 5eb8615 (main + `theory/predictions`, before B1-B4); full findings with file:line and concrete cases in `results/audit_v02/details/A1_A5_details.md`. Manuscript: branch `manuscript/v0.2` at eef3dab (`parts/formal.tex`, `parts/appendix.tex`). Not fixed here unless an item of B covers it.
 
 | Item | Sub-item | Verdict | Finding |

@@ -1,5 +1,7 @@
 ### B3. Attacker `drain_lowthreshold` (lower the threshold, then drain)
 
+- **Commit on main.** `b9e4bf3` (cherry-picked from branch `audit/v0.2`; the merge of `theory/predictions` is `c78f357`).
+
 - **Strategy** (`harm.attacker_command`): at each downlink, first the lowest alert threshold S6+F accepts (band_lo under C1, the catalogue minimum 0 under C1+C3; the commissioning floor caps it at theta_F from above, not below), then `drain` (shortest accepted interval, else an immediate uplink). Test: `tests/test_harm.py::test_drain_lowthreshold_strategy_b3`.
 - **Runs** (`scripts/b3_drain_lowthreshold.py`, `harm.budget_sweep` unchanged): S6+F, LWL01/poor, SOC0 60 % (ASSUMED, as G3), the registered G3 budget grid (contains the derived budget 50), 41 events, C1 and C1+C3, `drain` and `drain_lowthreshold`, F8 off (`configured`) and on (`commissioned`); storm-cluster bootstrap 95 % CIs as G3. Output: `results/b3_drain_lowthreshold.csv` (new file; no existing result overwritten). Reproduction: the `drain` / C1 / F8-off rows equal `results/g3_budget_sweep.csv` exactly (excess, CI, legitimate p90 at every budget). Bounds from `theory/bound_robust.py` (B4) and, for F8 on, the fixed-threshold P_upper of `theory/bound.py` ('actual').
 
