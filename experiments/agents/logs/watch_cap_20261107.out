@@ -1,0 +1,5 @@
+/Users/gpdk/Documents/Back_Up_Windows/Documents/PHD/THESIS/pq-cap-bench/.venv/bin/python: can't open file '/Users/gpdk/Documents/Back_Up_Windows/Documents/PHD/THESIS/pq-cap-bench/experiments/agents/experiments/agents/watch_cap.py': [Errno 2] No such file or directory
+2026-11-07 09:19:09 EST  watcher started; run start 2026-11-06 18:07:53; cap 30.0 h -> 2026-11-08 00:07:53; finished before: {'qwen3:8b': 1.95, 'llama3.1:8b': 12.95}
+2026-11-07 14:27:16 EST  mistral-nemo:12b done in 5.13 h (estimate 5.5 h); {"episodes": 1144, "breakdowns": 58, "timeouts": 0, "step_limit": 58, "other_errors": 0, "breakdowns_attacked": 47}
+2026-11-07 14:27:16 EST  projected end 2026-11-07 19:35 (unscaled 18:27, scaled x1.28 19:35); total 25.5 h vs cap 30.0 h; next: judge
+2026-11-07 14:27:17 EST  all models finished within the projection; judge proceeds

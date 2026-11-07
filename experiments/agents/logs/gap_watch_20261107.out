@@ -1,0 +1,3 @@
+/Users/gpdk/Documents/Back_Up_Windows/Documents/PHD/THESIS/pq-cap-bench/.venv/bin/python: can't open file '/Users/gpdk/Documents/Back_Up_Windows/Documents/PHD/THESIS/pq-cap-bench/experiments/agents/experiments/agents/gap_watch.py': [Errno 2] No such file or directory
+2026-11-07 09:19:09 EST  gap watcher started (gap > 15.0 min outside a logged timeout; end-time resolution 5 s)
+2026-11-07 15:02:16 EST  gap watcher stopped (0 possible host-sleep gaps; judge finished: True)

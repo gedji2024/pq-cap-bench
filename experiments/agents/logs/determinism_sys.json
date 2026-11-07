@@ -1,0 +1,542 @@
+[
+ {
+  "key": "c8f351b7f425575c6ac635b2",
+  "model": "llama3.1:8b",
+  "condition": "S6",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "ff0118e5ced2a26385c9e13e",
+  "model": "llama3.1:8b",
+  "condition": "S6-R",
+  "prompt": "naive",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "15596b905660cf62cbdc6d99",
+  "model": "llama3.1:8b",
+  "condition": "S6",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "90399f5df2c0974ff45fb7e4",
+  "model": "llama3.1:8b",
+  "condition": "S6+F",
+  "prompt": "naive",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "83bba69f97b900c780aaa249",
+  "model": "llama3.1:8b",
+  "condition": "spotlighting_with_delimiting",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "9613257cba312fdfea316050",
+  "model": "llama3.1:8b",
+  "condition": "spotlighting_with_delimiting",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "7e0d991da3db04190c0c30c2",
+  "model": "llama3.1:8b",
+  "condition": "S6+F",
+  "prompt": "naive",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "fb5578628215cff86a13b274",
+  "model": "llama3.1:8b",
+  "condition": "S6-R",
+  "prompt": "naive",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "2861b84f74f4cb46bbd138c7",
+  "model": "llama3.1:8b",
+  "condition": "spotlighting_with_delimiting",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "9b7f20eb9a286d3e3e63740c",
+  "model": "llama3.1:8b",
+  "condition": "tool_filter",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "f525d6500ec8fa197f2875dc",
+  "model": "llama3.1:8b",
+  "condition": "S6",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "bb7bc1a90e308bcd703ec639",
+  "model": "llama3.1:8b",
+  "condition": "S4",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "dd6fe440b4a6133e4f04341e",
+  "model": "llama3.1:8b",
+  "condition": "transformers_pi_detector",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "595b492c562aff2a6915acd3",
+  "model": "llama3.1:8b",
+  "condition": "tool_filter",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "8ed3da3f37cbfbd0a2c073d6",
+  "model": "llama3.1:8b",
+  "condition": "S6+F",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "17e62346d70144bd240794ba",
+  "model": "llama3.1:8b",
+  "condition": "none",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "3d9f33a815055ac09ecc17c7",
+  "model": "llama3.1:8b",
+  "condition": "S4-E",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "1702f55345541bbed665d4cd",
+  "model": "llama3.1:8b",
+  "condition": "S6",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "e78bae7aa6bf079c3049087e",
+  "model": "llama3.1:8b",
+  "condition": "spotlighting_with_delimiting",
+  "prompt": "naive",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "4e75cae370a4e1987a0c1d49",
+  "model": "llama3.1:8b",
+  "condition": "none",
+  "prompt": "naive",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "f6254ec3e48c6cd47f92b6d4",
+  "model": "mistral-nemo:12b",
+  "condition": "S6",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "c99f7439b1ac30aae16a3601",
+  "model": "mistral-nemo:12b",
+  "condition": "S6-R",
+  "prompt": "naive",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "17f9e62f1a1384bec9844138",
+  "model": "mistral-nemo:12b",
+  "condition": "S6",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "eccf8c19f5e3a33527f31497",
+  "model": "mistral-nemo:12b",
+  "condition": "S6+F",
+  "prompt": "naive",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": false
+ },
+ {
+  "key": "852237a38cd5c3d9e31f2ec6",
+  "model": "mistral-nemo:12b",
+  "condition": "spotlighting_with_delimiting",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "f6c4d59368ee9390c817ff44",
+  "model": "mistral-nemo:12b",
+  "condition": "spotlighting_with_delimiting",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "22500a5ee459ca8230f95fdb",
+  "model": "mistral-nemo:12b",
+  "condition": "S6+F",
+  "prompt": "naive",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "c53583cf8e25c298d8be2e2e",
+  "model": "mistral-nemo:12b",
+  "condition": "S6-R",
+  "prompt": "naive",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "2329e81f7f09d40f604f19ed",
+  "model": "mistral-nemo:12b",
+  "condition": "spotlighting_with_delimiting",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "f22e36b9e500859595675561",
+  "model": "mistral-nemo:12b",
+  "condition": "tool_filter",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "44192d1a0ca766c6f0f82401",
+  "model": "mistral-nemo:12b",
+  "condition": "S6",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "532ea365ffbb4a04087c98d7",
+  "model": "mistral-nemo:12b",
+  "condition": "S4",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "0efd3180d2deb6c99c96f558",
+  "model": "mistral-nemo:12b",
+  "condition": "transformers_pi_detector",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "509a1937d6fe4bf47cf51a3e",
+  "model": "mistral-nemo:12b",
+  "condition": "tool_filter",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "31ffc9774815b1d9408eb890",
+  "model": "mistral-nemo:12b",
+  "condition": "S6+F",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "0a29248152dfaa155ececc0d",
+  "model": "mistral-nemo:12b",
+  "condition": "none",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "973419528290a5e5e6999962",
+  "model": "mistral-nemo:12b",
+  "condition": "S4-E",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "02146f26127398670b2fbe35",
+  "model": "mistral-nemo:12b",
+  "condition": "S6",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "5650f27c9b8c099dae366a94",
+  "model": "mistral-nemo:12b",
+  "condition": "spotlighting_with_delimiting",
+  "prompt": "naive",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "e9e38b2592abaa596e911a43",
+  "model": "mistral-nemo:12b",
+  "condition": "none",
+  "prompt": "naive",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "550d581872999f74cd935d00",
+  "model": "qwen3:8b",
+  "condition": "S6",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": false
+ },
+ {
+  "key": "74db698c49827634e4ef1539",
+  "model": "qwen3:8b",
+  "condition": "S6-R",
+  "prompt": "naive",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "ef434d147378b7ef617cd9d5",
+  "model": "qwen3:8b",
+  "condition": "S6",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "b5d8cb7779a1efbde357953a",
+  "model": "qwen3:8b",
+  "condition": "S6+F",
+  "prompt": "naive",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "023b237c8da1707932359665",
+  "model": "qwen3:8b",
+  "condition": "spotlighting_with_delimiting",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "a42ee0969fb971f52b67363a",
+  "model": "qwen3:8b",
+  "condition": "spotlighting_with_delimiting",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "d3f23602ab8c9df35fb9ee0a",
+  "model": "qwen3:8b",
+  "condition": "S6+F",
+  "prompt": "naive",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "2276048ca74f7ed101643b98",
+  "model": "qwen3:8b",
+  "condition": "S6-R",
+  "prompt": "naive",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "920155473bc1c458e6d4fb62",
+  "model": "qwen3:8b",
+  "condition": "spotlighting_with_delimiting",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "6f88175061c40b1b27913068",
+  "model": "qwen3:8b",
+  "condition": "tool_filter",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "4cfc527bd66ec6c65899c4a5",
+  "model": "qwen3:8b",
+  "condition": "S6",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "263a8072c8738a7a4c912bee",
+  "model": "qwen3:8b",
+  "condition": "S4",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "35aa0af3b59684f4c02d89b0",
+  "model": "qwen3:8b",
+  "condition": "transformers_pi_detector",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "66d30469415220e43ee4ee3c",
+  "model": "qwen3:8b",
+  "condition": "tool_filter",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "7238b37e1fddadce04d6a834",
+  "model": "qwen3:8b",
+  "condition": "S6+F",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "1ce747c70e10fe1d014d1985",
+  "model": "qwen3:8b",
+  "condition": "none",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "6e47b056e0d4d4173ac07493",
+  "model": "qwen3:8b",
+  "condition": "S4-E",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "b7243373ef2db563ec00869a",
+  "model": "qwen3:8b",
+  "condition": "S6",
+  "prompt": "limit_aware",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "c6311f6a38afcd537f415971",
+  "model": "qwen3:8b",
+  "condition": "spotlighting_with_delimiting",
+  "prompt": "naive",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ },
+ {
+  "key": "ae5dacc9f907fc666b4afd98",
+  "model": "qwen3:8b",
+  "condition": "none",
+  "prompt": "naive",
+  "runs_identical": true,
+  "receipts_identical": true,
+  "same_as_logged": true
+ }
+]
