@@ -1,6 +1,10 @@
 """Analytic upper bound on drain harm for S6+F (Theorem 3 in the manuscript draft).
 Uses ONLY the stage series, the NWS levels and the configuration constants; it never calls harm.simulate.
-P(B) = share of crossings that are not certified safe = upper bound on the attack excess late-or-missed share."""
+P(B) = share of crossings that are not certified safe = upper bound on the attack excess late-or-missed share.
+Audit v0.2 (A3/B4): this is the Corollary-1 form (alert onsets counted at ONE fixed threshold). It is a valid bound
+for an adversary that does not move the threshold ('actual'). The 'band_lo' / 'zero' modes are NOT valid bounds for
+an adversary that moves the threshold (toggling it creates onsets that this count misses); for those, and for F8,
+use theory/bound_robust.py (the manuscript's U_B)."""
 import sys, json, math
 sys.path.insert(0, str(__import__('pathlib').Path(__file__).resolve().parents[1]/'src'))
 from pathlib import Path

@@ -166,3 +166,13 @@ def test_bound_and_checker_detect_violations():
     except AssertionError as e:
         assert "counterexample" in str(e)
     assert check_theorem2(np.full(100, 0.0), late, 600, -1) == 0
+
+
+@settings(max_examples=300, deadline=None, derandomize=True)
+@given(**CASE)
+def test_theorems_hold_with_f8(**k):
+    """B4: with F8 on (`commissioned`), U_B with theta_lo = theta_F bounds N(t) for every adversary (C1 and C1+C3),
+    since an alert uplink is free only when its triggering sample is >= theta_F; Theorem 2 still holds."""
+    stage, r, _ = run_case(**k, f8="commissioned")
+    check_theorem3(stage, r, k["theta_f"], k["budget"], k["seed"])
+    check_theorem2(stage, r, k["theta_f"], k["seed"])

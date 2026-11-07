@@ -1,0 +1,11 @@
+### B4. Theory scripts for F8 and C1+C3; check_vs_replay re-run
+
+- **`theory/bound_robust.py`** (new; never calls `harm.simulate`): the manuscript's U_B for every adversary class, `theta_lo` = band_lo (C1, F8 off), 0 (C1+C3, F8 off), theta_F (F8 on, any adversary, C1 or C1+C3; also the fixed-threshold case), K = (SOC0 - 20)/100 x 1300, certification as `bound.py` (stage >= theta_F at every sample instant of [tau, tau + I_max] and U_B(tau + I_max) <= K - 1). Output `theory/bound_robust.csv` (SOC0 40/60/80 x the G3 budget grid). Its C1 / F8-off column reproduces `theory/bound_adaptive_bandlo.csv` exactly (24 of 24 points).
+- **Why theta_F with F8 on:** an alert uplink is free only if its triggering sample is >= theta_F, so free alert uplinks (onsets and I_max-rate) lie in runs of R(theta_F) whatever threshold the adversary sets; non-alert free uplinks stay >= T apart and charged ones <= B per started epoch. Executable check: `tests/test_theorems.py::test_theorems_hold_with_f8` (300 cases, C1 and C1+C3, random and greedy adversaries, no counterexample).
+- **`theory/bound.py`:** header now states that its `band_lo` / `zero` modes are not valid for threshold-moving adversaries (A3); its numbers are unchanged.
+- **`theory/check_vs_replay.py`** gains check (3): the B3 replay against the robust P_upper, written to `theory/check_vs_replay_b4.csv`. Re-run on 2026-11-07 after `bound.py`, `floor_time.py` and `bound_robust.py` (`floor_time_lower_bound.csv` unchanged):
+  - floor-time check: 615 runs, 0 violations, smallest slack 0.54 h (unchanged);
+  - G3 excess <= P_upper ('actual'): 33 grid points, 0 violations (unchanged);
+  - B3 excess <= robust P_upper: 96 grid points, 0 violations (smallest margin 0.037); with F8 on, also <= the fixed-threshold P_upper at all 40 points where it is defined.
+- **P_upper at SOC0 60** (share of crossings not certified): C1 / F8 off 0.178 at B = 50 and 0.407 at 75; C1+C3 / F8 off 0.948 from B = 10 (vacuous); F8 on (both) 0.074 at 50 and 0.222 at 75. With F8 on the bound no longer depends on the compromise level.
+- **PREDICTIONS.md** is left as written before the replay (it is a pre-replay record); the corrections are here and in A3: P1's "band_lo for any C1 adversary" needs `bound_robust.py`, P4 is now tested (B3), and its closed form uses K - 1 where the manuscript uses K - 2.

@@ -19,3 +19,20 @@ for _, x in d.iterrows():
     else: continue
     n += 1; bad += x.excess > pu + 1e-12
 print(f'excess <= P_upper: {n} grid points, violations {bad}')
+# (3) audit v0.2 B4: B3 replay (drain and drain_lowthreshold, C1 and C1+C3, F8 off/on) against the robust U_B
+# (bound_robust.py): F8 off -> theta_lo = band_lo (C1) / 0 (C1+C3); F8 on -> theta_F for every adversary. With F8
+# on, also against the fixed-threshold P_upper of bound.py ('actual', Corollary-1 form). Run after bound_robust.py.
+b3p = res / 'b3_drain_lowthreshold.csv'
+if b3p.exists():
+    rb = pd.read_csv(here / 'bound_robust.csv'); b3 = pd.read_csv(b3p); rows = []
+    for _, x in b3[b3.budget_per_epoch.notna()].iterrows():
+        mode = 'f8on_or_fixed' if x.f8 == 'commissioned' else ('C1_f8off' if x.compromise == 'C1' else 'C1C3_f8off')
+        q = rb[(rb['mode'] == mode) & (rb.soc0 == x.initial_soc_pct) & (rb.B == x.budget_per_epoch)]
+        g = o[f'soc{int(x.initial_soc_pct)}_actual']
+        fixed = g.loc[x.budget_per_epoch, 'P_upper'] if x.budget_per_epoch in g.index else float('nan')
+        rows.append({'compromise': x.compromise, 'strategy': x.strategy, 'f8': x.f8, 'B': int(x.budget_per_epoch),
+                     'excess': x.excess, 'excess_ci_lo': x.excess_ci_lo, 'excess_ci_hi': x.excess_ci_hi, 'bound_mode': mode,
+                     'P_upper': q.P_upper.iloc[0], 'P_upper_fixed_threshold': fixed,
+                     'within_bound': bool(x.excess <= q.P_upper.iloc[0] + 1e-12)})
+    cv = pd.DataFrame(rows); cv.to_csv(here / 'check_vs_replay_b4.csv', index=False)
+    print(f'B4: {len(cv)} B3 grid points, excess > robust P_upper: {(~cv.within_bound).sum()}')
