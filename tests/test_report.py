@@ -288,3 +288,17 @@ def test_section_agents(tmp_path):
     for h in ("**Harmful commands accepted", "0.100 [0.000, 0.400] (1/10)", "**Agent false-report rate",
               "**Refusal vs ignore - PROVISIONAL", "0.091", "**Secondary tests**", "hold only for the tested"):
         assert h in md, h
+
+
+def test_agents_threats(tmp_path):
+    ed = tmp_path
+    assert "Self-judging" in report.agents_threats(ed) and "Determinism" not in report.agents_threats(ed)
+    (ed / "logs").mkdir()
+    (ed / "logs/determinism_sys.json").write_text(json.dumps(
+        [{"key": "a", "model": "m", "runs_identical": True, "same_as_logged": False},
+         {"key": "b", "model": "m", "runs_identical": True, "same_as_logged": True}]))
+    (ed / "logs/resend_check.json").write_text(json.dumps({"summary": {
+        "agent": {"n": 30, "identical": 29, "identical_ignoring_ids": 30},
+        "judge": {"n": 30, "identical": 30, "label_identical": 30}}}))
+    t = report.agents_threats(ed)
+    assert "m: run-to-run 2/2, same as logged 1/2" in t and "agent calls 29/30" in t and "labels 30/30" in t

@@ -1020,9 +1020,46 @@ def section_agents(ed: Path) -> str:
                              "pairs": lambda v: "-" if pd.isna(v) else f"{int(v)}",
                              "only_a": lambda v: "-" if pd.isna(v) else f"{int(v)}",
                              "only_b": lambda v: "-" if pd.isna(v) else f"{int(v)}"})]
+    out.append(agents_threats(ed))
     out.append("Full tables (per model, utility, hydrological impact, telemetry, decision mix, transcripts, deviations): "
                "`experiments/agents/RESULTS.md`. These results hold only for the tested models and attacks.")
     return "\n\n".join(out)
+
+
+def agents_threats(ed: Path) -> str:
+    """Threats to validity of the Task E re-run; the check results are read from the logs when present."""
+    t = ["**Threats to validity.**",
+         "- *Self-judging:* the registered judge, mistral-nemo:12b, is also one of the three agent models, so it labels "
+         "its own transcripts. The judge is kept as registered; every judge-based split is PROVISIONAL until the "
+         "60-item human sample is labelled, and `scripts/agreement.py` reports Cohen's kappa overall, for the "
+         "mistral-nemo:12b transcripts and for the other two models separately.",
+         "- *v0 fault:* the first static run sent the system prompt with a role Ollama drops; it is SUPERSEDED and "
+         "the static phase and judge were re-run (DEVIATIONS 1, 1a, 1b).",
+         "- *Pilot decisions without the system prompt:* the pilot ran with the same fault; the UT3 wording, the JSON "
+         "rule, the power figures and the runtime estimate were set on agents that did not see the system prompt "
+         "(DEVIATIONS 1c). None was re-tuned.",
+         "- *Pause:* the run was paused after llama3.1:8b for host availability and mistral-nemo:12b was re-run from "
+         "scratch on the next day with the same Ollama version, digests, settings and code (preflight in DEVIATIONS 3 "
+         "and 4); the 30 h cap applies to summed active time.",
+         "- *Cache handling:* requests are cached by model digest and full request; every hit in the re-run is on a "
+         "request first sent earlier in the same run. Replayed responses of discarded episodes and the v0 judge's "
+         "rows were removed from the cache before they could be reused (DEVIATIONS 4)."]
+    dp = ed / "logs/determinism_sys.json"
+    if dp.exists():
+        d = pd.DataFrame(json.loads(dp.read_text()))
+        g = d.groupby("model").agg(n=("key", "size"), runs_identical=("runs_identical", "sum"),
+                                   same_as_logged=("same_as_logged", "sum")).reset_index()
+        t.append("- *Determinism re-check* (20 logged episodes per model, run twice with no cache; identical / total): "
+                 + "; ".join(f"{r.model}: run-to-run {r.runs_identical}/{r.n}, same as logged {r.same_as_logged}/{r.n}"
+                             for r in g.itertuples()) + ".")
+    rp = ed / "logs/resend_check.json"
+    if rp.exists():
+        s = json.loads(rp.read_text())["summary"]
+        t.append(f"- *Resend check* (same-run cache hits resent with the cache off): agent calls {s['agent']['identical']}"
+                 f"/{s['agent']['n']} identical ({s['agent']['identical_ignoring_ids']}/{s['agent']['n']} ignoring "
+                 f"tool-call ids); judge calls {s['judge']['identical']}/{s['judge']['n']} identical, labels "
+                 f"{s['judge']['label_identical']}/{s['judge']['n']}.")
+    return "\n".join(t)
 
 
 def run(config: Path, results: Path, figures: Path) -> None:
