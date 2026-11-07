@@ -5,7 +5,9 @@ logs/judge/judge.jsonl; a record's end time is the poll at which it is first see
 consecutive end times are more than GAP_MIN apart and the later episode is not a logged timeout
 (error APITimeoutError), the gap is a possible host sleep: it is logged to logs/static_watch.log and
 logs/host_gaps.jsonl, with the macOS power-log Sleep/Wake events inside the gap, and a row 2.<n> listing the
-affected episode is appended to DEVIATIONS.md. Exits when the judge has finished (SHA256SUMS written in
+affected episode is appended to DEVIATIONS.md. Resume rule (DEVIATIONS 4): any macOS Sleep / Wake / DarkWake
+event that overlaps an episode (between its start, end - wall time, or the previous end when the record has no
+wall time, and its end, +- POLL s) is flagged the same way, whatever the gap length. Exits when the judge has finished (SHA256SUMS written in
 logs/judge after the run started) and no run.py process is left.
 
 Usage: python experiments/agents/gap_watch.py "<run start, e.g. 2026-11-06 07:28:33>"
@@ -41,7 +43,7 @@ def power_events(a: dt.datetime, b: dt.datetime) -> list[str]:
     out = []
     for line in log:
         p = line.split()
-        if len(p) > 3 and p[3] in ("Sleep", "Wake", "DarkWake"):
+        if len(p) > 4 and p[3] in ("Sleep", "Wake", "DarkWake") and p[4] != "Requests":
             try:
                 t = dt.datetime.strptime(f"{p[0]} {p[1]}", "%Y-%m-%d %H:%M:%S")
             except ValueError:
@@ -72,10 +74,13 @@ def main(start: str) -> int:
                 r = json.loads(x)
                 gap = (now - last).total_seconds() / 60
                 err = r.get("error") or ""
-                if gap > GAP_MIN and not err.startswith("APITimeoutError"):
+                wall = r.get("wall_s")
+                ep_start = now - dt.timedelta(seconds=wall) if wall else last
+                sleeps = power_events(ep_start - dt.timedelta(seconds=POLL), now + dt.timedelta(seconds=POLL))
+                if sleeps or (gap > GAP_MIN and not err.startswith("APITimeoutError")):
                     n_gap += 1
                     spec = r.get("spec", {})
-                    ev = power_events(last, now)
+                    ev = sleeps or power_events(last, now)
                     g = {"n": n_gap, "file": f.name, "key": r["key"], "model": spec.get("model"),
                          "condition": spec.get("condition"), "prompt": spec.get("prompt"),
                          "attack": spec.get("attack"), "previous_end": f"{last:%Y-%m-%d %H:%M:%S}",
@@ -85,7 +90,7 @@ def main(start: str) -> int:
                         h.write(json.dumps(g) + "\n")
                     note(f"POSSIBLE HOST SLEEP: {json.dumps(g)}")
                     with DEV.open("a") as h:
-                        h.write(f"| 2.{n_gap} | {now:%Y-%m-%d} | Possible host sleep (gap_watch.py): {g['gap_min']} min "
+                        h.write(f"| 2.{n_gap} | {now:%Y-%m-%d} | {'Host sleep overlapping an episode' if sleeps else 'Possible host sleep'} (gap_watch.py): {g['gap_min']} min "
                                 f"between episode ends {g['previous_end']} and {g['end']} EST, not a logged timeout. "
                                 f"Affected episode: `{g['key']}` ({g['model']}, {g['condition']}, {g['prompt']}, "
                                 f"attack {g['attack']}; episode wall time {g['episode_wall_min']} min; {f.name}). "

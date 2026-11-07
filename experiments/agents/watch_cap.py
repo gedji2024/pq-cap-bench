@@ -8,7 +8,11 @@ Projection (CHOICE): now + sum of the design.yaml estimates of the remaining mod
 by the ratio observed / estimated of the models finished so far; the unscaled projection is logged too and the
 later of the two is compared with the cap.
 
-Usage: python experiments/agents/watch_cap.py "<start, e.g. 2026-11-06 07:28:33>"
+Usage: python experiments/agents/watch_cap.py "<start, e.g. 2026-11-06 07:28:33>" [model=hours,...]
+
+Resume (DEVIATIONS 4): the optional second argument lists models finished before a pause with their run hours;
+they count as finished (and in the observed / estimated ratio) without being re-checked. The start is then set
+back by the active time already used, so the cap applies to summed active run time.
 """
 
 from __future__ import annotations
@@ -51,12 +55,12 @@ def kill(pattern: str) -> None:
     subprocess.run(["pkill", "-TERM", "-f", pattern], check=False)
 
 
-def main(start: str) -> int:
+def main(start: str, prior: str = "") -> int:
     dz = yaml.safe_load((HERE / "design.yaml").read_text())
     order, est, cap = dz["order"], dz["runtime"]["estimate_h"], float(dz["runtime"]["cap_h"])
     t0 = dt.datetime.strptime(start, "%Y-%m-%d %H:%M:%S")
-    finished: dict[str, float] = {}
-    log(f"watcher started; run start {t0}; cap {cap} h -> {t0 + dt.timedelta(hours=cap)}")
+    finished: dict[str, float] = {k: float(v) for k, v in (x.split("=") for x in prior.split(",") if x)}
+    log(f"watcher started; run start {t0}; cap {cap} h -> {t0 + dt.timedelta(hours=cap)}; finished before: {finished}")
     while len(finished) < len(order):
         for line in PROG.read_text().splitlines() if PROG.exists() else []:
             m = DONE.match(line)
@@ -85,4 +89,4 @@ def main(start: str) -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main(sys.argv[1]))
+    sys.exit(main(*sys.argv[1:3]))
