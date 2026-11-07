@@ -8,8 +8,11 @@ Wire formats (big-endian):
     header[16]     = handle u32 | not_before u32 | not_after u32 | version u8 | alg u8 | reserved u16
     bounds[64]     = rules, each action_id u8 | target_bitmap u8 | lo i32 | hi i32 (10 B), zero-padded
     invariants[32] = alert_max_interval u16 | flags u8 | battery_floor_pct u8 | low_batt_min_interval u16 | 0-pad
-  S6 envelope authenticator   = PQ signature over the 112 B (verified with a public key)
-  S4-E envelope authenticator = HMAC-SHA256(per-device policy key, 112 B)
+  S6 envelope authenticator   = PQ signature over  "PQCAP-ENV-v1" | dev_id | 112 B  (verified with a public key)
+  S4-E envelope authenticator = HMAC-SHA256(per-device policy key, "PQCAP-ENV-v1" | dev_id | 112 B)
+  dev_id = the device's 8-byte DevEUI; the device knows it, so it is not transmitted (sizes on the air are
+  unchanged). Binding the envelope to dev_id stops an envelope issued for one device being installed on
+  another (audit v0.2 B1; manuscript Sec. V "Binding").
 
 Device state is passed in and a new state is returned; nothing is mutated.
 """
@@ -331,6 +334,17 @@ def apply_revocation(commitments: dict[int, bytes], state: DeviceState, msg: byt
 
 
 # ---------------------------------------------------------------- envelope installation
+ENV_DOMAIN = b"PQCAP-ENV-v1"   # domain-separation tag (audit v0.2 B1)
+DEV_ID_BYTES = 8               # LoRaWAN DevEUI (EUI-64)
+
+
+def envelope_message(dev_id: bytes, blob: bytes) -> bytes:
+    """What the PA signs (S6) or MACs (S4-E): domain tag | 8-byte DevEUI | 112-byte envelope encoding."""
+    if len(dev_id) != DEV_ID_BYTES:
+        raise ValueError(f"dev_id must be {DEV_ID_BYTES} bytes (DevEUI)")
+    return ENV_DOMAIN + dev_id + blob
+
+
 def validity_ok(env: Policy, max_validity_s: int | None) -> bool:
     """Firmware cap: an envelope may not be valid for longer than max_validity_s (None = no cap).
     This bounds the exposure window of any envelope, including one minted by an attacker."""
@@ -338,17 +352,21 @@ def validity_ok(env: Policy, max_validity_s: int | None) -> bool:
                                                 or env.not_after - env.not_before <= max_validity_s)
 
 
-def install_envelope_s4e(blob: bytes, mac: bytes, policy_key: bytes, max_validity_s: int | None = None) -> Policy | None:
-    """S4-E: the device holds the per-device policy key, so it (and anyone holding it) could also forge."""
-    if not hmac.compare_digest(hmac.new(policy_key, blob, hashlib.sha256).digest(), mac):
+def install_envelope_s4e(blob: bytes, mac: bytes, policy_key: bytes, dev_id: bytes,
+                         max_validity_s: int | None = None) -> Policy | None:
+    """S4-E: the device holds the per-device policy key, so it (and anyone holding it) could also forge.
+    `dev_id` is the installing device's own DevEUI."""
+    if not hmac.compare_digest(hmac.new(policy_key, envelope_message(dev_id, blob), hashlib.sha256).digest(), mac):
         return None
     env = decode_envelope(blob)
     return env if validity_ok(env, max_validity_s) else None
 
 
-def install_envelope_s6(blob: bytes, sig: bytes, verify, max_validity_s: int | None = None) -> Policy | None:
-    """S6: `verify(blob, sig) -> bool` uses only the policy authority's PUBLIC key (e.g. ML-DSA-44)."""
-    if not verify(blob, sig):
+def install_envelope_s6(blob: bytes, sig: bytes, verify, dev_id: bytes,
+                        max_validity_s: int | None = None) -> Policy | None:
+    """S6: `verify(message, sig) -> bool` uses only the policy authority's PUBLIC key (e.g. ML-DSA-44); the
+    message is `envelope_message(dev_id, blob)` with the installing device's own DevEUI."""
+    if not verify(envelope_message(dev_id, blob), sig):
         return None
     env = decode_envelope(blob)
     return env if validity_ok(env, max_validity_s) else None

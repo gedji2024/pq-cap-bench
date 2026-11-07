@@ -87,17 +87,41 @@ def test_third_party_verification():
     """Executable form of the K6 property: an S6 verifier holds only a public key and cannot forge;
     an S4-E verifier necessarily holds the key, and with it can install a permissive envelope."""
     oqs = load_oqs()
+    dev = bytes.fromhex("70b3d57ed0000001")                          # DevEUI of the installing device
     blob = ev.encode_envelope(ENV)
     evil = ev.encode_envelope(ev.permissive_policy(CAT, ENV.handle))
     signer = oqs.Signature("ML-DSA-44")
     pk = signer.generate_keypair()
-    sig = signer.sign(blob)
+    sig = signer.sign(ev.envelope_message(dev, blob))
     verify = lambda b, s: oqs.Signature("ML-DSA-44").verify(b, s, pk)  # noqa: E731  (public key only)
-    assert ev.install_envelope_s6(blob, sig, verify) == ENV
-    assert ev.install_envelope_s6(evil, sig, verify) is None          # holder of pk cannot repurpose a signature
+    assert ev.install_envelope_s6(blob, sig, verify, dev) == ENV
+    assert ev.install_envelope_s6(evil, sig, verify, dev) is None     # holder of pk cannot repurpose a signature
     key = b"p" * 32                                                    # the S4-E verifier's per-device key
-    mac = hmac.new(key, blob, hashlib.sha256).digest()
-    assert ev.install_envelope_s4e(blob, mac, key) == ENV
-    forged = hmac.new(key, evil, hashlib.sha256).digest()             # same key that verifies, forges
-    assert ev.install_envelope_s4e(evil, forged, key) == ev.permissive_policy(CAT, ENV.handle)
-    assert ev.install_envelope_s4e(evil, mac, key) is None
+    mac = hmac.new(key, ev.envelope_message(dev, blob), hashlib.sha256).digest()
+    assert ev.install_envelope_s4e(blob, mac, key, dev) == ENV
+    forged = hmac.new(key, ev.envelope_message(dev, evil), hashlib.sha256).digest()  # same key that verifies, forges
+    assert ev.install_envelope_s4e(evil, forged, key, dev) == ev.permissive_policy(CAT, ENV.handle)
+    assert ev.install_envelope_s4e(evil, mac, key, dev) is None
+
+
+def test_envelope_bound_to_device():
+    """B1: an envelope signed (S6) or MACed (S4-E) for device A is rejected by device B; the signed message is
+    "PQCAP-ENV-v1" | DevEUI | 112 B and the transmitted envelope stays 112 B."""
+    oqs = load_oqs()
+    dev_a, dev_b = bytes.fromhex("70b3d57ed0000001"), bytes.fromhex("70b3d57ed0000002")
+    blob = ev.encode_envelope(ENV)
+    assert len(blob) == 112
+    assert ev.envelope_message(dev_a, blob) == b"PQCAP-ENV-v1" + dev_a + blob
+    signer = oqs.Signature("ML-DSA-44")
+    pk = signer.generate_keypair()
+    verify = lambda b, s: oqs.Signature("ML-DSA-44").verify(b, s, pk)  # noqa: E731
+    sig_a = signer.sign(ev.envelope_message(dev_a, blob))
+    assert ev.install_envelope_s6(blob, sig_a, verify, dev_a) == ENV
+    assert ev.install_envelope_s6(blob, sig_a, verify, dev_b) is None
+    assert ev.install_envelope_s6(blob, signer.sign(blob), verify, dev_a) is None   # unbound signature refused
+    key = b"p" * 32                                                    # a policy key shared by A and B (worst case)
+    mac_a = hmac.new(key, ev.envelope_message(dev_a, blob), hashlib.sha256).digest()
+    assert ev.install_envelope_s4e(blob, mac_a, key, dev_a) == ENV
+    assert ev.install_envelope_s4e(blob, mac_a, key, dev_b) is None
+    with pytest.raises(ValueError):
+        ev.envelope_message(b"short", blob)

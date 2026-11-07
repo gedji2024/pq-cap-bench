@@ -302,3 +302,12 @@ def test_agents_threats(tmp_path):
         "judge": {"n": 30, "identical": 30, "label_identical": 30}}}))
     t = report.agents_threats(ed)
     assert "m: run-to-run 2/2, same as logged 1/2" in t and "agent calls 29/30" in t and "labels 30/30" in t
+
+
+def test_section_audit(tmp_path):
+    assert "No audit notes" in report.section_audit(tmp_path)
+    (tmp_path / "audit_v02").mkdir()
+    (tmp_path / "audit_v02" / "B1.md").write_text("### B1\nx\n")
+    (tmp_path / "audit_v02" / "A1.md").write_text("### A1\ny\n")
+    out = report.section_audit(tmp_path)
+    assert out.index("A1") < out.index("B1")

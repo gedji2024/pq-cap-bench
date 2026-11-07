@@ -952,6 +952,14 @@ def section_kill(results: Path) -> str:
     return "\n\n".join(parts)
 
 
+def section_audit(results: Path) -> str:
+    """Sec. 11: audit of manuscript v0.2 against the code (one note per item in results/audit_v02/, A1-A6, B1-B4)."""
+    notes = sorted((results / "audit_v02").glob("*.md"))
+    if not notes:
+        return "_No audit notes (results/audit_v02/ is empty)._"
+    return "\n\n".join(n.read_text().strip() for n in notes)
+
+
 def section_agents(ed: Path) -> str:
     """Task E: the pre-registration record (E0) and the headline results, read from experiments/agents."""
     e0p = ed / "E0.json"
@@ -1097,5 +1105,6 @@ def run(config: Path, results: Path, figures: Path) -> None:
         "## 9. Task E: LLM agents against device-side schemes (pre-registered)",
         section_agents(results.parent / "experiments/agents"),
         "## 10. Figures (numbered 9 before Task E took Sec. 9)", "\n".join(f"- [{f}](figures/{f}) ([pdf](figures/{f[:-4]}.pdf))" for f in figs),
+        "## 11. Audit of manuscript v0.2 against the code", section_audit(results),
     ]
     (results.parent / "REPORT.md").write_text("\n\n".join(parts) + "\n")

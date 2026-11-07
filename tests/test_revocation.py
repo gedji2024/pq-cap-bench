@@ -15,6 +15,7 @@ from pqcap.config import CONFIG, load_yaml
 
 ACFG = load_yaml(CONFIG / "actions.yaml")
 KEY = b"p" * 32
+DEV = bytes(8)
 
 
 @settings(max_examples=300, deadline=None)
@@ -22,17 +23,17 @@ KEY = b"p" * 32
 def test_no_installed_envelope_exceeds_validity_cap(nb, length, cap):
     env = ev.envelope_from_config(ACFG, nb, nb + length)
     blob = ev.encode_envelope(env)
-    got = ev.install_envelope_s4e(blob, hmac.new(KEY, blob, hashlib.sha256).digest(), KEY, cap)
+    got = ev.install_envelope_s4e(blob, hmac.new(KEY, ev.envelope_message(DEV, blob), hashlib.sha256).digest(), KEY, DEV, cap)
     assert (got is not None) == (length <= cap)
     if got is not None:
         assert got.not_after - got.not_before <= cap
-    got6 = ev.install_envelope_s6(blob, b"sig", lambda b, s: True, cap)
+    got6 = ev.install_envelope_s6(blob, b"sig", lambda b, s: True, DEV, cap)
     assert (got6 is not None) == (length <= cap)
 
 
 def test_install_rejections():
     blob = ev.encode_envelope(ev.envelope_from_config(ACFG, 0, 10))
-    assert ev.install_envelope_s6(blob, b"x", lambda b, s: False) is None
+    assert ev.install_envelope_s6(blob, b"x", lambda b, s: False, DEV) is None
     assert ev.validity_ok(ev.envelope_from_config(ACFG, 10, 5), None) is False
     assert ev.validity_ok(ev.envelope_from_config(ACFG, 0, 10), None) is True
 
