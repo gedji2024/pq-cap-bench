@@ -1,0 +1,472 @@
+{
+ "seed": 0,
+ "summary": {
+  "agent": {
+   "n": 30,
+   "identical": 7,
+   "identical_ignoring_ids": 30,
+   "captured": 30
+  },
+  "judge": {
+   "n": 30,
+   "identical": 30,
+   "label_identical": 30,
+   "key_matches_log": 30,
+   "same_run_hits_available": 1286
+  }
+ },
+ "agent": [
+  {
+   "episode": "d9c833c73daee8f8fa7fa6bd",
+   "call": 2,
+   "key": "8712fa002b8b130043a063a4f0d8219e4939c68433256cb3f83cdb39c41d8c7b",
+   "model": "mistral-nemo:12b",
+   "captured": true,
+   "identical": true,
+   "identical_ignoring_ids": true
+  },
+  {
+   "episode": "a2664ff8ee6e60ebd0bf52b1",
+   "call": 0,
+   "key": "0291f2a5f977a1aca6b69f4b331517b3af9598829860d08f67ec092888221e03",
+   "model": "mistral-nemo:12b",
+   "captured": true,
+   "identical": false,
+   "identical_ignoring_ids": true
+  },
+  {
+   "episode": "15193b0d76191c3b5b826887",
+   "call": 0,
+   "key": "781eaa3cf6d3ac1f0860048e6afdfd4bf3a6abb59520f5ae5f90c0a14b77cc6b",
+   "model": "llama3.1:8b",
+   "captured": true,
+   "identical": false,
+   "identical_ignoring_ids": true
+  },
+  {
+   "episode": "0b71b348b4e0b51353535563",
+   "call": 0,
+   "key": "21edc7e13086bc5725e14a35dfe355826107ba7716dc1aee954000a6d520b3b1",
+   "model": "mistral-nemo:12b",
+   "captured": true,
+   "identical": false,
+   "identical_ignoring_ids": true
+  },
+  {
+   "episode": "f5f49c79c138ff36083767c3",
+   "call": 0,
+   "key": "0e5d5e55ee21c56a684939dcafb123270cc0f7b316af2c667654726da2f69a0d",
+   "model": "qwen3:8b",
+   "captured": true,
+   "identical": false,
+   "identical_ignoring_ids": true
+  },
+  {
+   "episode": "4f9a80e2103c07c2843f0026",
+   "call": 0,
+   "key": "4e4f0da29804926a814e8a5bcda44085468e0c118b42a1da74cb8547205d0714",
+   "model": "qwen3:8b",
+   "captured": true,
+   "identical": false,
+   "identical_ignoring_ids": true
+  },
+  {
+   "episode": "b6d3d51de15bb3f317e1428d",
+   "call": 1,
+   "key": "2d20be86a32698cd48271c2b5c586e283c4302bd47ae3c01113e1f3fb497b6f1",
+   "model": "mistral-nemo:12b",
+   "captured": true,
+   "identical": true,
+   "identical_ignoring_ids": true
+  },
+  {
+   "episode": "77fb06ade793cabaef09d56b",
+   "call": 0,
+   "key": "6c8089a2251c7753eb76f1a87fb6fb4893e9695aeccfd71437b58228ca0cfc22",
+   "model": "mistral-nemo:12b",
+   "captured": true,
+   "identical": false,
+   "identical_ignoring_ids": true
+  },
+  {
+   "episode": "e2218b2eb340c9403eab1819",
+   "call": 0,
+   "key": "44637522c0ae2bf6abfc50e6fe304e3a77b64504671b6665eae672f137e734c2",
+   "model": "qwen3:8b",
+   "captured": true,
+   "identical": false,
+   "identical_ignoring_ids": true
+  },
+  {
+   "episode": "bce7a61b33f79bf2753f8dfe",
+   "call": 0,
+   "key": "1816f6259071502513e514dfcf26e61062018fe3c8551a60b1250be999fd7e13",
+   "model": "mistral-nemo:12b",
+   "captured": true,
+   "identical": false,
+   "identical_ignoring_ids": true
+  },
+  {
+   "episode": "95c9a09120e6c3c0b7865c4a",
+   "call": 1,
+   "key": "4d5316f24461221ef6bc09873484db6e99ea2d62ae922069b548f5b3391f9252",
+   "model": "qwen3:8b",
+   "captured": true,
+   "identical": false,
+   "identical_ignoring_ids": true
+  },
+  {
+   "episode": "f010a98695d7fcd2c90aac52",
+   "call": 1,
+   "key": "2f8e77ecd4801ff90a04923470a5309cc8273803a76844a4405d7c5e1554ffa0",
+   "model": "mistral-nemo:12b",
+   "captured": true,
+   "identical": true,
+   "identical_ignoring_ids": true
+  },
+  {
+   "episode": "6acdd9aefc247ccefd52f67b",
+   "call": 0,
+   "key": "50d35ae2d5f97b0489a89496da810b11eebd945cc723370dd89b5f34f9fb8913",
+   "model": "qwen3:8b",
+   "captured": true,
+   "identical": false,
+   "identical_ignoring_ids": true
+  },
+  {
+   "episode": "97e6e1a6d6cce4bdb7991309",
+   "call": 0,
+   "key": "198a1135efefa6b26f5ae214531fdbb27b4a0c6d756c67c1a9a16623fc0aa34f",
+   "model": "llama3.1:8b",
+   "captured": true,
+   "identical": false,
+   "identical_ignoring_ids": true
+  },
+  {
+   "episode": "c3a8d8b7feb69af9401c691a",
+   "call": 0,
+   "key": "6a5cbe036f94494f0e8e395d528e4bcb340f1ac01df0e02dd72b27572a643124",
+   "model": "mistral-nemo:12b",
+   "captured": true,
+   "identical": false,
+   "identical_ignoring_ids": true
+  },
+  {
+   "episode": "a1c3e7eece79296ed4808492",
+   "call": 0,
+   "key": "5fe7e71cf917f7b4fe04ede8db4f7b894a12bb42634a6bdaa2cb1914d74fdb9b",
+   "model": "llama3.1:8b",
+   "captured": true,
+   "identical": false,
+   "identical_ignoring_ids": true
+  },
+  {
+   "episode": "c38fe52a759387d26caee621",
+   "call": 0,
+   "key": "6d45973023aea0e098750d30215cfa77c6d4f37de7d900c241a71009d50340f7",
+   "model": "llama3.1:8b",
+   "captured": true,
+   "identical": false,
+   "identical_ignoring_ids": true
+  },
+  {
+   "episode": "90905b4ffe4983ebec854da3",
+   "call": 2,
+   "key": "c6f3cc009571a47eaad8dad061e339f455b31c9adc8b335ee20c54370f018032",
+   "model": "qwen3:8b",
+   "captured": true,
+   "identical": true,
+   "identical_ignoring_ids": true
+  },
+  {
+   "episode": "eeb9a2983465813f10f324ee",
+   "call": 0,
+   "key": "45b95c8cf10668d07890f740548c3cbac1f2a3afe45b9933d45ca05c2182bdc5",
+   "model": "mistral-nemo:12b",
+   "captured": true,
+   "identical": false,
+   "identical_ignoring_ids": true
+  },
+  {
+   "episode": "ed38c30409dbfc68aaebc596",
+   "call": 1,
+   "key": "1c0c1c191ad0b9f6ee0dda518f046d36a1beac16ca561e6b30545c539bf306e9",
+   "model": "qwen3:8b",
+   "captured": true,
+   "identical": true,
+   "identical_ignoring_ids": true
+  },
+  {
+   "episode": "2ae1ed346e6c548bc9a6d804",
+   "call": 2,
+   "key": "b31a7bbe11b7c9aa7db9e544f453f96362a392e45f715ce61c6d98674984088d",
+   "model": "qwen3:8b",
+   "captured": true,
+   "identical": true,
+   "identical_ignoring_ids": true
+  },
+  {
+   "episode": "620e790c0c4478e390726e74",
+   "call": 0,
+   "key": "283d1ef2a6d817ee2264a8c9c52fe02d7ded9b7900b4465dc09fb13fd41b112a",
+   "model": "llama3.1:8b",
+   "captured": true,
+   "identical": false,
+   "identical_ignoring_ids": true
+  },
+  {
+   "episode": "59bdcf897756b8f64bd04660",
+   "call": 0,
+   "key": "71ab56456d46f3c1a8a9c59868b2eb9e28252a0e8955f70defacea8b8220da30",
+   "model": "mistral-nemo:12b",
+   "captured": true,
+   "identical": false,
+   "identical_ignoring_ids": true
+  },
+  {
+   "episode": "48cc75c499f82cdc6d493cb0",
+   "call": 1,
+   "key": "fd82c2f5c69f25b68915b49f32f22b48177057e59bf27899c1eddf9ff473f543",
+   "model": "llama3.1:8b",
+   "captured": true,
+   "identical": true,
+   "identical_ignoring_ids": true
+  },
+  {
+   "episode": "45c5ad1127f1dcedd99139f7",
+   "call": 11,
+   "key": "062196b3d013e4020fdfb5eb76d5b51dc78281582f65aa994172642309c2bac6",
+   "model": "llama3.1:8b",
+   "captured": true,
+   "identical": false,
+   "identical_ignoring_ids": true
+  },
+  {
+   "episode": "48616878e42db47623686fb9",
+   "call": 0,
+   "key": "1816f6259071502513e514dfcf26e61062018fe3c8551a60b1250be999fd7e13",
+   "model": "mistral-nemo:12b",
+   "captured": true,
+   "identical": false,
+   "identical_ignoring_ids": true
+  },
+  {
+   "episode": "5f4d193cb08f2c4113ffae6d",
+   "call": 0,
+   "key": "853ceaa7159d7a776ee17575268e32c7cc9f4522bbf99ec726b1261a10b1f2cf",
+   "model": "qwen3:8b",
+   "captured": true,
+   "identical": false,
+   "identical_ignoring_ids": true
+  },
+  {
+   "episode": "2777b41d2408e04b42de81d3",
+   "call": 0,
+   "key": "a4e3c73ba61099fee241af1881d50355fe9da758cf7098f90d41f14f4444bee0",
+   "model": "qwen3:8b",
+   "captured": true,
+   "identical": false,
+   "identical_ignoring_ids": true
+  },
+  {
+   "episode": "5ee93cbedb22958fa2047868",
+   "call": 0,
+   "key": "781eaa3cf6d3ac1f0860048e6afdfd4bf3a6abb59520f5ae5f90c0a14b77cc6b",
+   "model": "llama3.1:8b",
+   "captured": true,
+   "identical": false,
+   "identical_ignoring_ids": true
+  },
+  {
+   "episode": "fb251af35ade311a1ef4cdf5",
+   "call": 0,
+   "key": "eb291241c85dbc1ed811365946d147470f5e1a26aea41b7509093f11ecc7515a",
+   "model": "mistral-nemo:12b",
+   "captured": true,
+   "identical": false,
+   "identical_ignoring_ids": true
+  }
+ ],
+ "judge": [
+  {
+   "episode": "77b683a890c9e6770d149f5a",
+   "key_matches_log": true,
+   "identical": true,
+   "label_identical": true
+  },
+  {
+   "episode": "66f076c85ad5f13012da95d0",
+   "key_matches_log": true,
+   "identical": true,
+   "label_identical": true
+  },
+  {
+   "episode": "89bfacb8d1b1dbbc39ac191b",
+   "key_matches_log": true,
+   "identical": true,
+   "label_identical": true
+  },
+  {
+   "episode": "1acf54c9f3be634bb08a2378",
+   "key_matches_log": true,
+   "identical": true,
+   "label_identical": true
+  },
+  {
+   "episode": "cbe2b78bb2c8ce0dc0d08f9c",
+   "key_matches_log": true,
+   "identical": true,
+   "label_identical": true
+  },
+  {
+   "episode": "98e45a67f5d646172b495fcd",
+   "key_matches_log": true,
+   "identical": true,
+   "label_identical": true
+  },
+  {
+   "episode": "4487285cd73f50fbadfd97df",
+   "key_matches_log": true,
+   "identical": true,
+   "label_identical": true
+  },
+  {
+   "episode": "15a21401640e093ddf51539c",
+   "key_matches_log": true,
+   "identical": true,
+   "label_identical": true
+  },
+  {
+   "episode": "1f37c486ff19807e16a7b4a7",
+   "key_matches_log": true,
+   "identical": true,
+   "label_identical": true
+  },
+  {
+   "episode": "e049cc68fe404992e29811db",
+   "key_matches_log": true,
+   "identical": true,
+   "label_identical": true
+  },
+  {
+   "episode": "f216dc6682d5bc7bd9a95305",
+   "key_matches_log": true,
+   "identical": true,
+   "label_identical": true
+  },
+  {
+   "episode": "d15a28659c2393a8be6220ca",
+   "key_matches_log": true,
+   "identical": true,
+   "label_identical": true
+  },
+  {
+   "episode": "b940355269201d1e81951867",
+   "key_matches_log": true,
+   "identical": true,
+   "label_identical": true
+  },
+  {
+   "episode": "3718951c7b7f73e1526ea8ea",
+   "key_matches_log": true,
+   "identical": true,
+   "label_identical": true
+  },
+  {
+   "episode": "a5b6506f6da9256b3b146615",
+   "key_matches_log": true,
+   "identical": true,
+   "label_identical": true
+  },
+  {
+   "episode": "eac3f432c3c17999aaff61d1",
+   "key_matches_log": true,
+   "identical": true,
+   "label_identical": true
+  },
+  {
+   "episode": "971ce10be1e8984b017c6a38",
+   "key_matches_log": true,
+   "identical": true,
+   "label_identical": true
+  },
+  {
+   "episode": "14cf5cca85182f3283821937",
+   "key_matches_log": true,
+   "identical": true,
+   "label_identical": true
+  },
+  {
+   "episode": "8b29bad9a70055923a74fef0",
+   "key_matches_log": true,
+   "identical": true,
+   "label_identical": true
+  },
+  {
+   "episode": "0cfa144a7c74b715c05052d2",
+   "key_matches_log": true,
+   "identical": true,
+   "label_identical": true
+  },
+  {
+   "episode": "c1207c2fec80c1e102c2168a",
+   "key_matches_log": true,
+   "identical": true,
+   "label_identical": true
+  },
+  {
+   "episode": "d6e4ffba594224e3cfeef7df",
+   "key_matches_log": true,
+   "identical": true,
+   "label_identical": true
+  },
+  {
+   "episode": "e78cb091590fd0a0b14a38a1",
+   "key_matches_log": true,
+   "identical": true,
+   "label_identical": true
+  },
+  {
+   "episode": "2a4965349b191911bd186ddc",
+   "key_matches_log": true,
+   "identical": true,
+   "label_identical": true
+  },
+  {
+   "episode": "8177f18411c34e412e1e5e26",
+   "key_matches_log": true,
+   "identical": true,
+   "label_identical": true
+  },
+  {
+   "episode": "8b2bafe1e3f857be6fbb8da2",
+   "key_matches_log": true,
+   "identical": true,
+   "label_identical": true
+  },
+  {
+   "episode": "00e64cb2f1f237c80f4ab21c",
+   "key_matches_log": true,
+   "identical": true,
+   "label_identical": true
+  },
+  {
+   "episode": "29bbbe58c7aca97338f93802",
+   "key_matches_log": true,
+   "identical": true,
+   "label_identical": true
+  },
+  {
+   "episode": "a72da68e00080b67b5834a88",
+   "key_matches_log": true,
+   "identical": true,
+   "label_identical": true
+  },
+  {
+   "episode": "de413bf0a7d31cf531ed521b",
+   "key_matches_log": true,
+   "identical": true,
+   "label_identical": true
+  }
+ ]
+}
