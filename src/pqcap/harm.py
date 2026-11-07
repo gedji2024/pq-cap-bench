@@ -261,7 +261,7 @@ def epoch_budget(bat: dict, cfg: dict, floor_pct: float, eb: dict) -> int:
 
 def simulate(stage: np.ndarray, scheme: str, compromise: str, strategy: str | None, cfg: dict, cat,
              env: ev.Policy, fw: ev.Policy, legit_variant: str = "naive", bat: dict | None = None,
-             budget: int | None = None, init: dict | None = None) -> dict:
+             budget: int | None = None, init: dict | None = None, adversary=None, trace: bool = False) -> dict:
     """`budget` (G3): command-caused uplinks allowed per epoch of cfg["energy_budget"]["epoch_h"] (None = no budget).
     An uplink is command-caused if it is requested by `request_immediate_uplink` or comes sooner than the default
     reporting interval would (with the alert-mode and low-battery invariants applied). With no budget left in the
@@ -270,7 +270,10 @@ def simulate(stage: np.ndarray, scheme: str, compromise: str, strategy: str | No
     F8 (cfg["commissioning"]["free_alert_uplinks"] == "commissioned", S6+F only): an uplink is free of the budget
     as an alert uplink (alert onset, or the alert-mode base interval) only if its triggering sample (the onset
     sample, or the last sample) is >= the commissioned threshold theta_F; otherwise the non-alert base interval
-    applies for budget accounting. Default "configured" = behaviour before F8."""
+    applies for budget accounting. Default "configured" = behaviour before F8.
+    Instrumentation (audit v0.2 A4; behaviour unchanged when unused): `adversary(sch, d, st) -> (aid, value) | None`
+    replaces the named attacker strategy at each downlink; `trace=True` adds the uplink minutes and the state of
+    charge (% of capacity, after the sleep drain of each minute) to the result."""
     dv = cfg["device"]
     bat = bat or cfg["_battery"]
     sch = Scheme(scheme, cat, env, fw, replaced=compromise.startswith("C1+C3"), op_key=compromise.endswith("+OP"),
@@ -294,6 +297,8 @@ def simulate(stage: np.ndarray, scheme: str, compromise: str, strategy: str | No
     stats = {"budget_used": 0, "budget_denied_requests": 0, "legit_intents": 0, "legit_intents_rejected": 0, "floor_violating_uplinks": 0, "uplinks": 0, "legit_sent": 0, "legit_rejected": 0, "attacker_sent": 0, "attacker_accepted": 0,
              "minutes_below_floor": 0, "died_min": None, "min_soc_pct": 100.0, "floor_reached_min": None}
     delivered: list[tuple[int, float, int]] = []                     # (sample minute, value, uplink minute)
+    uplinks_at: list[int] = []
+    soc_trace: list[float] = []
     reject_reasons: dict[str, int] = {}
     for t in range(len(stage)):
         d.soc_mAh -= sleep_per_min
@@ -301,6 +306,8 @@ def simulate(stage: np.ndarray, scheme: str, compromise: str, strategy: str | No
             stats["died_min"] = t
             break
         soc_pct = 100 * d.soc_mAh / cap
+        if trace:
+            soc_trace.append(soc_pct)
         stats["min_soc_pct"] = min(stats["min_soc_pct"], soc_pct)
         stats["minutes_below_floor"] += d.soc_mAh < cfg_floor
         if d.soc_mAh < cfg_floor and stats["floor_reached_min"] is None:
@@ -344,6 +351,7 @@ def simulate(stage: np.ndarray, scheme: str, compromise: str, strategy: str | No
         cmd_pending = False
         d.soc_mAh -= q_tx
         stats["uplinks"] += 1
+        uplinks_at.append(t)
         delivered += [(ts, v, t) for ts, v in d.buffer]
         if legit:
             legit.observe(d.buffer)
@@ -352,6 +360,8 @@ def simulate(stage: np.ndarray, scheme: str, compromise: str, strategy: str | No
         st = _dstate(d, 100 * d.soc_mAh / cap, t)
         if legit:
             cmd, who = legit.command(d.interval, lambda v, st=st: sch.accepts(st, ev.A_INTERVAL, v)), "legit"
+        elif adversary is not None:
+            cmd, who = adversary(sch, d, st), "attacker"
         elif strategy:
             cmd, who = attacker_command(strategy, sch, d, st), "attacker"
         else:
@@ -384,7 +394,10 @@ def simulate(stage: np.ndarray, scheme: str, compromise: str, strategy: str | No
         elif aid == ev.A_THRESHOLD:
             d.threshold = value
     stats["reject_reasons"] = reject_reasons
-    return {"stats": stats, "delivered": delivered}
+    out = {"stats": stats, "delivered": delivered}
+    if trace:
+        out.update(uplinks_at=uplinks_at, soc_pct=soc_trace)
+    return out
 
 
 def score(stage: np.ndarray, delivered: list[tuple[int, float, int]], levels_cm: list[float], tol_min: int) -> dict:
