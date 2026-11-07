@@ -199,6 +199,12 @@ def attacker_command(strategy: str, sch: Scheme, d: Dev, st: ev.DeviceState) -> 
         a = cat[ev.A_INTERVAL]
         best = next((v for v in range(a.max, d.interval, -1) if sch.accepts(st, ev.A_INTERVAL, v)), None)
         return (ev.A_INTERVAL, best) if best is not None else None
+    if strategy == "drain_lowthreshold":                            # audit v0.2 B3
+        a = cat[ev.A_THRESHOLD]
+        low = next((v for v in range(a.min, d.threshold) if sch.accepts(st, ev.A_THRESHOLD, v)), None)
+        if low is not None:                                         # first: lowest accepted threshold
+            return ev.A_THRESHOLD, low
+        strategy = "drain"                                          # then: behave as drain
     if strategy == "drain":
         a = cat[ev.A_INTERVAL]
         best = next((v for v in range(a.min, d.interval) if sch.accepts(st, ev.A_INTERVAL, v)), None)

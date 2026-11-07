@@ -496,3 +496,22 @@ def test_f8_free_alert_uplinks_tied_to_commissioned_threshold():
     sc = harm.score(stage, r["delivered"], [theta_f], 30)
     assert sc["crossings"] > 0 and sc["missed"] == 0 and sc["delayed"] == 0
     assert r["stats"]["budget_used"] == 0
+
+
+def test_drain_lowthreshold_strategy_b3():
+    """B3: the attacker first lowers the threshold to the lowest accepted value (band_lo under C1, the catalogue
+    minimum 0 under C1+C3 for S6+F), then behaves as `drain`."""
+    acfg = harm.threshold_profile(ACFG, (460, 760))
+    cat, env, fw = ev.catalogue_from_config(acfg), ev.envelope_from_config(acfg), ev.firmware_policy_from_config(acfg)
+    for comp, low in (("C1", 460), ("C1+C3", 0)):
+        sch = harm.Scheme("S6+F", cat, env, fw, replaced=comp == "C1+C3", max_alert_threshold=610)
+        d = harm.Dev(60, 610, soc_mAh=1.0)
+        st = harm._dstate(d, 60.0, 0)
+        assert harm.attacker_command("drain_lowthreshold", sch, d, st) == (ev.A_THRESHOLD, low)
+        d.threshold = low
+        assert harm.attacker_command("drain_lowthreshold", sch, d, st) == harm.attacker_command("drain", sch, d, st)
+    stage = _hydrograph(500, minutes=2 * 1440)
+    cfg = {**_cfg(), "device": {**HCFG["device"], "alert_threshold_cm": 610}, "_max_alert_threshold": 610}
+    lo = harm.simulate(stage, "S6+F", "C1+C3", "drain_lowthreshold", cfg, cat, env, fw, budget=50)["stats"]
+    dr = harm.simulate(stage, "S6+F", "C1+C3", "drain", cfg, cat, env, fw, budget=50)["stats"]
+    assert lo["uplinks"] > dr["uplinks"]                                # free alert-rate uplinks below theta_F
