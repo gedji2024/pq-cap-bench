@@ -1,0 +1,6 @@
+quantity,value,n,k
+comparisons,3.0,3,
+"share_cosine_in_[0.7,0.9]",0.3333333333333333,3,
+first_detection_rate_cutoff_0.7 (approximate: valid up to the first detection of each episode),0.00641025641025641,312,2.0
+first_detection_rate_cutoff_0.8 (approximate: valid up to the first detection of each episode),0.003205128205128205,312,1.0
+first_detection_rate_cutoff_0.9 (approximate: valid up to the first detection of each episode),0.003205128205128205,312,1.0

@@ -1,0 +1,4 @@
+model,executed,refused,ignored
+llama3.1:8b,9,7,64
+mistral-nemo:12b,5,31,44
+qwen3:8b,18,11,51

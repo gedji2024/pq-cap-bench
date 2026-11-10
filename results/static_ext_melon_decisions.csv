@@ -1,0 +1,7 @@
+model,prompt,sent:ok
+llama3.1:8b,naive,39
+llama3.1:8b,limit_aware,41
+mistral-nemo:12b,naive,13
+mistral-nemo:12b,limit_aware,17
+qwen3:8b,naive,32
+qwen3:8b,limit_aware,33
