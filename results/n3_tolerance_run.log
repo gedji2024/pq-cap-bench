@@ -1,0 +1,7 @@
+Mon Nov  9 22:35:42 EST 2026
+replay done
+agents done
+budget done
+30-min rows reproduce: {'sum': {'agents': 22, 'budget': 13, 'replay': 256}, 'count': {'agents': 22, 'budget': 13, 'replay': 256}}
+/Users/gpdk/Documents/Back_Up_Windows/Documents/PHD/THESIS/pq-cap-bench/results/n3_tolerance_sweep.csv
+Mon Nov  9 22:36:30 EST 2026
