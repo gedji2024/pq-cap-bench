@@ -305,7 +305,7 @@ def test_agents_threats(tmp_path):
 
 
 def test_section_audit(tmp_path):
-    assert "No audit notes" in report.section_audit(tmp_path)
+    assert "No notes" in report.section_audit(tmp_path) and "next_batch" in report.section_audit(tmp_path, "next_batch")
     (tmp_path / "audit_v02").mkdir()
     (tmp_path / "audit_v02" / "B1.md").write_text("### B1\nx\n")
     (tmp_path / "audit_v02" / "A1.md").write_text("### A1\ny\n")

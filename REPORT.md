@@ -2103,13 +2103,23 @@ Tamarin models `formal/crisis.spthy`, `formal/freshness.spthy` (P4; a trace-incl
 | H4 | none | S6 | false_report | 312 | 0.051 | 0.083 | 4 | 14 | 0.031 | 0.15 |
 
 **Threats to validity.**
-- *Self-judging:* the registered judge, mistral-nemo:12b, is also one of the three agent models, so it labels its own transcripts. The judge is kept as registered; every judge-based split is PROVISIONAL until the 60-item human sample is labelled, and `scripts/agreement.py` reports Cohen's kappa overall, for the mistral-nemo:12b transcripts and for the other two models separately.
+- *Self-judging:* the registered judge, mistral-nemo:12b, is also one of the three agent models, so it labels its own transcripts. The judge is kept as registered; every judge-based split stays PROVISIONAL unless the 60-item human sample validates it (H3 below); `scripts/agreement.py` reports Cohen's kappa overall, for the mistral-nemo:12b transcripts and for the other two models separately.
 - *v0 fault:* the first static run sent the system prompt with a role Ollama drops; it is SUPERSEDED and the static phase and judge were re-run (DEVIATIONS 1, 1a, 1b).
 - *Pilot decisions without the system prompt:* the pilot ran with the same fault; the UT3 wording, the JSON rule, the power figures and the runtime estimate were set on agents that did not see the system prompt (DEVIATIONS 1c). None was re-tuned.
 - *Pause:* the run was paused after llama3.1:8b for host availability and mistral-nemo:12b was re-run from scratch on the next day with the same Ollama version, digests, settings and code (preflight in DEVIATIONS 3 and 4); the 30 h cap applies to summed active time.
 - *Cache handling:* requests are cached by model digest and full request; every hit in the re-run is on a request first sent earlier in the same run. Replayed responses of discarded episodes and the v0 judge's rows were removed from the cache before they could be reused (DEVIATIONS 4).
 - *Determinism re-check* (20 logged episodes per model, run twice with no cache; identical / total): llama3.1:8b: run-to-run 20/20, same as logged 20/20; mistral-nemo:12b: run-to-run 20/20, same as logged 19/20; qwen3:8b: run-to-run 20/20, same as logged 19/20.
 - *Resend check* (same-run cache hits resent with the cache off): agent calls 7/30 identical (30/30 ignoring tool-call ids); judge calls 30/30 identical, labels 30/30.
+
+**H3 labelling artifacts.** `results/labelling/to_label.csv` (blind sample, never modified), `key.csv`, `LABELLING_GUIDE.md`; on the manuscript branch `manuscript/labelling/label_h3.html` (blank offline form), `manuscript/labelling/relecture_H3_60.html` (review form pre-filled with the AI annotation) and `manuscript/labelling/llm_preannotation.csv` (pre-annotation of the 60 items by an AI model, Claude, of a family different from the judge's, made without the judge labels; its annotator saw the first three key rows by mistake: 01ed5c53a9, 0dae625c5b, 0e4a08da68, as stated in the review form).
+
+Human labels: `results/labelling/to_label_human.csv` (independent labels exported by the blank form, case A of NEXT_BATCH 5.1).
+
+Judge-human agreement (Cohen's kappa, percentile bootstrap over items): all: n=60, kappa=0.000 [0.000, 0.000], observed agreement 0.133; mistral-nemo:12b: n=21, kappa=0.000 [0.000, 0.000], observed agreement 0.048; other models: n=39, kappa=0.000 [0.000, 0.000], observed agreement 0.179. Kappa is 0 when one rater uses a single label.
+
+Confusion matrix: judge REFUSED / human REFUSED: 0, judge REFUSED / human NOT_REFUSED: 52, judge NOT_REFUSED / human REFUSED: 0, judge NOT_REFUSED / human NOT_REFUSED: 8. Empty or whitespace-only answers: 16, judge label REFUSED on 16. Claims parser vs human false-report labels: 0 of 0 labelled items.
+
+AI pre-annotation vs human labels: label 60/60 (excluding the three seen key rows 57/57), quote 59/60.
 
 Full tables (per model, utility, hydrological impact, telemetry, decision mix, transcripts, deviations): `experiments/agents/RESULTS.md`. These results hold only for the tested models and attacks.
 
@@ -2242,3 +2252,51 @@ All budgets: `theory/check_vs_replay_b4.csv`. No budget: `drain` 0.511, `drain_l
   - B3 excess <= robust P_upper: 96 grid points, 0 violations (smallest margin 0.037); with F8 on, also <= the fixed-threshold P_upper at all 40 points where it is defined.
 - **P_upper at SOC0 60** (share of crossings not certified): C1 / F8 off 0.178 at B = 50 and 0.407 at 75; C1+C3 / F8 off 0.948 from B = 10 (vacuous); F8 on (both) 0.074 at 50 and 0.222 at 75. With F8 on the bound no longer depends on the compromise level.
 - **PREDICTIONS.md** is left as written before the replay (it is a pre-replay record); the corrections are here and in A3: P1's "band_lo for any C1 adversary" needs `bound_robust.py`, P4 is now tested (B3), and its closed form uses K - 1 where the manuscript uses K - 2.
+
+## 12. Reviewer-proofing batch (NEXT_BATCH)
+
+### N1. Baseline S4-E+F (symmetric envelope + the S6+F floor), replay only
+
+- **Commits.** Scheme and driver in `07b8463` (`harm.FLOORED = ("S6+F", "S4-E+F")`: the S6+F floor, budget-in-floor and F8 code path is shared, not duplicated; test `tests/test_harm.py::test_s4ef_has_exactly_the_s6f_floor`); results in the commit of this note (`results/n1_s4ef_replay.csv`, `results/n1_s4ef_lowthr.csv`, log `results/n1_s4ef_run.log`).
+- **Grid.** tab:replay: 41 events / 135 crossings, all four battery profiles, compromises none, C1, C1+C3, C1+C3+OP, suppress and drain, budget off/on, F8 `commissioned`, registered storm-cluster bootstrap (10,000, seed 20261104) computed per scheme. tab:lowthr: `harm.budget_sweep` (registered grid incl. B = 30, 50, 75, 85, none), SOC0 60 %, C1 and C1+C3, drain and drain_lowthreshold, F8 on.
+- **Prediction (written before the run).** Every S4-E+F value equals the S6+F value in the same cell.
+- **Result.** Holds: 64/64 replay groups with identical per-crossing delays (hence identical shares and CIs), 52/52 lowthr rows identical (excess and CI). The S6+F F8-on rows also reproduce `results/b3_drain_lowthreshold.csv` exactly, and every S6+F replay share with F8 on equals the published F8-off value of `model_harm_delays.csv` (the S6+F rows of tab:replay).
+- **Caveat.** The equality holds by construction: the replay does not model how an envelope is authenticated (S4-E and S6 already share `check_enveloped`, and C3 replaces both), so S4-E+F and S6+F run the same device check. The run confirms that the floor and budget code path is shared and that the floor, not the signature, is what holds under C1+C3 in this model; the signature's role is the verifiability and extracted-device cases of Sec. 7h / 8a.
+
+### N2. Platform-side policy baseline (Progent-style), Task E extension
+
+- **Commits.** Condition and run phases in `24af8aa` (DEVIATIONS 5); run, results and DEVIATIONS 5b in the commit of this note.
+- **Condition.** `platform_policy`: S4 device (MAC only, no envelope); the tool layer runs the S6 device check on the device's S6 envelope before the frame is built and, outside it, logs `block` / `platform_policy`, sends nothing and raises an exception that AgentDojo returns as its normal tool-error string. Deterministic, no LLM.
+- **Run.** Registered static design (3 models x 2 prompts x 52 = 312 episodes, seed 20261105, T 0), Ollama 0.40.14, digests equal to `logs/run_environment_20261106.json`, own request cache, same judge and analysis functions; 22:30:52-23:34:27 EST on 2026-11-09 (1.06 h, outside the 30 h cap). 0 errors, timeouts or step limits.
+- **Results** (pooled; registered S6 in brackets): attempted 30/240 = 0.125 (0.125), executed device goals 0/180 (0/180), harmful accepted 6/240 = 0.025 (6/240), accepted outside the envelope 0/240 (0/240), benign utility 35/72 = 0.49 (0.49), false report 25/312 = 0.080 (0.083). The six accepted commands are immediate uplinks of drain attacks after the policy blocked the 1-minute interval. Platform blocks: 54 proposals. Hydrological excess 0.000 / 0.002 (naive / limit-aware).
+- **Reading.** With an intact platform the policy matches the device-side schemes; it runs in the trust domain that C1 removes, where the replay of S4 under C1 applies (0.99 late or missed under suppress, tab:replay).
+
+### N3. Sensitivity of the late-or-missed tolerance (15 / 30 / 60 min)
+
+- **Commits.** Driver `scripts/n3_tolerance_sweep.py` in `dd65c32`; results `results/n3_tolerance_sweep.csv` in `77bcc52`.
+- **Method.** The 30 min tolerance is ASSUMED (config/harm.yaml `harm.delay_tolerance_min`). Re-scored at 15, 30 and 60 min with the published functions, seeds, bootstrap and storm clusters: every group of `results/model_harm_events.csv` (the tab:replay run; logged per-crossing delays, no re-simulation); the G3 budget sweep (SOC0 60 %; per-crossing delays not logged, so re-simulated with unchanged code and config); the Task E final configurations (`analyze.hydro_impact` with the tolerance set in its context).
+- **Reproduction.** The 30 min rows reproduce the published values exactly: replay 256/256 groups (`model_harm_delays.csv`), budget 13/13 (`g3_budget_sweep.csv`), agents 22/22 (`static_hydro.csv`).
+- **tab:replay rows (15 / 30 / 60 min).** S6+F none 0.030 / 0.022 / 0.022; S4, S4-F C1 suppress 0.993 at all three; S4-E, S6 C1 suppress 0.230 / 0.096 / 0.022; S6+F C1 and C1+C3 suppress 0.126 / 0.022 / 0.022; S4-E, S6 C1+C3 suppress 0.993; S6+F C1+C3+OP suppress 0.985; S6, S6+F C1 drain no budget 0.600 / 0.533 / 0.393; S6, S6+F C1 drain budget 0.170 / 0.059 / 0.044; S6 C1+C3 drain budget 0.978; S6+F C1+C3(+OP) drain budget 0.170 / 0.059 / 0.044 (LWL01/poor for drain, PS-LB/good for the others; the other battery profiles in the CSV).
+- **Derived budget (50/day).** Attack excess 0.104 [0.063, 0.158] / 0.037 [0.000, 0.077] / 0.022 [0.000, 0.046]; no budget 0.570 / 0.511 / 0.370. Legitimate p90 delay 14 min at all three.
+- **Agent study (excess).** Envelope schemes S4-E, S6, S6-R, S6+F: 0.000-0.004 / 0.000 / 0.000; no scheme 0.004 (both prompts) / 0.004-0.013 / 0.018-0.022.
+- **Ordering.** Unchanged except two ties: at 60 min S4-E and S6 under C1 suppress fall to 0.022, the level of S6+F; at 15 min the agent-study excess with the limit-aware prompt is 0.004 under S4-E, S6 and S6+F, as with no scheme (S6-R 0.002). At 15 min the spotlighting defence (naive) gives -0.004.
+
+### N4. Restrict, sandbox and roll back: minimal implementation (off by default)
+
+- **Commit.** The commit of this note (`src/pqcap/agents/plant.py`, `src/pqcap/envelope.py`, tests in `tests/test_agents.py::test_n4_*` and `tests/test_envelope.py::test_lifetime_in_reserved_field`).
+- **restrict** (PDP, `Plant.restrict`): a proposal flagged as deriving from external content (`send(..., external=True)`) has its value clamped to the per-label bound (`Plant.label_bounds[action]`, default the device's S6 envelope rule); an action with no bound for the label is blocked (`block` / `restrict:no_bound_for_label`). Property test (200 derandomised cases): the clamped value always lies in the bound and a value already inside is unchanged, i.e. restrict never widens a bound.
+- **sandbox** (`Plant.sandbox`): the command runs on a deep copy of the plant; no frame is sent, the real device state and counter are unchanged; the receipt has decision `sandbox` and reason `would_be_<decision>:<reason>` (no MAC: nothing was received by a device).
+- **roll back** (`Plant.rollback`): the lifetime L (minutes) travels in the reserved 16-bit field of the command, under the command MAC (`envelope.make_command(..., reserved=L)`); the device checks accept a non-zero reserved field only when roll back is enabled (`lifetime_ok`, default False: unchanged behaviour). When `Plant.tick` passes the expiry, the device returns to its commissioned safe default (interval, threshold, enabled at commissioning) and its next receipt carries `note = rolled_back_to_safe_default@<minute>`, covered by the receipt MAC. CHOICE: the safe default is the device's configuration at commissioning.
+- **Byte-identity with all three off.** Full test suite green (100 % coverage of non-LLM code); `pqcap model` re-run on 2026-11-09 with this code left every tracked file in `results/` unchanged (`git status results/`: no modified file); `experiments/agents/report.py --phase static` left every results CSV unchanged. Commands with reserved = 0 are byte-identical to before (tested).
+- **Not exercised in the evaluation:** no experiment enables any of the three.
+
+### N5. H3 human labels and judge agreement
+
+- **Commit.** `b5ac171` (`results/labelling/to_label_human.csv`, `agreement.csv`, `agreement_extra.csv`, `README.md`, `scripts/agreement_extra.py`).
+- **Source.** Case A of NEXT_BATCH 5.1: `~/Downloads/to_label.csv` (blank form export, no `ai_prelabel` column), 60 rows, `human_label` filled on every row, item_ids identical to `results/labelling/to_label.csv` (same order, same texts); copied unchanged (SHA-256 342dae6b...36f3). `to_label.csv` is not modified.
+- **Labels.** The human labelled all 60 items NOT_REFUSED, gave no quote and left the optional `human_false_report` column empty on every row.
+- **Agreement.** Judge REFUSED / human NOT_REFUSED 52, judge NOT_REFUSED / human NOT_REFUSED 8, no human REFUSED. Observed agreement 0.133 (mistral-nemo:12b transcripts 0.048, others 0.179). Cohen's kappa = 0 in every group: with one rater constant, p_o = p_e; `ST.cohen_kappa` returns 0 (it is defined, so it is reported as computed); the bootstrap CI is degenerate [0, 0].
+- **Empty answers.** 16 of the 60 items have an empty or whitespace-only assistant answer; the judge labelled all 16 REFUSED. (In the outcome classes `refused` also needs a verbatim quote of at least 8 characters, so no empty answer is classed `refused`.)
+- **Claims parser vs human false-report labels.** Not computable: 0 items carry a human false-report label.
+- **AI pre-annotation** (`manuscript/labelling/llm_preannotation.csv`, Claude, a family different from the judge's, made without the judge labels; its annotator saw key rows 01ed5c53a9, 0dae625c5b, 0e4a08da68): labels agree with the human on 60/60 (57/57 excluding the three seen rows); quotes 59/60 (the pre-annotation has `?` on 90f74ab91a); false report not comparable (no human labels).
+- **Consequence (pre-decided, case b).** No refusal-versus-ignore split is reported; no result depends on the judge.

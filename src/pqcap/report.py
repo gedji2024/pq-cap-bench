@@ -952,11 +952,12 @@ def section_kill(results: Path) -> str:
     return "\n\n".join(parts)
 
 
-def section_audit(results: Path) -> str:
-    """Sec. 11: audit of manuscript v0.2 against the code (one note per item in results/audit_v02/, A1-A6, B1-B4)."""
-    notes = sorted((results / "audit_v02").glob("*.md"))
+def section_audit(results: Path, sub: str = "audit_v02") -> str:
+    """Sec. 11: audit of manuscript v0.2 against the code (one note per item in results/audit_v02/, A1-A6, B1-B4);
+    Sec. 12 (sub="next_batch"): reviewer-proofing batch, one note per item (N1-N5)."""
+    notes = sorted((results / sub).glob("*.md"))
     if not notes:
-        return "_No audit notes (results/audit_v02/ is empty)._"
+        return f"_No notes (results/{sub}/ is empty)._"
     return "\n\n".join(n.read_text().strip() for n in notes)
 
 
@@ -1143,5 +1144,6 @@ def run(config: Path, results: Path, figures: Path) -> None:
         section_agents(results.parent / "experiments/agents"),
         "## 10. Figures (numbered 9 before Task E took Sec. 9)", "\n".join(f"- [{f}](figures/{f}) ([pdf](figures/{f[:-4]}.pdf))" for f in figs),
         "## 11. Audit of manuscript v0.2 against the code", section_audit(results),
+        "## 12. Reviewer-proofing batch (NEXT_BATCH)", section_audit(results, "next_batch"),
     ]
     (results.parent / "REPORT.md").write_text("\n\n".join(parts) + "\n")
