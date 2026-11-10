@@ -515,3 +515,18 @@ def test_drain_lowthreshold_strategy_b3():
     lo = harm.simulate(stage, "S6+F", "C1+C3", "drain_lowthreshold", cfg, cat, env, fw, budget=50)["stats"]
     dr = harm.simulate(stage, "S6+F", "C1+C3", "drain", cfg, cat, env, fw, budget=50)["stats"]
     assert lo["uplinks"] > dr["uplinks"]                                # free alert-rate uplinks below theta_F
+
+
+@pytest.mark.parametrize("comp,strategy", [("C1", "suppress"), ("C1+C3", "suppress"), ("C1+C3+OP", "suppress"),
+                                           ("C1", "drain_lowthreshold"), ("C1+C3", "drain_lowthreshold")])
+@pytest.mark.parametrize("mode", ["configured", "commissioned"])
+def test_s4ef_has_exactly_the_s6f_floor(comp, strategy, mode):
+    """N1: S4-E+F = S4-E device + the S6+F floor and budget (same code path, harm.FLOORED); the replay does not
+    model envelope authentication, so it behaves exactly as S6+F, while S4-E alone has no floor."""
+    stage = _hydrograph(1000)
+    cfg = {**_cfg(commissioning={"free_alert_uplinks": mode}), "_max_alert_threshold": 610}
+    run = lambda s: harm.simulate(stage, s, comp, strategy, cfg, CAT, ENV, FW, budget=5, trace=True)  # noqa: E731
+    assert run("S4-E+F") == run("S6+F")
+    a = harm.Scheme("S4-E+F", CAT, ENV, FW, comp.startswith("C1+C3"), max_alert_threshold=610)
+    assert a.floor == harm.Scheme("S6+F", CAT, ENV, FW, False, max_alert_threshold=610).floor != ev.NO_INVARIANTS
+    assert harm.Scheme("S4-E", CAT, ENV, FW, False).floor == ev.NO_INVARIANTS

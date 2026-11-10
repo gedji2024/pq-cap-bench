@@ -142,13 +142,18 @@ def effective_interval(interval: int, alert: bool, soc_pct: float, inv: ev.Invar
     return e
 
 
+FLOORED = ("S6+F", "S4-E+F")   # schemes with the write-once commissioning floor (S4-E+F: N1 baseline = S4-E + floor)
+
+
 class Scheme:
-    """Device-side check for one scheme, with the policy in force (possibly attacker-replaced)."""
+    """Device-side check for one scheme, with the policy in force (possibly attacker-replaced). S4-E+F (NEXT_BATCH
+    N1) is the S4-E device (per-device symmetric envelope key) with exactly the S6+F floor and budget-in-floor; the
+    replay does not model how the envelope is authenticated, so its device check is the S6+F one."""
 
     def __init__(self, name: str, cat, env: ev.Policy, fw: ev.Policy, replaced: bool, op_key: bool = False,
                  max_alert_threshold: int = 0):
         self.name, self.cat, self.op_key, self.max_alert_threshold = name, cat, op_key, max_alert_threshold
-        enveloped = name in ("S4-E", "S6", "S6+F")
+        enveloped = name in ("S4-E", "S6") + FLOORED
         self.env = ev.permissive_policy(cat, env.handle) if replaced and enveloped else env
         self.fw = fw
         self.handle = self.env.handle if enveloped else 0
@@ -163,7 +168,7 @@ class Scheme:
     def floor(self) -> ev.Invariants:
         """S6+F non-updatable firmware floor (profile invariants + F3 write-once commissioning bound on the alert
         threshold); none for the other schemes."""
-        if self.name != "S6+F":
+        if self.name not in FLOORED:
             return ev.NO_INVARIANTS
         return dataclasses.replace(self.fw.invariants, max_alert_threshold=self.max_alert_threshold)
 
@@ -172,7 +177,7 @@ class Scheme:
             return ev.check_s4(self.cat, state, msg, KEY, TAG)
         if self.name == "S4-F":
             return ev.check_s4f(self.fw, self.cat, state, msg, KEY, TAG)
-        if self.name == "S6+F":
+        if self.name in FLOORED:
             return ev.check_s6f(self.env, self.floor, self.cat, state, msg, KEY, TAG, self.op_key)
         return ev.check_enveloped(self.env, self.cat, state, msg, KEY, TAG)
 
@@ -273,7 +278,7 @@ def simulate(stage: np.ndarray, scheme: str, compromise: str, strategy: str | No
     reporting interval would (with the alert-mode and low-battery invariants applied). With no budget left in the
     epoch the device keeps the default schedule and drops immediate-uplink requests; firmware alerts always go.
     `init` (Task E): starting configuration {interval, threshold, enabled, soc_pct} instead of the defaults.
-    F8 (cfg["commissioning"]["free_alert_uplinks"] == "commissioned", S6+F only): an uplink is free of the budget
+    F8 (cfg["commissioning"]["free_alert_uplinks"] == "commissioned", S6+F and S4-E+F only): an uplink is free of the budget
     as an alert uplink (alert onset, or the alert-mode base interval) only if its triggering sample (the onset
     sample, or the last sample) is >= the commissioned threshold theta_F; otherwise the non-alert base interval
     applies for budget accounting. Default "configured" = behaviour before F8.
@@ -296,7 +301,7 @@ def simulate(stage: np.ndarray, scheme: str, compromise: str, strategy: str | No
     cmd_pending = alert_pending = False
     epoch_min = int(cfg["energy_budget"]["epoch_h"] * 60) if budget is not None else 0
     cur_epoch, tokens = -1, 0
-    f8 = scheme == "S6+F" and (cfg.get("commissioning") or {}).get("free_alert_uplinks", "configured") == "commissioned"
+    f8 = scheme in FLOORED and (cfg.get("commissioning") or {}).get("free_alert_uplinks", "configured") == "commissioned"
     theta_f = sch.max_alert_threshold
     onset_v = last_v = -math.inf
     last_rejected = last_sent = None
