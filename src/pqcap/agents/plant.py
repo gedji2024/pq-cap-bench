@@ -15,6 +15,11 @@ Schemes:
          (CHOICE of trigger), after which every command on that envelope is rejected.
   S6+F   S6 + write-once floor (F3 commissioning bound = NWS action stage) + disable only with an OP token,
          which the agent cannot obtain.
+  platform_policy   post-registration extension (DEVIATIONS 5), Progent-style deterministic tool-call policy: the
+         tool layer (before the frame is built) checks each proposal against that device's S6 envelope (bounds and
+         invariants, the same check as the S6 device); outside it the proposal is logged as decision `block`, reason
+         `platform_policy`, nothing is sent, and the tool raises PlatformPolicyError (AgentDojo returns its normal
+         tool-error string). Inside it the frame goes to an S4 device (MAC + counter, no envelope). No LLM.
 """
 
 from __future__ import annotations
@@ -27,10 +32,14 @@ from dataclasses import dataclass, field
 
 from .. import envelope as ev
 
-SCHEMES = ("none", "S4", "S4-F", "S4-E", "S6", "S6-R", "S6+F")
+SCHEMES = ("none", "S4", "S4-F", "S4-E", "S6", "S6-R", "S6+F", "platform_policy")
 ACTIONS = {"set_reporting_interval": ev.A_INTERVAL, "request_immediate_uplink": ev.A_IMMEDIATE,
            "sensor_enable": ev.A_ENABLE, "set_alert_threshold": ev.A_THRESHOLD}
 TAG = 8
+
+
+class PlatformPolicyError(Exception):
+    """A proposal rejected by the platform-side policy (scheme platform_policy); nothing was sent."""
 
 
 @dataclass
@@ -91,7 +100,7 @@ class Plant:
         handle = d.envelope.handle if self.scheme in ("S4-E", "S6", "S6-R", "S6+F") else 0
         msg = ev.make_command(self.session_key, handle, d.counter + 1, aid, 0, value, TAG)
         k, cat = self.session_key, self.catalogue
-        if self.scheme == "S4":
+        if self.scheme in ("S4", "platform_policy"):
             dec, _ = ev.check_s4(cat, st, msg, k, TAG)
         elif self.scheme == "S4-F":
             dec, _ = ev.check_s4f(d.firmware, cat, st, msg, k, TAG)
@@ -100,6 +109,12 @@ class Plant:
             dec, _ = ev.check_s6f(d.envelope, floor, cat, st, msg, k, TAG, op_token_valid=False)
         else:
             dec, _ = ev.check_enveloped(d.envelope, cat, st, msg, k, TAG)
+        return dec
+
+    def _platform_check(self, d: Device, aid: int, value: int) -> ev.Decision:
+        """Platform side (platform_policy): the S6 device check on this device's envelope, state not changed."""
+        msg = ev.make_command(self.session_key, d.envelope.handle, d.counter + 1, aid, 0, value, TAG)
+        dec, _ = ev.check_enveloped(d.envelope, self.catalogue, self._state(d), msg, self.session_key, TAG)
         return dec
 
     @staticmethod
@@ -128,6 +143,12 @@ class Plant:
             r = Receipt(seq, device_id, action, value, "sent" if ok else "rejected", "ok" if ok else "catalogue", None)
             self.receipts.append(r)
             return r
+        if self.scheme == "platform_policy":
+            pol = self._platform_check(d, aid, value)
+            if not pol.accepted:
+                self.receipts.append(Receipt(seq, device_id, action, value, "block", "platform_policy", None))
+                raise PlatformPolicyError(f"{action}({value}) on {device_id} is outside the platform policy "
+                                          f"({pol.reason}); the command was not sent")
         dec = self._check(d, aid, value)
         if dec.accepted:
             d.counter += 1
@@ -165,7 +186,7 @@ def limits_text(p: Plant) -> str:
 
 def _device_limits(scheme: str, d: Device) -> str:
     names = {v: k for k, v in ACTIONS.items()}
-    pol = d.firmware if scheme == "S4-F" else d.envelope
+    pol = d.firmware if scheme == "S4-F" else d.envelope   # platform_policy: the S6 envelope it enforces
     parts = []
     for aid in sorted(names):
         r = pol.rules.get(aid)

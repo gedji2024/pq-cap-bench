@@ -25,6 +25,9 @@ from pqcap.config import CONFIG, REPO_ROOT, load_yaml
 HERE = REPO_ROOT / "experiments/agents"
 
 
+EXT = "platform_policy"         # post-registration extension condition (DEVIATIONS 5)
+
+
 def world(cache_name: str) -> tuple[R.World, dict, list]:
     cfg = load_yaml(HERE / "config.yaml")
     h = {**load_yaml(CONFIG / "harm.yaml"), "workers": 1}
@@ -132,13 +135,14 @@ def run_e6(w: R.World, dz: dict, models: list, stamp: tuple):
     R.sha256_manifest(HERE / "logs/e6")
 
 
-def run_judge(w: R.World, cfg: dict, stamp: tuple):
-    """Label-blind judge on attacked episodes with no attack command and no executed goal (static + adaptive)."""
+def run_judge(w: R.World, cfg: dict, stamp: tuple, phases: tuple = ("static", "adaptive"),
+              out: Path = HERE / "logs/judge/judge.jsonl"):
+    """Label-blind judge on attacked episodes with no attack command and no executed goal (static + adaptive;
+    `phases` / `out` set only for the post-registration extension, DEVIATIONS 5)."""
     from pqcap.agents import judge as JD  # noqa: PLC0415
-    out = HERE / "logs/judge/judge.jsonl"
     done = R.done_keys(out)
     jc = cfg["judge"]
-    for phase in ("static", "adaptive"):
+    for phase in phases:
         for f in sorted((HERE / f"logs/{phase}").glob("*.jsonl")):
             for line in f.read_text().splitlines():
                 r = json.loads(line)
@@ -148,7 +152,7 @@ def run_judge(w: R.World, cfg: dict, stamp: tuple):
                 lab, q, st = JD.judge(w.client, w.cache, jc, w.digests.get(jc["model"], ""), inj, r["agent_text"])
                 R.append(out, {"key": r["key"], "label": lab, "quote": q, "stats": st, "prereg_commit": stamp[0]})
                 done.add(r["key"])
-    R.sha256_manifest(HERE / "logs/judge")
+    R.sha256_manifest(out.parent)
 
 
 def determinism(n: int, seed: int):
@@ -244,6 +248,20 @@ def main(argv=None):
             sys.exit("system-prompt check FAILED (logs/syscheck/summary.json)")
     elif a.phase == "determinism_sys":
         determinism_sys(20, 2, 11)
+    elif a.phase in ("static_ext", "judge_ext"):
+        # DEVIATIONS 5: post-registration extension (condition EXT), registered static design, own request cache
+        commit, sha = prereg()
+        w, cfg, atks = world(f"ext_{EXT}")
+        dz = load_yaml(HERE / "design.yaml")
+        models = a.models.split(",") if a.models else list(cfg["models"])
+        hp = D.pairs(sorted(w.scenarios), dz["host_pairs"]["n"], dz["host_pairs"]["seed"])
+        if a.phase == "static_ext":
+            test = [x for x in atks if x.split == "test"]
+            temps = {float(t): int(r) for t, r in dz["temperatures"].items()}
+            run_specs(w, D.static_specs(models, temps, [EXT], cfg["prompt_variants"], test, hp, dz["seed"]),
+                      f"static_ext_{EXT}", (commit, sha))
+        else:
+            run_judge(w, cfg, (commit, sha), (f"static_ext_{EXT}",), HERE / f"logs/judge_ext_{EXT}/judge.jsonl")
     elif a.phase in ("static", "adaptive", "e6", "judge"):
         commit, sha = prereg()
         w, cfg, atks = world("main")

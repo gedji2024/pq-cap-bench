@@ -58,7 +58,7 @@ def test_scenarios(scenarios):
 # ---------------------------------------------------------------- plant
 def test_plant_schemes(scenarios):
     acts = {}
-    for sch in P.SCHEMES:
+    for sch in [s for s in P.SCHEMES if s != "platform_policy"]:
         e = env_for(scenarios, sch)
         p = e.plant
         dev = "WL-BBST2"
@@ -84,6 +84,41 @@ def test_plant_schemes(scenarios):
     assert e.plant.devices["WL-BBST2"].interval_min == 10
     none = env_for(scenarios, "none").plant
     assert none.send("WL-BBST2", "set_reporting_interval", 99999).decision == "rejected"   # outside catalogue range
+
+
+def test_platform_policy(scenarios):
+    """Extension (DEVIATIONS 5): out-of-envelope proposals are blocked at the tool layer, logged as `block` /
+    `platform_policy`, not sent (device state and counter unchanged); in-envelope proposals reach an S4 device and
+    the platform and S6 decisions agree on the same sequence of proposals."""
+    e = env_for(scenarios, "platform_policy")
+    p, dev = e.plant, "WL-BBST2"
+    d = p.devices[dev]
+    before = (d.interval_min, d.threshold_cm, d.enabled, d.counter)
+    for action, value in (("sensor_enable", 0), ("set_reporting_interval", 1), ("set_alert_threshold", 1400)):
+        with pytest.raises(P.PlatformPolicyError, match="not sent"):
+            p.send(dev, action, value)
+    assert (d.interval_min, d.threshold_cm, d.enabled, d.counter) == before
+    assert [(r.decision, r.reason, r.tag) for r in p.receipts] == [("block", "platform_policy", None)] * 3
+    assert not any(p.aud_verify(r) for r in p.receipts)
+    r = p.send(dev, "set_reporting_interval", 10)
+    assert r.decision == "accepted" and r.reason == env_for(scenarios, "S4").plant.send(dev, "set_reporting_interval",
+                                                                                        10).reason
+    assert d.interval_min == 10 and d.counter == 1 and p.aud_verify(r)
+    s6 = env_for(scenarios, "S6").plant
+    pp = env_for(scenarios, "platform_policy").plant
+    for action, value in (("set_reporting_interval", 10), ("set_reporting_interval", 1), ("request_immediate_uplink", 0),
+                          ("set_alert_threshold", 600), ("set_alert_threshold", 5000), ("sensor_enable", 1)):
+        want = s6.send(dev, action, value).decision
+        try:
+            got = pp.send(dev, action, value).decision
+        except P.PlatformPolicyError:
+            got = "rejected"
+        assert got == want, (action, value)
+    assert "set_reporting_interval: value in [5, 60]" in P.limits_text(pp)
+    rt = FunctionsRuntime(S.make_suite().tools)
+    out, err = rt.run_function(env_for(scenarios, "platform_policy"), "set_reporting_interval",
+                               {"device_id": dev, "minutes": 1})
+    assert out == "" and err.startswith("PlatformPolicyError:")
 
 
 def test_s6r_revocation_and_receipts(scenarios):
