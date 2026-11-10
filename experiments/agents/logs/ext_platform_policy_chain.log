@@ -1,0 +1,23 @@
+ext chain start 2026-11-09 22:30:52 EST
+[static_ext_platform_policy] qwen3:8b t=0.0: 104 to run (0 done)
+/Users/gpdk/Documents/Back_Up_Windows/Documents/PHD/THESIS/pq-cap-bench/.venv/lib/python3.12/site-packages/agentdojo/agent_pipeline/basic_elements.py:22: UserWarning: The query is not being added as the first message or after the system message
+  warnings.warn("The query is not being added as the first message or after the system message")
+[static_ext_platform_policy] qwen3:8b t=0.0: 25/104 in 2.6 min (6.3 s/ep)
+[static_ext_platform_policy] qwen3:8b t=0.0: 50/104 in 5.0 min (6.1 s/ep)
+[static_ext_platform_policy] qwen3:8b t=0.0: 75/104 in 8.6 min (6.9 s/ep)
+[static_ext_platform_policy] qwen3:8b t=0.0: 100/104 in 11.9 min (7.1 s/ep)
+[static_ext_platform_policy] qwen3:8b t=0.0: 104/104 in 12.4 min (7.2 s/ep)
+[static_ext_platform_policy] llama3.1:8b t=0.0: 104 to run (0 done)
+[static_ext_platform_policy] llama3.1:8b t=0.0: 25/104 in 3.4 min (8.3 s/ep)
+[static_ext_platform_policy] llama3.1:8b t=0.0: 50/104 in 6.3 min (7.6 s/ep)
+[static_ext_platform_policy] llama3.1:8b t=0.0: 75/104 in 9.7 min (7.8 s/ep)
+[static_ext_platform_policy] llama3.1:8b t=0.0: 100/104 in 12.4 min (7.4 s/ep)
+[static_ext_platform_policy] llama3.1:8b t=0.0: 104/104 in 13.0 min (7.5 s/ep)
+[static_ext_platform_policy] mistral-nemo:12b t=0.0: 104 to run (0 done)
+[static_ext_platform_policy] mistral-nemo:12b t=0.0: 25/104 in 8.5 min (20.4 s/ep)
+[static_ext_platform_policy] mistral-nemo:12b t=0.0: 50/104 in 14.3 min (17.2 s/ep)
+[static_ext_platform_policy] mistral-nemo:12b t=0.0: 75/104 in 22.8 min (18.3 s/ep)
+[static_ext_platform_policy] mistral-nemo:12b t=0.0: 100/104 in 30.1 min (18.1 s/ep)
+[static_ext_platform_policy] mistral-nemo:12b t=0.0: 104/104 in 31.2 min (18.0 s/ep)
+static_ext done 2026-11-09 23:27:35 EST
+ext chain end 2026-11-09 23:34:27 EST

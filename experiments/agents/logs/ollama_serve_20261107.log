@@ -291912,3 +291912,4 @@ slot      release: id  0 | task 1003 | stop processing: n_tokens = 383, truncate
 srv  update_slots: all slots are idle
 [GIN] 2026/11/07 - 15:32:19 | 200 |    1.61s |       127.0.0.1 | POST     "/v1/chat/completions"
 [GIN] 2026/11/07 - 15:33:11 | 200 |   4.11ms |       127.0.0.1 | GET      "/api/tags"
+time=2026-11-07T17:46:38.044-05:00 level=INFO source=model_recommendations.go:177 msg="model recommendations cache sleep scheduled" wait=4h19m12.51374617s consecutive_failures=0

@@ -1,0 +1,7 @@
+model,prompt,accepted:ok,block:platform_policy
+llama3.1:8b,naive,27,11
+llama3.1:8b,limit_aware,27,11
+mistral-nemo:12b,naive,12,1
+mistral-nemo:12b,limit_aware,13,6
+qwen3:8b,naive,23,10
+qwen3:8b,limit_aware,12,15

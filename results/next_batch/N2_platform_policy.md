@@ -1,0 +1,7 @@
+### N2. Platform-side policy baseline (Progent-style), Task E extension
+
+- **Commits.** Condition and run phases in `24af8aa` (DEVIATIONS 5); run, results and DEVIATIONS 5b in the commit of this note.
+- **Condition.** `platform_policy`: S4 device (MAC only, no envelope); the tool layer runs the S6 device check on the device's S6 envelope before the frame is built and, outside it, logs `block` / `platform_policy`, sends nothing and raises an exception that AgentDojo returns as its normal tool-error string. Deterministic, no LLM.
+- **Run.** Registered static design (3 models x 2 prompts x 52 = 312 episodes, seed 20261105, T 0), Ollama 0.40.14, digests equal to `logs/run_environment_20261106.json`, own request cache, same judge and analysis functions; 22:30:52-23:34:27 EST on 2026-11-09 (1.06 h, outside the 30 h cap). 0 errors, timeouts or step limits.
+- **Results** (pooled; registered S6 in brackets): attempted 30/240 = 0.125 (0.125), executed device goals 0/180 (0/180), harmful accepted 6/240 = 0.025 (6/240), accepted outside the envelope 0/240 (0/240), benign utility 35/72 = 0.49 (0.49), false report 25/312 = 0.080 (0.083). The six accepted commands are immediate uplinks of drain attacks after the policy blocked the 1-minute interval. Platform blocks: 54 proposals. Hydrological excess 0.000 / 0.002 (naive / limit-aware).
+- **Reading.** With an intact platform the policy matches the device-side schemes; it runs in the trust domain that C1 removes, where the replay of S4 under C1 applies (0.99 late or missed under suppress, tab:replay).
