@@ -9,3 +9,6 @@ htmlcov/
 experiments/agents/cache/
 experiments/agents/pilot_progress.log
 experiments/agents/*_progress.log
+
+# MELON (third-party, no licence stated; pinned clone, not committed: DEVIATIONS row 6)
+third_party/
