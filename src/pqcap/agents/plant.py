@@ -20,10 +20,22 @@ Schemes:
          invariants, the same check as the S6 device); outside it the proposal is logged as decision `block`, reason
          `platform_policy`, nothing is sent, and the tool raises PlatformPolicyError (AgentDojo returns its normal
          tool-error string). Inside it the frame goes to an S4 device (MAC + counter, no envelope). No LLM.
+
+Decisions restrict, sandbox and roll back (NEXT_BATCH N4; implemented and unit-tested, each OFF by default and not
+exercised in the evaluation; with all three off the plant behaves exactly as before):
+  restrict   (PDP) a proposal that derives from external content (`send(..., external=True)`) has its value clamped
+             to the per-label bounds (`label_bounds[action] = (lo, hi)`, default: the device's S6 envelope rule);
+             an action with no bound for the label is blocked. Clamping never widens a bound.
+  sandbox    the command runs on a deep copy of the plant and no frame is sent; the receipt (decision `sandbox`)
+             records what the device would have decided.
+  roll back  a lifetime L (minutes) is carried in the reserved 16-bit field of the command; when it expires
+             (`tick`), the device returns to its commissioned safe default configuration and says so in its next
+             receipt (`note`).
 """
 
 from __future__ import annotations
 
+import copy
 import dataclasses
 import hashlib
 import hmac
@@ -59,6 +71,9 @@ class Device:
     counter: int = 0
     revoked: bool = False
     immediate_uplinks: int = 0
+    expiry_min: int | None = None      # roll back: minute at which the last command's lifetime ends
+    safe: tuple | None = None          # roll back: commissioned safe default (interval, threshold, enabled)
+    notes: list = field(default_factory=list)   # roll back events reported in the next receipt
 
 
 @dataclass(frozen=True)
@@ -70,9 +85,11 @@ class Receipt:
     decision: str                      # accepted | rejected | sent (scheme none: no device check, no receipt)
     reason: str
     tag: str | None                    # HMAC(k_rcpt, body), hex; None when the scheme has no receipts
+    note: str | None = None            # roll back: expiry reported in this receipt (MACed when present)
 
     def body(self) -> bytes:
-        return json.dumps([self.seq, self.device, self.action, self.value, self.decision, self.reason]).encode()
+        b = [self.seq, self.device, self.action, self.value, self.decision, self.reason]
+        return json.dumps(b if self.note is None else b + [self.note]).encode()
 
 
 @dataclass
@@ -85,31 +102,57 @@ class Plant:
     r_rev: bytes = bytes(range(64, 96))
     receipts: list = field(default_factory=list)
     revoked_at: int | None = None
+    restrict: bool = False
+    sandbox: bool = False
+    rollback: bool = False
+    label_bounds: dict | None = None   # restrict: action -> (lo, hi) for requests from external content
+    clock_min: int = 0
 
     def __post_init__(self):
         if self.scheme not in SCHEMES:
             raise ValueError(self.scheme)
+        for d in self.devices.values():
+            if d.safe is None:
+                d.safe = (d.interval_min, d.threshold_cm, d.enabled)
 
     # -------------------------------------------------------------- device side
     def _state(self, d: Device) -> ev.DeviceState:
         rev = frozenset({d.envelope.handle}) if d.revoked else frozenset()
         return ev.DeviceState(d.counter, d.alert, d.battery_pct, 0, rev)
 
-    def _check(self, d: Device, aid: int, value: int) -> ev.Decision:
+    def _check(self, d: Device, aid: int, value: int, lifetime: int = 0) -> ev.Decision:
         st = self._state(d)
         handle = d.envelope.handle if self.scheme in ("S4-E", "S6", "S6-R", "S6+F") else 0
-        msg = ev.make_command(self.session_key, handle, d.counter + 1, aid, 0, value, TAG)
-        k, cat = self.session_key, self.catalogue
+        msg = ev.make_command(self.session_key, handle, d.counter + 1, aid, 0, value, TAG, lifetime)
+        k, cat, lt = self.session_key, self.catalogue, self.rollback
         if self.scheme in ("S4", "platform_policy"):
-            dec, _ = ev.check_s4(cat, st, msg, k, TAG)
+            dec, _ = ev.check_s4(cat, st, msg, k, TAG, lt)
         elif self.scheme == "S4-F":
-            dec, _ = ev.check_s4f(d.firmware, cat, st, msg, k, TAG)
+            dec, _ = ev.check_s4f(d.firmware, cat, st, msg, k, TAG, lt)
         elif self.scheme == "S6+F":
             floor = dataclasses.replace(d.firmware.invariants, max_alert_threshold=d.max_alert_threshold)
-            dec, _ = ev.check_s6f(d.envelope, floor, cat, st, msg, k, TAG, op_token_valid=False)
+            dec, _ = ev.check_s6f(d.envelope, floor, cat, st, msg, k, TAG, op_token_valid=False, lifetime_ok=lt)
         else:
-            dec, _ = ev.check_enveloped(d.envelope, cat, st, msg, k, TAG)
+            dec, _ = ev.check_enveloped(d.envelope, cat, st, msg, k, TAG, lt)
         return dec
+
+    # -------------------------------------------------------------- restrict / roll back (N4, off by default)
+    def bound_for(self, d: Device, action: str) -> tuple[int, int] | None:
+        """restrict: the per-label bound for external content (label_bounds, else the S6 envelope rule)."""
+        if self.label_bounds is not None:
+            return self.label_bounds.get(action)
+        r = d.envelope.rules.get(ACTIONS[action])
+        return None if r is None else (r.lo, r.hi)
+
+    def tick(self, minutes: int):
+        """roll back: advance the plant clock; every device whose command lifetime has ended returns to its
+        commissioned safe default, which its next receipt reports."""
+        self.clock_min += minutes
+        for d in self.devices.values():
+            if d.expiry_min is not None and d.expiry_min <= self.clock_min:
+                d.interval_min, d.threshold_cm, d.enabled = d.safe
+                d.notes.append(f"rolled_back_to_safe_default@{d.expiry_min}")
+                d.expiry_min = None
 
     def _platform_check(self, d: Device, aid: int, value: int) -> ev.Decision:
         """Platform side (platform_policy): the S6 device check on this device's envelope, state not changed."""
@@ -130,12 +173,30 @@ class Plant:
             d.threshold_cm = value
 
     # -------------------------------------------------------------- AG -> PDP -> NS/GW -> D
-    def send(self, device_id: str, action: str, value: int) -> Receipt:
+    def send(self, device_id: str, action: str, value: int, external: bool = False, lifetime: int = 0) -> Receipt:
         if device_id not in self.devices:
             raise KeyError(f"unknown device {device_id}")
         if action not in ACTIONS:
             raise KeyError(f"unknown action {action}")
         d, aid, seq = self.devices[device_id], ACTIONS[action], len(self.receipts) + 1
+        if self.restrict and external:
+            b = self.bound_for(d, action)
+            if b is None:
+                r = Receipt(seq, device_id, action, value, "block", "restrict:no_bound_for_label", None)
+                self.receipts.append(r)
+                return r
+            value = min(max(value, b[0]), b[1])
+        if self.sandbox:
+            twin = copy.deepcopy(self)
+            twin.sandbox = twin.restrict = False
+            w = twin.send(device_id, action, value, lifetime=lifetime)
+            r = Receipt(seq, device_id, action, value, "sandbox", f"would_be_{w.decision}:{w.reason}", None)
+            self.receipts.append(r)
+            return r
+        if not self.rollback:
+            lifetime = 0
+        elif not 0 <= lifetime <= 0xFFFF:
+            raise ValueError("lifetime must fit the 16-bit reserved field")
         if self.scheme == "none":
             ok = ev.in_catalogue(self.catalogue, aid, 0, value)
             if ok:
@@ -149,11 +210,15 @@ class Plant:
                 self.receipts.append(Receipt(seq, device_id, action, value, "block", "platform_policy", None))
                 raise PlatformPolicyError(f"{action}({value}) on {device_id} is outside the platform policy "
                                           f"({pol.reason}); the command was not sent")
-        dec = self._check(d, aid, value)
+        dec = self._check(d, aid, value, lifetime)
         if dec.accepted:
             d.counter += 1
             self._apply(d, aid, value)
-        r = Receipt(seq, device_id, action, value, "accepted" if dec.accepted else "rejected", dec.reason, None)
+            if lifetime:
+                d.expiry_min = self.clock_min + lifetime
+        note = "; ".join(d.notes) or None
+        d.notes = []
+        r = Receipt(seq, device_id, action, value, "accepted" if dec.accepted else "rejected", dec.reason, None, note)
         r = dataclasses.replace(r, tag=hmac.new(self.receipt_key, r.body(), hashlib.sha256).hexdigest()[:2 * TAG])
         self.receipts.append(r)
         if self.scheme == "S6-R" and not dec.accepted and self.revoked_at is None:

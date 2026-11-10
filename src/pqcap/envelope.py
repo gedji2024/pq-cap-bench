@@ -178,8 +178,8 @@ def decode_envelope(b: bytes) -> Policy:
 
 
 # ---------------------------------------------------------------- messages
-def encode_params(action_id: int, target: int, value: int) -> bytes:
-    return PARAMS.pack(action_id, target, value, 0)
+def encode_params(action_id: int, target: int, value: int, reserved: int = 0) -> bytes:
+    return PARAMS.pack(action_id, target, value, reserved)
 
 
 def decode_params(b: bytes) -> tuple[int, int, int, int]:
@@ -191,8 +191,9 @@ def tag(key: bytes, body: bytes, tag_len: int) -> bytes:
 
 
 def make_command(key: bytes, handle: int, counter: int, action_id: int, target: int, value: int,
-                 tag_len: int) -> bytes:
-    body = HEADER.pack(handle, counter) + encode_params(action_id, target, value)
+                 tag_len: int, reserved: int = 0) -> bytes:
+    """`reserved` (default 0) carries the roll-back lifetime in minutes when that decision is enabled."""
+    body = HEADER.pack(handle, counter) + encode_params(action_id, target, value, reserved)
     return body + tag(key, body, tag_len)
 
 
@@ -236,8 +237,8 @@ def invariant_violation(inv: Invariants, state: DeviceState, action_id: int, val
     return None
 
 
-def _check_policy(p: Policy, catalogue, state, aid, target, value, reserved, counter):
-    if reserved != 0 or not in_catalogue(catalogue, aid, target, value):
+def _check_policy(p: Policy, catalogue, state, aid, target, value, reserved, counter, lifetime_ok=False):
+    if (reserved != 0 and not lifetime_ok) or not in_catalogue(catalogue, aid, target, value):
         return Decision(False, "catalogue"), state
     if not p.not_before <= state.now <= p.not_after:
         return Decision(False, "expired"), state
@@ -250,27 +251,28 @@ def _check_policy(p: Policy, catalogue, state, aid, target, value, reserved, cou
 
 
 def check_s4(catalogue: dict[int, Action], state: DeviceState, msg: bytes, key: bytes,
-             tag_len: int) -> tuple[Decision, DeviceState]:
-    """S4: a valid MAC + fresh counter + syntactically valid command is accepted. No bounds, no invariants."""
+             tag_len: int, lifetime_ok: bool = False) -> tuple[Decision, DeviceState]:
+    """S4: a valid MAC + fresh counter + syntactically valid command is accepted. No bounds, no invariants.
+    `lifetime_ok` (roll back enabled): a non-zero reserved field is a lifetime, not a malformed command."""
     parsed, bad = _authenticate(msg, key, tag_len, state)
     if bad:
         return bad, state
     _, counter, (aid, target, value, reserved) = parsed
-    if reserved != 0 or not in_catalogue(catalogue, aid, target, value):
+    if (reserved != 0 and not lifetime_ok) or not in_catalogue(catalogue, aid, target, value):
         return Decision(False, "catalogue"), state
     return Decision(True, "ok"), replace(state, last_counter=counter)
 
 
-def check_s4f(firmware: Policy, catalogue, state, msg, key, tag_len):
+def check_s4f(firmware: Policy, catalogue, state, msg, key, tag_len, lifetime_ok=False):
     """S4-F: per-command HMAC, checked against static bounds + invariants compiled into firmware."""
     parsed, bad = _authenticate(msg, key, tag_len, state)
     if bad:
         return bad, state
     _, counter, (aid, target, value, reserved) = parsed
-    return _check_policy(firmware, catalogue, state, aid, target, value, reserved, counter)
+    return _check_policy(firmware, catalogue, state, aid, target, value, reserved, counter, lifetime_ok)
 
 
-def check_enveloped(env: Policy, catalogue, state, msg, key, tag_len):
+def check_enveloped(env: Policy, catalogue, state, msg, key, tag_len, lifetime_ok=False):
     """S6 and S4-E crisis commands (identical once the envelope is installed): per-command HMAC,
     envelope handle, validity window, bounds and invariants."""
     parsed, bad = _authenticate(msg, key, tag_len, state)
@@ -281,18 +283,19 @@ def check_enveloped(env: Policy, catalogue, state, msg, key, tag_len):
         return Decision(False, "handle"), state
     if handle in state.revoked:
         return Decision(False, "revoked"), state
-    return _check_policy(env, catalogue, state, aid, target, value, reserved, counter)
+    return _check_policy(env, catalogue, state, aid, target, value, reserved, counter, lifetime_ok)
 
 
 check_s6 = check_enveloped
 check_s4e = check_enveloped
 
 
-def check_s6f(env: Policy, floor: Invariants, catalogue, state, msg, key, tag_len, op_token_valid: bool):
+def check_s6f(env: Policy, floor: Invariants, catalogue, state, msg, key, tag_len, op_token_valid: bool,
+              lifetime_ok: bool = False):
     """S6+F (D2): S6 envelope check, then a NON-UPDATABLE firmware floor (applies even if the envelope was
     replaced), and "disable sensor" only with a valid OP approval token (signed with sk_OP != sk_PA;
     `op_token_valid` is the result of verifying it)."""
-    dec, new = check_enveloped(env, catalogue, state, msg, key, tag_len)
+    dec, new = check_enveloped(env, catalogue, state, msg, key, tag_len, lifetime_ok)
     if not dec.accepted:
         return dec, state
     aid, _target, value, _reserved = decode_params(msg[HEADER.size:HEADER.size + PARAMS.size])

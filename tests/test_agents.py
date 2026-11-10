@@ -8,6 +8,8 @@ import numpy as np
 import pandas as pd
 import pytest
 from agentdojo.functions_runtime import FunctionsRuntime
+from hypothesis import given, settings
+from hypothesis import strategies as st
 from openai.types.chat import ChatCompletionMessage
 
 from pqcap import envelope as ev
@@ -689,3 +691,83 @@ def test_syscheck(world):
     nosys = SY.check({**req, "messages": req["messages"][1:]}, fake(False))
     assert not nosys["ok"] and nosys["system_chars"] == 0
     assert "tools" not in SY.native({"model": "m", "messages": []})
+
+
+# ---------------------------------------------------------------- N4: restrict, sandbox, roll back (off by default)
+def test_n4_defaults_off(scenarios):
+    p = env_for(scenarios, "S6").plant
+    assert not (p.restrict or p.sandbox or p.rollback)
+    r = p.send("WL-BBST2", "set_reporting_interval", 10, external=True, lifetime=30)   # ignored when off
+    assert r.decision == "accepted" and r.note is None and p.devices["WL-BBST2"].expiry_min is None
+    assert json.loads(r.body()) == [r.seq, r.device, r.action, r.value, r.decision, r.reason]
+
+
+def test_n4_restrict(scenarios):
+    p = env_for(scenarios, "S4").plant
+    p.restrict = True
+    d = p.devices["WL-BBST2"]
+    lo, hi = p.bound_for(d, "set_reporting_interval")
+    r = p.send("WL-BBST2", "set_reporting_interval", 1, external=True)
+    assert r.decision == "accepted" and r.value == lo and d.interval_min == lo           # clamped up to the bound
+    assert p.send("WL-BBST2", "set_reporting_interval", 1).value == 1                 # not external: untouched
+    assert p.bound_for(d, "sensor_enable") == (1, 1)                                   # envelope: enable only
+    assert p.send("WL-BBST2", "sensor_enable", 0, external=True).value == 1            # disable clamped to enable
+    p.label_bounds = {"set_alert_threshold": (500, 600)}
+    assert p.send("WL-BBST2", "set_alert_threshold", 900, external=True).value == 600
+    r = p.send("WL-BBST2", "request_immediate_uplink", 0, external=True)
+    assert (r.decision, r.reason) == ("block", "restrict:no_bound_for_label")
+
+
+_SCN: dict = {}
+
+
+@settings(max_examples=200, deadline=None, derandomize=True)
+@given(lo=st.integers(-2000, 2000), width=st.integers(0, 3000), value=st.integers(-10**6, 10**6))
+def test_n4_restrict_never_widens(lo, width, value):
+    """The clamped value always lies in [lo, hi], and a value already inside is left unchanged."""
+    p = env_for(_SCN or _SCN.update({s.id: s for s in SC.build(HCFG, REPO_ROOT)}) or _SCN, "S4").plant
+    p.restrict, p.sandbox = True, True                       # sandbox: no device state touched, decision recorded
+    p.label_bounds = {"set_alert_threshold": (lo, lo + width)}
+    v = p.send("WL-BBST2", "set_alert_threshold", value, external=True).value
+    assert lo <= v <= lo + width and (v == value or not lo <= value <= lo + width)
+
+
+def test_n4_sandbox(scenarios):
+    p = env_for(scenarios, "S6").plant
+    p.sandbox = True
+    d = p.devices["WL-BBST2"]
+    before = (d.interval_min, d.threshold_cm, d.enabled, d.counter, d.battery_pct, d.immediate_uplinks)
+    r1 = p.send("WL-BBST2", "set_reporting_interval", 10)
+    r2 = p.send("WL-BBST2", "set_reporting_interval", 1)
+    r3 = p.send("WL-BBST2", "request_immediate_uplink", 0)
+    assert (d.interval_min, d.threshold_cm, d.enabled, d.counter, d.battery_pct, d.immediate_uplinks) == before
+    assert [(r.decision, r.reason, r.tag) for r in (r1, r2, r3)] == [
+        ("sandbox", "would_be_accepted:ok", None), ("sandbox", "would_be_rejected:bounds", None),
+        ("sandbox", "would_be_accepted:ok", None)]
+    assert len(p.receipts) == 3 and not any(p.aud_verify(r) for r in p.receipts)
+
+
+def test_n4_rollback(scenarios):
+    p = env_for(scenarios, "S6").plant
+    p.rollback = True
+    d = p.devices["WL-BBST2"]
+    safe = (d.interval_min, d.threshold_cm, d.enabled)
+    assert d.safe == safe
+    r = p.send("WL-BBST2", "set_reporting_interval", 10, lifetime=30)
+    assert r.decision == "accepted" and d.interval_min == 10 and d.expiry_min == 30
+    p.tick(29)
+    assert d.interval_min == 10
+    p.tick(1)
+    assert (d.interval_min, d.threshold_cm, d.enabled) == safe and d.expiry_min is None
+    r = p.send("WL-BBST2", "set_reporting_interval", 15)                  # next receipt reports the roll back
+    assert r.note == "rolled_back_to_safe_default@30" and p.aud_verify(r)
+    import dataclasses
+    assert not p.aud_verify(dataclasses.replace(r, note=None))            # the note is under the receipt MAC
+    assert p.send("WL-BBST2", "set_reporting_interval", 20).note is None
+    assert p.send("WL-BBST2", "set_reporting_interval", 1, lifetime=5).decision == "rejected" and d.expiry_min is None
+    with pytest.raises(ValueError):
+        p.send("WL-BBST2", "set_reporting_interval", 10, lifetime=70000)
+    for sch in ("S4", "S4-F", "S6+F"):                                    # every check accepts the lifetime field
+        q = env_for(scenarios, sch).plant
+        q.rollback = True
+        assert q.send("WL-BBST2", "set_reporting_interval", 10, lifetime=60).decision == "accepted"

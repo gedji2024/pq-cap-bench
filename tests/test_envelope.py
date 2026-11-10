@@ -264,3 +264,21 @@ def test_commissioning_reason():
     perm = ev.permissive_policy(CAT, 7)
     hi = ev.make_command(KEY, 7, 1, ev.A_THRESHOLD, 0, 900, 8)
     assert ev.check_s6f(perm, floor, CAT, s, hi, KEY, 8, True)[0].reason == "floor:commissioning:max_alert_threshold"
+
+
+def test_lifetime_in_reserved_field():
+    """N4 roll back: the lifetime travels in the reserved u16 under the command MAC; every check rejects a non-zero
+    reserved field unless roll back is enabled (`lifetime_ok`), so the default behaviour is unchanged."""
+    s = ev.DeviceState(0, False, 100.0)
+    m = ev.make_command(KEY, ENV.handle, 1, ev.A_INTERVAL, 0, 10, 8, reserved=30)
+    assert ev.decode_params(m[ev.HEADER.size:ev.HEADER.size + ev.PARAMS.size])[3] == 30
+    floor = ev.Invariants(**{**INV.__dict__, "max_alert_threshold": 900})
+    checks = [lambda lt: ev.check_s4(CAT, s, m, KEY, 8, lt), lambda lt: ev.check_s4f(ENV, CAT, s, m, KEY, 8, lt),
+              lambda lt: ev.check_enveloped(ENV, CAT, s, m, KEY, 8, lt),
+              lambda lt: ev.check_s6f(ENV, floor, CAT, s, m, KEY, 8, False, lt)]
+    for c in checks:
+        assert c(False)[0].reason == "catalogue" and c(True)[0].accepted
+    forged = bytearray(m)
+    forged[ev.HEADER.size + ev.PARAMS.size - 1] ^= 1                      # change the lifetime, keep the tag
+    assert ev.check_s4(CAT, s, bytes(forged), KEY, 8, True)[0].reason == "tag"
+    assert ev.make_command(KEY, 1, 1, 1, 0, 10, 8) == ev.make_command(KEY, 1, 1, 1, 0, 10, 8, reserved=0)
