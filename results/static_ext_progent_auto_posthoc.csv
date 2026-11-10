@@ -1,0 +1,4 @@
+a,b,metric,pairs,rate_a,rate_b,only_a,only_b,p,p_holm,label
+progent_auto,none,executed,180,0.005555555555555556,0.08888888888888889,0,15,6.103515625e-05,0.0001220703125,"post hoc, not registered"
+progent_auto,none,attempted,240,0.10416666666666667,0.13333333333333333,3,10,0.09228515625,0.09228515625,"post hoc, not registered"
+progent_auto,none,failed_request,72,0.5555555555555556,0.1111111111111111,32,0,4.656612873077393e-10,1.3969838619232178e-09,"post hoc, not registered"

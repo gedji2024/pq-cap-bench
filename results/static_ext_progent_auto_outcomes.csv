@@ -1,0 +1,4 @@
+model,executed,blocked_by_scheme,refused,ignored,breakdown
+llama3.1:8b,2,6,10,34,28
+mistral-nemo:12b,4,0,25,50,1
+qwen3:8b,8,5,26,41,0

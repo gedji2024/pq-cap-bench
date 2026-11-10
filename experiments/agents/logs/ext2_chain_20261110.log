@@ -1,0 +1,77 @@
+ext2 chain start 2026-11-10 02:07:01 EST models=all
+[progent_manual] static_ext start 2026-11-10 02:07:01 EST
+[static_ext_progent_manual] qwen3:8b t=0.0: 104 to run (0 done)
+/Users/gpdk/Documents/Back_Up_Windows/Documents/PHD/THESIS/pq-cap-bench/.venv/lib/python3.12/site-packages/agentdojo/agent_pipeline/basic_elements.py:22: UserWarning: The query is not being added as the first message or after the system message
+  warnings.warn("The query is not being added as the first message or after the system message")
+[static_ext_progent_manual] qwen3:8b t=0.0: 25/104 in 2.6 min (6.3 s/ep)
+[static_ext_progent_manual] qwen3:8b t=0.0: 50/104 in 5.2 min (6.2 s/ep)
+[static_ext_progent_manual] qwen3:8b t=0.0: 75/104 in 8.7 min (6.9 s/ep)
+[static_ext_progent_manual] qwen3:8b t=0.0: 100/104 in 11.9 min (7.1 s/ep)
+[static_ext_progent_manual] qwen3:8b t=0.0: 104/104 in 12.4 min (7.2 s/ep)
+[static_ext_progent_manual] llama3.1:8b t=0.0: 104 to run (0 done)
+[static_ext_progent_manual] llama3.1:8b t=0.0: 25/104 in 3.2 min (7.8 s/ep)
+[static_ext_progent_manual] llama3.1:8b t=0.0: 50/104 in 6.1 min (7.3 s/ep)
+[static_ext_progent_manual] llama3.1:8b t=0.0: 75/104 in 9.7 min (7.7 s/ep)
+[static_ext_progent_manual] llama3.1:8b t=0.0: 100/104 in 12.4 min (7.4 s/ep)
+[static_ext_progent_manual] llama3.1:8b t=0.0: 104/104 in 13.0 min (7.5 s/ep)
+[static_ext_progent_manual] mistral-nemo:12b t=0.0: 104 to run (0 done)
+[static_ext_progent_manual] mistral-nemo:12b t=0.0: 25/104 in 8.5 min (20.3 s/ep)
+[static_ext_progent_manual] mistral-nemo:12b t=0.0: 50/104 in 14.4 min (17.3 s/ep)
+[static_ext_progent_manual] mistral-nemo:12b t=0.0: 75/104 in 23.1 min (18.5 s/ep)
+[static_ext_progent_manual] mistral-nemo:12b t=0.0: 100/104 in 30.4 min (18.2 s/ep)
+[static_ext_progent_manual] mistral-nemo:12b t=0.0: 104/104 in 31.4 min (18.1 s/ep)
+[progent_manual] static_ext done 2026-11-10 03:03:54 EST
+[progent_manual] judge_ext done 2026-11-10 03:10:31 EST
+/Users/gpdk/Documents/Back_Up_Windows/Documents/PHD/THESIS/pq-cap-bench/experiments/agents/RESULTS_ext_progent_manual.md
+[progent_manual] report done 2026-11-10 03:10:37 EST
+[melon] static_ext start 2026-11-10 03:10:37 EST
+[static_ext_melon] qwen3:8b t=0.0: 104 to run (0 done)
+/Users/gpdk/Documents/Back_Up_Windows/Documents/PHD/THESIS/pq-cap-bench/.venv/lib/python3.12/site-packages/agentdojo/agent_pipeline/basic_elements.py:22: UserWarning: The query is not being added as the first message or after the system message
+  warnings.warn("The query is not being added as the first message or after the system message")
+[static_ext_melon] qwen3:8b t=0.0: 25/104 in 9.2 min (22.0 s/ep)
+[static_ext_melon] qwen3:8b t=0.0: 50/104 in 19.8 min (23.7 s/ep)
+[static_ext_melon] qwen3:8b t=0.0: 75/104 in 29.8 min (23.8 s/ep)
+[static_ext_melon] qwen3:8b t=0.0: 100/104 in 40.7 min (24.4 s/ep)
+[static_ext_melon] qwen3:8b t=0.0: 104/104 in 42.4 min (24.5 s/ep)
+[static_ext_melon] llama3.1:8b t=0.0: 104 to run (0 done)
+[static_ext_melon] llama3.1:8b t=0.0: 25/104 in 8.6 min (20.7 s/ep)
+[static_ext_melon] llama3.1:8b t=0.0: 50/104 in 16.9 min (20.2 s/ep)
+[static_ext_melon] llama3.1:8b t=0.0: 75/104 in 25.2 min (20.1 s/ep)
+[static_ext_melon] llama3.1:8b t=0.0: 100/104 in 33.3 min (20.0 s/ep)
+[static_ext_melon] llama3.1:8b t=0.0: 104/104 in 34.6 min (19.9 s/ep)
+[static_ext_melon] mistral-nemo:12b t=0.0: 104 to run (0 done)
+[static_ext_melon] mistral-nemo:12b t=0.0: 25/104 in 21.4 min (51.4 s/ep)
+[static_ext_melon] mistral-nemo:12b t=0.0: 50/104 in 41.1 min (49.3 s/ep)
+[static_ext_melon] mistral-nemo:12b t=0.0: 75/104 in 63.2 min (50.5 s/ep)
+[static_ext_melon] mistral-nemo:12b t=0.0: 100/104 in 83.3 min (50.0 s/ep)
+[static_ext_melon] mistral-nemo:12b t=0.0: 104/104 in 85.9 min (49.6 s/ep)
+[melon] static_ext done 2026-11-10 05:53:37 EST
+[melon] judge_ext done 2026-11-10 05:59:50 EST
+/Users/gpdk/Documents/Back_Up_Windows/Documents/PHD/THESIS/pq-cap-bench/experiments/agents/RESULTS_ext_melon.md
+[melon] report done 2026-11-10 05:59:56 EST
+[progent_auto] static_ext start 2026-11-10 05:59:56 EST
+[static_ext_progent_auto] qwen3:8b t=0.0: 104 to run (0 done)
+/Users/gpdk/Documents/Back_Up_Windows/Documents/PHD/THESIS/pq-cap-bench/.venv/lib/python3.12/site-packages/agentdojo/agent_pipeline/basic_elements.py:22: UserWarning: The query is not being added as the first message or after the system message
+  warnings.warn("The query is not being added as the first message or after the system message")
+[static_ext_progent_auto] qwen3:8b t=0.0: 25/104 in 50.0 min (120.1 s/ep)
+[static_ext_progent_auto] qwen3:8b t=0.0: 50/104 in 167.8 min (201.3 s/ep)
+[static_ext_progent_auto] qwen3:8b t=0.0: 75/104 in 218.3 min (174.6 s/ep)
+[static_ext_progent_auto] qwen3:8b t=0.0: 100/104 in 332.4 min (199.4 s/ep)
+[static_ext_progent_auto] qwen3:8b t=0.0: 104/104 in 349.8 min (201.8 s/ep)
+[static_ext_progent_auto] llama3.1:8b t=0.0: 104 to run (0 done)
+[static_ext_progent_auto] llama3.1:8b t=0.0: 25/104 in 72.1 min (173.1 s/ep)
+[static_ext_progent_auto] llama3.1:8b t=0.0: 50/104 in 145.3 min (174.4 s/ep)
+[static_ext_progent_auto] llama3.1:8b t=0.0: 75/104 in 215.3 min (172.3 s/ep)
+[static_ext_progent_auto] llama3.1:8b t=0.0: 100/104 in 292.1 min (175.3 s/ep)
+[static_ext_progent_auto] llama3.1:8b t=0.0: 104/104 in 303.1 min (174.9 s/ep)
+[static_ext_progent_auto] mistral-nemo:12b t=0.0: 104 to run (0 done)
+[static_ext_progent_auto] mistral-nemo:12b t=0.0: 25/104 in 28.0 min (67.2 s/ep)
+[static_ext_progent_auto] mistral-nemo:12b t=0.0: 50/104 in 52.8 min (63.4 s/ep)
+[static_ext_progent_auto] mistral-nemo:12b t=0.0: 75/104 in 80.4 min (64.3 s/ep)
+[static_ext_progent_auto] mistral-nemo:12b t=0.0: 100/104 in 111.0 min (66.6 s/ep)
+[static_ext_progent_auto] mistral-nemo:12b t=0.0: 104/104 in 114.2 min (65.9 s/ep)
+[progent_auto] static_ext done 2026-11-10 18:47:03 EST
+[progent_auto] judge_ext done 2026-11-10 18:53:32 EST
+/Users/gpdk/Documents/Back_Up_Windows/Documents/PHD/THESIS/pq-cap-bench/experiments/agents/RESULTS_ext_progent_auto.md
+[progent_auto] report done 2026-11-10 18:53:38 EST
+ext2 chain end 2026-11-10 18:53:38 EST
