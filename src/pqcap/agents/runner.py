@@ -25,6 +25,8 @@ from . import suite as S
 from .plant import limits_text
 
 DEFENCES = ("tool_filter", "transformers_pi_detector", "spotlighting_with_delimiting", "repeat_user_prompt")
+# post-registration extensions run from their authors' code (DEVIATIONS 6, 7, 7b): condition -> device scheme
+EXT_DEFENCES = {"melon": "none", "progent_auto": "none", "progent_manual": "S4"}
 
 
 @dataclass(frozen=True)
@@ -51,6 +53,8 @@ class Spec:
 def scheme_and_defence(condition: str) -> tuple[str, str | None]:
     if condition in DEFENCES:
         return "none", condition
+    if condition in EXT_DEFENCES:
+        return EXT_DEFENCES[condition], condition
     return (condition, None)
 
 
@@ -74,6 +78,23 @@ def build_pipeline(llm, defence: str | None, system_message: str):
     pipe = AgentPipeline([SystemMessage(system_message), InitQuery(), llm, loop])
     pipe.name = f"{llm.name}-{defence}"
     return pipe
+
+
+def _ext_pipeline(defence: str, llm, cfg: dict, variant: str, plant, suite):
+    """Extension pipelines (DEVIATIONS 6, 7, 7b). progent_manual's limit-aware prompt lists the S6 limits it enforces,
+    the same text as platform_policy (its reimplemented twin). Returns (pipeline, tools, record function)."""
+    sysmsg = system_prompt(cfg, variant, plant)
+    if defence == "progent_manual" and variant == "limit_aware":
+        import dataclasses  # noqa: PLC0415
+        sysmsg = system_prompt(cfg, variant, dataclasses.replace(plant, scheme="platform_policy"))
+    if defence == "melon":
+        from . import melon_adapter as MA  # noqa: PLC0415
+        pipe, det = MA.build(llm, sysmsg)
+        return pipe, suite.tools, lambda: {"condition": "melon", "cosines": det.cosines,
+                                           "embedding_calls": det.detection_model.calls}
+    from . import progent_adapter as PA  # noqa: PLC0415
+    pipe, fns, st = PA.build(defence, llm, sysmsg, suite.tools, plant)
+    return pipe, fns, st.record
 
 
 def system_prompt(cfg: dict, variant: str, plant) -> str:
@@ -133,11 +154,16 @@ def run_episode(world: World, spec: Spec) -> dict:
     suite = S.make_suite(inj.get("tool_description", ""), inj.get("tool_description_b", ""))
     llm = L.CachedLLM(world.client, spec.model, world.digests.get(spec.model, ""), spec.temperature, spec.seed,
                       world.cache, think=world.cfg["models"][spec.model].get("think"))
-    pipe = build_pipeline(llm, defence, system_prompt(world.cfg, spec.prompt, env.plant))
-    if defence == "tool_filter":
-        pipe.elements = [L.CachedToolFilter(e, llm) if type(e).__name__ == "OpenAILLMToolFilter" else e
-                         for e in pipe.elements]
-    runtime = FunctionsRuntime(suite.tools)
+    ext = None
+    if defence in EXT_DEFENCES:
+        pipe, tools, ext = _ext_pipeline(defence, llm, world.cfg, spec.prompt, env.plant, suite)
+    else:
+        pipe = build_pipeline(llm, defence, system_prompt(world.cfg, spec.prompt, env.plant))
+        if defence == "tool_filter":
+            pipe.elements = [L.CachedToolFilter(e, llm) if type(e).__name__ == "OpenAILLMToolFilter" else e
+                             for e in pipe.elements]
+        tools = suite.tools
+    runtime = FunctionsRuntime(tools)
     t0 = time.time()
     error, messages = None, []
     turns = [ut.PROMPT]
@@ -173,6 +199,8 @@ def run_episode(world: World, spec: Spec) -> dict:
         rec["executed"] = bool(it.security("\n".join(texts), pre, env))
         rec["attack_receipts"] = [asdict(r) for r in S.attack_receipts(it, env)]
     rec["step_limit"] = sum(1 for m in messages if m["role"] == "assistant") >= 15
+    if ext is not None:
+        rec["ext"] = ext()
     return rec
 
 

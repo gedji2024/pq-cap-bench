@@ -26,6 +26,7 @@ HERE = REPO_ROOT / "experiments/agents"
 
 
 EXT = "platform_policy"         # post-registration extension condition (DEVIATIONS 5)
+EXTS = (EXT, "progent_manual", "melon", "progent_auto")   # --ext choices (DEVIATIONS 5, 6, 7, 7b)
 
 
 def world(cache_name: str) -> tuple[R.World, dict, list]:
@@ -229,6 +230,7 @@ def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("phase")
     ap.add_argument("--models", default=None)
+    ap.add_argument("--ext", default=EXT, choices=EXTS)
     a = ap.parse_args(argv)
     if a.phase == "pilot":
         w, cfg, atks = world("pilot")
@@ -248,20 +250,31 @@ def main(argv=None):
             sys.exit("system-prompt check FAILED (logs/syscheck/summary.json)")
     elif a.phase == "determinism_sys":
         determinism_sys(20, 2, 11)
-    elif a.phase in ("static_ext", "judge_ext"):
-        # DEVIATIONS 5: post-registration extension (condition EXT), registered static design, own request cache
+    elif a.phase in ("static_ext", "judge_ext", "smoke_ext"):
+        # DEVIATIONS 5-7b: post-registration extension (condition --ext), registered static design, own request cache
         commit, sha = prereg()
-        w, cfg, atks = world(f"ext_{EXT}")
+        ext = a.ext
+        w, cfg, atks = world(f"ext_{ext}")
         dz = load_yaml(HERE / "design.yaml")
         models = a.models.split(",") if a.models else list(cfg["models"])
         hp = D.pairs(sorted(w.scenarios), dz["host_pairs"]["n"], dz["host_pairs"]["seed"])
-        if a.phase == "static_ext":
+        if a.phase == "smoke_ext":
+            # one attacked test episode per model (first test attack, first host pair, naive prompt), own log dir;
+            # its LLM calls are compared with the same spec under platform_policy for the time gate
+            test = [x for x in atks if x.split == "test"]
+            specs = D.static_specs(models, {0.0: 1}, [ext], ["naive"], test, hp, dz["seed"])
+            first = {}
+            for s in specs:
+                if s.attack is not None and s.model not in first:
+                    first[s.model] = s
+            run_specs(w, list(first.values()), f"smoke_ext_{ext}", (commit, sha))
+        elif a.phase == "static_ext":
             test = [x for x in atks if x.split == "test"]
             temps = {float(t): int(r) for t, r in dz["temperatures"].items()}
-            run_specs(w, D.static_specs(models, temps, [EXT], cfg["prompt_variants"], test, hp, dz["seed"]),
-                      f"static_ext_{EXT}", (commit, sha))
+            run_specs(w, D.static_specs(models, temps, [ext], cfg["prompt_variants"], test, hp, dz["seed"]),
+                      f"static_ext_{ext}", (commit, sha))
         else:
-            run_judge(w, cfg, (commit, sha), (f"static_ext_{EXT}",), HERE / f"logs/judge_ext_{EXT}/judge.jsonl")
+            run_judge(w, cfg, (commit, sha), (f"static_ext_{ext}",), HERE / f"logs/judge_ext_{ext}/judge.jsonl")
     elif a.phase in ("static", "adaptive", "e6", "judge"):
         commit, sha = prereg()
         w, cfg, atks = world("main")
