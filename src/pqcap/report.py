@@ -1029,6 +1029,7 @@ def section_agents(ed: Path) -> str:
                              "only_a": lambda v: "-" if pd.isna(v) else f"{int(v)}",
                              "only_b": lambda v: "-" if pd.isna(v) else f"{int(v)}"})]
     out.append(agents_threats(ed))
+    out.append(agents_h3(ed.parents[1] / "results/labelling"))
     out.append("Full tables (per model, utility, hydrological impact, telemetry, decision mix, transcripts, deviations): "
                "`experiments/agents/RESULTS.md`. These results hold only for the tested models and attacks.")
     return "\n\n".join(out)
@@ -1038,8 +1039,8 @@ def agents_threats(ed: Path) -> str:
     """Threats to validity of the Task E re-run; the check results are read from the logs when present."""
     t = ["**Threats to validity.**",
          "- *Self-judging:* the registered judge, mistral-nemo:12b, is also one of the three agent models, so it labels "
-         "its own transcripts. The judge is kept as registered; every judge-based split is PROVISIONAL until the "
-         "60-item human sample is labelled, and `scripts/agreement.py` reports Cohen's kappa overall, for the "
+         "its own transcripts. The judge is kept as registered; every judge-based split stays PROVISIONAL unless the "
+         "60-item human sample validates it (H3 below); `scripts/agreement.py` reports Cohen's kappa overall, for the "
          "mistral-nemo:12b transcripts and for the other two models separately.",
          "- *v0 fault:* the first static run sent the system prompt with a role Ollama drops; it is SUPERSEDED and "
          "the static phase and judge were re-run (DEVIATIONS 1, 1a, 1b).",
@@ -1068,6 +1069,42 @@ def agents_threats(ed: Path) -> str:
                  f"tool-call ids); judge calls {s['judge']['identical']}/{s['judge']['n']} identical, labels "
                  f"{s['judge']['label_identical']}/{s['judge']['n']}.")
     return "\n".join(t)
+
+
+def agents_h3(lab: Path) -> str:
+    """H3 judge validation: human labels, agreement (scripts/agreement.py, scripts/agreement_extra.py) and the
+    labelling artifacts, read from results/labelling when present."""
+    t = ["**H3 labelling artifacts.** `results/labelling/to_label.csv` (blind sample, never modified), `key.csv`, "
+         "`LABELLING_GUIDE.md`; on the manuscript branch `manuscript/labelling/label_h3.html` (blank offline form), "
+         "`manuscript/labelling/relecture_H3_60.html` (review form pre-filled with the AI annotation) and "
+         "`manuscript/labelling/llm_preannotation.csv` (pre-annotation of the 60 items by an AI model, Claude, of a "
+         "family different from the judge's, made without the judge labels; its annotator saw the first three key "
+         "rows by mistake: 01ed5c53a9, 0dae625c5b, 0e4a08da68, as stated in the review form)."]
+    hp, ap, xp = lab / "to_label_human.csv", lab / "agreement.csv", lab / "agreement_extra.csv"
+    if hp.exists():
+        t.append("Human labels: `results/labelling/to_label_human.csv` (independent labels exported by the blank form, "
+                 "case A of NEXT_BATCH 5.1).")
+    if ap.exists():
+        a = pd.read_csv(ap)
+        t.append("Judge-human agreement (Cohen's kappa, percentile bootstrap over items): " + "; ".join(
+            f"{r.group}: n={int(r.n)}, kappa={r.kappa:.3f} [{r.ci_lo:.3f}, {r.ci_hi:.3f}], observed agreement "
+            f"{r.observed_agreement:.3f}" for r in a.itertuples()) + ". Kappa is 0 when one rater uses a single label.")
+    if xp.exists():
+        x = pd.read_csv(xp).set_index(["metric", "subset"])
+        v = x.value
+        conf = ", ".join(f"judge {j} / human {h}: {v[f'confusion_judge_{j}_human_{h}', 'all']}"
+                         for j in ("REFUSED", "NOT_REFUSED") for h in ("REFUSED", "NOT_REFUSED"))
+        t.append(f"Confusion matrix: {conf}. Empty or whitespace-only answers: {v['empty_answers', 'all']}, judge "
+                 f"label REFUSED on {(x.loc['judge_label_on_empty_answer'].value == 'REFUSED').sum()}. Claims parser "
+                 f"vs human false-report labels: {v['parser_vs_human_false_report_agree', 'labelled']} of "
+                 f"{x.n['parser_vs_human_false_report_agree', 'labelled']} labelled items.")
+        if ("llm_vs_human_label_agree", "all") in v.index:
+            t.append(f"AI pre-annotation vs human labels: label {v['llm_vs_human_label_agree', 'all']}/"
+                     f"{x.n['llm_vs_human_label_agree', 'all']} (excluding the three seen key rows "
+                     f"{v['llm_vs_human_label_agree', 'excluding_seen_key_rows']}/"
+                     f"{x.n['llm_vs_human_label_agree', 'excluding_seen_key_rows']}), quote "
+                     f"{v['llm_vs_human_quote_agree', 'all']}/{x.n['llm_vs_human_quote_agree', 'all']}.")
+    return "\n\n".join(t)
 
 
 def run(config: Path, results: Path, figures: Path) -> None:

@@ -311,3 +311,22 @@ def test_section_audit(tmp_path):
     (tmp_path / "audit_v02" / "A1.md").write_text("### A1\ny\n")
     out = report.section_audit(tmp_path)
     assert out.index("A1") < out.index("B1")
+
+
+def test_agents_h3(tmp_path):
+    assert "llm_preannotation.csv" in report.agents_h3(tmp_path) and "Cohen" not in report.agents_h3(tmp_path)
+    (tmp_path / "to_label_human.csv").write_text("item_id\n")
+    pd.DataFrame([{"group": "all", "n": 4, "kappa": 0.0, "ci_lo": 0.0, "ci_hi": 0.0,
+                   "observed_agreement": 0.25}]).to_csv(tmp_path / "agreement.csv", index=False)
+    rows = [("observed_agreement_judge_human", "all", 4, 0.25), ("empty_answers", "all", 1, 1),
+            ("judge_label_on_empty_answer", "x", 1, "REFUSED"), ("parser_vs_human_false_report_agree", "labelled", 0, 0)]
+    rows += [(f"confusion_judge_{j}_human_{h}", "all", 4, 1) for j in ("REFUSED", "NOT_REFUSED")
+             for h in ("REFUSED", "NOT_REFUSED")]
+    pd.DataFrame(rows, columns=["metric", "subset", "n", "value"]).to_csv(tmp_path / "agreement_extra.csv", index=False)
+    t = report.agents_h3(tmp_path)
+    assert "case A" in t and "kappa=0.000" in t and "label REFUSED on 1" in t and "0 of 0 labelled" in t
+    assert "AI pre-annotation" not in t
+    rows += [("llm_vs_human_label_agree", "all", 4, 4), ("llm_vs_human_label_agree", "excluding_seen_key_rows", 3, 3),
+             ("llm_vs_human_quote_agree", "all", 4, 3)]
+    pd.DataFrame(rows, columns=["metric", "subset", "n", "value"]).to_csv(tmp_path / "agreement_extra.csv", index=False)
+    assert "label 4/4 (excluding the three seen key rows 3/3), quote 3/4" in report.agents_h3(tmp_path)
