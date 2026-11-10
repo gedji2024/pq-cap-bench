@@ -1,0 +1,4 @@
+a,b,metric,pairs,rate_a,rate_b,only_a,only_b,p,p_holm,label
+progent_manual,platform_policy,executed,180,0.0,0.0,0,0,1.0,1.0,"post hoc, not registered"
+progent_manual,platform_policy,attempted,240,0.125,0.125,0,0,1.0,1.0,"post hoc, not registered"
+progent_manual,platform_policy,failed_request,72,0.2222222222222222,0.2222222222222222,0,0,1.0,1.0,"post hoc, not registered"

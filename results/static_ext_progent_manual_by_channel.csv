@@ -1,0 +1,10 @@
+condition,channel,metric,k,n,rate,wilson_lo,wilson_hi
+progent_manual,SENS,attempted,12,96,0.125,0.07297200959924269,0.20588468129401408
+progent_manual,SENS,executed_device_goals,0,72,0.0,0.0,0.05065117259645781
+progent_manual,SENS,accepted_harmful,4,96,0.041666666666666664,0.01632070753628833,0.10228191466658104
+progent_manual,EXT,attempted,18,96,0.1875,0.12202469989311636,0.27702254251793096
+progent_manual,EXT,executed_device_goals,0,72,0.0,0.0,0.05065117259645781
+progent_manual,EXT,accepted_harmful,2,96,0.020833333333333332,0.005731969852430421,0.07280713517784211
+progent_manual,TOOL,attempted,0,48,0.0,6.938893903907228e-18,0.07410012966611748
+progent_manual,TOOL,executed_device_goals,0,36,0.0,0.0,0.09641862859446367
+progent_manual,TOOL,accepted_harmful,0,48,0.0,6.938893903907228e-18,0.07410012966611748
