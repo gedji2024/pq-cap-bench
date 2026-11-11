@@ -36,4 +36,4 @@ for soc0 in (40, 60, 80):
 df = pd.DataFrame(rows)
 g = df.groupby(['soc0', 'B']).status.value_counts().unstack(fill_value=0)
 g['P_upper'] = g['not_certified'] / g.sum(axis=1)
-print(g.to_string()); g.to_csv('bound_adaptive_bandlo.csv')
+print(g.to_string()); g.to_csv(__import__('pathlib').Path(__file__).with_name('bound_adaptive_bandlo.csv'))  # FIX_BATCH_v0.3.7 1.1: path next to this file
