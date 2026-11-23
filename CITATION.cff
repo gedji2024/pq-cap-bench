@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use this artifact, please cite the paper and this archive."
+title: "pq-cap-bench: artifact of 'Bounded Authority for Hijacked AI Agents: Offline-Verifiable Post-Quantum Capability Envelopes for Disaster-Monitoring Sensor Networks'"
+type: software
+authors:
+  - family-names: "Djimefo Kapen"
+    given-names: "Georges Parfait"
+    affiliation: "Polytechnique Montréal"
+    orcid: "https://orcid.org/0009-0000-7436-9546"
+  - family-names: "Al Mallah"
+    given-names: "Ranwa"
+    affiliation: "Polytechnique Montréal"
+    orcid: "https://orcid.org/0000-0003-3703-9729"
+  - family-names: "Pierre"
+    given-names: "Samuel"
+    affiliation: "Polytechnique Montréal"
+    orcid: "https://orcid.org/0000-0002-4788-3774"
+repository-code: "https://github.com/gedji2024/pq-cap-bench"
+keywords:
+  - AI agent security
+  - prompt injection
+  - capability-based authorization
+  - post-quantum cryptography
+  - wireless sensor networks
+  - LoRaWAN
+  - flood monitoring
+  - formal verification
