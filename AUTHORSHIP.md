@@ -31,5 +31,8 @@ The authors take responsibility for all content, data and references.
 - Files and notes named **`*_BATCH*`** (for example `NEXT_BATCH`, `FINAL_BATCH`, `FIX_BATCH_v0.3.7`,
   `MELON_BATCH_DECISION`) and the `results/next_batch/` and `results/audit_v02/` notes are the first author's
   written work orders to the coding assistant, and the assistant's reports on them.
+- References to the `manuscript/v0.2` branch and its files (for example `MELON_BATCH_DECISION.md` or a commit
+  hash on that branch) point to the authors' private working branch with the manuscript sources, drafts and
+  instructions; it is not part of this public artifact.
 - These records are kept verbatim: `PREREG.md` is fixed by the SHA-256 in `REPORT.md`, and the paper cites
   commit `8e2d301`.
