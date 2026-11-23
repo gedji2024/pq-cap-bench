@@ -9,6 +9,8 @@ Every number in `results/`, `figures/` and `REPORT.md` comes from one of two pla
 
 No measured value is hard-coded. Test fixtures in `tests/` use obviously synthetic sizes and never reach the outputs.
 
+Authorship, the use of AI tools and how to read the records ("the user", `*_BATCH*` files, `Co-authored-by` lines): see [`AUTHORSHIP.md`](AUTHORSHIP.md).
+
 ## Quick start
 
 ```bash
