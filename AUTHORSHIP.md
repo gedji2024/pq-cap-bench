@@ -10,7 +10,7 @@ Ranwa Al Mallah and Samuel Pierre (Polytechnique Montréal).
   the study, directed all of the work recorded here, and made every decision: threat model, design, choice of
   schemes and baselines, pre-registration, the deviations recorded in `experiments/agents/DEVIATIONS.md`, and
   which results to report. He reviewed the code, the results and the text, and labelled the human-validation
-  sample of the agent study. Ranwa Al Mallah and Samuel Pierre reviewed and approved the manuscript.
+  sample of the agent study. Ranwa Al Mallah and Samuel Pierre supervised the work and reviewed and approved the manuscript.
 - **AI tools, used under the first author's direction.** As disclosed in the paper's acknowledgment:
   - Claude Code (Anthropic) wrote and ran the benchmark, simulation, Tamarin and analysis code from written
     instructions by the first author, who reviewed its output;
